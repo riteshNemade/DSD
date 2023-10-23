@@ -2,6 +2,7 @@ import { StyleSheet, TextInput, View, Text } from "react-native";
 import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { verticalScale } from "react-native-size-matters/extend";
 
 const PasswordBox = () => {
   const [isPasswordVisible, setPasswordVisibility] = useState(true);
@@ -17,7 +18,7 @@ const PasswordBox = () => {
       style={{
         flexDirection: "row",
         backgroundColor: "white",
-        height: 60,
+        height: verticalScale(60),
         borderRadius: 10,
       }}
     >
@@ -26,7 +27,7 @@ const PasswordBox = () => {
           placeholder={"Password"}
           style={{
             height: 60,
-            fontSize: 18,
+            fontSize: 14,
             paddingLeft: 15,
             color: "#667085",
           }}

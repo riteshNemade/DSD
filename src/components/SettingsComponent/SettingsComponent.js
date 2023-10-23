@@ -20,8 +20,7 @@ const SettingsComponent = ({title,options}) => {
           {title}
         </Text>
         <View style={{ marginTop: verticalScale(33)-gapV, flex: 1 }}>
-            {options.map((item)=>(<SettingsFragment icon={item.icon} title={item.title} navigate={item.navigate}/>))}
-           
+            {options.map((item)=>(<SettingsFragment iconName={item.icon} title={item.title} navigate={item.navigate} toggle={item.toggle  }/>))}  
         </View>
       </View>
     </View>
