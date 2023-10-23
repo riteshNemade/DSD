@@ -10,9 +10,21 @@
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_SIZE_MATTERS_BASE_WIDTH": "430",
+        "EXPO_PUBLIC_SIZE_MATTERS_BASE_HEIGHT": "932"
       }
     },
-    "production": {}
+    "production": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_SIZE_MATTERS_BASE_WIDTH": "430",
+        "EXPO_PUBLIC_SIZE_MATTERS_BASE_HEIGHT": "932"
+      }
+    }
   },
   "submit": {
     "production": {}
