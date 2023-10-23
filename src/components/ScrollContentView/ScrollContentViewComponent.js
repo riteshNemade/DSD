@@ -4,7 +4,7 @@ import { ScrollView } from "react-native";
 
 const ContentView = ({ children, backgroundColor }) => {
   return (
-    <View style={{ flex: 8 }}>
+    <View style={{ flexGrow: 8, height:'100%' }}>
       <View
         style={{
           flex: 1,

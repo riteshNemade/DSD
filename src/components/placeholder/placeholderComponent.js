@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 
 const PlaceholderComponent = () => {
   return (
-    <TouchableOpacity style={{ height: 40, flex:1, justifyContent:'space-between'}}>
+    <TouchableOpacity style={{ height: '100%', flex:1, justifyContent:'space-between'}}>
       <View style={styles.button}>
         <Text style={styles.buttonText}>Image1234</Text>
         <Entypo name="circle-with-cross" size={18}/>
@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 10,
       backgroundColor:'#B0B0B047',
-      height: 40,
+      height: '100%',
       flexDirection:'row',
       justifyContent:'space-between',
       alignItems:'center',
-      paddingHorizontal:25
+      paddingHorizontal:25,
       
     },
     buttonText: {

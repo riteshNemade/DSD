@@ -4,7 +4,7 @@ import LoginScreen from "../screens/Login/LoginScreen";
 
 const Stack = createStackNavigator();
 
-export default function AuthNavigator({setIsLoggedIn}) {
+export default function AuthNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />

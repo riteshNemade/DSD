@@ -2,15 +2,16 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import DashboardButtonComponent from "components/DashboardButton/DashboardButtonComponent";
+import { gapH, gapV } from "../../constants/global";
 
 const DashboardButtonGroup = () => {
   const navigation = useNavigation();
   return (
     <>
-      <View style={{ flexDirection: "row", marginTop:34 }}>
+      <View style={styles.rowContainer}>
         {/* Top Row */}
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.leftButtonStyle}
           onPress={() => navigation.navigate("QRScannerScreen")}
         >
           <DashboardButtonComponent
@@ -20,7 +21,7 @@ const DashboardButtonGroup = () => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.rightButtonStyle}
           onPress={() => navigation.navigate("AddAsset")}
         >
           <DashboardButtonComponent
@@ -30,9 +31,13 @@ const DashboardButtonGroup = () => {
           />
         </TouchableOpacity>
       </View>
+
       {/* Bottom Row */}
-      <View style={{ flexDirection: "row", marginTop: "10%" }}>
-        <TouchableOpacity style={styles.buttonStyle}>
+      <View style={styles.rowContainer}>
+        <TouchableOpacity
+          style={styles.leftButtonStyle}
+          onPress={() => navigation.navigate("AssetList")}
+        >
           <DashboardButtonComponent
             color="#EA6E15"
             iconName="Asset"
@@ -40,7 +45,7 @@ const DashboardButtonGroup = () => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.rightButtonStyle}
           onPress={() => navigation.navigate("AssetAudit")}
         >
           <DashboardButtonComponent
@@ -57,9 +62,19 @@ const DashboardButtonGroup = () => {
 export default DashboardButtonGroup;
 
 const styles = StyleSheet.create({
-  buttonStyle: {
+  rowContainer: {
+    flexDirection: "row",
+    marginTop: gapV,
+    paddingHorizontal: gapH,
+  },
+  leftButtonStyle: {
     flex: 1,
     flexDirection: "row",
-    marginHorizontal: "5%",
+    marginRight: gapH / 2,
+  },
+  rightButtonStyle: {
+    flex: 1,
+    flexDirection: "row",
+    marginLeft: gapH / 2,
   },
 });

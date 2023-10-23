@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import HeaderComponent from "components/Header/HeaderComponent";
@@ -13,32 +12,18 @@ import { ActivityIndicator } from "react-native-paper";
 const AssetAuditScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [auditListData, setAuditListData] = useState([]);
-
+  
   useEffect(() => {
-    // Check if the data is cached in AsyncStorage
-    AsyncStorage.getItem('cachedAuditListData').then(cachedData => {
-      if (cachedData) {
-        // If cached data exists, use it
-        setAuditListData(JSON.parse(cachedData));
-        setIsLoading(false);
-      } else {
-        console.log('cache miss')
-        // If not, make the API request and cache the result
-        api.get("/hardware/audit/due").then((response) => {
-          setAuditListData(response.data.rows);
-          setIsLoading(false);
-
-          // Cache the response in AsyncStorage
-          AsyncStorage.setItem('cachedAuditListData', JSON.stringify(response.data.rows));
-        });
-      }
+    api.get("/hardware/audit/due").then((response) => {
+      setAuditListData(response.data.rows);
+      setIsLoading(false);
     });
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
-        <HeaderComponent title="Asset Audit List" />
+        <HeaderComponent title="Asset Audit List" iconName="Menu"/>
         <ContentViewComponent backgroundColor={"#FFFFFF"}>
           {isLoading ? (
             <View style={{ flex: 1, justifyContent: "center" }}>

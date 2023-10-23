@@ -4,6 +4,7 @@ import AddBoxSVG from "assets/svg/addBox";
 import QRScanner from "assets/svg/qrScanner";
 import AssetList from "assets/svg/assetList";
 import AuditList from "assets/svg/auditList";
+import { scale, verticalScale } from "react-native-size-matters/extend";
 
 const DashboardButton = ({ color, iconName, text }) => {
   const SVGicon = useMemo(() => {
@@ -26,9 +27,9 @@ const DashboardButton = ({ color, iconName, text }) => {
       flex: 2,
       borderColor: color,
       borderWidth: 1,
-      height: 172,
+      height: verticalScale(158),
+      width: scale(185),
       borderRadius: 16,
-      width: "30%",
     },
   });
 

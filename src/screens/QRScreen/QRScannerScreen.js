@@ -6,6 +6,7 @@ import ScrollContentViewComponent from "../../components/ScrollContentView/Scrol
 import AssetTagEntryComponent from "../../components/AssetTagEntry/AssetTagEntryComponent";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useNavigation } from "@react-navigation/native";
+import { gapV, hPadding } from "../../constants/global";
 
 const QRScannerScreen = () => {
   const navigation = useNavigation();
@@ -13,27 +14,13 @@ const QRScannerScreen = () => {
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
         <HeaderComponent title="QR Scanner" iconName="Menu" />
-        <ScrollContentViewComponent backgroundColor={"#e3e2f0"}>
-          <View
-            style={{
-              padding: 19,
-              flex: 1,
-              justifyContent: "center",
-              marginVertical: "35%",
-            }}
-          >
+        <ScrollContentViewComponent backgroundColor={"#fff"}>
+          <View style={styles.container}>
             <View style={{ flex: 1 }}>
               <AssetTagEntryComponent />
             </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                marginVertical: "10%",
-              }}
-            >
-              <Text>OR</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.textStyle}>OR</Text>
             </View>
             <View style={{ flex: 1 }}>
               <ButtonComponent
@@ -51,4 +38,22 @@ const QRScannerScreen = () => {
 
 export default QRScannerScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: hPadding,
+    flex: 1,
+    justifyContent: "center",
+    marginTop: gapV,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: gapV,
+  },
+  textStyle: {
+    fontSize: 18,
+    letterSpacing: 1.1,
+    fontWeight: "600",
+  },
+});

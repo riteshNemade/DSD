@@ -14,11 +14,9 @@ export default function AssetAuditContent({ auditListData }) {
         renderItem={({ item }) => (
           <View style={{ paddingHorizontal: 34, flex: 1 }}>
             <TouchableOpacity
-              onPress={() =>{
-                console.log('item: '+item)
-                navigation.navigate("AssetOverview", item )
-              }
-              }
+              onPress={() => {
+                navigation.navigate("AssetOverview", item);
+              }}
             >
               <FlatListComponent props={item} />
             </TouchableOpacity>

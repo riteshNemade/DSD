@@ -8,7 +8,17 @@ import { Checkbox } from "react-native-paper";
 import getStatusBarHeight from "utils/getStatusBarHeight";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/actions";
+
 const LoginScreen = () => {
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    dispatch({
+      type: 'LOGIN',
+    }); // Dispatch the logIn action
+  };
   //!!! rewrite this hook in App.js later and use Redux
   const statusBarHeight = Math.ceil(getStatusBarHeight());
 
@@ -75,7 +85,7 @@ const LoginScreen = () => {
                 justifyContent: "center",
               }}
             >
-              <TouchableOpacity >
+              <TouchableOpacity onPress={handleLogin}>
                 <Text style={{ color: "white" }}>Sign In</Text>
               </TouchableOpacity>
             </View>

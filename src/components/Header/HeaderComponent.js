@@ -76,9 +76,11 @@ export default function Header({ title, iconName }) {
       >
         {title}
       </Text>
-      <View style={{ flex: 1 }}>
-        {SVGicon !== undefined ? <SVGicon /> : null}
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate("SettingStack")}>
+        <View style={{ flex: 1 }}>
+          {SVGicon !== undefined ? <SVGicon /> : null}
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

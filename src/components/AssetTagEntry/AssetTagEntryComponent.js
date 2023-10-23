@@ -8,7 +8,14 @@ const AssetTagEntryComponent = () => {
       <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
         <Text style={styles.title}>Asset Tag Entry</Text>
       </View>
-      <View style={{ flex: 2, alignItems: "center", paddingHorizontal: 30, justifyContent:'flex-start' }}>
+      <View
+        style={{
+          flex: 2,
+          alignItems: "center",
+          paddingHorizontal: 30,
+          justifyContent: "flex-start",
+        }}
+      >
         <SearchBarComponent placeholder={"Enter Asset Tag ID"} />
       </View>
     </View>
@@ -21,13 +28,13 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 6,
     backgroundColor: "#fff",
-    shadowColor: "rgba(0, 0, 0, 0.25)",
+    shadowColor: "rgba(0, 0, 0, 1)",
     shadowOffset: {
-      width: 0,
-      height: 3,
+    width: 2,
+    height: 2
     },
-    shadowRadius: 20,
-    elevation: 20,
+    shadowRadius: 14,
+    elevation: 14,
     shadowOpacity: 1,
     width: "100%",
     height: 128,

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 
 import HeaderComponent from "components/Header/HeaderComponent";
@@ -22,4 +22,3 @@ const DashboardScreen = () => {
 
 export default DashboardScreen;
 
-const styles = StyleSheet.create({});

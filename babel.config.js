@@ -14,7 +14,16 @@ module.exports = function(api) {
             constants: './src/constants'
           },
         },
+        
       ],
+      ["dotenv-import", {
+        "moduleName": "@env",
+        "path": ".env",
+        "blocklist": null,
+        "allowlist": null,
+        "safe": false,
+        "allowUndefined": false
+      }]  
     ],
   };
 };
