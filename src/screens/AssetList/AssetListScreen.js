@@ -1,41 +1,54 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native-paper";
 
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
 
+import api from "../../api/api";
 import AssetListContent from "./AssetListContent";
 import TopContent from "./TopContent";
-import api from "../../api/api";
 import ModalContent from "./ModalContent";
 
 const AssetListScreen = () => {
-  //api call
   const [assetListData, setAssetListData] = useState([]);
-  const [isModalVisible, setModalVisible] = useState(false);
-  // useEffect(() => {
-  //   api.get("/hardware").then((response) => {
-  //     setAssetListData(response.data.rows);
-  //   });
-  // }, []);
-  const openModal = () =>{
-    setModalVisible(true)
-  }
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  //api call
+  useEffect(() => {
+    api.get("/hardware?limit=100").then((response) => {
+      setAssetListData(response.data.rows);
+      setIsLoading(false);
+    });
+  }, []);
+
 
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
         <HeaderComponent title="Asset List" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <ModalContent
-            isModalVisible={isModalVisible}
-            setModalVisible={setModalVisible}
-          />
           <TopContent />
-          <View style={{ flex: 9 }}>
-            <AssetListContent assetListData={assetListData} openModal={openModal}/>
-          </View>
+          {isLoading ? (
+            <View
+              style={{
+                flex: 9,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator size={100} color="#4290df" />
+            </View>
+          ) : (
+            <View style={{ flex: 9 }}>
+              <AssetListContent
+                assetListData={assetListData}
+              />
+
+            </View>
+          )}
         </ContentViewComponent>
       </LinearGradientComponent>
     </View>

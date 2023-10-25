@@ -7,8 +7,10 @@ const LinearGradientComponent = ({ children }) => {
     <View style={{ flex: 1 }}>
       <LinearGradient
         style={{ flex: 1 }}
-        locations={[0, 1]}
         colors={[colors.gradientColor1, colors.gradientColor2]}
+        start={{x:0, y:0}}
+        end={{x:0.8, y:0.5}}
+        locations={[0, 1]}
         useAngle={true}
         angle={164.65}
       >

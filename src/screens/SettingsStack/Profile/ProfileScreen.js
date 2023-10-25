@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 
 import HeaderComponent from "components/Header/HeaderComponent";
@@ -7,11 +7,20 @@ import ScrollContentViewComponent from "components/ScrollContentView/ScrollConte
 
 import ButtonComponent from "../../../components/Button/ButtonComponent";
 
-import { gapH, gapV } from "../../../constants/global";
+import { gapH } from "../../../constants/global";
 import ProfileHeader from "./ProfileHeader";
 import ProfileScreenContent from "./ProfileScreenContent";
+import { useDispatch } from "react-redux";
 
 const ProfileScreen = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch({
+      type: "LOGOUT",
+    }); // LOGOUT action
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
@@ -19,10 +28,8 @@ const ProfileScreen = () => {
         <ScrollContentViewComponent backgroundColor="#fff">
           <ProfileHeader />
           <ProfileScreenContent />
-          <View
-            style={{ flex: 1, paddingBottom: 120, paddingHorizontal: gapH }}
-          >
-            <ButtonComponent text="Log Out" />
+          <View style={styles.buttonStyle}>
+            <ButtonComponent text="Log Out" onPress={handleLogout} />
           </View>
         </ScrollContentViewComponent>
       </LinearGradientComponent>
@@ -32,4 +39,10 @@ const ProfileScreen = () => {
 
 export default ProfileScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonStyle: {
+    flex: 1,
+    paddingBottom: 120,
+    paddingHorizontal: gapH,
+  },
+});

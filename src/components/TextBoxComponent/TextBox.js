@@ -1,7 +1,13 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, PixelRatio } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { verticalScale } from "react-native-size-matters/extend";
+
+let FONT_SIZE =16;
+if (PixelRatio.get() >= 2) {
+  FONT_SIZE = 12;
+}
 
 const TextBox = () => {
   return (
@@ -9,7 +15,7 @@ const TextBox = () => {
       style={{
         flexDirection: "row",
         backgroundColor: "white",
-        height: 60,
+        height: verticalScale(70),
         borderRadius: 10,
       }}
     >
@@ -17,8 +23,8 @@ const TextBox = () => {
         <TextInput
           placeholder={"Enter Email"}
           style={{
-            height: 60,
-            fontSize: 18,
+            height: verticalScale(70),
+            fontSize: FONT_SIZE,
             paddingLeft: 15,
             color: "#667085",
           }}
@@ -27,7 +33,7 @@ const TextBox = () => {
       <View
         style={{
           flex: 1,
-          height: 60,
+          height: verticalScale(70),
           alignItems: "flex-end",
           paddingRight:'5%',
           justifyContent: "center",
@@ -35,7 +41,7 @@ const TextBox = () => {
       >
         <TouchableOpacity
           style={{
-            height: 60,
+            height: 70,
             width: "100%",
             alignContent: "center",
             justifyContent: "center",

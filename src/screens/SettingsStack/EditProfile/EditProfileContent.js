@@ -22,7 +22,7 @@ export default function EditProfileContent() {
       <View
         style={styles.textInputContainer}
       >
-        <PasswordBox />
+        <PasswordBox size={60}/>
       </View>
       <View style={styles.textInputContainer}>
         <TextInput placeholder="Gender" style={styles.textStyle} />
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     height: verticalScale(65),
   },
   textStyle: {
-    height: 60,
+    height: 50,
     fontSize: 14,
     paddingLeft: 15,
     color: colors.gray,

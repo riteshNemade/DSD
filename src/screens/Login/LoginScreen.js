@@ -9,7 +9,7 @@ import getStatusBarHeight from "utils/getStatusBarHeight";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 
 import { useDispatch } from "react-redux";
-import { logIn } from "../../redux/actions";
+import { hPadding } from "../../constants/global";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -26,12 +26,11 @@ const LoginScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <SplashScreen /> */}
       <LinearGradientComponent>
         <View
           style={{
             justifyContent: "center",
-            paddingHorizontal: "7%",
+            paddingHorizontal: hPadding,
             marginTop: statusBarHeight,
             alignContent: "center",
           }}
@@ -45,7 +44,7 @@ const LoginScreen = () => {
               <TextBox />
             </View>
             <View style={{ marginTop: 24 }}>
-              <PasswordBox />
+              <PasswordBox size={70}/>
             </View>
 
             <View
@@ -75,6 +74,7 @@ const LoginScreen = () => {
               </TouchableOpacity>
             </View>
 
+            <TouchableOpacity onPress={handleLogin}>
             <View
               style={{
                 marginTop: "5%",
@@ -85,10 +85,9 @@ const LoginScreen = () => {
                 justifyContent: "center",
               }}
             >
-              <TouchableOpacity onPress={handleLogin}>
                 <Text style={{ color: "white" }}>Sign In</Text>
-              </TouchableOpacity>
             </View>
+              </TouchableOpacity>
 
             <View style={{ paddingHorizontal: 45, marginTop: 39 }}>
               <Text style={{ color: "white", fontSize: 18, fontWeight: "500" }}>

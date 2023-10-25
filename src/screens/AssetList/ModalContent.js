@@ -1,5 +1,5 @@
 import { StyleSheet, View, Modal, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { verticalScale, scale } from "react-native-size-matters/extend";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../constants/global";
@@ -7,15 +7,13 @@ import { useState } from "react";
 
 const ModalContent = ({ isModalVisible, setModalVisible, data }) => {
   const [modalData, setModalData] = useState({});
-
   const handleModalClose = () => {
     setModalVisible(false);
   };
 
   useEffect(() => {
-    setModalData(data);
-    // Clean up function
-    return () => setModalData({});
+    console.log("modal opened");
+
   }, []);
 
   return (
@@ -43,7 +41,7 @@ const ModalContent = ({ isModalVisible, setModalVisible, data }) => {
   );
 };
 
-export default ModalContent;
+export default memo(ModalContent);
 
 const styles = StyleSheet.create({
   closeButton: {
@@ -67,11 +65,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   container: {
-    justifyContent: "center",
-    alignItems: "center",
     width: "100%",
-    marginTop: verticalScale(85),
+    marginTop: verticalScale(71.4),
     borderRadius: 30,
-    height: "150%",
+    height: "110%",
   },
 });

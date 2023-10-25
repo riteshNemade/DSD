@@ -2,11 +2,13 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { gapH, gapV } from "../../../constants/global";
 import ButtonComponent from "../../../components/Button/ButtonComponent";
-import { scale } from "react-native-size-matters/extend";
+import { scale, verticalScale } from "react-native-size-matters/extend";
 import ProfilePicture from '../../../components/ProfilePictureComponent/ProfilePicture';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function ProfileHeader() {
+  const navigation = useNavigation();
   return (
     <View
     style={{
@@ -49,8 +51,8 @@ export default function ProfileHeader() {
           User Role
         </Text>
       </View>
-      <View style={{ flex: 1, marginRight: scale(88) }}>
-        <ButtonComponent text="Edit Profile" />
+      <View style={{ flex: 1, marginRight: scale(88), height: verticalScale(50) }}>
+        <ButtonComponent text="Edit Profile" onPress={()=> navigation.navigate('EditProfile')}/>
       </View>
     </View>
     </View>

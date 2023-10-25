@@ -9,7 +9,7 @@ const HomeIcon = (props) => (
       height: scale(40),
       backgroundColor: "#fff",
       borderRadius: 50,
-      padding: scale(7),
+      padding: scale(6),
     }}
   >
     <Svg xmlns="http://www.w3.org/2000/svg" fill="#A1A1A1" {...props} >

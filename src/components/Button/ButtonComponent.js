@@ -4,21 +4,28 @@ import { TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import QRScanner from "assets/svg/qrScanner";
 import { colors } from "../../constants/global";
+import { verticalScale } from "react-native-size-matters/extend";
+import { PixelRatio } from "react-native";
 
+let FONT_SIZE =16;
+if (PixelRatio.get() >= 2) {
+  FONT_SIZE = 14;
+}
 const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption }) => {
+  console.log(FONT_SIZE)
   let color1;
   let color2;
   gradientOption === "Blue" || gradientOption === undefined
-    ? ((color1 = colors.gradientColor1), (color2 = colors.gradientColor2))
+    ? ((color1 = colors.buttonGradientColor1), (color2 = colors.buttonGradientColor2))
     : ((color1 = colors.gradientColor3), (color2 = colors.gradientColor4));
   return (
     <TouchableOpacity onPress={onPress} style={{ height: "100%", flex: 1 }}>
       <LinearGradient
-        style={{ borderRadius: 6, height: "100%" }}
+        style={{ borderRadius: 10, height: verticalScale(50) }}
         locations={[0, 1]}
         colors={[color1, color2]}
-        useAngle={true}
-        angle={164.65}
+        start={{x:1, y:0.1}}
+        end={{x:1, y:0.8}}
       >
         <View style={styles.button}>
           {iconEnabled !== undefined && iconEnabled ? (
@@ -55,10 +62,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   buttonText: {
-    fontSize: 16,
-    letterSpacing: 1.1,
+    fontSize: FONT_SIZE,
     fontWeight: "600",
-
     color: "#fff",
     textAlign: "left",
   },
