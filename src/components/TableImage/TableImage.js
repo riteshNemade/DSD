@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Image } from "react-native";
+import { verticalScale } from "react-native-size-matters/extend";
 
 const TableImage = ({ url }) => {
   return (
       <Image
         style={{
-          width: "100%",
-          height:'100%',
+          height:verticalScale(217),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
         }}

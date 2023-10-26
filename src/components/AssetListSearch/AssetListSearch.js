@@ -1,22 +1,38 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import { colors, gapV, hPadding } from "../../constants/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
-
 import QRScannerSmall from "../../../assets/svg/QRScannerSmall";
 import { scale } from "react-native-size-matters/extend";
-const AssetListSearch = () => {
+import { useNavigation } from "@react-navigation/native";
+
+const AssetListSearch = ({setSearchTerm}) => {
+  const navigation = useNavigation();
+  const [inputText, setInputText] = useState(null);
+  const handleInputChange = (text) =>{
+    setInputText(text)
+  }
+
+  const handleSubmit = () => {
+    setSearchTerm(inputText)
+  }
   return (
     <View style={styles.container}>
-      <View style={{ flex: 2, justifyContent:'center', alignItems:'center' }}>
-        <MaterialIcons name="search" size={24} color={colors.gray}/>
+      <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
+        <MaterialIcons name="search" size={24} color={colors.gray} />
       </View>
-      <View style={{ flex: 7, justifyContent:'center', alignContent:'center' }}>
-        <TextInput placeholder="Search Asset" />
+      <View style={{ flex: 7, justifyContent: "center", alignContent: "center" }}>
+        <TextInput
+          placeholder="Search Asset"
+          onChangeText={handleInputChange}
+          onSubmitEditing={handleSubmit}
+        />
       </View>
-      <View style={{ flex: 1, padding:scale(12)}}>
-        <QRScannerSmall />
+      <View style={{ flex: 1, padding: scale(12) }}>
+        <TouchableOpacity onPress={() => navigation.navigate("QRScanner")}>
+          <QRScannerSmall />
+        </TouchableOpacity>
       </View>
     </View>
   );

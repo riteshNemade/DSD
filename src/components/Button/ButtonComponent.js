@@ -12,7 +12,6 @@ if (PixelRatio.get() >= 2) {
   FONT_SIZE = 14;
 }
 const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption }) => {
-  console.log(FONT_SIZE)
   let color1;
   let color2;
   gradientOption === "Blue" || gradientOption === undefined

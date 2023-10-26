@@ -3,15 +3,20 @@ import React, { memo, useState } from "react";
 
 import PopupIcon from "../../../assets/svg/PopupIcon";
 import CardViewComponent from "../../components/CardView/CardViewComponent";
-import ModalContent from "./ModalContent";
+import ModalContent from "./AssetModalContent";
 
-import { hPadding, colors } from "../../constants/global";
+import {
+  hPadding,
+  colors,
+  popUpButtonWidth,
+  popUpButtonHeight,
+} from "../../constants/global";
 import { scale, verticalScale } from "react-native-size-matters/extend";
+import { StyleSheet } from "react-native";
 
 export default memo(function AssetListComponent({ item }) {
   const [modalData, setModalData] = useState({});
   const [isModalVisible, setModalVisible] = useState(false);
-
   const openModal = () => {
     setModalVisible(true);
   };
@@ -34,13 +39,7 @@ export default memo(function AssetListComponent({ item }) {
           style={{ flexDirection: "row", flex: 1 }}
           activeOpacity={0.2}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              flex: 1,
-              padding: hPadding,
-            }}
-          >
+          <View style={styles.container}>
             <View style={{ flex: 2 }}>
               <Image
                 source={{
@@ -62,20 +61,19 @@ export default memo(function AssetListComponent({ item }) {
               </Text>
             </View>
             <View style={{ flex: 2 }}>
-              <View style={{ flex: 1, alignItems: "flex-end" }}>
+              <View style={styles.status}>
+                {item.status_label?.name === "Good" ? (
+                  <View style={styles.statusIcon}></View>
+                ) : (
+                  <></>
+                )}
                 <Text numberOfLines={1} style={{ fontSize: 14 }}>
                   {item.status_label?.name !== undefined
                     ? item.status_label.name
                     : "N/A"}
                 </Text>
               </View>
-              <View
-                style={{
-                  flex: 1,
-                  height: verticalScale(24),
-                  width: verticalScale(24),
-                }}
-              >
+              <View style={styles.popUpButton}>
                 <PopupIcon />
               </View>
             </View>
@@ -84,4 +82,31 @@ export default memo(function AssetListComponent({ item }) {
       )}
     </CardViewComponent>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    flex: 1,
+    padding: hPadding,
+  },
+  popUpButton: {
+    flex: 1,
+    height: popUpButtonHeight,
+    width: popUpButtonWidth,
+    marginTop: verticalScale(15),
+  },
+  status: {
+    flex: 1,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  statusIcon: {
+    borderRadius: 50,
+    backgroundColor: colors.statusGreen,
+    height: scale(8),
+    width: scale(8),
+    marginRight: scale(8) / 2,
+  },
 });

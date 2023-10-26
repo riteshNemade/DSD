@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import { verticalScale } from "react-native-size-matters/extend";
 
 const TableComponent = ({ items }) => {
   // Define the fields you want to display
@@ -24,33 +25,29 @@ const TableComponent = ({ items }) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={fieldsToDisplay}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View
-            style={[
-              styles.row,
-              {
-                backgroundColor:
-                  index % 2 === 0 ? "#fff" : "rgba(161, 161, 161, 0.28)",
-              },
-            ]}
-          >
-            <View style={styles.column}>
-              <Text style={styles.key}>{item.key}</Text>
-            </View>
-            <View style={styles.column}>
-              <Text
-                numberOfLines={1}
-                style={[styles.value, { flexWrap: "wrap" }]}
-              >
-                {item.value || "N/A"}
-              </Text>
-            </View>
+      {fieldsToDisplay.map((item, index) => (
+        <View
+          style={[
+            styles.row,
+            {
+              backgroundColor:
+                index % 2 === 0 ? "#fff" : "rgba(161, 161, 161, 0.28)",
+            },
+          ]}
+        >
+          <View style={styles.column}>
+            <Text style={styles.key}>{item.key}</Text>
           </View>
-        )}
-      />
+          <View style={styles.column}>
+            <Text
+              numberOfLines={1}
+              style={[styles.value, { flexWrap: "wrap" }]}
+            >
+              {item.value || "N/A"}
+            </Text>
+          </View>
+        </View>
+      ))}
     </View>
   );
 };
@@ -60,7 +57,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
-    flex:1,
+    flex: 1,
   },
   column: {
     flex: 1,
@@ -68,14 +65,14 @@ const styles = StyleSheet.create({
   },
   key: {
     fontWeight: "bold",
-    fontSize: 13,
+    fontSize: 14,
   },
   value: {
     marginLeft: 10,
   },
-  container:{
-    flex:1,
-    height:'100%'
+  container: {
+    flex: 1,
+    height: "100%",
   },
 });
 

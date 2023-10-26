@@ -1,25 +1,45 @@
-import React from "react";
+import React,{ useState } from "react";
 import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { verticalScale } from "react-native-size-matters/extend";
 
 import SortIcon from "assets/svg/SortIcon";
 import AssetListSearch from "../../components/AssetListSearch/AssetListSearch";
 import { gapV, hPadding } from "../../constants/global";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const TopContent = () => {
+import SortModal from "./SortModal";
+
+const TopContent = ({ setSearchTerm, setSortOption }) => {
+  const [isSortModalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "height" : "padding"}
     >
-      <View style={{ flex: 8 }}>
-        <AssetListSearch />
-      </View>
-      <View style={styles.iconContainer}>
-        <View style={styles.iconStyle}>
-          <SortIcon />
-        </View>
-      </View>
+      {isSortModalVisible ? (
+        <SortModal
+          isModalVisible={isSortModalVisible}
+          setModalVisible={setModalVisible}
+          setSortOption={setSortOption}
+        />
+      ) : (
+        <>
+          <View style={{ flex: 8 }}>
+            <AssetListSearch setSearchTerm={setSearchTerm} />
+          </View>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={openModal}>
+              <View style={styles.iconStyle}>
+                <SortIcon />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </KeyboardAvoidingView>
   );
 };

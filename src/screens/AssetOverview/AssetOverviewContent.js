@@ -3,6 +3,8 @@ import React from "react";
 
 import TableImage from "../../components/TableImage/TableImage";
 import TableComponent from "../../components/Table/TableComponent";
+import { scale } from "react-native-size-matters/extend";
+import { gapV } from "../../constants/global";
 
 const AssetOverviewContent = ({ imageUrl, qrUrl, data }) => {
   return (
@@ -14,7 +16,7 @@ const AssetOverviewContent = ({ imageUrl, qrUrl, data }) => {
           <Text>No Preview Available.</Text>
         )}
       </View>
-      <View style={{ flex: 3 }}>
+      <View style={{ flex: 2 }}>
         <TableComponent items={data} />
       </View>
       <View
@@ -33,8 +35,9 @@ export default AssetOverviewContent;
 
 const styles = StyleSheet.create({
   qrStyle: {
-    width: 90,
-    height: 90,
+    height: scale(147),
+    width: scale(147),
+    marginTop: gapV,
     borderWidth: 1,
     borderColor: "#A1A1A1",
     paddingVertical: 13,

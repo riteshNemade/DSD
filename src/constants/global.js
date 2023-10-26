@@ -4,6 +4,10 @@ export const gapV = verticalScale(20);
 export const gapH = scale(20);
 
 export const hPadding = scale(20);
+export const popUpButtonHeight = verticalScale(24)
+export const popUpButtonWidth = verticalScale(24)
+
+
 
 /*Input Fields*/
 export const textBox = {
@@ -32,6 +36,6 @@ export const colors = {
   gradientColor3:'#7BE17F',
   gradientColor4:'#279F2C',
   gray: "#A1A1A1",
-  bottomTabGray:'#B8B7B7'
-
+  bottomTabGray:'#B8B7B7',
+  statusGreen:'#01912F',
 };
