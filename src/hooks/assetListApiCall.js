@@ -9,7 +9,7 @@ export const fetchAssetListData = () => {
 
   const fetchData = async () => {
     setIsLoading(true);
-    api
+    await api
       .get("/hardware")
       .then((response) => {
         setAssetListData(response.data.rows);
@@ -24,7 +24,7 @@ export const fetchAssetListData = () => {
 
   const search = async () => {
     setIsLoading(true);
-    api
+    await api
       .get(`/hardware?search=${searchTerm}`)
       .then((response) => {
         setAssetListData(response.data.rows);
@@ -41,7 +41,7 @@ export const fetchAssetListData = () => {
 
   const sortFetchData = async (sortCriteria, order) => {
     setIsLoading(true);
-    api
+    await api
       .get(`/hardware?sort=${sortCriteria}&order=${order}`)
       .then((response) => {
         setAssetListData(response.data.rows);
