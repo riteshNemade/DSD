@@ -48,6 +48,7 @@ const PasswordBox = ({size}) => {
           alignItems: "flex-end",
           paddingRight:'5%',
           justifyContent: "center",
+          marginTop: 5
         }}
       >
         <TouchableOpacity

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   key: {
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 12,
   },
   value: {
     marginLeft: 10,

@@ -1,12 +1,11 @@
 import { StyleSheet, View, Modal, TouchableOpacity } from "react-native";
-import React, { useEffect, memo } from "react";
+import React, { memo } from "react";
 import { verticalScale, scale } from "react-native-size-matters/extend";
 import { AntDesign } from "@expo/vector-icons";
 import { colors, hPadding } from "../../constants/global";
-import { useState } from "react";
 import { Text } from "react-native";
 
-const ModalContent = ({ isModalVisible, setModalVisible, data }) => {
+const DataModalContent = ({ isModalVisible, setModalVisible, data }) => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
@@ -70,7 +69,7 @@ const ModalContent = ({ isModalVisible, setModalVisible, data }) => {
   );
 };
 
-export default memo(ModalContent);
+export default memo(DataModalContent);
 
 const styles = StyleSheet.create({
   closeButton: {

@@ -7,9 +7,22 @@ import AssetTagEntryComponent from "../../components/AssetTagEntry/AssetTagEntry
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useNavigation } from "@react-navigation/native";
 import { gapV, hPadding } from "../../constants/global";
+import { useState } from "react";
+import api from "../../api/api";
 
 const QRScannerScreen = () => {
   const navigation = useNavigation();
+  const [assetTag, setAssetTag] = useState("");
+
+  const handleSubmit = async (searchTerm) => {
+    setAssetTag(searchTerm)
+    if (assetTag !== "")
+      await api.get(`/hardware/bytag/${assetTag}`).then((response) => {
+        const data = response.data;
+        navigation.navigate("AssetOverview", data);
+      });
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
@@ -17,7 +30,7 @@ const QRScannerScreen = () => {
         <ScrollContentViewComponent backgroundColor={"#fff"}>
           <View style={styles.container}>
             <View style={{ flex: 1 }}>
-              <AssetTagEntryComponent />
+              <AssetTagEntryComponent handleSubmit={handleSubmit}/>
             </View>
             <View style={styles.textContainer}>
               <Text style={styles.textStyle}>OR</Text>

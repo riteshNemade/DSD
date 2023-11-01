@@ -7,7 +7,7 @@ import { gapH, hPadding } from "../../constants/global";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { TouchableOpacity } from "react-native";
 import { useState } from "react";
-const SortModal = ({ isSortModalVisible, setModalVisible, setSortOption }) => {
+const SortModal = ({ isSortModalVisible, setModalVisible, setUrl }) => {
   const [selectedOption, setSelectedOption] = useState('created_at-asc');
 
   const handleModalClose = () => {
@@ -15,7 +15,9 @@ const SortModal = ({ isSortModalVisible, setModalVisible, setSortOption }) => {
   };
 
   const handleOKPress = () => {
-    setSortOption(selectedOption)
+    const sortCriteria = selectedOption.split("-")[0];
+    const order = selectedOption.split("-")[1];
+    setUrl(`/hardware?sort=${sortCriteria}&order=${order}&limit=20&offset=`)
     setModalVisible(false);
   };
 

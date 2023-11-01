@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/native";
 import api from "../../api/api";
@@ -72,9 +72,9 @@ const QRScanner = () => {
       <Text style={styles.title}>QR SCANNER</Text>
       <Text style={styles.paragraph}>Scan a QR code.</Text>
       {renderCamera()}
-      <TouchableOpacity style={styles.button} onPress={() => setScanned(false)}>
+      {/* <TouchableOpacity style={styles.button} onPress={() => setScanned(false)}>
         <Text style={styles.buttonText}>Scan QR again</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

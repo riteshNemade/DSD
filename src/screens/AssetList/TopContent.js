@@ -2,14 +2,15 @@ import React,{ useState } from "react";
 import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { verticalScale } from "react-native-size-matters/extend";
 
-import SortIcon from "assets/svg/SortIcon";
+import FilterIcon from "../../../assets/svg/FilterIcon";
+import SortIcon from '../../../assets/svg/SortIcon'
 import AssetListSearch from "../../components/AssetListSearch/AssetListSearch";
 import { gapV, hPadding } from "../../constants/global";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import SortModal from "./SortModal";
 
-const TopContent = ({ setSearchTerm, setSortOption }) => {
+const TopContent = ({ setSearchTerm, setUrl }) => {
   const [isSortModalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -24,7 +25,7 @@ const TopContent = ({ setSearchTerm, setSortOption }) => {
         <SortModal
           isModalVisible={isSortModalVisible}
           setModalVisible={setModalVisible}
-          setSortOption={setSortOption}
+          setUrl={setUrl}
         />
       ) : (
         <>
@@ -34,7 +35,7 @@ const TopContent = ({ setSearchTerm, setSortOption }) => {
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={openModal}>
               <View style={styles.iconStyle}>
-                <SortIcon />
+                <FilterIcon />
               </View>
             </TouchableOpacity>
           </View>

@@ -11,7 +11,7 @@ import TopContent from "./TopContent";
 import { fetchAssetListData } from "../../hooks/assetListApiCall";
 
 const AssetListScreen = () => {
-  const { isLoading, assetListData, setSearchTerm, setSortOption } =
+  const { isLoading, assetListData, setSearchTerm, setOffset, setUrl } =
     fetchAssetListData();
 
   return (
@@ -19,14 +19,14 @@ const AssetListScreen = () => {
       <LinearGradientComponent>
         <HeaderComponent title="Asset List" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <TopContent setSearchTerm={setSearchTerm} setSortOption={setSortOption}/>
+          <TopContent setSearchTerm={setSearchTerm} setUrl={setUrl}/>
           {isLoading ? (
             <View style={styles.loadingIndicator}>
               <ActivityIndicator size={100} color="#4290df" />
             </View>
           ) : (
             <View style={{ flex: 9 }}>
-              <AssetListContent assetListData={assetListData} />
+              <AssetListContent assetListData={assetListData} setOffset={setOffset}/>
             </View>
           )}
         </ContentViewComponent>

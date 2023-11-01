@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SearchBarComponent from "../SearchBar/SearchBarComponent";
 
-const AssetTagEntryComponent = () => {
+const AssetTagEntryComponent = ({handleSubmit}) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
@@ -16,7 +16,7 @@ const AssetTagEntryComponent = () => {
           justifyContent: "flex-start",
         }}
       >
-        <SearchBarComponent placeholder={"Enter Asset Tag ID"} />
+        <SearchBarComponent placeholder={"Enter Asset Tag ID"} handleSubmit={handleSubmit}/>
       </View>
     </View>
   );
