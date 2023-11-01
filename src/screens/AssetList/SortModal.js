@@ -1,81 +1,84 @@
-import { StyleSheet, View, Modal, Text } from "react-native";
+import { StyleSheet, View, Modal } from "react-native";
 import React from "react";
-import { RadioButton } from "react-native-paper";
-
-import { verticalScale } from "react-native-size-matters/extend";
-import { gapH, hPadding } from "../../constants/global";
 import ButtonComponent from "../../components/Button/ButtonComponent";
-import { TouchableOpacity } from "react-native";
-import { useState } from "react";
-const SortModal = ({ isSortModalVisible, setModalVisible, setUrl }) => {
-  const [selectedOption, setSelectedOption] = useState('created_at-asc');
+import { verticalScale } from "react-native-size-matters/extend";
+import { colors, gapV, hPadding } from "../../constants/global";
+import SortModalInputFields from "./SortModalInputFields";
+import { filters } from "../../hooks/AssetList/modalHooks";
+import { Feather } from '@expo/vector-icons'; 
 
-  const handleModalClose = () => {
-    setModalVisible(false);
-  };
+const SortModal = ({ isModalVisible, setModalVisible, setUrl }) => {
+  const InputFieldProps = filters();
 
   const handleOKPress = () => {
-    const sortCriteria = selectedOption.split("-")[0];
-    const order = selectedOption.split("-")[1];
-    setUrl(`/hardware?sort=${sortCriteria}&order=${order}&limit=20&offset=`)
+    let url = `/hardware?`;
+    let sortCriteria;
+    let order;
+    let urlFilterObject = {
+    };
+
+    if (InputFieldProps.sortOption !== null) {
+      sortCriteria = InputFieldProps.sortOption.split("-")[0];
+      order = InputFieldProps.sortOption.split("-")[1];
+      url += `sort=${sortCriteria}&order=${order}&`;
+    }
+    InputFieldProps.companyFilter !== null
+      ? (url += `company_id=${InputFieldProps.companyFilter}&`)
+      : url;
+    InputFieldProps.categoryFilter !== null
+      ? (url += `category_id=${InputFieldProps.categoryFilter}&`)
+      : url;
+    InputFieldProps.modelFilter !== null
+      ? (url += `model_id=${InputFieldProps.modelFilter}&`)
+      : url;
+    InputFieldProps.statusFilter !== null
+      ? (url += `status_id=${InputFieldProps.statusFilter}&`)
+      : url;
+    InputFieldProps.locationFilter !== null
+      ? (url += `location_id=${InputFieldProps.locationFilter}&`)
+      : url;
+    InputFieldProps.manufacturerFilter !== null
+      ? (url += `manufacturer_id=${InputFieldProps.manufacturerFilter}&`)
+      : url;
+      InputFieldProps.supplierFilter !== null
+      ? (url += `supplier_id=${InputFieldProps.supplierFilter}&`)
+      : url;
+      console.log(JSON.stringify(urlFilterObject));
+    if (InputFieldProps.assetNameFilter !== null) {
+      urlFilterObject.name = InputFieldProps.assetNameFilter;
+    }
+
+    if (InputFieldProps.assetTagFilter !== null) {
+      urlFilterObject.asset_tag = InputFieldProps.assetTagFilter;
+    }
+
+    //asset_tag and asset name are passed as encodedURIComponents
+    if (urlFilterObject.asset_tag !== "" || urlFilterObject.name !== "") {
+      console.log('Object: ',JSON.stringify(urlFilterObject));
+      url += `&filter=${encodeURIComponent(JSON.stringify(urlFilterObject))}&`;
+    }
+    //&filter=%7B%22name%22%3A%22Brake%22%7D
+    url += `limit=20&offset=`;
+    console.log(url);
+    setUrl(url);
     setModalVisible(false);
   };
-
-  const sortingOptions = [
-    { title: "Date added (asc)", value: "created_at-asc" },
-    { title: "Date added (desc)", value: "created_at-desc" },
-    { title: "Asset Name (asc)", value: "name-asc" },
-    { title: "Asset Name (desc)", value: "name-desc" },
-    { title: "EOL Date (asc)", value: "asset_eol_date-asc" },
-    { title: "EOL Date (desc)", value: "asset_eol_date-desc" },
-  ];
-
   return (
     <View>
       <Modal
         animationType="fade"
         transparent={true}
-        visible={isSortModalVisible}
+        visible={isModalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.container}>
           <View style={styles.containerBehindModal}>
             <View style={styles.contentContainer}>
-              <Text style={styles.textStyle}>Sort By</Text>
-              {sortingOptions.map((item) => {
-                let itemValue = item.value
-                return (
-                  <View style={{ flex: 1, flexDirection: "row" }}>
-                    <View style={styles.sortOptions}>
-                      <RadioButton 
-                            value= {itemValue}
-                            status={selectedOption === itemValue ? "checked" : "unchecked"}
-                            onPress={() => setSelectedOption(itemValue)}
-                      />
-                    </View>
-                    <View style={{ flex: 9, justifyContent: "center" }}>
-                      <Text style={{ marginLeft: gapH }}>
-                        {item.title}
-                      </Text>
-                    </View>
-                  </View>
-                );
-              })}
-
-              <View style={styles.buttonRow}>
-                <View style={{ flex: 1, marginRight: gapH }}>
-                  <ButtonComponent text={"OK"} onPress={handleOKPress}/>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <TouchableOpacity
-                    style={styles.cancelButton}
-                    onPress={handleModalClose}
-                  >
-                    <Text>Cancel</Text>
-                  </TouchableOpacity>
-                </View>
+            <Feather name="x" size={18} color={colors.gray} style={{alignSelf:'flex-end'}} onPress={()=>setModalVisible(false)}/>
+              <SortModalInputFields props={InputFieldProps} />
+              <View style={{ marginTop: gapV }}>
+                <ButtonComponent text={"Search"} onPress={handleOKPress} />
               </View>
-
             </View>
           </View>
         </View>
@@ -89,8 +92,9 @@ export default SortModal;
 const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: "#fff",
-    padding: hPadding,
-    height: "60%",
+    paddingHorizontal: hPadding,
+    overflow: "scroll",
+    paddingVertical:gapV
   },
   containerBehindModal: {
     backgroundColor: "rgba(0, 0, 0, 0.76)",
@@ -99,6 +103,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 30,
+    overflow: "scroll",
   },
   container: {
     width: "100%",
@@ -106,7 +111,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: "110%",
   },
-
+  placeholder: {
+    fontSize: 14,
+    color: colors.gray,
+  },
   textStyle: {
     fontSize: 18,
     letterSpacing: 1.1,
@@ -128,5 +136,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+  },
+  inputContainer: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.gray,
+    height: verticalScale(50),
+    marginTop: gapV,
+    padding: 15,
+    fontSize: 14,
+    color: colors.gray,
   },
 });

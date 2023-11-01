@@ -8,7 +8,7 @@ import ContentViewComponent from "components/ContentView/ContentViewComponent";
 
 import AssetListContent from "./AssetListContent";
 import TopContent from "./TopContent";
-import { fetchAssetListData } from "../../hooks/assetListApiCall";
+import { fetchAssetListData } from "../../hooks/AssetList/assetListApiCall";
 
 const AssetListScreen = () => {
   const { isLoading, assetListData, setSearchTerm, setOffset, setUrl } =

@@ -1,4 +1,4 @@
-import api from "../api/api";
+import api from "../../api/api";
 import { useState, useEffect } from "react";
 
 export const fetchAssetListData = () => {
@@ -51,7 +51,7 @@ export const fetchAssetListData = () => {
     })
   }
 
-  //normal API call on screen load
+  // normal API call on screen load
   useEffect(() => {
     fetchData();
   }, [url]);
@@ -61,7 +61,7 @@ export const fetchAssetListData = () => {
     console.log('offset',offset)
   }, [offset]);
 
-  //API call for search
+  // API call for search
   useEffect(() => {
     if (searchTerm !== undefined || searchTerm !== null) {
       search();
