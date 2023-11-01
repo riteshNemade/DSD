@@ -7,8 +7,10 @@ import { scale } from "react-native-size-matters/extend";
 import { gapH, gapV } from "../../constants/global";
 import { TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const AssetOverviewContent = ({ imageUrl, qrUrl, data }) => {
+  const navigation = useNavigation()  
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -22,6 +24,7 @@ const AssetOverviewContent = ({ imageUrl, qrUrl, data }) => {
                 marginTop: gapV,
                 paddingRight: gapH,
               }}
+
             >
               <MaterialCommunityIcons
                 name="dots-vertical"

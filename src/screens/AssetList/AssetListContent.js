@@ -2,13 +2,21 @@ import { View, FlatList, Text } from "react-native";
 import React, { memo } from "react";
 import { verticalScale } from "react-native-size-matters/extend";
 import AssetListComponent from "./AssetListComponent";
+import { ActivityIndicator } from "react-native-paper";
 
-const AssetListContent = ({ assetListData,setOffset }) => {
-    
-  const onFlatListEndReached = () =>{
-    setOffset((prevData)=> prevData+20);
-  }
+const AssetListContent = ({
+  assetListData,
+  setOffset,
+  isListLoading,
+  offsetLimit,
+  offset,
+}) => {
+  const onFlatListEndReached = () => {
+    if (offset <= offsetLimit) setOffset((prevData) => prevData + 20);
+    else return;
+  };
 
+  console.log(isListLoading);
   const length = assetListData?.length;
   return (
     <View style={{ flex: 1, marginTop: verticalScale(10) }}>
@@ -20,11 +28,22 @@ const AssetListContent = ({ assetListData,setOffset }) => {
           initialNumToRender={10}
           removeClippedSubviews={true}
           onEndReached={onFlatListEndReached}
+          ListFooterComponent={
+            isListLoading ? (
+              <View style={{ padding: 10 }}>
+                <ActivityIndicator animating={isListLoading} size={11} />
+              </View>
+            ) : (
+              <></>
+            )
+          }
         />
       ) : (
+        <>
         <View style={{ flex: 1, justifyContent: "center" }}>
           <Text style={{ alignSelf: "center" }}>No results found</Text>
         </View>
+        </>
       )}
     </View>
   );

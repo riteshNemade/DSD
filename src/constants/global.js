@@ -38,4 +38,5 @@ export const colors = {
   gray: "#A1A1A1",
   bottomTabGray:'#B8B7B7',
   statusGreen:'#01912F',
+  hyperlinkBlue: '#3F71C6'
 };

@@ -5,7 +5,7 @@ import { fetchFilterData, filters } from "../../hooks/AssetList/modalHooks";
 import { colors, gapV } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 
-const SortModalInputFields = ({ props }) => {
+const FilterModalInputFields = ({ props }) => {
   const {
     companies,
     categories,
@@ -27,7 +27,7 @@ const SortModalInputFields = ({ props }) => {
     setSupplierFilter,
     setSortOption,
     setAssetNameFilter,
-    setAssetTagFilter
+    setAssetTagFilter,
   } = { ...props };
   return (
     <>
@@ -68,13 +68,13 @@ const SortModalInputFields = ({ props }) => {
         style={styles.inputContainer}
         placeholder={"Asset Tag"}
         placeholderTextColor={{ color: colors.gray }}
-        onEndEditing={(e)=>setAssetTagFilter(e.nativeEvent.text)}
+        onEndEditing={(e) => setAssetTagFilter(e.nativeEvent.text)}
       />
-      <TextInput 
-      style={styles.inputContainer} 
-      placeholder={"Asset Name"}
-      onEndEditing={(e)=>setAssetNameFilter(e.nativeEvent.text)}
-       />
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={"Asset Name"}
+        onEndEditing={(e) => setAssetNameFilter(e.nativeEvent.text)}
+      />
       <Dropdown
         data={models}
         placeholderStyle={styles.placeholder}
@@ -134,7 +134,7 @@ const SortModalInputFields = ({ props }) => {
   );
 };
 
-export default SortModalInputFields;
+export default FilterModalInputFields;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.gray,
     height: verticalScale(50),
-    marginTop: gapV,
+    marginBottom: gapV,
     padding: 15,
     color: colors.gray,
   },

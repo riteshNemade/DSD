@@ -1,34 +1,79 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native-paper";
 
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
-
 import AssetListContent from "./AssetListContent";
 import TopContent from "./TopContent";
+import FilterIcon from "../../../assets/svg/FilterIcon";
 import { fetchAssetListData } from "../../hooks/AssetList/assetListApiCall";
 
-const AssetListScreen = () => {
-  const { isLoading, assetListData, setSearchTerm, setOffset, setUrl } =
-    fetchAssetListData();
+import { scale } from "react-native-size-matters/extend";
+import { colors, gapH, gapV } from "../../constants/global";
+import { TouchableOpacity } from "react-native";
+import FilterModal from "./FilterModal";
+
+const AssetListScreen = ({ route }) => {
+  const [isSortModalVisible, setModalVisible] = useState(false);
+  const {
+    isLoading,
+    assetListData,
+    setSearchTerm,
+    setOffset,
+    setUrl,
+    isListLoading,
+    total,
+    offset,
+  } = fetchAssetListData();
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  useEffect(() => {
+    /* When Company, Category, Status are tapped from Asset Overview, 
+    get redirected to this screen with url as params.
+    URL dictates filtering criteria */
+
+    if (route.params !== undefined) setUrl(route.params);
+  }, [route.params]);
 
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
         <HeaderComponent title="Asset List" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <TopContent setSearchTerm={setSearchTerm} setUrl={setUrl}/>
+          <TopContent setSearchTerm={setSearchTerm} setUrl={setUrl} />
           {isLoading ? (
             <View style={styles.loadingIndicator}>
               <ActivityIndicator size={100} color="#4290df" />
             </View>
+          ) : isSortModalVisible ? (
+            <FilterModal
+              isModalVisible={isSortModalVisible}
+              setModalVisible={setModalVisible}
+              setUrl={setUrl}
+            />
           ) : (
             <View style={{ flex: 9 }}>
-              <AssetListContent assetListData={assetListData} setOffset={setOffset}/>
+              <AssetListContent
+                assetListData={assetListData}
+                setOffset={setOffset}
+                isListLoading={isListLoading}
+                offsetLimit={total}
+                offset={offset}
+              />
             </View>
           )}
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.floatingButton}
+            onPress={() => openModal()}
+          >
+            <FilterIcon color={"white"} />
+          </TouchableOpacity>
         </ContentViewComponent>
       </LinearGradientComponent>
     </View>
@@ -42,5 +87,18 @@ const styles = StyleSheet.create({
     flex: 9,
     alignItems: "center",
     justifyContent: "center",
+  },
+  floatingButton: {
+    height: scale(70),
+    width: scale(70),
+    borderRadius: 50,
+    backgroundColor: colors.hyperlinkBlue,
+    bottom: 1,
+    right: 1,
+    position: "absolute",
+    marginRight: gapH,
+    marginBottom: gapV,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

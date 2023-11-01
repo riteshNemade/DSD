@@ -68,11 +68,9 @@ export default memo(function AssetListComponent({ item }) {
     }
   };
 
-
-  const handleComponentClick =(item) =>{
+  const handleComponentClick = (item) => {
     navigation.navigate("AssetOverview", item);
-
-  }
+  };
 
   return (
     <CardViewComponent>
@@ -85,7 +83,7 @@ export default memo(function AssetListComponent({ item }) {
           onPress={() => handleComponentClick(item)}
         >
           <View style={styles.container}>
-            <TouchableOpacity style={{ flex: 2}} onPress={handleImageClick}>
+            <TouchableOpacity style={{ flex: 2 }} onPress={handleImageClick}>
               <Image
                 source={{
                   uri: item.image !== undefined ? item.image : null,

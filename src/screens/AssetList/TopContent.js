@@ -1,46 +1,35 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { verticalScale } from "react-native-size-matters/extend";
 
 import FilterIcon from "../../../assets/svg/FilterIcon";
-import SortIcon from '../../../assets/svg/SortIcon'
 import AssetListSearch from "../../components/AssetListSearch/AssetListSearch";
-import { gapV, hPadding } from "../../constants/global";
+import { colors, gapV, hPadding } from "../../constants/global";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import SortModal from "./SortModal";
+import SortModal from "./FilterModal";
 
 const TopContent = ({ setSearchTerm, setUrl }) => {
-  const [isSortModalVisible, setModalVisible] = useState(false);
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "height" : "padding"}
     >
-      {isSortModalVisible ? (
-        <SortModal
-          isModalVisible={isSortModalVisible}
-          setModalVisible={setModalVisible}
-          setUrl={setUrl}
-        />
-      ) : (
+     
         <>
           <View style={{ flex: 8 }}>
             <AssetListSearch setSearchTerm={setSearchTerm} />
           </View>
           <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={openModal}>
+            <TouchableOpacity >
               <View style={styles.iconStyle}>
-                <FilterIcon />
+                <FilterIcon color={colors.gray}/>
               </View>
             </TouchableOpacity>
           </View>
         </>
-      )}
     </KeyboardAvoidingView>
   );
 };

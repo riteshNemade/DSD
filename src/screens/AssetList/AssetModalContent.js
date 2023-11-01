@@ -22,16 +22,15 @@ const DataModalContent = ({ isModalVisible, setModalVisible, data }) => {
           <View style={styles.containerBehindModal}>
             <View style={styles.contentContainer}>
               <View style={{ flex: 9 }}>
-                <Text
-                  style={styles.textStyle}
-                >
+                <Text style={styles.textStyle}>
                   Category:{" "}
                   {data.category?.name !== undefined
                     ? data.category?.name
                     : "N/A"}{" "}
                   {"\n"}
                   EOL Date:{" "}
-                  {data.asset_eol_date !== undefined && data.asset_eol_date !== null
+                  {data.asset_eol_date !== undefined &&
+                  data.asset_eol_date !== null
                     ? data.asset_eol_date
                     : "N/A"}{" "}
                   {"\n"}
@@ -41,17 +40,20 @@ const DataModalContent = ({ isModalVisible, setModalVisible, data }) => {
                     : "N/A"}{" "}
                   {"\n"}
                   Purchase Date:{" "}
-                  {data.purchase_date !== undefined && data.purchase_date!== null
+                  {data.purchase_date !== undefined &&
+                  data.purchase_date !== null
                     ? data.purchase_date
                     : "N/A"}{" "}
                   {"\n"}
                   Created At:{" "}
-                  {data.created_at.formatted !== undefined && data.created_at.formatted !== null
+                  {data.created_at.formatted !== undefined &&
+                  data.created_at.formatted !== null
                     ? data.created_at.formatted
                     : "N/A"}{" "}
                   {"\n"}
                   Last Updated:{" "}
-                  {data.updated_at.formatted !== undefined && data.updated_at.formatted!== null
+                  {data.updated_at.formatted !== undefined &&
+                  data.updated_at.formatted !== null
                     ? data.updated_at.formatted
                     : "N/A"}{" "}
                 </Text>
@@ -97,11 +99,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: "110%",
   },
-  textStyle:{
+  textStyle: {
     fontSize: 14,
     letterSpacing: 0.8,
     textAlign: "left",
-    marginTop:2,
-    lineHeight:19
-  }
+    marginTop: 2,
+    lineHeight: 19,
+  },
 });
