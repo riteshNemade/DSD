@@ -51,6 +51,7 @@ const TableComponent = ({ items }) => {
     <View style={styles.container}>
       {fieldsToDisplay.map((item, index) => (
         <View
+        key={item.key}
           style={[
             styles.row,
             {

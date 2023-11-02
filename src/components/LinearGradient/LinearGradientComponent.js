@@ -6,7 +6,7 @@ const LinearGradientComponent = ({ children }) => {
   return (
     <View style={{ flex: 1 }}>
       <LinearGradient
-        style={{ flex: 1 }}
+        style={{ flex: 1}}
         colors={[colors.gradientColor1, colors.gradientColor2]}
         start={{x:0, y:0}}
         end={{x:0.8, y:0.5}}

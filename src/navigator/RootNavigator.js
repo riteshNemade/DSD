@@ -3,7 +3,6 @@ import React from "react";
 import AuthNavigator from "./AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-
 import BottomTabNavigator from "./BottomTabNavigator";
 
 export default function RootNavigator() {
