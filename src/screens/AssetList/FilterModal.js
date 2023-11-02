@@ -12,15 +12,8 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
 
   const handleOKPress = () => {
     let url = `/hardware?`;
-    let sortCriteria;
-    let order;
     let urlFilterObject = {};
 
-    if (InputFieldProps.sortOption !== null) {
-      sortCriteria = InputFieldProps.sortOption.split("-")[0];
-      order = InputFieldProps.sortOption.split("-")[1];
-      url += `sort=${sortCriteria}&order=${order}&`;
-    }
     InputFieldProps.companyFilter !== null
       ? (url += `company_id=${InputFieldProps.companyFilter}&`)
       : url;
@@ -42,7 +35,7 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
     InputFieldProps.supplierFilter !== null
       ? (url += `supplier_id=${InputFieldProps.supplierFilter}&`)
       : url;
-    console.log(JSON.stringify(urlFilterObject));
+
     if (InputFieldProps.assetNameFilter !== null) {
       urlFilterObject.name = InputFieldProps.assetNameFilter;
     }
@@ -53,8 +46,7 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
 
     //asset_tag and asset name are passed as encodedURIComponents
     if (urlFilterObject.asset_tag !== "" || urlFilterObject.name !== "") {
-      console.log("Object: ", JSON.stringify(urlFilterObject));
-      url += `&filter=${encodeURIComponent(JSON.stringify(urlFilterObject))}&`;
+      url += `filter=${encodeURIComponent(JSON.stringify(urlFilterObject))}&`;
     }
     //&filter=%7B%22name%22%3A%22Brake%22%7D
     url += `limit=20&offset=`;
@@ -73,19 +65,17 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
         <View style={styles.container}>
           <View style={styles.containerBehindModal}>
             <View style={styles.contentContainer}>
-            <View style={{ marginBottom:gapV/2}}>
-              <Feather
-                name="x"
-                size={18}
-                color={colors.gray}
-                style={{ alignSelf: "flex-end" }}
-                onPress={() => setModalVisible(false)}
-              />
+              <View style={{ marginBottom: gapV / 2 }}>
+                <Feather
+                  name="x"
+                  size={18}
+                  color={colors.gray}
+                  style={{ alignSelf: "flex-end" }}
+                  onPress={() => setModalVisible(false)}
+                />
               </View>
               <FilterModalInputFields props={InputFieldProps} />
-              
-                <ButtonComponent text={"Search"} onPress={handleOKPress} />
-              
+              <ButtonComponent text={"Search"} onPress={handleOKPress} />
             </View>
           </View>
         </View>
@@ -97,11 +87,11 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
 export default FilterModal;
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    backgroundColor: "#fff",
-    paddingHorizontal: hPadding,
-    overflow: "scroll",
-    paddingVertical: gapV,
+  container: {
+    width: "100%",
+    marginTop: verticalScale(71.4),
+    borderRadius: 30,
+    height: "110%",
   },
   containerBehindModal: {
     backgroundColor: "rgba(0, 0, 0, 0.76)",
@@ -112,46 +102,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     overflow: "scroll",
   },
-  container: {
-    width: "100%",
-    marginTop: verticalScale(71.4),
-    borderRadius: 30,
-    height: "110%",
-  },
-  placeholder: {
-    fontSize: 14,
-    color: colors.gray,
-  },
-  textStyle: {
-    fontSize: 18,
-    letterSpacing: 1.1,
-    fontWeight: "600",
-    color: "#000",
-  },
-  sortOptions: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    height: "10%",
-  },
-  cancelButton: {
-    flex: 1,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  inputContainer: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: colors.gray,
-    height: verticalScale(50),
-    marginTop: gapV,
-    padding: 15,
-    fontSize: 14,
-    color: colors.gray,
+  contentContainer: {
+    backgroundColor: "#fff",
+    paddingHorizontal: hPadding,
+    overflow: "scroll",
+    paddingVertical: gapV,
+    borderRadius:20,
   },
 });

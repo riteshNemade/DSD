@@ -2,7 +2,7 @@ import { StyleSheet, TextInput, View } from "react-native";
 import React from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { fetchFilterData, filters } from "../../hooks/AssetList/modalHooks";
-import { colors, gapV } from "../../constants/global";
+import { colors, gapV, hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 
 const FilterModalInputFields = ({ props }) => {
@@ -14,7 +14,6 @@ const FilterModalInputFields = ({ props }) => {
     locations,
     manufacturers,
     suppliers,
-    sortingOptions,
   } = fetchFilterData();
 
   const {
@@ -25,23 +24,11 @@ const FilterModalInputFields = ({ props }) => {
     setLocationFilter,
     setManufacturerFilter,
     setSupplierFilter,
-    setSortOption,
     setAssetNameFilter,
     setAssetTagFilter,
   } = { ...props };
   return (
     <>
-      <Dropdown
-        data={sortingOptions}
-        placeholderStyle={styles.placeholder}
-        labelField="label"
-        valueField="value"
-        placeholder={"Sort By"}
-        onChange={(item) => {
-          setSortOption(item.value);
-        }}
-        style={styles.inputContainer}
-      />
       <Dropdown
         data={companies}
         placeholderStyle={styles.placeholder}
@@ -86,6 +73,7 @@ const FilterModalInputFields = ({ props }) => {
         }}
         style={styles.inputContainer}
       />
+      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
       <Dropdown
         data={status}
         placeholderStyle={styles.placeholder}
@@ -95,7 +83,7 @@ const FilterModalInputFields = ({ props }) => {
         onChange={(item) => {
           setStatusFilter(item.id);
         }}
-        style={styles.inputContainer}
+        style={styles.inputContainerSmall}
       />
       <Dropdown
         data={locations}
@@ -106,8 +94,10 @@ const FilterModalInputFields = ({ props }) => {
         onChange={(item) => {
           setLocationFilter(item.id);
         }}
-        style={styles.inputContainer}
+        style={styles.inputContainerSmall}
       />
+      </View>
+      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
       <Dropdown
         data={manufacturers}
         placeholderStyle={styles.placeholder}
@@ -117,7 +107,7 @@ const FilterModalInputFields = ({ props }) => {
         onChange={(item) => {
           setManufacturerFilter(item.id);
         }}
-        style={styles.inputContainer}
+        style={styles.inputContainerSmall}
       />
       <Dropdown
         data={suppliers}
@@ -128,8 +118,9 @@ const FilterModalInputFields = ({ props }) => {
         onChange={(item) => {
           setSupplierFilter(item.id);
         }}
-        style={styles.inputContainer}
+        style={styles.inputContainerSmall}
       />
+      </View>
     </>
   );
 };
@@ -145,6 +136,18 @@ const styles = StyleSheet.create({
     marginBottom: gapV,
     padding: 15,
     color: colors.gray,
+    flex:1
+  },
+  inputContainerSmall: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.gray,
+    height: verticalScale(50),
+    marginBottom: gapV,
+    padding: 15,
+    color: colors.gray,
+    padding:15,
+    width:'47%'
   },
   placeholder: {
     color: colors.gray,

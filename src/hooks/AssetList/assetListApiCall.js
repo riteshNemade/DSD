@@ -6,7 +6,6 @@ export const fetchAssetListData = () => {
   const [isListLoading, setIsListLoading] = useState(true);
   const [assetListData, setAssetListData] = useState([]);
   const [searchTerm, setSearchTerm] = useState();
-  const [sortOption, setSortOption] = useState("created_at-asc");
   const [url, setUrl] = useState(
     `/hardware?sort=created_at&order=asc&limit=20&offset=`
   );
@@ -62,6 +61,7 @@ export const fetchAssetListData = () => {
 
   // normal API call on screen load
   useEffect(() => {
+    console.log(url)
     fetchData();
   }, [url]);
 
@@ -84,8 +84,7 @@ export const fetchAssetListData = () => {
     assetListData,
     searchTerm,
     setSearchTerm,
-    setSortOption,
-    sortOption,
+    url,
     setUrl,
     setOffset,
     isListLoading,

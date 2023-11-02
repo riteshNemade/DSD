@@ -16,16 +16,17 @@ import { TouchableOpacity } from "react-native";
 import FilterModal from "./FilterModal";
 
 const AssetListScreen = ({ route }) => {
-  const [isSortModalVisible, setModalVisible] = useState(false);
+  const [isFilterModalVisible, setModalVisible] = useState(false);
   const {
     isLoading,
     assetListData,
     setSearchTerm,
+    offset,
     setOffset,
+    url,
     setUrl,
     isListLoading,
     total,
-    offset,
   } = fetchAssetListData();
 
   const openModal = () => {
@@ -33,7 +34,7 @@ const AssetListScreen = ({ route }) => {
   };
 
   useEffect(() => {
-    /* When Company, Category, Status are tapped from Asset Overview, 
+    /* When Company, Category, Status are tapped from ASSET OVERVIEW SCREEN, 
     get redirected to this screen with url as params.
     URL dictates filtering criteria */
 
@@ -45,14 +46,14 @@ const AssetListScreen = ({ route }) => {
       <LinearGradientComponent>
         <HeaderComponent title="Asset List" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <TopContent setSearchTerm={setSearchTerm} setUrl={setUrl} />
+          <TopContent setSearchTerm={setSearchTerm} url={url} setUrl={setUrl} />
           {isLoading ? (
             <View style={styles.loadingIndicator}>
               <ActivityIndicator size={100} color="#4290df" />
             </View>
-          ) : isSortModalVisible ? (
+          ) : isFilterModalVisible ? (
             <FilterModal
-              isModalVisible={isSortModalVisible}
+              isModalVisible={isFilterModalVisible}
               setModalVisible={setModalVisible}
               setUrl={setUrl}
             />
