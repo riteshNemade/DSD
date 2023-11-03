@@ -3,8 +3,14 @@ import React from "react";
 import { verticalScale } from "react-native-size-matters/extend";
 import { hPadding } from "../../constants/global";
 
-const CardViewComponent = ({ children }) => {
-  return <View style={styles.container}>{children}</View>;
+const CardViewComponent = ({ children,size }) => {
+  let cardHeight;
+  if(size==='lg')
+    cardHeight = 150;
+  else
+    cardHeight = 105;
+
+  return <View style={[styles.container,{height:verticalScale(cardHeight)}]}>{children}</View>;
 };
 
 export default CardViewComponent;
@@ -22,7 +28,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 10,
     backgroundColor: "#fff",
-    height: verticalScale(105),
     marginVertical: verticalScale(10),
     marginLeft: hPadding,
     marginRight: hPadding

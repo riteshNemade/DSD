@@ -3,10 +3,12 @@ import { View } from "react-native";
 
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import HeaderComponent from "components/Header/HeaderComponent";
-import ContentViewComponent from "../../components/ContentView/ContentViewComponent";
 import AssetOverviewContent from "./AssetOverviewContent";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { scale } from "react-native-size-matters/extend";
+import { StyleSheet } from "react-native";
+import AssetHistory from "./AssetHistory";
+import AssetFiles from "./AssetFiles";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -16,39 +18,27 @@ function MyTabs({ data, imageUrl, qrUrl }) {
       initialRouteName="Info"
       screenOptions={{
         
-        tabBarStyle: {
-          backgroundColor: "transparent",
-          shadowColor: "transparent",
-          color: "#fff",
-          height: 27,
-          elevation: 0,   // for Android
-        },
-        tabBarContentContainerStyle: {
-          alignItems: "center",
-        },
+        //styling
+        tabBarStyle: styles.tabBarStyle,
+        tabBarContentContainerStyle: styles.tabBarContentContainerStyle,
         tabBarActiveTintColor: "white",
-        tabBarIndicatorStyle: {
-          backgroundColor: "white",
-          left: scale(28),
-          width: "20%",
-        },
+        tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
       }}
     >
       <Tab.Screen
         name="Info"
         component={AssetOverviewContent}
         initialParams={{ data: data, imageUrl: imageUrl, qrUrl: qrUrl }}
-        
       />
       <Tab.Screen
         name="History"
-        component={AssetOverviewContent}
-        initialParams={{ data: data, imageUrl: imageUrl, qrUrl: qrUrl }}
+        component={AssetHistory}
+        initialParams={{ id: data.id}}
       />
       <Tab.Screen
         name="Files"
-        component={AssetOverviewContent}
-        initialParams={{ data: data, imageUrl: imageUrl, qrUrl: qrUrl }}
+        component={AssetFiles}
+        initialParams={{ id: data.id}}
       />
     </Tab.Navigator>
   );
@@ -69,3 +59,21 @@ const AssetOverviewScreen = ({ route }) => {
 };
 
 export default AssetOverviewScreen;
+
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    backgroundColor: "transparent",
+    shadowColor: "transparent",
+    color: "#fff",
+    height: 27,
+    elevation: 0, // for Android
+  },
+  tabBarContentContainerStyle: {
+    alignItems: "center",
+  },
+  tabBarIndicatorStyle: {
+    backgroundColor: "white",
+    left: scale(28),
+    width: "20%",
+  },
+});

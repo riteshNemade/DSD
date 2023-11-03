@@ -72,7 +72,7 @@ const TableComponent = ({ items }) => {
                   height: scale(8),
                   width: scale(8),
                   alignSelf: "center",
-                  marginTop: 5,
+                  marginTop: 1,
                   marginLeft: 10,
                 }}
               ></View>
