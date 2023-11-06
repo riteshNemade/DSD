@@ -14,7 +14,7 @@ export const textBox = {
   textInputHeight: verticalScale(50),
   textBorderRadius: 10,
   bigTextBoxHeight: verticalScale(139),
-  padding: scale(16),
+  padding: scale(10),
 
 };
 
