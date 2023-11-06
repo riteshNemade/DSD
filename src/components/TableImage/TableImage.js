@@ -7,7 +7,7 @@ const TableImage = ({ url }) => {
     <>
       <Image
         style={{
-          height: verticalScale(217),
+          height: verticalScale(250),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
         }}

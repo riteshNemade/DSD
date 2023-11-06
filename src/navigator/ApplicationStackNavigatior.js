@@ -10,6 +10,7 @@ import { CardStyleInterpolators } from '@react-navigation/stack';
 import NotificationsScreen from "../screens/Notifications/NotificationsScreen";
 import AssetListScreen from "../screens/AssetList/AssetListScreen";
 import SettingsStackNavigator from "./SettingsStackNavigator";
+import EditAssetScreen from "../screens/EditAsset/EditAssetScreen";
 
 const Stack = createStackNavigator();
 export default function ApplicationStackNavigatior() {
@@ -29,6 +30,7 @@ export default function ApplicationStackNavigatior() {
       <Stack.Screen name="AssetList" component={AssetListScreen} />
       <Stack.Screen name="QRScannerScreen" component={QRScannerScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
+      <Stack.Screen name="EditAsset" component={EditAssetScreen} />
       <Stack.Screen name="SettingStack" component={SettingsStackNavigator} />
     </Stack.Navigator>
   );

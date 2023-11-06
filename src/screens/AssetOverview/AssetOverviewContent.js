@@ -16,7 +16,7 @@ const AssetOverviewContent = ({ route }) => {
       <LinearGradientComponent>
         <ScrollContentViewComponent backgroundColor={"#fff"}>
           <View style={{ flex: 1, borderRadius: 30, paddingBottom: 50 }}>
-            <AssetImage imageUrl={imageUrl} />
+            <AssetImage imageUrl={imageUrl} data={data}/>
 
             <View style={{ flex: 3 }}>
               <TableComponent items={data} />
