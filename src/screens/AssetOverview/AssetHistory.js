@@ -24,9 +24,9 @@ const AssetHistory = ({ route }) => {
             
             {/* MAIN CONTENT */}
             <View style={{ flex: 2 }}>
-              <View style={styles.container}>
+              {/* <View style={styles.container}>
                 <SearchBarComponent setSearchTerm={setSearchTerm} />
-              </View>
+              </View> */}
               <AssetHistoryContent historicalData={historicalData}/>
             </View>
 
