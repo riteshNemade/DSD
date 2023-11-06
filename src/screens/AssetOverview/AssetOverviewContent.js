@@ -1,14 +1,14 @@
 import { StyleSheet, View, Image } from "react-native";
 import React from "react";
 
-import TableComponent from "../../components/Table/TableComponent";
 import { scale } from "react-native-size-matters/extend";
 import { gapV } from "../../constants/global";
 
+import TableComponent from "../../components/Table/TableComponent";
 import ScrollContentViewComponent from "../../components/ScrollContentView/ScrollContentViewComponent";
-
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import AssetImage from "./AssetImage";
+
 const AssetOverviewContent = ({ route }) => {
   const { imageUrl, qrUrl, data } = route.params;
   return (

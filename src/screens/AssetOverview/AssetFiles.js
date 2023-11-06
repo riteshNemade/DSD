@@ -6,7 +6,6 @@ import ContentViewComponent from "../../components/ContentView/ContentViewCompon
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import SearchBarComponent from "../../components/SearchBar/SearchBarComponent";
 import { verticalScale } from "react-native-size-matters/extend";
-import AssetImage from "./AssetImage";
 import AssetFilesContent from "./AssetFilesContent";
 import { fetchHistoricalData } from "../../hooks/AssetOverview/assetOverviewHooks";
 

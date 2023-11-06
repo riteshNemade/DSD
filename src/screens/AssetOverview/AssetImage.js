@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
+
 import { gapH, gapV } from "../../constants/global";
-import TableImage from "../../components/TableImage/TableImage";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import TableImage from "../../components/TableImage/TableImage";
 
 const AssetImage = ({ imageUrl }) => {
   return (

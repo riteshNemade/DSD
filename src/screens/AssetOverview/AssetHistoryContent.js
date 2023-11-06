@@ -3,7 +3,6 @@ import React from "react";
 import { colors, gapV, hPadding } from "../../constants/global";
 import CardViewComponent from "../../components/CardView/CardViewComponent";
 import { Text } from "react-native";
-import { fetchHistoricalData } from "../../hooks/AssetOverview/assetOverviewHooks";
 
 const ListContent = ({ historicalData }) => {
   

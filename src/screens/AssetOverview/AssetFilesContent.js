@@ -17,7 +17,7 @@ const ListContent = ({ file,note,date }) => {
           <Image 
           style={styles.imageStyle}
           source={{
-            uri: file.url
+            uri: `http://34.195.168.97/hardware/28/showfile/459`
           }}/>
         </View>
         <View style={{ flex: 7, justifyContent: "flex-start", marginTop:gapV, marginLeft:gapH }}>
