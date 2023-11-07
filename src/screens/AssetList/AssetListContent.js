@@ -16,7 +16,6 @@ const AssetListContent = ({
     else return;
   };
 
-  console.log(isListLoading);
   const length = assetListData?.length;
   return (
     <View style={{ flex: 1, marginTop: verticalScale(10) }}>

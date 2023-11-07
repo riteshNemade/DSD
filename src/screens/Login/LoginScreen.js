@@ -7,7 +7,7 @@ import PasswordBox from "components/PasswordBox/PasswordBox";
 import { Checkbox } from "react-native-paper";
 import getStatusBarHeight from "utils/getStatusBarHeight";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-
+import ButtonComponent from '../../components/Button/ButtonComponent'
 import { useDispatch } from "react-redux";
 import { hPadding } from "../../constants/global";
 
@@ -74,7 +74,7 @@ const LoginScreen = () => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity onPress={handleLogin}>
+            {/* <TouchableOpacity onPress={handleLogin}>
             <View
               style={{
                 marginTop: "5%",
@@ -87,8 +87,10 @@ const LoginScreen = () => {
             >
                 <Text style={{ color: "white" }}>Sign In</Text>
             </View>
-              </TouchableOpacity>
-
+              </TouchableOpacity> */}
+              <View style={{ marginTop: "5%",height: 60,}}>
+              <ButtonComponent text={'Sign In'} onPress={handleLogin}/>
+              </View>
             <View style={{ paddingHorizontal: 45, marginTop: 39 }}>
               <Text style={{ color: "white", fontSize: 18, fontWeight: "500" }}>
                 If you don't have an account you can

@@ -40,10 +40,6 @@ export default memo(function AssetListComponent({ item }) {
   };
 
   const ModalToRender = ({ modalToRender }) => {
-    console.log("Data modal: ", isDataModalVisible);
-    console.log("Image modal: ", isImageModalVisible);
-    console.log(modalToRender);
-
     switch (modalToRender) {
       case "Details":
         return (

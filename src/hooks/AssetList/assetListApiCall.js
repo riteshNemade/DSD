@@ -61,7 +61,6 @@ export const fetchAssetListData = () => {
 
   // normal API call on screen load
   useEffect(() => {
-    console.log(url)
     fetchData();
   }, [url]);
 

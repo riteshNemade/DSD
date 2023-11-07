@@ -38,7 +38,6 @@ const QRScanner = () => {
       const route = "/hardware/" + match[1];
 
       //route format is like /hardware/3
-      console.log("route: " + route);
 
       await redirectToAssetOverview(route);
     } else {

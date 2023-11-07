@@ -14,7 +14,6 @@ import FooterButtons from "./FooterButtons";
 
 const EditAssetScreen = ({route}) => {
   const data = route.params;
-  console.log(data)
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>

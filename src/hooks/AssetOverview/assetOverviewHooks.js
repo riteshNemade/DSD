@@ -12,15 +12,13 @@ export const fetchHistoricalData = (id) => {
   const getHistoricalData = async () => {
     await api.get(url).then((response) => {
       setHistoricalData(response.data.rows);
-    });
+    }).catch(err=> console.log(err));
   };
   const search = async () => {
     await api.get(url + searchTerm).then((response) => {
-      console.log(url + searchTerm);
       setHistoricalData([])
       setHistoricalData(response.data.rows);
-      console.log(historicalData.length);
-    });
+    }).catch(err=> console.log(err));
   };
   useEffect(() => {
     getHistoricalData();
@@ -28,7 +26,6 @@ export const fetchHistoricalData = (id) => {
 
   useEffect(() => {
     if (searchTerm !== undefined && searchTerm !== null) {
-      console.log('why')
       search();
     }
   }, [searchTerm]);

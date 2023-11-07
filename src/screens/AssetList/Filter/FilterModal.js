@@ -50,7 +50,6 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
     }
     //&filter=%7B%22name%22%3A%22Brake%22%7D
     url += `limit=20&offset=`;
-    console.log(url);
     setUrl(url);
     setModalVisible(false);
   };
