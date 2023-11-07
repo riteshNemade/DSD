@@ -1,8 +1,8 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import React from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import { fetchFilterData, filters } from "../../hooks/AssetList/modalHooks";
-import { colors, gapV, hPadding } from "../../constants/global";
+import { fetchFilterData, filters } from "../../../hooks/AssetList/modalHooks";
+import { colors, gapV, hPadding } from "../../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 
 const FilterModalInputFields = ({ props }) => {

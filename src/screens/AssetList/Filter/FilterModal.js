@@ -1,10 +1,10 @@
 import { StyleSheet, View, Modal } from "react-native";
 import React from "react";
-import ButtonComponent from "../../components/Button/ButtonComponent";
+import ButtonComponent from "../../../components/Button/ButtonComponent";
 import { verticalScale } from "react-native-size-matters/extend";
-import { colors, gapV, hPadding } from "../../constants/global";
+import { colors, gapV, hPadding } from "../../../constants/global";
 import FilterModalInputFields from "./FilterModalInputFields";
-import { filters } from "../../hooks/AssetList/modalHooks";
+import { filters } from "../../../hooks/AssetList/modalHooks";
 import { Feather } from "@expo/vector-icons";
 
 const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {

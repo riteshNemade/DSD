@@ -7,7 +7,7 @@ import AssetListSearch from "../../components/AssetListSearch/AssetListSearch";
 import { colors, gapV, hPadding } from "../../constants/global";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import SortModal from "./SortModal";
+import SortModal from "./Sort/SortModal";
 
 const TopContent = ({ setSearchTerm, url, setUrl }) => {
   const [isSortModalVisible, setSortModalVisible] = useState(false);

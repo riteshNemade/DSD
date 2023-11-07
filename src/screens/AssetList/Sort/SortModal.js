@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { colors, gapV, hPadding } from "../../constants/global";
+import { colors, gapV, hPadding } from "../../../constants/global";
 import { Modal } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import ButtonComponent from "../../components/Button/ButtonComponent";
+import ButtonComponent from "../../../components/Button/ButtonComponent";
 import { scale, verticalScale } from "react-native-size-matters/extend";
 import { RadioButton } from "react-native-paper";
 import { useState } from "react";

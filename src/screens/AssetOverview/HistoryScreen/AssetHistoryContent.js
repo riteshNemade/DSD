@@ -5,37 +5,21 @@ import { Text } from "react-native";
 import HistoryModal from "./HistoryInfoModal";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
+import ListContent from "./ListContent";
 
-const ListContent = ({ historicalData, indexNumber, setModalData, setModalVisible }) => {
-  const handleItemPress = () =>{
-    setModalData(historicalData);
-    setModalVisible(true);
-  }
+const Header = () => {
   return (
-    <>
-      <TouchableOpacity
-        style={[
-          { flex: 1, flexDirection: "row" },
-          {
-            backgroundColor:
-              indexNumber % 2 === 0 ? "rgba(161, 161, 161, 0.28)" : "fff",
-          },
-        ]}
-        onPress={() => handleItemPress()}
-      >
-        <View style={styles.column}>
-          <View style={styles.firstColumn}>
-            <Text>{historicalData.action_date.formatted}</Text>
-          </View>
-          <View style={styles.firstColumn}>
-            <Text>{historicalData.admin.name}</Text>
-          </View>
-          <View style={styles.firstColumn}>
-            <Text>{historicalData.action_type}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </>
+    <View style={{ flexDirection: "row" }}>
+      <View style={styles.firstColumn}>
+        <Text style={styles.columnHeader}>Date</Text>
+      </View>
+      <View style={styles.secondColumn}>
+        <Text style={styles.columnHeader}>Admin</Text>
+      </View>
+      <View style={styles.thirdColumn}>
+        <Text style={styles.columnHeader}>Action</Text>
+      </View>
+    </View>
   );
 };
 
@@ -48,17 +32,7 @@ const AssetHistoryContent = ({ historicalData }) => {
       <View style={{ flex: 9 }}>
         {dataLength > 0 ? (
           <>
-            <View style={{ flexDirection: "row" }}>
-              <View style={styles.firstColumn}>
-                <Text style={styles.columnHeader}>Date</Text>
-              </View>
-              <View style={styles.secondColumn}>
-                <Text style={styles.columnHeader}>Admin</Text>
-              </View>
-              <View style={styles.thirdColumn}>
-                <Text style={styles.columnHeader}>Action</Text>
-              </View>
-            </View>
+            <Header />
             <FlatList
               data={historicalData}
               renderItem={({ item, index }) => (
@@ -67,7 +41,6 @@ const AssetHistoryContent = ({ historicalData }) => {
                   indexNumber={index}
                   setModalData={setModalData}
                   setModalVisible={setModalVisible}
-
                 />
               )}
               keyExtractor={(item) => item.id}

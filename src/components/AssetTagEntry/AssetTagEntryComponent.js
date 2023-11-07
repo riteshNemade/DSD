@@ -1,8 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
 import SearchBarComponent from "../SearchBar/SearchBarComponent";
+import { MaterialIcons } from "@expo/vector-icons";
+import { verticalScale } from "react-native-size-matters/extend";
 
 const AssetTagEntryComponent = ({handleSubmit}) => {
+  const [inputText, setInputText] = useState(null);
+  
+  const handleInputChange = (text) =>{
+    setInputText(text)
+  }
+
+  const handleEndEditing = () =>{
+    handleSubmit(inputText)
+  }
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
@@ -16,7 +27,18 @@ const AssetTagEntryComponent = ({handleSubmit}) => {
           justifyContent: "flex-start",
         }}
       >
-        <SearchBarComponent placeholder={"Enter Asset Tag ID"} handleSubmit={handleSubmit}/>
+        <View style={styles.searchContainer}>
+      <View style={{flex:9}}>
+        <TextInput   style={{marginLeft:20}} 
+        placeholder="Search"
+          onChangeText={handleInputChange}
+          onSubmitEditing={handleEndEditing}
+        />
+      </View>
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <MaterialIcons name="search" color={'#667085'} size={24}/>
+      </View>
+    </View>
       </View>
     </View>
   );
@@ -46,4 +68,13 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "left",
   },
+  searchContainer:{
+    flexDirection:'row',
+    borderColor:'#667085',
+    borderWidth:1,
+    borderRadius:6,
+    height:verticalScale(50),
+    justifyContent:'center',
+    alignItems:'center'
+}
 });

@@ -7,13 +7,13 @@ import LinearGradientComponent from "components/LinearGradient/LinearGradientCom
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
 import AssetListContent from "./AssetListContent";
 import TopContent from "./TopContent";
-import FilterIcon from "../../../assets/svg/FilterIcon";
-import { fetchAssetListData } from "../../hooks/AssetList/assetListApiCall";
+import FilterIcon from "assets/svg/FilterIcon";
+import { fetchAssetListData } from "hooks/AssetList/assetListApiCall";
 
 import { scale } from "react-native-size-matters/extend";
-import { colors, gapH, gapV } from "../../constants/global";
+import { colors, gapH, gapV } from "constants/global";
 import { TouchableOpacity } from "react-native";
-import FilterModal from "./FilterModal";
+import FilterModal from "./Filter/FilterModal";
 
 const AssetListScreen = ({ route }) => {
   const [isFilterModalVisible, setModalVisible] = useState(false);
@@ -69,7 +69,7 @@ const AssetListScreen = ({ route }) => {
             </View>
           )}
           <TouchableOpacity
-            activeOpacity={0.5}
+            activeOpacity={0.6}
             style={styles.floatingButton}
             onPress={() => openModal()}
           >

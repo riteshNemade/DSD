@@ -6,9 +6,6 @@ import { colors, hPadding } from "constants/global";
 import { Text } from "react-native";
 
 const HistoryModal = ({ modalData, isModalVisible, setModalVisible }) => {
-  console.log(JSON.stringify(modalData))
-  console.log()
-  console.log()
   const handleModalClose = () => {
     setModalVisible(false);
   };
