@@ -1,7 +1,7 @@
 import { StyleSheet, View, Modal, TouchableOpacity } from "react-native";
 import React from "react";
 import { verticalScale } from "react-native-size-matters/extend";
-import { gapV, hPadding } from "../../constants/global";
+import { gapV, hPadding } from "../../../constants/global";
 import { AntDesign } from "@expo/vector-icons";
 import { Image } from "react-native";
 

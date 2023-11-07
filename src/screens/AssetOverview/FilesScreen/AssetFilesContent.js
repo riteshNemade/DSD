@@ -1,9 +1,9 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import React from "react";
-import { colors, gapH, gapV, hPadding } from "../../constants/global";
-import CardViewComponent from "../../components/CardView/CardViewComponent";
+import { colors, gapH, gapV, hPadding } from "../../../constants/global";
+import CardViewComponent from "../../../components/CardView/CardViewComponent";
 import { Text } from "react-native";
-import { fetchHistoricalData } from "../../hooks/AssetOverview/assetOverviewHooks";
+import { fetchHistoricalData } from "../../../hooks/AssetOverview/assetOverviewHooks";
 import { Image } from "react-native";
 import { scale } from "react-native-size-matters/extend";
 

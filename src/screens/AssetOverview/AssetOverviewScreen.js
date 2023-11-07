@@ -3,12 +3,12 @@ import { View } from "react-native";
 
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import HeaderComponent from "components/Header/HeaderComponent";
-import AssetOverviewContent from "./AssetOverviewContent";
+import AssetOverviewContent from "./InfoScreen/AssetOverviewContent";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { scale } from "react-native-size-matters/extend";
 import { StyleSheet } from "react-native";
-import AssetHistory from "./AssetHistory";
-import AssetFiles from "./AssetFiles";
+import AssetHistory from "./HistoryScreen/AssetHistory";
+import AssetFiles from "./FilesScreen/AssetFiles";
 
 const Tab = createMaterialTopTabNavigator();
 

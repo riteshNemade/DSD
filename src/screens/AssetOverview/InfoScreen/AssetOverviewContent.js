@@ -2,10 +2,10 @@ import { StyleSheet, View, Image } from "react-native";
 import React from "react";
 
 import { scale } from "react-native-size-matters/extend";
-import { gapV } from "../../constants/global";
+import { gapV } from "../../../constants/global";
 
-import TableComponent from "../../components/Table/TableComponent";
-import ScrollContentViewComponent from "../../components/ScrollContentView/ScrollContentViewComponent";
+import TableComponent from "../../../components/Table/TableComponent";
+import ScrollContentViewComponent from "../../../components/ScrollContentView/ScrollContentViewComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import AssetImage from "./AssetImage";
 

@@ -9,12 +9,12 @@ import {
 } from "react-native-popup-menu";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { scale, verticalScale } from "react-native-size-matters/extend";
-import { colors, gapH, gapV } from "../../constants/global";
+import { colors, gapH, gapV } from "../../../constants/global";
 
-import EditIcon from "../../../assets/svg/ModalIcons/EditIcon";
-import CloneIcon from "../../../assets/svg/ModalIcons/CloneIcon";
-import AuditIcon from "../../../assets/svg/ModalIcons/AuditIcon";
-import DeleteIcon from "../../../assets/svg/ModalIcons/DeleteIcon";
+import EditIcon from "../../../../assets/svg/ModalIcons/EditIcon";
+import CloneIcon from "../../../../assets/svg/ModalIcons/CloneIcon";
+import AuditIcon from "../../../../assets/svg/ModalIcons/AuditIcon";
+import DeleteIcon from "../../../../assets/svg/ModalIcons/DeleteIcon";
 import { useNavigation } from "@react-navigation/native";
 
 const MenuModal = ({data}) => {

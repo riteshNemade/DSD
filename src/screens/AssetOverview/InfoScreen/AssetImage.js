@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { verticalScale } from "react-native-size-matters/extend";
 
-import TableImage from "../../components/TableImage/TableImage";
+import TableImage from "../../../components/TableImage/TableImage";
 
 import { useNavigation } from "@react-navigation/native";
 import MenuModal from "./MenuModal";
@@ -23,7 +23,10 @@ const AssetImage = ({ imageUrl, data }) => {
             />
           ) : (
             <>
-              <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <TouchableOpacity 
+              activeOpacity={0.8}
+              onPress={() => setModalVisible(true)}
+              >
                 <TableImage url={imageUrl} />
                 <View style={styles.imageOverlay}></View>
               </TouchableOpacity>
