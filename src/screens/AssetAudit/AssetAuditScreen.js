@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import HeaderComponent from "components/Header/HeaderComponent";
@@ -12,7 +12,7 @@ import { ActivityIndicator } from "react-native-paper";
 const AssetAuditScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [auditListData, setAuditListData] = useState([]);
-  
+
   useEffect(() => {
     api.get("/hardware/audit/due").then((response) => {
       setAuditListData(response.data.rows);
@@ -23,16 +23,30 @@ const AssetAuditScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
-        <HeaderComponent title="Asset Audit List" iconName="Menu"/>
-        <ContentViewComponent backgroundColor={"#FFFFFF"}>
-          {isLoading ? (
-            <View style={{ flex: 1, justifyContent: "center" }}>
-              <ActivityIndicator size={100} color="#4290df" />
+        <HeaderComponent title="Asset Audit List" iconName="Menu" />
+        {isLoading | auditListData.length > 0 ? (
+          <ContentViewComponent backgroundColor={"#fff"}>
+            {isLoading ? (
+              <View style={{ flex: 1, justifyContent: "center" }}>
+                <ActivityIndicator size={100} color="#4290df" />
+              </View>
+            ) : (
+              <AssetAuditContent auditListData={auditListData} />
+            )}
+          </ContentViewComponent>
+        ) : (
+          <ContentViewComponent backgroundColor={"#fff"}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>No Data Available</Text>
             </View>
-          ) : (
-            <AssetAuditContent auditListData={auditListData} />
-          )}
-        </ContentViewComponent>
+          </ContentViewComponent>
+        )}
       </LinearGradientComponent>
     </View>
   );

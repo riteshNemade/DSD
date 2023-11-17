@@ -66,7 +66,6 @@ export const fetchAssetListData = () => {
 
   useEffect(() => {
     fetchDataByOffset();
-    console.log("offset", offset);
   }, [offset]);
 
   // API call for search
