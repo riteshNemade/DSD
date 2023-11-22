@@ -5,10 +5,18 @@ export function fetchOptions() {
   const [categoriesList, setCategoriesList] = useState([]);
   const [manufacturersList, setmanufacturersList] = useState([]);
   const [suppliersList, setSuppliersList] = useState([]);
-  const [maintenancesList, setMaintenancesList] = useState([]);
   const [departmentsList, setDepartmentsList] = useState([]);
   const [companiesList, setCompaniesList] = useState([]);
   const [locationsList, setLocationsList] = useState([]);
+  const [maintenancesList] = useState([
+    { label: "Maintenance", value: 1 },
+    { label: "Repair", value: 2 },
+    { label: "PAT Test", value: 3 },
+    { label: "Upgrade", value: 4 },
+    { label: "Hardware Support", value: 5 },
+    { label: "Software Support", value: 6 },
+  ]);
+  const assetTypeData = [];
 
   const fetchInitalData = async () => {
     await api
@@ -33,15 +41,6 @@ export function fetchOptions() {
       .get("/suppliers")
       .then((response) => {
         setSuppliersList(response.data.rows);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    await api
-      .get("/maintenances")
-      .then((response) => {
-        setMaintenancesList(response.data.rows);
       })
       .catch((err) => {
         console.log(err);
@@ -87,5 +86,6 @@ export function fetchOptions() {
     departmentsList,
     companiesList,
     locationsList,
+    assetTypeData
   };
 }

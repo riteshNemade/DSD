@@ -3,8 +3,10 @@ import React from 'react'
 import { gapV } from '../../constants/global'
 import PlaceholderComponent from '../../components/placeholder/placeholderComponent'
 import ButtonComponent from '../../components/Button/ButtonComponent'
+import { useNavigation } from '@react-navigation/native'
 
 const TopContent = () => {
+  const navigation = useNavigation();
   return (
     <View style={{ flex: 2 }}>
               <Text style={styles.textStyle}>Scanned 1 Asset</Text>
@@ -15,7 +17,7 @@ const TopContent = () => {
                   <PlaceholderComponent />
                 </View>
                 <View style={{ flex: 1, marginLeft: 17, height: "100%" }}>
-                  <ButtonComponent text="Scan Image" />
+                  <ButtonComponent text="Scan Image" onPress={()=> navigation.navigate('Camera')}/>
                 </View>
               </View>
             </View>

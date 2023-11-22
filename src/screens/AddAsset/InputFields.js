@@ -1,144 +1,213 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, View } from "react-native";
+import React,{ useEffect } from "react";
 import { TextInput } from "react-native";
 import { textBox, colors, gapV } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
-import { useState } from "react";
 import { fetchOptions } from "../../hooks/AddAsset/AddAssetHooks";
+import { inputFieldState } from "../../hooks/AddAsset/AddAssetFormHooks";
+import FooterButtons from "./FooterButtons";
+
+//prettier-ignore
+import initDatabase, {createTable, dropTable,getSyncData,saveData} from "../../api/sqlite";
 
 
-const assetTypeData = [];
-const InputFields = () => {
+const InputFields = ({ isOffline, capturedImage }) => {
+
+/***************************************State,Setters,Dropdown List Data******************************************************* */
+  //prettier-ignore
   const {
-    categoriesList,
-    manufacturersList,
-    suppliersList,
-    maintenancesList,
-    departmentsList,
-    companiesList,
-    locationsList,
-  } = fetchOptions();
-  const [value, setValue] = useState(null);
+    assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company, location, description, setAssetName, setModelNumber, setTagId, setCategory, setManufacturers,
+    setSuppliers, setAssetMaintenance, setDepartment, setCompany, setLocation, setDescription
+  } = inputFieldState();  
+  //prettier-ignore
+  const {
+    categoriesList, manufacturersList, suppliersList, maintenancesList, departmentsList, companiesList, locationsList, assetTypeData
+  } = fetchOptions();   
+
+  /***************************************Functions****************************************************************/
+  const onPressSave = async () => {
+    //prettier-ignore
+    const data = {
+      assetName,modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company, location, description, 
+      imagepath: capturedImage, flag: false,
+    };
+
+    if (isOffline) {
+      console.log("Internet connection unavailabe. Saving data locally...");
+      const db = await initDatabase();
+      await createTable(db);
+      await saveData(db, data);
+    } else {
+      console.log(data);
+      console.log("Not Offline. Saving data to server immediately.");
+      alert("Data Saved Successfully.");
+    }
+    setAssetName("");
+    setModelNumber("");
+    setTagId("");
+    setCategory("");
+    setManufacturers("");
+    setSuppliers("");
+    setAssetMaintenance("");
+    setDepartment("");
+    setCompany("");
+    setLocation("");
+    setDescription("");
+  };
+
+  //🧹temporary console log useEffect 
+  useEffect(() => {
+    console.log("from input fields: ", capturedImage);    
+  }, [capturedImage]);
+
+  const onPressPrint = async () => {
+    const db = await initDatabase();
+    const result = await getSyncData(db);
+    console.log(result);
+  };
+
   return (
-    <View style={{ flex: 7 }}>
-      <TextInput
-        style={styles.inputContainer}
-        placeholder={"Asset Name"}
-        placeholderStyle={{ color: colors.gray }}
-      />
-      <Dropdown
-        data={assetTypeData}
-        style={styles.inputContainer}
-        placeholder={"Asset Type"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="label"
-        valueField="value"
-        value={value}
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
-      <TextInput
+    <>
+      <View style={{ flex: 7 }}>
+        <TextInput
+          style={styles.inputContainer}
+          placeholder={"Asset Name"}
+          placeholderStyle={{ color: colors.gray }}
+          value={assetName}
+          onChangeText={(text) => {
+            setAssetName(text);
+          }}
+        />
+        <Dropdown
+          data={assetTypeData}
+          style={styles.inputContainer}
+          placeholder={"Asset Type"}
+          placeholderStyle={{ color: colors.gray }}
+          labelField="label"
+        />
+        {/* <TextInput
         style={styles.inputContainer}
         placeholder="Asset Location"
         placeholderTextColor={colors.gray}
-      />
-      <TextInput
-        style={styles.inputContainer}
-        placeholder="Model No"
-        placeholderTextColor={colors.gray}
-      />
-      <TextInput
-        style={styles.inputContainer}
-        placeholder="Tag ID"
-        placeholderTextColor={colors.gray}
-      />
+      /> */}
+        <TextInput
+          style={styles.inputContainer}
+          placeholder="Model No"
+          placeholderTextColor={colors.gray}
+          value={modelNumber}
+          onChangeText={(text) => {
+            setModelNumber(text);
+          }}
+        />
+        <TextInput
+          style={styles.inputContainer}
+          placeholder="Tag ID"
+          placeholderTextColor={colors.gray}
+          value={tagId}
+          onChangeText={(text) => {
+            setTagId(text);
+          }}
+        />
 
-      <Dropdown
-        data={categoriesList}
-        style={styles.inputContainer}
-        placeholder={"Categories"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="name"
-        valueField="id"
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
-      <Dropdown
-        data={manufacturersList}
-        style={styles.inputContainer}
-        placeholder={"Manufacturers"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="name"
-        valueField="id"
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
-      <Dropdown
-        data={suppliersList}
-        style={styles.inputContainer}
-        placeholder={"Suppliers"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="name"
-        valueField="id"
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
-      <Dropdown
-        data={maintenancesList}
-        style={styles.inputContainer}
-        placeholder={"Asset Maintenances"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="label"
-        valueField="value"
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
-      <Dropdown
-        data={departmentsList}
-        style={styles.inputContainer}
-        placeholder={"Departments"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="name"
-        valueField="id"
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
-      <Dropdown
-        data={companiesList}
-        style={styles.inputContainer}
-        placeholder={"Companies"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="name"
-        valueField="id"
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
-      <Dropdown
-        data={locationsList}
-        style={styles.inputContainer}
-        placeholder={"Locations"}
-        placeholderStyle={{ color: colors.gray }}
-        labelField="name"
-        valueField="id"
-        onChange={(item) => {
-          setValue(item.value);
-        }}
-      />
+        <Dropdown
+          data={categoriesList}
+          style={styles.inputContainer}
+          placeholder={"Categories"}
+          placeholderStyle={{ color: colors.gray }}
+          value={category}
+          labelField="name"
+          valueField="id"
+          onChange={(item) => {
+            setCategory(item.name);
+          }}
+        />
+        <Dropdown
+          data={manufacturersList}
+          style={styles.inputContainer}
+          placeholder={"Manufacturers"}
+          placeholderStyle={{ color: colors.gray }}
+          value={manufacturers}
+          labelField="name"
+          valueField="id"
+          onChange={(item) => {
+            setManufacturers(item.name);
+          }}
+        />
+        <Dropdown
+          data={suppliersList}
+          style={styles.inputContainer}
+          placeholder={"Suppliers"}
+          placeholderStyle={{ color: colors.gray }}
+          labelField="name"
+          valueField="id"
+          value={suppliers}
+          onChange={(item) => {
+            setSuppliers(item.name);
+          }}
+        />
+        <Dropdown
+          data={maintenancesList}
+          style={styles.inputContainer}
+          placeholder={"Asset Maintenances"}
+          placeholderStyle={{ color: colors.gray }}
+          labelField="label"
+          valueField="value"
+          value={maintenance}
+          onChange={(item) => {
+            setAssetMaintenance(item.label);
+          }}
+        />
+        <Dropdown
+          data={departmentsList}
+          style={styles.inputContainer}
+          placeholder={"Departments"}
+          placeholderStyle={{ color: colors.gray }}
+          labelField="name"
+          valueField="id"
+          value={department}
+          onChange={(item) => {
+            setDepartment(item.name);
+          }}
+        />
+        <Dropdown
+          data={companiesList}
+          style={styles.inputContainer}
+          placeholder={"Companies"}
+          placeholderStyle={{ color: colors.gray }}
+          labelField="name"
+          valueField="id"
+          value={company}
+          onChange={(item) => {
+            setCompany(item.name);
+          }}
+        />
+        <Dropdown
+          data={locationsList}
+          style={styles.inputContainer}
+          placeholder={"Locations"}
+          placeholderStyle={{ color: colors.gray }}
+          labelField="name"
+          valueField="id"
+          value={location}
+          onChange={(item) => {
+            setLocation(item.name);
+          }}
+        />
 
-      <TextInput
-        style={styles.bigInputContainer}
-        placeholder="Description"
-        textAlignVertical="top"
-        placeholderTextColor={colors.gray}
-      />
-    </View>
+        <TextInput
+          style={styles.bigInputContainer}
+          placeholder="Description"
+          textAlignVertical="top"
+          placeholderTextColor={colors.gray}
+          value={description}
+          onChangeText={(text) => {
+            setDescription(text);
+          }}
+        />
+      </View>
+      {/* Footer buttons here to manage state here itself */}
+      <FooterButtons handleSave={onPressSave} handlePrint={onPressPrint} />
+    </>
   );
 };
 
@@ -150,7 +219,7 @@ const styles = StyleSheet.create({
     borderColor: colors.gray,
     borderWidth: 1,
     borderRadius: textBox.textBorderRadius,
-    marginTop: gapV+1,
+    marginTop: gapV + 1,
     padding: textBox.padding,
   },
   bigInputContainer: {

@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 
-const FooterButtons = () => {
+const FooterButtons = ({handleSave,handlePrint}) => {
   return (
     <View style={styles.buttonContainer}>
       <View style={{ flex: 1, marginRight: 17, height: "100%" }}>
-        <ButtonComponent text="Save" gradientOption={"Green"} />
+        <ButtonComponent text="Save" gradientOption={"Green"} onPress={handleSave}/>
       </View>
       <View style={{ flex: 1, marginLeft: 17, height: "100%" }}>
-        <ButtonComponent text="Print" />
+        <ButtonComponent text="Print" onPress={handlePrint}/>
       </View>
     </View>
   );

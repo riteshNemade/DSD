@@ -11,6 +11,7 @@ import NotificationsScreen from "../screens/Notifications/NotificationsScreen";
 import AssetListScreen from "../screens/AssetList/AssetListScreen";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EditAssetScreen from "../screens/EditAsset/EditAssetScreen";
+import CameraScreen from "../screens/Camera/CameraScreen";
 
 const Stack = createStackNavigator();
 export default function ApplicationStackNavigatior() {
@@ -32,6 +33,7 @@ export default function ApplicationStackNavigatior() {
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
       <Stack.Screen name="EditAsset" component={EditAssetScreen} />
       <Stack.Screen name="SettingStack" component={SettingsStackNavigator} />
+      <Stack.Screen name="Camera" component={CameraScreen} />
     </Stack.Navigator>
   );
 }
