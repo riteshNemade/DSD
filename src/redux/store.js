@@ -4,7 +4,6 @@ import authReducer from './reducers/authReducers';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-
 });
 
 const store = configureStore({reducer:rootReducer});

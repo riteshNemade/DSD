@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import { TextInput } from "react-native";
 import { textBox, colors, gapV } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
@@ -9,20 +9,19 @@ import FooterButtons from "./FooterButtons";
 
 //prettier-ignore
 import initDatabase, {createTable, dropTable,getSyncData,saveData} from "../../api/sqlite";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const InputFields = ({ isOffline, capturedImage }) => {
-
-/***************************************State,Setters,Dropdown List Data******************************************************* */
+  /***************************************State,Setters,Dropdown List Data******************************************************* */
   //prettier-ignore
   const {
     assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company, location, description, setAssetName, setModelNumber, setTagId, setCategory, setManufacturers,
     setSuppliers, setAssetMaintenance, setDepartment, setCompany, setLocation, setDescription
-  } = inputFieldState();  
+  } = inputFieldState();
   //prettier-ignore
   const {
     categoriesList, manufacturersList, suppliersList, maintenancesList, departmentsList, companiesList, locationsList, assetTypeData
-  } = fetchOptions();   
+  } = fetchOptions();
 
   /***************************************Functions****************************************************************/
   const onPressSave = async () => {
@@ -37,6 +36,9 @@ const InputFields = ({ isOffline, capturedImage }) => {
       const db = await initDatabase();
       await createTable(db);
       await saveData(db, data);
+      console.log("🔁Enabling sync service...");
+      AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+      alert("Data Saved Successfully.");
     } else {
       console.log(data);
       console.log("Not Offline. Saving data to server immediately.");
@@ -55,15 +57,11 @@ const InputFields = ({ isOffline, capturedImage }) => {
     setDescription("");
   };
 
-  //🧹temporary console log useEffect 
-  useEffect(() => {
-    console.log("from input fields: ", capturedImage);    
-  }, [capturedImage]);
-
   const onPressPrint = async () => {
     const db = await initDatabase();
     const result = await getSyncData(db);
     console.log(result);
+    console.log(AsyncStorage.getItem("enableSync"));
   };
 
   return (

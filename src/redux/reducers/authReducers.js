@@ -1,4 +1,3 @@
-// Create a file called authReducer.js
 const initialState = {
   isLoggedIn: false,
 };

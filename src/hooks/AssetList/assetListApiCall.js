@@ -1,5 +1,6 @@
 import api from "../../api/api";
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export const fetchAssetListData = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,20 +15,13 @@ export const fetchAssetListData = () => {
 
   const fetchData = async () => {
     setIsLoading(true);
-    await api
-      .get(url + 0)
-      .then((response) => {
-        setAssetListData([]);
-        setOffset(0);
-        setTotal(response.data.total);
-        setAssetListData(response.data.rows);
-      })
-      .catch(() => {
-        setAssetListData([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const { isPending, isError, data, error } = useQuery({
+      queryKey: ['todos'],
+      queryFn: await api.get(url + 0),
+    })
+    if(isError) setAssetListData([]);
+    setAssetListData(data);
+    setIsListLoading(false);
   };
 
   const search = async () => {

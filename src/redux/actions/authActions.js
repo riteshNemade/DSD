@@ -1,4 +1,3 @@
-// Create a file called authActions.js
 export const logIn = () => ({
   type: 'LOGIN',
 });

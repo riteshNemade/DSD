@@ -17,9 +17,8 @@ const LoginScreen = () => {
   const handleLogin = () => {
     dispatch({
       type: 'LOGIN',
-    }); // Dispatch the logIn action
+    });
   };
-  //!!! rewrite this hook in App.js later and use Redux
   const statusBarHeight = Math.ceil(getStatusBarHeight());
 
   const [checked, setChecked] = useState(false);
