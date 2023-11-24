@@ -9,7 +9,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import SortModal from "./Sort/SortModal";
 
-const TopContent = ({ setSearchTerm, url, setUrl }) => {
+const TopContent = ({ url, setUrl }) => {
   const [isSortModalVisible, setSortModalVisible] = useState(false);
 
   return (
@@ -27,7 +27,7 @@ const TopContent = ({ setSearchTerm, url, setUrl }) => {
       ) : (
         <>
           <View style={{ flex: 8 }}>
-            <AssetListSearch setSearchTerm={setSearchTerm} />
+            <AssetListSearch setUrl={setUrl} />
           </View>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={()=>setSortModalVisible(true)}>

@@ -24,17 +24,19 @@ const AssetListScreen = ({ route }) => {
     fetchNextPage,
     isFetching,
     refetch,
+    url,
+    setUrl,
   } = fetchData();
+
   const [isFilterModalVisible, setModalVisible] = useState(false);
   const openModal = () => {
     setModalVisible(true);
   };
 
+  /* When Company, Category, Status are tapped from ASSET OVERVIEW SCREEN, 
+  get redirected to this screen with url as params.
+  URL dictates filtering criteria */
   useEffect(() => {
-    /* When Company, Category, Status are tapped from ASSET OVERVIEW SCREEN, 
-    get redirected to this screen with url as params.
-    URL dictates filtering criteria */
-
     if (route.params !== undefined) setUrl(route.params);
   }, [route.params]);
 
@@ -43,7 +45,10 @@ const AssetListScreen = ({ route }) => {
       <LinearGradientComponent>
         <HeaderComponent title="Asset List" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <TopContent />
+          <TopContent
+          url={url} 
+          setUrl={setUrl}
+          />
           {isLoading ? (
             <View style={styles.loadingIndicator}>
               <ActivityIndicator size={100} color="#4290df" />

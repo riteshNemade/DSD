@@ -7,7 +7,7 @@ import QRScannerSmall from "../../../assets/svg/QRScannerSmall";
 import { scale } from "react-native-size-matters/extend";
 import { useNavigation } from "@react-navigation/native";
 
-const AssetListSearch = ({setSearchTerm}) => {
+const AssetListSearch = ({setUrl}) => {
   const navigation = useNavigation();
   const [inputText, setInputText] = useState(null);
   const handleInputChange = (text) =>{
@@ -15,8 +15,10 @@ const AssetListSearch = ({setSearchTerm}) => {
   }
 
   const handleSubmit = () => {
-    setSearchTerm(inputText)
+    console.log('search term', `/hardware?search=${inputText}`)
+    setUrl(`/hardware?search=${inputText}&sort=created_at&order=asc&limit=20&offset=`)
   }
+  
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
