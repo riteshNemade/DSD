@@ -4,9 +4,9 @@ import { colors, gapH, gapV, hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 import SettingsFragment from "./SettingsFragment";
 
-const SettingsComponent = ({title,options}) => {
+const SettingsComponent = ({ title, options }) => {
   return (
-    <View style={{ flex: 1, marginTop: gapV, paddingHorizontal: hPadding}}>
+    <View style={{ flex: 1, marginTop: gapV, paddingHorizontal: hPadding }}>
       <View style={{ flex: 1 }}>
         <Text
           style={{
@@ -19,8 +19,16 @@ const SettingsComponent = ({title,options}) => {
         >
           {title}
         </Text>
-        <View style={{ marginTop: verticalScale(33)-gapV, flex: 1 }}>
-            {options.map((item)=>(<SettingsFragment iconName={item.icon} title={item.title} navigate={item.navigate} toggle={item.toggle  }/>))}  
+        <View style={{ marginTop: verticalScale(33) - gapV, flex: 1 }}>
+          {options.map((item, index) => (
+            <SettingsFragment
+              key={index}
+              iconName={item.icon}
+              title={item.title}
+              navigate={item.navigate}
+              toggle={item.toggle}
+            />
+          ))}
         </View>
       </View>
     </View>

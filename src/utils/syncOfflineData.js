@@ -2,7 +2,7 @@ import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import * as Network from "expo-network";
-import initDatabase, { getSyncData } from "../api/sqlite";
+import initDatabase, { deleteData, getSyncData } from "../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { syncInterval, fetchInterval } from "../constants/syncConstants";
 
@@ -60,6 +60,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
         result
       );
     });
+    await deleteData(db);
     console.log("Background Fetch Task unregistering...");
     await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
     console.log("Disabling syncService...");
@@ -84,6 +85,8 @@ export const initBackgroundFetch = async () => {
     minimumInterval: 10, //unit is seconds
     startOnBoot: true,
     stopOnTerminate: false,
+    enableHeadless: true, // Allow the task to run in the background
+    forceAlarmManager: true, // Use AlarmManager on Android for greater reliability
   });
   await BackgroundFetch.setMinimumIntervalAsync(100);
 };

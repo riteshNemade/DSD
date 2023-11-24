@@ -77,8 +77,12 @@ const SettingsScreen = () => {
         <HeaderComponent title="Settings" iconName="Menu" />
         <ScrollContentViewComponent backgroundColor="#fff">
           <View style={{ paddingBottom: 150 }}>
-            {Settings.map((item) => (
-              <SettingsComponent title={item.title} options={item.options} />
+            {Settings.map((item, index) => (
+              <SettingsComponent
+                key={index}
+                title={item.title}
+                options={item.options}
+              />
             ))}
           </View>
         </ScrollContentViewComponent>

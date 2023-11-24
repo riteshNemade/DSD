@@ -12,6 +12,7 @@ import AssetListScreen from "../screens/AssetList/AssetListScreen";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EditAssetScreen from "../screens/EditAsset/EditAssetScreen";
 import CameraScreen from "../screens/Camera/CameraScreen";
+import OfflineDataScreen from "../screens/OfflineData/OfflineDataScreen";
 
 const Stack = createStackNavigator();
 export default function ApplicationStackNavigatior() {
@@ -34,6 +35,7 @@ export default function ApplicationStackNavigatior() {
       <Stack.Screen name="EditAsset" component={EditAssetScreen} />
       <Stack.Screen name="SettingStack" component={SettingsStackNavigator} />
       <Stack.Screen name="Camera" component={CameraScreen} />
+      <Stack.Screen name="OfflineScreen" component={OfflineDataScreen} />
     </Stack.Navigator>
   );
 }

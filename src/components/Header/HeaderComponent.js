@@ -6,8 +6,22 @@ import { MaterialIcons } from "@expo/vector-icons";
 import getStatusBarHeight from "../../utils/getStatusBarHeight";
 import MenuIcon from "assets/svg/MenuIcon";
 import TickIcon from "assets/svg/TickIcon";
+import { useState } from "react";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Header({ title, iconName }) {
+  const [offlineDataAvailable, setOfflineDataAvailable] = useState(false);
+
+  const fetchDataFlag = async () =>{
+    const flag = JSON.parse(await AsyncStorage.getItem("sync"))?.isEnabled ?? false;
+    setOfflineDataAvailable(flag)
+  }
+  useEffect(() => {
+    fetchDataFlag();
+  }, []);
+
+
   const navigation = useNavigation();
   let SVGicon;
   switch (iconName) {
@@ -72,10 +86,26 @@ export default function Header({ title, iconName }) {
           color: "white",
           fontWeight: "800",
           marginTop: statusBarHeight - 15,
+          marginLeft: offlineDataAvailable ? 50 : 0,
         }}
       >
         {title}
       </Text>
+      {offlineDataAvailable ? (
+        <TouchableOpacity onPress={() => navigation.navigate("OfflineScreen")}>
+          <View
+            style={{
+              borderRadius: 30,
+              marginTop: statusBarHeight - 12,
+              marginRight: 10,
+              padding: 7,
+              backgroundColor: "#3E53ABA8",
+            }}
+          >
+            <MaterialIcons name="sync" size={24} color="white" />
+          </View>
+        </TouchableOpacity>
+      ) : null}
       <TouchableOpacity onPress={() => navigation.navigate("SettingStack")}>
         <View style={{ flex: 1 }}>
           {SVGicon !== undefined ? <SVGicon /> : null}

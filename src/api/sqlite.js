@@ -7,7 +7,7 @@ export default async function initDatabase() {
     return db;
   } catch (error) {
     console.error("Error initializing database:", error);
-    throw error; 
+    throw error;
   }
 }
 
@@ -46,21 +46,25 @@ export async function dropTable(db) {
 export const getSyncData = async (db) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
-      tx.executeSql(`SELECT * from ${tableName} where flag=0`, [], (_, { rows }) => {
-        // Assuming you want to return rows from the query
-        resolve(rows);
-      },
-      (_, error) => {
-        console.error(error);
-        reject(new Error("Error executing SQL query"));
-        return true; // Return true to stop the transaction on error
-      });
+      tx.executeSql(
+        `SELECT * from ${tableName} where flag=0`,
+        [],
+        (_, { rows }) => {
+          // Assuming you want to return rows from the query
+          resolve(rows);
+        },
+        (_, error) => {
+          console.error(error);
+          reject(new Error("Error executing SQL query"));
+          return true; // Return true to stop the transaction on error
+        }
+      );
     });
   });
 };
 
 export const saveData = async (db, data) => {
-    const insertQuery = `
+  const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
         assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance,
         department, company, location, description, imagepath, flag
@@ -80,10 +84,15 @@ export const saveData = async (db, data) => {
         ${data.flag}
       )
     `;
-  
-    db.transaction((tx) => {
-      tx.executeSql(insertQuery);
-    });
-  };
-  
-  
+
+  db.transaction((tx) => {
+    tx.executeSql(insertQuery);
+  });
+};
+
+export async function deleteData(db) {
+  const deleteQuery = `DELETE FROM ${tableName} WHERE flag=0`;
+  db.transaction((tx) => {
+    tx.executeSql(deleteQuery);
+  });
+}
