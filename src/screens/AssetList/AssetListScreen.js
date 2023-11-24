@@ -1,21 +1,25 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native-paper";
+import NetInfo from "@react-native-community/netinfo";
 
+import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
-import AssetListContent from "./AssetListContent";
 import TopContent from "./TopContent";
+import AssetListContent from "./AssetListContent";
 import FilterIcon from "assets/svg/FilterIcon";
+import FilterModal from "./Filter/FilterModal";
+import OfflineHeader from "../../components/OfflineHeader/OfflineHeader";
 
 import { scale } from "react-native-size-matters/extend";
 import { colors, gapH, gapV } from "constants/global";
-import { TouchableOpacity } from "react-native";
-import FilterModal from "./Filter/FilterModal";
+
 import { fetchData } from "../../hooks/AssetList/assetListApiCall";
 
 const AssetListScreen = ({ route }) => {
+  const [isFilterModalVisible, setModalVisible] = useState(false);
+  const [isOffline, setOfflineStatus] = useState(false);
   const {
     data,
     isLoading,
@@ -28,27 +32,32 @@ const AssetListScreen = ({ route }) => {
     setUrl,
   } = fetchData();
 
-  const [isFilterModalVisible, setModalVisible] = useState(false);
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  /* When Company, Category, Status are tapped from ASSET OVERVIEW SCREEN, 
-  get redirected to this screen with url as params.
-  URL dictates filtering criteria */
   useEffect(() => {
+    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      const offline = !(state.isConnected && state.isInternetReachable);
+      setOfflineStatus(offline);
+    });
+
+    return () => removeNetInfoSubscription();
+  }, []);
+
+  useEffect(() => {
+    /* When Company, Category, Status are tapped from ASSET OVERVIEW SCREEN, 
+      get redirected to this screen with url as params.
+      URL dictates filtering criteria */
     if (route.params !== undefined) setUrl(route.params);
   }, [route.params]);
 
+  const openModal = () => {
+    setModalVisible(true);
+  };
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
         <HeaderComponent title="Asset List" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <TopContent
-          url={url} 
-          setUrl={setUrl}
-          />
+          {isOffline ? <OfflineHeader /> : null}
+          <TopContent url={url} setUrl={setUrl} />
           {isLoading ? (
             <View style={styles.loadingIndicator}>
               <ActivityIndicator size={100} color="#4290df" />
