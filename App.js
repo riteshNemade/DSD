@@ -3,21 +3,36 @@ import store from "./src/redux/store";
 import { Provider } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import { MenuProvider } from "react-native-popup-menu";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+    },
+  },
+});
 
+const asyncStoragePersister = createAsyncStoragePersister({
+  storage: AsyncStorage,
+});
 export default function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister: asyncStoragePersister }}
+      >
         <Provider store={store}>
           <StatusBar translucent />
           <MenuProvider backHandler>
             <RootNavigator />
           </MenuProvider>
         </Provider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </>
   );
 }

@@ -8,27 +8,24 @@ import ContentViewComponent from "components/ContentView/ContentViewComponent";
 import AssetListContent from "./AssetListContent";
 import TopContent from "./TopContent";
 import FilterIcon from "assets/svg/FilterIcon";
-import { fetchAssetListData } from "hooks/AssetList/assetListApiCall";
 
 import { scale } from "react-native-size-matters/extend";
 import { colors, gapH, gapV } from "constants/global";
 import { TouchableOpacity } from "react-native";
 import FilterModal from "./Filter/FilterModal";
+import { fetchData } from "../../hooks/AssetList/assetListApiCall";
 
 const AssetListScreen = ({ route }) => {
-  const [isFilterModalVisible, setModalVisible] = useState(false);
   const {
+    data,
     isLoading,
-    assetListData,
-    setSearchTerm,
-    offset,
-    setOffset,
-    url,
-    setUrl,
-    isListLoading,
-    total,
-  } = fetchAssetListData();
-
+    isError,
+    error,
+    fetchNextPage,
+    isFetching,
+    refetch,
+  } = fetchData();
+  const [isFilterModalVisible, setModalVisible] = useState(false);
   const openModal = () => {
     setModalVisible(true);
   };
@@ -46,7 +43,7 @@ const AssetListScreen = ({ route }) => {
       <LinearGradientComponent>
         <HeaderComponent title="Asset List" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <TopContent setSearchTerm={setSearchTerm} url={url} setUrl={setUrl} />
+          <TopContent />
           {isLoading ? (
             <View style={styles.loadingIndicator}>
               <ActivityIndicator size={100} color="#4290df" />
@@ -60,11 +57,10 @@ const AssetListScreen = ({ route }) => {
           ) : (
             <View style={{ flex: 9 }}>
               <AssetListContent
-                assetListData={assetListData}
-                setOffset={setOffset}
-                isListLoading={isListLoading}
-                offsetLimit={total}
-                offset={offset}
+                assetListData={data.pages}
+                loadNext={fetchNextPage}
+                isFetching={isFetching}
+                refreshFn={refetch}
               />
             </View>
           )}

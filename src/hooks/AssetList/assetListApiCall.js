@@ -1,92 +1,39 @@
 import api from "../../api/api";
-import { useState, useEffect } from "react";
+import { QueryClient, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import NetInfo from "@react-native-community/netinfo"
+import { onlineManager } from '@tanstack/react-query'
 
-export const fetchAssetListData = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isListLoading, setIsListLoading] = useState(true);
-  const [assetListData, setAssetListData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState();
-  const [url, setUrl] = useState(
-    `/hardware?sort=created_at&order=asc&limit=20&offset=`
-  );
-  const [offset, setOffset] = useState(0);
-  const [total, setTotal] = useState(0);
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    await api
-      .get(url + 0)
-      .then((response) => {
-        setAssetListData([]);
-        setOffset(0);
-        setTotal(response.data.total);
-        setAssetListData(response.data.rows);
-      })
-      .catch(() => {
-        setAssetListData([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+export function fetchData() {
+  const getApiData = async ({ pageParam }) => {
+    console.log(
+      `/hardware?sort=created_at&order=asc&limit=20&offset=${pageParam}`
+    );
+    const res = await api.get(
+      `/hardware?sort=created_at&order=asc&limit=20&offset=${pageParam}`
+    );
+    // console.log(res)
+    return res.data;
   };
+  onlineManager.setEventListener(setOnline => {
+    return NetInfo.addEventListener(state => {
+      setOnline(!!state.isConnected)
+    })
+  })
 
-  const search = async () => {
-    setIsLoading(true);
-    await api
-      .get(`/hardware?search=${searchTerm}`)
-      .then((response) => {
-        setAssetListData(response.data.rows);
-      })
-      .catch(() => {
-        setAssetListData([]);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1500);
-      });
-  };
+  return useInfiniteQuery({
+    queryKey: ["default"],
+    queryFn: getApiData,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if (lastPageParam > lastPage.total + 20) {
+        return undefined;
+      }
+      return lastPageParam + 20;
+    },
+    staleTime: 1000 * 60 * 5      //5 minutes
+   
+  });
 
-  const fetchDataByOffset = async () => {
-    await api.get(url + `${offset}`).then((response) => {
-      setIsListLoading(true);
 
-      setAssetListData([...assetListData, ...response.data.rows]);
-
-      setTimeout(() => {
-        setIsListLoading(false);
-      }, 2500);
-    });
-  };
-
-  // normal API call on screen load
-  useEffect(() => {
-    fetchData();
-  }, [url]);
-
-  useEffect(() => {
-    fetchDataByOffset();
-  }, [offset]);
-
-  // API call for search
-  useEffect(() => {
-    if (searchTerm !== undefined || searchTerm !== null) {
-      search();
-    } else {
-      fetchData();
-    }
-  }, [searchTerm]);
-
-  return {
-    isLoading,
-    assetListData,
-    searchTerm,
-    setSearchTerm,
-    url,
-    setUrl,
-    setOffset,
-    isListLoading,
-    total,
-    offset
-  };
-};
+}
