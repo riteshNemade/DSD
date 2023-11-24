@@ -1,11 +1,12 @@
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
-import * as Network from "expo-network"; // Import the Network module
+import * as Network from "expo-network";
 import initDatabase, { getSyncData } from "../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { syncInterval, fetchInterval } from "../constants/syncConstants";
-const BACKGROUND_FETCH_TASK = "upload-job-task_test";
+
+const BACKGROUND_FETCH_TASK = "upload-job-task";
 
 /*Background task definition.
 
@@ -15,9 +16,8 @@ Process:
 2. if internet restored, do this:
 init db->getSyncData()->
 (onSuccess) 
-Notify user->(cleanup)unregister background task and set enableSyncService flag from redux to false;
+Notify user->(cleanup)unregister background task and set flag in AsyncStorage to false;
 (onFail)
-
 */
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   console.log(BACKGROUND_FETCH_TASK, "running");
@@ -88,4 +88,12 @@ export const initBackgroundFetch = async () => {
   await BackgroundFetch.setMinimumIntervalAsync(100);
 };
 
-export const checkLocalData = async () => {};
+export const startupSync = async () => {
+  const isSyncDataAvailable =
+    JSON.parse(await AsyncStorage.getItem("sync"))?.isEnabled || false;
+
+  if (isSyncDataAvailable) {
+    console.log("🔁 sync was started");
+    initBackgroundFetch();
+  }
+};
