@@ -8,20 +8,7 @@ import { syncInterval, fetchInterval } from "../constants/syncConstants";
 
 const BACKGROUND_FETCH_TASK = "upload-job-task";
 
-/*Background task definition.
-
-Process:
-1. get internet status. Until internet connectivity is restored, keep running check every 'x' interval.
-
-2. if internet restored, do this:
-init db->getSyncData()->
-(onSuccess) 
-Notify user->(cleanup)unregister background task and set flag in AsyncStorage to false;
-(onFail)
-*/
-TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-  console.log(BACKGROUND_FETCH_TASK, "running");
-
+export const dataSyncService = async () => {
   let notificationBodyContent;
   const db = await initDatabase();
 
@@ -65,11 +52,19 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
     console.log("Disabling syncService...");
     AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
-    return BackgroundFetch.BackgroundFetchResult.NewData;
+    return true;
   } else {
     console.log("No internet connectivity. Skipping sync.");
-    return BackgroundFetch.BackgroundFetchResult.NoData;
+
+    return false;
   }
+};
+
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+  console.log(BACKGROUND_FETCH_TASK, "running");
+  const dataSyncComplete = dataSyncService();
+  if (dataSyncComplete) return BackgroundFetch.BackgroundFetchResult.NewData;
+  else return BackgroundFetch.BackgroundFetchResult.NoData;
 });
 
 export const initBackgroundFetch = async () => {
@@ -100,3 +95,54 @@ export const startupSync = async () => {
     initBackgroundFetch();
   }
 };
+
+export const handleManualSync = async () =>{
+  let notificationBodyContent;
+  const db = await initDatabase();
+  let syncCompleted = false;
+  // Function to check internet connectivity
+  const checkInternetConnectivity = async () => {
+    const isConnected = await Network.getNetworkStateAsync();
+    return isConnected.isConnected;
+  };
+
+  // Check internet connectivity
+  const isConnected = await checkInternetConnectivity();
+  console.log('Connection Status: ',isConnected);
+
+  if (isConnected) {
+    let result;
+
+    await getSyncData(db).then((res) => {
+      notificationBodyContent = "Data synced successfully";
+      Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+          shouldShowAlert: true,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+        }),
+      });
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "DSD",
+          body: notificationBodyContent,
+        },
+        trigger: null,
+      });
+      result = res;
+      console.log(
+        new Date().toISOString(),
+        "✅ This represents the SQLite data can be synced: ",
+        result
+      );
+    });
+    await deleteData(db);
+    AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
+
+    syncCompleted = true;
+  }else{
+    syncCompleted = false;
+  }
+
+  return syncCompleted
+}

@@ -81,7 +81,7 @@ export default function Header({ title, iconName }) {
         {title}
       </Text>
       {offlineDataAvailable ? (
-        <TouchableOpacity onPress={() => navigation.navigate("OfflineScreen")}>
+        <TouchableOpacity onPress={() => navigation.navigate("UploadQueue")}>
           <View
             style={{
               borderRadius: 30,

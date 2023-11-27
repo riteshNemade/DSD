@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
   container: {
     shadowColor: "#000000",
     shadowOffset: {
-      width: 1,
-      height: 1,
+      width: 10,
+      height: 10,
     },
     shadowRadius: 14,
-    elevation: 3,
+    elevation: 5,
     shadowOpacity: 0.5,
     flexDirection: "row",
     borderRadius: 10,

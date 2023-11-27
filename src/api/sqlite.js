@@ -96,3 +96,11 @@ export async function deleteData(db) {
     tx.executeSql(deleteQuery);
   });
 }
+
+export async function deleteById(db, id) {
+  const deleteQuery = `DELETE from ${tableName} WHERE id=${id}`;
+
+  db.transaction((tx) => {
+    tx.executeSql(deleteQuery);
+  });
+}
