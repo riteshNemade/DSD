@@ -30,6 +30,9 @@ const AddAssetScreen = ({ route }) => {
     }
   }, [route.params?.imageUri]);
 
+  const onClearImage = () =>{
+    setCapturedImage(null)
+  }
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
@@ -37,7 +40,7 @@ const AddAssetScreen = ({ route }) => {
         <ScrollContentViewComponent backgroundColor="#fff">
           {isOffline ? <OfflineHeader /> : null}
           <View style={styles.container}>
-            <TopContent />
+            <TopContent onClearImage={onClearImage}/>
             <InputFields isOffline={isOffline} capturedImage={capturedImage} />
           </View>
         </ScrollContentViewComponent>

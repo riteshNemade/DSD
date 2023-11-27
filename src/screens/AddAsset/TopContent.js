@@ -5,7 +5,7 @@ import PlaceholderComponent from '../../components/placeholder/placeholderCompon
 import ButtonComponent from '../../components/Button/ButtonComponent'
 import { useNavigation } from '@react-navigation/native'
 
-const TopContent = () => {
+const TopContent = ({onClearImage}) => {
   const navigation = useNavigation();
   return (
     <View style={{ flex: 2 }}>
@@ -14,7 +14,7 @@ const TopContent = () => {
                 style={styles.topButtonContainer}
               >
                 <View style={{ flex: 1, marginRight: 17, height: "100%" }}>
-                  <PlaceholderComponent />
+                  <PlaceholderComponent onClearImage={onClearImage}/>
                 </View>
                 <View style={{ flex: 1, marginLeft: 17, height: "100%" }}>
                   <ButtonComponent text="Scan Image" onPress={()=> navigation.navigate('Camera')}/>

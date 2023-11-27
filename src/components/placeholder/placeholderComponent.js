@@ -2,11 +2,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Entypo } from "@expo/vector-icons";
 
-const PlaceholderComponent = () => {
+const PlaceholderComponent = ({onClearImage}) => {
   return (
-    <TouchableOpacity style={{ height: '100%', flex:1, justifyContent:'space-between'}}>
+    <TouchableOpacity style={{ height: '100%', flex:1, justifyContent:'space-between'}} onPress={()=> onClearImage()}>
       <View style={styles.button}>
-        <Text style={styles.buttonText}>Image1234</Text>
+        <Text style={styles.buttonText}>Clear Image</Text>
         <Entypo name="circle-with-cross" size={18}/>
       </View>
     </TouchableOpacity>
