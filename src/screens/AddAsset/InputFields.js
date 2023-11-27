@@ -1,15 +1,16 @@
 import { StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { TextInput } from "react-native";
 import { textBox, colors, gapV } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
 import { fetchOptions } from "../../hooks/AddAsset/AddAssetHooks";
 import { inputFieldState } from "../../hooks/AddAsset/AddAssetFormHooks";
 import FooterButtons from "./FooterButtons";
-
+import DropDownPicker from 'react-native-dropdown-picker';
 //prettier-ignore
 import initDatabase, {createTable, dropTable,getSyncData,saveData} from "../../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
 
 const InputFields = ({ isOffline, capturedImage }) => {
   /***************************************State,Setters,Dropdown List Data******************************************************* */
@@ -23,6 +24,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
     categoriesList, manufacturersList, suppliersList, maintenancesList, departmentsList, companiesList, locationsList, assetTypeData
   } = fetchOptions();
 
+  const dispatch = useDispatch();
   /***************************************Functions****************************************************************/
   const onPressSave = async () => {
     //prettier-ignore
@@ -36,25 +38,27 @@ const InputFields = ({ isOffline, capturedImage }) => {
       const db = await initDatabase();
       await createTable(db);
       await saveData(db, data);
-      console.log("🔁Enabling sync service...");
       AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+      dispatch({
+        type:'ENABLE'
+      })
       alert("Data Saved Successfully.");
     } else {
       console.log(data);
       console.log("Not Offline. Saving data to server immediately.");
       alert("Data Saved Successfully.");
     }
-    setAssetName("");
-    setModelNumber("");
-    setTagId("");
-    setCategory("");
-    setManufacturers("");
-    setSuppliers("");
-    setAssetMaintenance("");
-    setDepartment("");
-    setCompany("");
-    setLocation("");
-    setDescription("");
+    setAssetName(null);
+    setModelNumber(null);
+    setTagId(null);
+    setCategory(null);
+    setManufacturers(null);
+    setSuppliers(null);
+    setAssetMaintenance(null);
+    setDepartment(null);
+    setCompany(null);
+    setLocation(null);
+    setDescription(null);
   };
 
   const onPressPrint = async () => {
@@ -76,13 +80,13 @@ const InputFields = ({ isOffline, capturedImage }) => {
             setAssetName(text);
           }}
         />
-        <Dropdown
+        {/* <Dropdown
           data={assetTypeData}
           style={styles.inputContainer}
           placeholder={"Asset Type"}
           placeholderStyle={{ color: colors.gray }}
           labelField="label"
-        />
+        /> */}
         {/* <TextInput
         style={styles.inputContainer}
         placeholder="Asset Location"
@@ -114,7 +118,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
           placeholderStyle={{ color: colors.gray }}
           value={category}
           labelField="name"
-          valueField="id"
+          valueField="name"
           onChange={(item) => {
             setCategory(item.name);
           }}
@@ -126,7 +130,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
           placeholderStyle={{ color: colors.gray }}
           value={manufacturers}
           labelField="name"
-          valueField="id"
+          valueField="name"
           onChange={(item) => {
             setManufacturers(item.name);
           }}
@@ -137,7 +141,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
           placeholder={"Suppliers"}
           placeholderStyle={{ color: colors.gray }}
           labelField="name"
-          valueField="id"
+          valueField="name"
           value={suppliers}
           onChange={(item) => {
             setSuppliers(item.name);
@@ -149,7 +153,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
           placeholder={"Asset Maintenances"}
           placeholderStyle={{ color: colors.gray }}
           labelField="label"
-          valueField="value"
+          valueField="label"
           value={maintenance}
           onChange={(item) => {
             setAssetMaintenance(item.label);
@@ -161,7 +165,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
           placeholder={"Departments"}
           placeholderStyle={{ color: colors.gray }}
           labelField="name"
-          valueField="id"
+          valueField="name"
           value={department}
           onChange={(item) => {
             setDepartment(item.name);
@@ -173,7 +177,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
           placeholder={"Companies"}
           placeholderStyle={{ color: colors.gray }}
           labelField="name"
-          valueField="id"
+          valueField="name"
           value={company}
           onChange={(item) => {
             setCompany(item.name);
@@ -185,7 +189,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
           placeholder={"Locations"}
           placeholderStyle={{ color: colors.gray }}
           labelField="name"
-          valueField="id"
+          valueField="name"
           value={location}
           onChange={(item) => {
             setLocation(item.name);

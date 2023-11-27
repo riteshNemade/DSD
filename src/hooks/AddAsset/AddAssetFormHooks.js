@@ -1,17 +1,17 @@
 import { useState } from "react";
 
 export function inputFieldState() {
-  const [assetName, setAssetName] = useState("");
-  const [modelNumber, setModelNumber] = useState("");
-  const [tagId, setTagId] = useState("");
-  const [category, setCategory] = useState("");
-  const [manufacturers, setManufacturers] = useState("");
-  const [suppliers, setSuppliers] = useState("");
-  const [maintenance, setAssetMaintenance] = useState("");
-  const [department, setDepartment] = useState("");
-  const [company, setCompany] = useState("");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
+  const [assetName, setAssetName] = useState(null);
+  const [modelNumber, setModelNumber] = useState(null);
+  const [tagId, setTagId] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [manufacturers, setManufacturers] = useState(null);
+  const [suppliers, setSuppliers] = useState(null);
+  const [maintenance, setAssetMaintenance] = useState(null);
+  const [department, setDepartment] = useState(null);
+  const [company, setCompany] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [description, setDescription] = useState(null);
 
   return {
     assetName,

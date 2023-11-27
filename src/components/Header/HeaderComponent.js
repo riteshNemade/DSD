@@ -6,21 +6,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 import getStatusBarHeight from "../../utils/getStatusBarHeight";
 import MenuIcon from "assets/svg/MenuIcon";
 import TickIcon from "assets/svg/TickIcon";
-import { useState } from "react";
-import { useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSelector } from "react-redux";
 
 export default function Header({ title, iconName }) {
-  const [offlineDataAvailable, setOfflineDataAvailable] = useState(false);
-
-  const fetchDataFlag = async () =>{
-    const flag = JSON.parse(await AsyncStorage.getItem("sync"))?.isEnabled ?? false;
-    setOfflineDataAvailable(flag)
-  }
-  useEffect(() => {
-    fetchDataFlag();
-  }, []);
-
+  const offlineDataAvailable = useSelector((state) => state.sync.isSyncDataAvailable);
 
   const navigation = useNavigation();
   let SVGicon;
@@ -102,7 +91,7 @@ export default function Header({ title, iconName }) {
               backgroundColor: "#3E53ABA8",
             }}
           >
-            <MaterialIcons name="sync" size={24} color="white" />
+            <MaterialIcons name="warning" size={23} color="white" />
           </View>
         </TouchableOpacity>
       ) : null}

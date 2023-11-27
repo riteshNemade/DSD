@@ -26,10 +26,10 @@ const ListComponent = ({ item }) => {
         </View>
         <View style={{ flex: 6 }}>
           <Text style={{ fontSize: 14, color: colors.blue }}>
-            Tag:{item?.tagId}
+            Tag: {item?.tagId}
           </Text>
-          <Text style={{ fontSize: 14 }}>Name:{item?.assetName}</Text>
-          <Text style={{ fontSize: 14 }}>Company:{item?.company}</Text>
+          <Text style={{ fontSize: 14 }}>Name: {item?.assetName}</Text>
+          <Text style={{ fontSize: 14 }} numberOfLines={1}>Company: {item?.company}</Text>
         </View>
         <View style={{ flex: 1 }}></View>
       </View>

@@ -21,7 +21,7 @@ const QRScannerScreen = () => {
     if (assetTag !== "")
       await api.get(`/hardware/bytag/${assetTag}`).then((response) => {
         const data = response.data;
-        setAPILoadingStatus(false);
+        console.log(data)
         navigation.navigate("AssetOverview", data);
       });
   };

@@ -27,7 +27,7 @@ const OfflineDataScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
-        <HeaderComponent title="Offline Data" iconName="Menu" />
+        <HeaderComponent title="Upload Queue" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
           <FlatList
             data={data}
