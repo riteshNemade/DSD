@@ -32,7 +32,7 @@ const AssetTagEntryComponent = ({handleSubmit}) => {
         <TextInput   style={{marginLeft:20}} 
         placeholder="Search"
           onChangeText={handleInputChange}
-          onSubmitEditing={handleEndEditing}
+          onSubmitEditing={() => handleEndEditing()}
         />
       </View>
       <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>

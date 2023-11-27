@@ -19,9 +19,10 @@ const QRScannerScreen = () => {
     setAssetTag(searchTerm);
     setAPILoadingStatus(true);
     if (assetTag !== "")
-      await api.get(`/hardware/bytag/${assetTag}`).then((response) => {
-        const data = response.data;
-        console.log(data)
+    await api.get(`/hardware/bytag/${assetTag}`).then((response) => {
+  const data = response.data;
+  console.log(data)
+  setAPILoadingStatus(false);
         navigation.navigate("AssetOverview", data);
       });
   };
@@ -34,7 +35,7 @@ const QRScannerScreen = () => {
           {isAPILoading ? (
             <View
               style={{
-                flex: 10,
+                flex: 1,
                 alignContent: "center",
                 justifyContent: "center",
                 backgroundColor:'#fff',
