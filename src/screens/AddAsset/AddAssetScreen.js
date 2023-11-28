@@ -15,6 +15,7 @@ import TopContent from "./TopContent";
 const AddAssetScreen = ({ route }) => {
   const [capturedImage, setCapturedImage] = useState(null);
   const [isOffline, setOfflineStatus] = useState(false);
+  const [imageName, setImageName] = useState('')
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const offline = !(state.isConnected && state.isInternetReachable);
@@ -26,12 +27,16 @@ const AddAssetScreen = ({ route }) => {
 
   useEffect(() => {
     if (route.params && route.params.imageUri) {
+      console.log(route.params.imageUri)
+      const filePath = route.params.imageUri;
+      setImageName(filePath.split('/').pop());
       setCapturedImage(route.params.imageUri);
     }
   }, [route.params?.imageUri]);
-
+  
   const onClearImage = () =>{
-    setCapturedImage(null)
+    setCapturedImage('')
+    setImageName('');
   }
   return (
     <View style={{ flex: 1 }}>
@@ -40,7 +45,7 @@ const AddAssetScreen = ({ route }) => {
         <ScrollContentViewComponent backgroundColor="#fff">
           {isOffline ? <OfflineHeader /> : null}
           <View style={styles.container}>
-            <TopContent onClearImage={onClearImage}/>
+            <TopContent onClearImage={onClearImage} imageName={imageName}/>
             <InputFields isOffline={isOffline} capturedImage={capturedImage} />
           </View>
         </ScrollContentViewComponent>
