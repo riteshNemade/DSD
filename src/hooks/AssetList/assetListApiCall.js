@@ -46,7 +46,7 @@ export function fetchData() {
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       nextPageCheckerFn(lastPage, allPages, lastPageParam),
-    staleTime: 1000 * 60 * 5, //5 minutes
+    staleTime: 1000 * 60 * 300, //5 minutes
   });
 
   return {
