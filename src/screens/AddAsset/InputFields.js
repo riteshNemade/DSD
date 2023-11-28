@@ -1,16 +1,16 @@
 import { StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { TextInput } from "react-native";
 import { textBox, colors, gapV } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
 import { fetchOptions } from "../../hooks/AddAsset/AddAssetHooks";
 import { inputFieldState } from "../../hooks/AddAsset/AddAssetFormHooks";
 import FooterButtons from "./FooterButtons";
-import DropDownPicker from 'react-native-dropdown-picker';
 //prettier-ignore
-import initDatabase, {createTable, dropTable,getSyncData,saveData} from "../../api/sqlite";
+import initDatabase, {createTable, getSyncData,saveData} from "../../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
+import { initBackgroundFetch } from "../../utils/syncOfflineData";
 
 const InputFields = ({ isOffline, capturedImage }) => {
   /***************************************State,Setters,Dropdown List Data******************************************************* */
@@ -39,6 +39,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
       await createTable(db);
       await saveData(db, data);
       AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+      initBackgroundFetch();
       dispatch({
         type:'ENABLE'
       })
@@ -65,7 +66,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
     const db = await initDatabase();
     const result = await getSyncData(db);
     console.log(result);
-    console.log(AsyncStorage.getItem("enableSync"));
+    console.log(await AsyncStorage.getItem("sync"));
   };
 
   return (

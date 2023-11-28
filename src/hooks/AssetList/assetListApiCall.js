@@ -1,12 +1,11 @@
 import api from "../../api/api";
 import {
-  QueryClient,
   useInfiniteQuery,
-  useQueryClient,
 } from "@tanstack/react-query";
 import NetInfo from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
 import { useState } from "react";
+import { ASSET_LIST_CACHE_TIME } from "../../constants/cacheConstants";
 
 export function fetchData() {
   const [url, setUrl] = useState(
@@ -46,7 +45,7 @@ export function fetchData() {
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       nextPageCheckerFn(lastPage, allPages, lastPageParam),
-    staleTime: 1000 * 60 * 300, //5 minutes
+    staleTime: ASSET_LIST_CACHE_TIME, //5 minutes
   });
 
   return {

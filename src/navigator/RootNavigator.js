@@ -1,12 +1,12 @@
+import React, { useEffect } from "react";
 import { KeyboardAvoidingView } from "react-native";
-import React from "react";
-import AuthNavigator from "./AuthNavigator";
-import { NavigationContainer } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import BottomTabNavigator from "./BottomTabNavigator";
-import { useEffect } from "react";
-import { startupSync } from "../utils/syncOfflineData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
+
+import AuthNavigator from "./AuthNavigator";
+import BottomTabNavigator from "./BottomTabNavigator";
+import { startupSync } from "../utils/syncOfflineData";
 
 export default function RootNavigator() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);

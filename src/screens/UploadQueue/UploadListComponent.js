@@ -12,6 +12,7 @@ import { Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import initDatabase, { deleteById } from "../../api/sqlite";
 import imagePlaceHolder from "assets/images/image_placeholder.png";
+import { Alert } from "react-native";
 
 const UploadListComponent = ({
   item,
@@ -30,7 +31,7 @@ const UploadListComponent = ({
   }
 
   const handleImagePress = () => {
-    if(item.imagepath === "null") return;
+    if (item.imagepath === "null") return;
     setIsImageModalVisible(true);
     setImageModalData(imagePath);
   };
@@ -42,9 +43,21 @@ const UploadListComponent = ({
 
   const handleDeletion = async (id) => {
     try {
-      const db = await initDatabase();
-      await deleteById(db, id);
-      refetch();
+      Alert.alert("Deleting an entry", "Are you sure you want to delete this entry?", [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            const db = await initDatabase();
+            await deleteById(db, id);
+            refetch();
+         
+          },
+        },
+      ]);
     } catch (err) {
       console.log("Error: ", err);
     }

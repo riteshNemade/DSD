@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  ToastAndroid,
-  View,
-  Text,
-} from "react-native";
+import { StyleSheet, ToastAndroid, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -17,6 +12,7 @@ import UploadListContent from "./UploadListContent";
 import FloatingSyncButton from "./FloatingSyncButton";
 import ImageModal from "./ImageModal";
 import DataModal from "./DataModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UploadQueueScreen = () => {
   const [data, setData] = useState([]);
@@ -26,7 +22,6 @@ const UploadQueueScreen = () => {
   const [isImageModalVisible, setIsImageModalVisible] = useState(false);
 
   const dispatch = useDispatch();
-  console.log(data)
   const fetchDataFn = async () => {
     const db = await initDatabase();
     const offlineData = await getSyncData(db);
@@ -41,6 +36,7 @@ const UploadQueueScreen = () => {
       dispatch({
         type: "DISABLE",
       });
+      await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
       setData([]);
     } else {
       ToastAndroid.show(
@@ -61,11 +57,15 @@ const UploadQueueScreen = () => {
         <ContentViewComponent backgroundColor="#fff">
           {data.length > 0 ? (
             <>
-              {isDataModalVisible ? <DataModal
-              isModalVisible={isDataModalVisible}
-              setModalVisible={setIsDataModalVisible}
-              data={modalData}
-              ></DataModal> : <></>}
+              {isDataModalVisible ? (
+                <DataModal
+                  isModalVisible={isDataModalVisible}
+                  setModalVisible={setIsDataModalVisible}
+                  data={modalData}
+                ></DataModal>
+              ) : (
+                <></>
+              )}
               {isImageModalVisible ? (
                 <ImageModal
                   isModalVisible={isImageModalVisible}
@@ -75,15 +75,15 @@ const UploadQueueScreen = () => {
               ) : (
                 <></>
               )}
-              <View style={{flex:1}}>
-              <UploadListContent
-              data={data}
-                refetch={fetchDataFn}
-                setIsDataModalVisible={setIsDataModalVisible}
-                setIsImageModalVisible={setIsImageModalVisible}
-                setImageModalData={setImageModalData}
-                setModalData={setModalData}
-              />
+              <View style={{ flex: 1 }}>
+                <UploadListContent
+                  data={data}
+                  refetch={fetchDataFn}
+                  setIsDataModalVisible={setIsDataModalVisible}
+                  setIsImageModalVisible={setIsImageModalVisible}
+                  setImageModalData={setImageModalData}
+                  setModalData={setModalData}
+                />
               </View>
               <FloatingSyncButton handleSyncPress={handleSyncPress} />
             </>

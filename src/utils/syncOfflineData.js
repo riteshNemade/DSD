@@ -5,7 +5,7 @@ import * as Network from "expo-network";
 import initDatabase, { deleteData, getSyncData } from "../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { syncInterval, fetchInterval } from "../constants/syncConstants";
-
+import store from '../redux/store'
 const BACKGROUND_FETCH_TASK = "upload-job-task";
 
 export const dataSyncService = async () => {
@@ -52,6 +52,9 @@ export const dataSyncService = async () => {
     await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
     console.log("Disabling syncService...");
     AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
+    store.dispatch({
+      type:'DISABLE'
+    })
     return true;
   } else {
     console.log("No internet connectivity. Skipping sync.");
