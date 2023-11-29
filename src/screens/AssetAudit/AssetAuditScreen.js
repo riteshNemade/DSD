@@ -23,7 +23,7 @@ const AssetAuditScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
-        <HeaderComponent title="Asset Audit List" iconName="Menu" />
+        <HeaderComponent title="Due for Audit" iconName="Menu" />
         {isLoading | auditListData.length > 0 ? (
           <ContentViewComponent backgroundColor={"#fff"}>
             {isLoading ? (
