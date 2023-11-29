@@ -1,9 +1,10 @@
-import { View, FlatList, Text } from "react-native";
+import { View, Text } from "react-native";
 import React, { memo, useState } from "react";
 import { verticalScale } from "react-native-size-matters/extend";
 import AssetListComponent from "./AssetListComponent";
 import { ActivityIndicator } from "react-native-paper";
 import { RefreshControl } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
 const AssetListContent = ({
   assetListData,
@@ -11,20 +12,20 @@ const AssetListContent = ({
   isFetching,
   refreshFn,
 }) => {
-
   const [refreshing, setIsRefreshing] = useState(false);
   const flatData = assetListData.flatMap((page) => page.rows);
   const length = assetListData?.length;
-  
+
   return (
     <View style={{ flex: 1, marginTop: verticalScale(10) }}>
       {length > 0 ? (
-        <FlatList
+        <FlashList
           data={flatData}
+          estimatedItemSize={120}
           renderItem={({ item }) => <AssetListComponent item={item} />}
           keyExtractor={(item) => item.id}
-          initialNumToRender={10}
-          removeClippedSubviews={true}
+          initialNumToRender={50}
+          onEndReachedThreshold={0.1}
           onEndReached={loadNext}
           refreshControl={
             <RefreshControl

@@ -66,8 +66,8 @@ export default function ProfileScreenContent() {
 
   return (
     <View style={{ flex: 1, paddingBottom: gapV }}>
-      {Settings.map((item) => (
-        <SettingsComponent title={item.title} options={item.options} />
+      {Settings.map((item,index) => (
+        <SettingsComponent title={item.title} options={item.options} key={index}/>
       ))}
     </View>
   );

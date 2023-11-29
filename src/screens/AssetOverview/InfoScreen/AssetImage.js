@@ -4,7 +4,6 @@ import { verticalScale } from "react-native-size-matters/extend";
 
 import TableImage from "../../../components/TableImage/TableImage";
 
-import { useNavigation } from "@react-navigation/native";
 import MenuModal from "./MenuModal";
 import { useState } from "react";
 import ImageModal from "./AssetOverviewImageModal";
@@ -35,7 +34,9 @@ const AssetImage = ({ imageUrl, data }) => {
           )}
         </>
       ) : (
+        <View style={{height:verticalScale(250), justifyContent:'center', alignSelf:'center'}}>
         <Text>No Preview Available.</Text>
+        </View>
       )}
     </View>
   );

@@ -6,6 +6,8 @@ import ContentViewComponent from "components/ContentView/ContentViewComponent";
 import NotificationComponent from "../../components/Notifications/NotificationComponent";
 
 import { hPadding } from "../../constants/global";
+import { FlashList } from "@shopify/flash-list";
+import { verticalScale } from "react-native-size-matters/extend";
 import { FlatList } from "react-native";
 
 const DATA = [
@@ -62,6 +64,7 @@ const NotificationsScreen = () => {
           <View style={{paddingTop: 5 }}>
             <FlatList
               data={DATA}
+
               renderItem={({ item }) => (
                 <View
                   style={{ paddingHorizontal: hPadding}}

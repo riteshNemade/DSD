@@ -1,12 +1,11 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { colors, gapH, gapV, hPadding } from "../../../constants/global";
 import CardViewComponent from "../../../components/CardView/CardViewComponent";
 import { Text } from "react-native";
 import { fetchHistoricalData } from "../../../hooks/AssetOverview/assetOverviewHooks";
 import { Image } from "react-native";
-import { scale } from "react-native-size-matters/extend";
-
+import { FlashList } from "@shopify/flash-list";
 const ListContent = ({ file,note,date }) => {
   return (
     <CardViewComponent size={"lg"}>
@@ -38,7 +37,8 @@ const AssetFilesContent = ({ id }) => {
   return (
     <View style={{ marginTop: gapV, flex: 1 }}>
       {dataLength > 0 ? (
-        <FlatList
+        <FlashList
+        estimatedItemSize={50}
           data={historicalData}
           renderItem={({ item }) => (
             item.file!== null ?(

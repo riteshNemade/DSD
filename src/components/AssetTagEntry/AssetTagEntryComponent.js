@@ -5,14 +5,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { verticalScale } from "react-native-size-matters/extend";
 
 const AssetTagEntryComponent = ({handleSubmit}) => {
-  const [inputText, setInputText] = useState(null);
+  const [inputText, setInputText] = useState('');
   
   const handleInputChange = (text) =>{
     setInputText(text)
   }
 
-  const handleEndEditing = () =>{
-    handleSubmit(inputText)
+  const handleEndEditing =async () =>{
+    console.log(inputText)
+    await handleSubmit(inputText)
   }
   return (
     <View style={styles.container}>

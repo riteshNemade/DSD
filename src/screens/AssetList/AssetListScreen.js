@@ -16,6 +16,7 @@ import { scale } from "react-native-size-matters/extend";
 import { colors, gapH, gapV } from "constants/global";
 
 import { fetchData } from "../../hooks/AssetList/assetListApiCall";
+import AssetListPlaceholder from "../../components/AssetListPlaceholder/AssetListPlaceholder";
 
 const AssetListScreen = ({ route }) => {
   const [isFilterModalVisible, setModalVisible] = useState(false);
@@ -60,7 +61,8 @@ const AssetListScreen = ({ route }) => {
           <TopContent url={url} setUrl={setUrl} />
           {isLoading ? (
             <View style={styles.loadingIndicator}>
-              <ActivityIndicator size={100} color="#4290df" />
+              {/* <ActivityIndicator size={100} color="#4290df" /> */}
+              <AssetListPlaceholder />
             </View>
           ) : isFilterModalVisible ? (
             <FilterModal
@@ -96,8 +98,6 @@ export default AssetListScreen;
 const styles = StyleSheet.create({
   loadingIndicator: {
     flex: 9,
-    alignItems: "center",
-    justifyContent: "center",
   },
   floatingButton: {
     height: scale(70),

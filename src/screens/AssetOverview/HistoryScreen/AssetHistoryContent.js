@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { colors, gapV } from "constants/global";
 import { Text } from "react-native";
@@ -6,7 +6,7 @@ import HistoryModal from "./HistoryInfoModal";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import ListContent from "./ListContent";
-
+import { FlashList } from "@shopify/flash-list";
 const Header = () => {
   return (
     <View style={{ flexDirection: "row" }}>
@@ -33,8 +33,9 @@ const AssetHistoryContent = ({ historicalData }) => {
         {dataLength > 0 ? (
           <>
             <Header />
-            <FlatList
+            <FlashList
               data={historicalData}
+              estimatedItemSize={50}
               renderItem={({ item, index }) => (
                 <ListContent
                   historicalData={item}

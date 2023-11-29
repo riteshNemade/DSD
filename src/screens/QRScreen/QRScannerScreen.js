@@ -10,42 +10,51 @@ import { gapV, hPadding } from "../../constants/global";
 import { useState } from "react";
 import api from "../../api/api";
 import { ActivityIndicator } from "react-native-paper";
+import { Alert } from "react-native";
 
 const QRScannerScreen = () => {
   const navigation = useNavigation();
-  const [assetTag, setAssetTag] = useState("");
   const [isAPILoading, setAPILoadingStatus] = useState(false);
+
   const handleSubmit = async (searchTerm) => {
-    setAssetTag(searchTerm);
     setAPILoadingStatus(true);
-    if (assetTag !== "")
-    await api.get(`/hardware/bytag/${assetTag}`).then((response) => {
-  const data = response.data;
-  console.log(data)
-  setAPILoadingStatus(false);
-        navigation.navigate("AssetOverview", data);
+    if (searchTerm !== "") {
+      await api.get(`/hardware/bytag/${searchTerm}`).then((response) => {
+        const data = response.data;
+        if (data.status === "error") {
+          setAPILoadingStatus(false);
+          Alert.alert(
+            "Asset does not exist",
+            "The Asset you are trying to search does not exist."
+          );
+        } else {
+          setAPILoadingStatus(false);
+          navigation.navigate("AssetOverview", data);
+        }
       });
+    }
   };
 
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
-        <HeaderComponent title="QR Scanner" iconName="Menu" />
-        
-          {isAPILoading ? (
-            <View
-              style={{
-                flex: 1,
-                alignContent: "center",
-                justifyContent: "center",
-                backgroundColor:'#fff',
-                borderTopLeftRadius:30,
-                borderTopRightRadius:30
-              }}
-            >
-              <ActivityIndicator animating={isAPILoading} size={48} />
-            </View>
-          ) : (<ScrollContentViewComponent backgroundColor={"#fff"}>
+        <HeaderComponent title="Search Asset" iconName="Menu" />
+
+        {isAPILoading ? (
+          <View
+            style={{
+              flex: 1,
+              alignContent: "center",
+              justifyContent: "center",
+              backgroundColor: "#fff",
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+            }}
+          >
+            <ActivityIndicator animating={true} size={48} />
+          </View>
+        ) : (
+          <ScrollContentViewComponent backgroundColor={"#fff"}>
             <View style={styles.container}>
               <View style={{ flex: 1 }}>
                 <AssetTagEntryComponent handleSubmit={handleSubmit} />
@@ -61,9 +70,8 @@ const QRScannerScreen = () => {
                 />
               </View>
             </View>
-            </ScrollContentViewComponent>
-          )}
-        
+          </ScrollContentViewComponent>
+        )}
       </LinearGradientComponent>
     </View>
   );

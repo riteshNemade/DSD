@@ -1,17 +1,19 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import UploadListComponent from "./UploadListComponent";
+import { FlashList } from "@shopify/flash-list";
 const UploadListContent = ({
   data,
   setIsDataModalVisible,
   setIsImageModalVisible,
   setImageModalData,
   setModalData,
-  refetch
+  refetch,
 }) => {
   return (
     <View style={{ flex: 1 }}>
-      <FlatList
+      <FlashList
+        estimatedItemSize={120}
         data={data}
         contentContainerStyle={{ paddingBottom: 90 }}
         renderItem={({ item, index }) => (
