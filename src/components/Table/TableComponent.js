@@ -3,10 +3,14 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters/extend";
 import { colors } from "../../constants/global";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 const TableComponent = ({ items }) => {
   const navigation = useNavigation();
   // Define the fields you want to display
+  const companyName = useSelector((state) => {
+    return state.global.Company;
+  });
   const fieldsToDisplay = [
     {
       key: "Status",

@@ -7,6 +7,7 @@ import ButtonComponent from "../../../components/Button/ButtonComponent";
 import { scale, verticalScale } from "react-native-size-matters/extend";
 import { RadioButton } from "react-native-paper";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const SortModal = ({
   isSortModalVisible,
@@ -15,8 +16,11 @@ const SortModal = ({
   setUrl,
 }) => {
   const [selectedOption, setSelectedOption] = useState("created_at-asc");
-
+  const company_id = useSelector((state) => {
+    return state.global.company_id;
+  });
   const handleSortPressed = () => {
+    
     //URL format1= /hardware?sort=name&order=asc&limit=20&offset=
     //URL format2= /hardware?category_id=2&company_id=57&limit=20&offset=
     //split selectedOption

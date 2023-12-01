@@ -6,12 +6,16 @@ import { colors, gapV, hPadding } from "../../../constants/global";
 import FilterModalInputFields from "./FilterModalInputFields";
 import { filters } from "../../../hooks/AssetList/modalHooks";
 import { Feather } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
   const InputFieldProps = filters();
-
+  const company_id = useSelector((state) => {
+    return state.global.company_id;
+  });
   const handleOKPress = () => {
-    let url = `/hardware?`;
+    
+    let url = `/hardware?company_id=${company_id}`;
     let urlFilterObject = {};
 
     InputFieldProps.companyFilter !== null
@@ -106,6 +110,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: hPadding,
     overflow: "scroll",
     paddingVertical: gapV,
-    borderRadius:20,
+    borderRadius: 20,
   },
 });

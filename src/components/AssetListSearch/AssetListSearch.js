@@ -6,25 +6,34 @@ import { TextInput } from "react-native-gesture-handler";
 import QRScannerSmall from "../../../assets/svg/QRScannerSmall";
 import { scale } from "react-native-size-matters/extend";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
-const AssetListSearch = ({setUrl}) => {
+const AssetListSearch = ({ setUrl }) => {
   const navigation = useNavigation();
   const [inputText, setInputText] = useState(null);
-  const handleInputChange = (text) =>{
-    setInputText(text)
-  }
+  const handleInputChange = (text) => {
+    setInputText(text);
+  };
 
+  const company_id = useSelector((state) => {
+    return state.global.company_id;
+  });
   const handleSubmit = () => {
-    console.log('search term', `/hardware?search=${inputText}`)
-    setUrl(`/hardware?search=${inputText}&sort=created_at&order=asc&limit=20&offset=`)
-  }
-  
+    
+    
+    setUrl(
+      `/hardware?company_id=${company_id}&search=${inputText}&sort=created_at&order=asc&limit=20&offset=`
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
         <MaterialIcons name="search" size={24} color={colors.gray} />
       </View>
-      <View style={{ flex: 7, justifyContent: "center", alignContent: "center" }}>
+      <View
+        style={{ flex: 7, justifyContent: "center", alignContent: "center" }}
+      >
         <TextInput
           placeholder="Search Asset"
           onChangeText={handleInputChange}

@@ -1,17 +1,19 @@
 import api from "../../api/api";
-import {
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import NetInfo from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
 import { useState } from "react";
 import { ASSET_LIST_CACHE_TIME } from "../../constants/cacheConstants";
+import { useSelector } from "react-redux";
 
 export function fetchData() {
+  const company_id = useSelector((state) => {
+    return state.global.company_id;
+  });
   const [url, setUrl] = useState(
-    "/hardware?sort=created_at&order=asc&limit=20&offset="
+    `/hardware?company_id=${company_id}&sort=created_at&order=asc&limit=20&offset=`
   );
-
+  console.log(url);
   onlineManager.setEventListener((setOnline) => {
     return NetInfo.addEventListener((state) => {
       setOnline(!!state.isConnected);
@@ -57,8 +59,6 @@ export function fetchData() {
     isFetching,
     refetch,
     url,
-    setUrl
-  }
-
-
+    setUrl,
+  };
 }

@@ -29,7 +29,7 @@ const FilterModalInputFields = ({ props }) => {
   } = { ...props };
   return (
     <>
-      <Dropdown
+      {/* <Dropdown
         data={companies}
         placeholderStyle={styles.placeholder}
         labelField="name"
@@ -39,7 +39,7 @@ const FilterModalInputFields = ({ props }) => {
           setCompanyFilter(item.id);
         }}
         style={styles.inputContainer}
-      />
+      /> */}
       <Dropdown
         data={categories}
         placeholderStyle={styles.placeholder}
