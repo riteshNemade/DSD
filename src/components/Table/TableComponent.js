@@ -8,14 +8,14 @@ import { useSelector } from "react-redux";
 const TableComponent = ({ items }) => {
   const navigation = useNavigation();
   // Define the fields you want to display
-  const companyName = useSelector((state) => {
-    return state.global.Company;
+  const company_id = useSelector((state) => {
+    return state.global.company_id;
   });
   const fieldsToDisplay = [
     {
       key: "Status",
       value: items.status_label?.name || "N/A",
-      url: `/hardware?status_id=${items.status_label?.id}&limit=20&offset=`,
+      url: `/hardware?company_id=${company_id}&status_id=${items.status_label?.id}&limit=20&offset=`,
     },
     {
       key: "Company",
@@ -26,7 +26,7 @@ const TableComponent = ({ items }) => {
     {
       key: "Model",
       value: items.model?.name || "N/A",
-      url: `/hardware?model_id=${items.model?.id}&limit=20&offset=`,
+      url: `/hardware?company_id=${company_id}&model_id=${items.model?.id}&limit=20&offset=`,
     },
     { key: "Category", value: items.category?.name || "N/A", url: null },
     { key: "Serial No", value: items.serial || "N/A", url: null },
