@@ -1,13 +1,12 @@
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 
-
 import TextBox from "components/TextBoxComponent/TextBox";
 import PasswordBox from "components/PasswordBox/PasswordBox";
 import { Checkbox } from "react-native-paper";
 import getStatusBarHeight from "utils/getStatusBarHeight";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ButtonComponent from '../../components/Button/ButtonComponent'
+import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useDispatch } from "react-redux";
 import { hPadding } from "../../constants/global";
 
@@ -16,7 +15,7 @@ const LoginScreen = () => {
 
   const handleLogin = () => {
     dispatch({
-      type: 'LOGIN',
+      type: "LOGIN",
     });
   };
   const statusBarHeight = Math.ceil(getStatusBarHeight());
@@ -43,7 +42,7 @@ const LoginScreen = () => {
               <TextBox />
             </View>
             <View style={{ marginTop: 24 }}>
-              <PasswordBox size={70}/>
+              <PasswordBox size={70} />
             </View>
 
             <View
@@ -87,9 +86,9 @@ const LoginScreen = () => {
                 <Text style={{ color: "white" }}>Sign In</Text>
             </View>
               </TouchableOpacity> */}
-              <View style={{ marginTop: "5%",height: 60,}}>
-              <ButtonComponent text={'Sign In'} onPress={handleLogin}/>
-              </View>
+            <View style={{ marginTop: "5%", height: 60 }}>
+              <ButtonComponent text={"Sign In"} onPress={handleLogin} />
+            </View>
             <View style={{ paddingHorizontal: 45, marginTop: 39 }}>
               <Text style={{ color: "white", fontSize: 18, fontWeight: "500" }}>
                 If you don't have an account you can
