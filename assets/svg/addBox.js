@@ -1,12 +1,12 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
-
+import { DASHBOARD_BUTTON_WIDTH, DASHBOARD_BUTTON_HEIGHT } from "../../src/constants/global"
 function AddBoxSVG(props) {
   return (
     <Svg
       width={78}
       height={78}
-      viewBox="0 0 78 78"
+      viewBox={`0 0 78 78`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}

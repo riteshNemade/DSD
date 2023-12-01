@@ -27,7 +27,7 @@ export default function App() {
         persistOptions={{ persister: asyncStoragePersister }}
       >
         <Provider store={store}>
-          <StatusBar translucent />
+          <StatusBar translucent style="inverted" />
           <MenuProvider backHandler>
             <RootNavigator />
           </MenuProvider>

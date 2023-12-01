@@ -2,7 +2,6 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 
-import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";

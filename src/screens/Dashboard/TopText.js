@@ -1,41 +1,45 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { verticalScale } from "react-native-size-matters/extend";
-import { colors, hPadding } from "../../constants/global";
-import { useNavigation } from "@react-navigation/native";
+import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, colors, hPadding } from "../../constants/global";
 import { useSelector } from "react-redux";
 
-const TopText = () => {
+const TopText = ({ setIsModalVisible }) => {
   const company = useSelector((state) => {
     return state.global.companyName;
   });
-  console.log(company)
-  const navigation = useNavigation();
+  console.log(company);
   return (
-    <View
-      style={{
-        paddingHorizontal: hPadding,
-        marginVertical: verticalScale(20),
-        flexDirection: "row",
-      }}
-    >
-      <Text style={{ fontSize: 16, fontWeight: 800 }}>Company: </Text>
-      <Text style={{ fontSize: 16, fontWeight: 400 }} numberOfLines={1}>
-        {company || "N/A"}{" "}
-      </Text>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text
-          numberOfLines={1}
+    <>
+      {company !== "" && company !== undefined && company !== null ? (
+        <View
           style={{
-            fontSize: 16,
-            fontWeight: 400,
-            color: colors.hyperlinkBlue,
+            paddingHorizontal: hPadding,
+            marginVertical: verticalScale(20),
+            flexDirection: "row",
           }}
         >
-          (change)
-        </Text>
-      </TouchableOpacity>
-    </View>
+          <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: 800 }}>Company: </Text>
+          <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: 400 }} numberOfLines={1}>
+            {company}{" "}
+          </Text>
+          <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: FONT_SIZE_REGULAR,
+                fontWeight: 400,
+                color: colors.hyperlinkBlue,
+              }}
+            >
+              (change)
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

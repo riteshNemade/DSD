@@ -21,7 +21,7 @@ const AssetListContent = ({
       {length > 0 ? (
         <FlashList
           data={flatData}
-          estimatedItemSize={120}
+          estimatedItemSize={verticalScale(150)}
           renderItem={({ item }) => <AssetListComponent item={item} />}
           keyExtractor={(item) => item.id}
           initialNumToRender={50}

@@ -3,13 +3,12 @@ import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { verticalScale } from "react-native-size-matters/extend";
-
-let FONT_SIZE =16;
-if (PixelRatio.get() >= 2) {
+import {FONT_SIZE_REGULAR} from '../../constants/global'
+let FONT_SIZE = 16;
+if (PixelRatio.get() > 3.5) {
   FONT_SIZE = 12;
 }
-
-const PasswordBox = ({size}) => {
+const PasswordBox = ({ size }) => {
   const [isPasswordVisible, setPasswordVisibility] = useState(true);
 
   function togglePasswordVisibility() {
@@ -23,16 +22,16 @@ const PasswordBox = ({size}) => {
       style={{
         flexDirection: "row",
         backgroundColor: "white",
-        height: verticalScale(size),
+        height: verticalScale(70),
         borderRadius: 10,
       }}
     >
-      <View style={{ flex: 4, height: verticalScale(size) }}>
+      <View style={{ flex: 9, height: verticalScale(60) }}>
         <TextInput
           placeholder={"Password"}
           style={{
-            height: verticalScale(size),
-            fontSize: FONT_SIZE,
+            height: verticalScale(70),
+            fontSize: FONT_SIZE_REGULAR,
             paddingLeft: 15,
             color: "#667085",
           }}
@@ -44,17 +43,14 @@ const PasswordBox = ({size}) => {
       <View
         style={{
           flex: 1,
-          height: 50,
+          height: verticalScale(70),
           alignItems: "flex-end",
-          paddingRight:'5%',
+          paddingRight: "5%",
           justifyContent: "center",
-          marginTop: 5
         }}
       >
         <TouchableOpacity
           style={{
-            height: verticalScale(size),
-            width: "100%",
             alignContent: "center",
             justifyContent: "center",
           }}

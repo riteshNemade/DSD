@@ -9,27 +9,29 @@ import FooterButtons from "./FooterButtons";
 //prettier-ignore
 import initDatabase, {createTable, getSyncData,saveData} from "../../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { initBackgroundFetch } from "../../utils/syncOfflineData";
 
 const InputFields = ({ isOffline, capturedImage }) => {
   /***************************************State,Setters,Dropdown List Data******************************************************* */
   //prettier-ignore
   const {
-    assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company, location, description, setAssetName, setModelNumber, setTagId, setCategory, setManufacturers,
-    setSuppliers, setAssetMaintenance, setDepartment, setCompany, setLocation, setDescription
+    assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, location, description, setAssetName, setModelNumber, setTagId, setCategory, setManufacturers,
+    setSuppliers, setAssetMaintenance, setDepartment, setLocation, setDescription
   } = inputFieldState();
   //prettier-ignore
   const {
-    categoriesList, manufacturersList, suppliersList, maintenancesList, departmentsList, companiesList, locationsList, assetTypeData
+    categoriesList, manufacturersList, suppliersList, maintenancesList, departmentsList, locationsList, assetTypeData
   } = fetchOptions();
-
+  const companyName = useSelector((state) => {
+    return state.global.companyName;
+  });
   const dispatch = useDispatch();
   /***************************************Functions****************************************************************/
   const onPressSave = async () => {
     //prettier-ignore
     const data = {
-      assetName,modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company, location, description, 
+      assetName,modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company:companyName , location, description, 
       imagepath: capturedImage, flag: false,
     };
 
@@ -41,8 +43,8 @@ const InputFields = ({ isOffline, capturedImage }) => {
       AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
       initBackgroundFetch();
       dispatch({
-        type:'ENABLE'
-      })
+        type: "ENABLE",
+      });
       alert("Data Saved Successfully.");
     } else {
       console.log(data);
@@ -57,7 +59,6 @@ const InputFields = ({ isOffline, capturedImage }) => {
     setSuppliers(null);
     setAssetMaintenance(null);
     setDepartment(null);
-    setCompany(null);
     setLocation(null);
     setDescription(null);
   };
@@ -71,6 +72,17 @@ const InputFields = ({ isOffline, capturedImage }) => {
 
   return (
     <>
+      <TextInput
+        editable={false}
+        selectTextOnFocus={false}
+        value={companyName}
+        placeholder="Company"
+        placeholderStyle={{ color: "#fff" }}
+        style={[
+          styles.inputContainer,
+          { backgroundColor: "#e0e0e0", color: "#000" },
+        ]}
+      />
       <View style={{ flex: 7 }}>
         <TextInput
           style={styles.inputContainer}
@@ -172,18 +184,7 @@ const InputFields = ({ isOffline, capturedImage }) => {
             setDepartment(item.name);
           }}
         />
-        <Dropdown
-          data={companiesList}
-          style={styles.inputContainer}
-          placeholder={"Companies"}
-          placeholderStyle={{ color: colors.gray }}
-          labelField="name"
-          valueField="name"
-          value={company}
-          onChange={(item) => {
-            setCompany(item.name);
-          }}
-        />
+
         <Dropdown
           data={locationsList}
           style={styles.inputContainer}

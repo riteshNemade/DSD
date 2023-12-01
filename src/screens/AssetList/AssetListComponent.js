@@ -10,6 +10,8 @@ import {
   colors,
   popUpButtonWidth,
   popUpButtonHeight,
+  FONT_SIZE_REGULAR,
+  FONT_SIZE_SMALL,
 } from "../../constants/global";
 import { scale, verticalScale } from "react-native-size-matters/extend";
 import { StyleSheet } from "react-native";
@@ -84,19 +86,19 @@ export default memo(function AssetListComponent({ item }) {
                 source={{
                   uri: item.image !== undefined ? item.image : null,
                 }}
-                style={{ flex: 1 }}
+                style={{ flex: 1, height: verticalScale(105) }}
               />
             </TouchableOpacity>
             <View style={{ flex: 6, marginLeft: scale(12) }}>
               <TouchableOpacity onPress={handleTagClick}>
-                <Text style={{ fontSize: 14, color: colors.blue }}>
+                <Text style={{ fontSize: FONT_SIZE_SMALL, color: colors.blue }}>
                   Tag: {item.asset_tag}
                 </Text>
               </TouchableOpacity>
-              <Text numberOfLines={1} style={{ fontSize: 14 }}>
+              <Text numberOfLines={1} style={{ fontSize: FONT_SIZE_SMALL }}>
                 Name: {item.name !== undefined ? item.name : "N/A"}
               </Text>
-              <Text numberOfLines={1} style={{ fontSize: 14 }}>
+              <Text numberOfLines={1} style={{ fontSize: FONT_SIZE_SMALL }}>
                 Name:{" "}
                 {item.company?.name !== undefined ? item.company.name : "N/A"}
               </Text>

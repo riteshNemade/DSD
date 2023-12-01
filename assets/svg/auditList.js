@@ -1,12 +1,13 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from "react";
+import Svg, { Path } from "react-native-svg";
+import { DASHBOARD_BUTTON_HEIGHT, DASHBOARD_BUTTON_WIDTH } from "../../src/constants/global";
 
 function AuditList(props) {
   return (
     <Svg
-      width={78}
-      height={78}
-      viewBox="0 0 78 78"
+      width={DASHBOARD_BUTTON_WIDTH}
+      height={DASHBOARD_BUTTON_HEIGHT}
+      viewBox="0 0 82 68"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
@@ -16,7 +17,7 @@ function AuditList(props) {
         fill="#3F77CB"
       />
     </Svg>
-  )
+  );
 }
 
-export default AuditList
+export default AuditList;

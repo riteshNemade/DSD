@@ -8,7 +8,7 @@ import { Image } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 const ListContent = ({ file,note,date }) => {
   return (
-    <CardViewComponent size={"lg"}>
+    <CardViewComponent>
       <View
         style={{ flex: 5, paddingHorizontal: hPadding, flexDirection: "row" }}
       >
@@ -19,7 +19,7 @@ const ListContent = ({ file,note,date }) => {
             uri: `http://34.195.168.97/hardware/28/showfile/459`
           }}/>
         </View>
-        <View style={{ flex: 7, justifyContent: "flex-start", marginTop:gapV, marginLeft:gapH }}>
+        <View style={{ flex: 7, justifyContent: "flex-start", marginLeft:gapH}}>
           <Text  style={{fontWeight:'600'}}>FILE NAME: </Text>
           <Text numberOfLines={1}>{file.filename} {'\n'}</Text>
 

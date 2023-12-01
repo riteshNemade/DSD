@@ -1,12 +1,13 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from "react";
+import Svg, { Path } from "react-native-svg";
+import { DASHBOARD_BUTTON_HEIGHT, DASHBOARD_BUTTON_WIDTH } from "../../src/constants/global";
 
 function AssetList(props) {
   return (
     <Svg
-      width={75}
-      height={75}
-      viewBox="0 0 75 75"
+      width={78}
+      height={78}
+      viewBox="0 0 78 78"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
@@ -16,7 +17,7 @@ function AssetList(props) {
         fill="#EA6E15"
       />
     </Svg>
-  )
+  );
 }
 
-export default AssetList
+export default AssetList;

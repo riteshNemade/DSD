@@ -9,6 +9,7 @@ import LinearGradientComponent from "components/LinearGradient/LinearGradientCom
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useDispatch } from "react-redux";
 import { hPadding } from "../../constants/global";
+import { verticalScale } from "react-native-size-matters/extend";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const LoginScreen = () => {
               <TextBox />
             </View>
             <View style={{ marginTop: 24 }}>
-              <PasswordBox size={70} />
+              <PasswordBox size={verticalScale(70)} />
             </View>
 
             <View
@@ -86,7 +87,7 @@ const LoginScreen = () => {
                 <Text style={{ color: "white" }}>Sign In</Text>
             </View>
               </TouchableOpacity> */}
-            <View style={{ marginTop: "5%", height: 60 }}>
+            <View style={{ marginTop: "5%", height: verticalScale(70)}}>
               <ButtonComponent text={"Sign In"} onPress={handleLogin} />
             </View>
             <View style={{ paddingHorizontal: 45, marginTop: 39 }}>

@@ -10,17 +10,15 @@ import { useState } from "react";
 import { colors, gapV, hPadding, textBox } from "../../constants/global";
 import { useDispatch, useSelector } from "react-redux";
 import { verticalScale } from "react-native-size-matters/extend";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const CompanySelectionScreen = () => {
   const [company, setCompany] = useState("");
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const initState = useSelector((state)=>{return state.global.Company})
   
-
   const handleSelect = (id,name) => {
     setCompany(name);
     dispatch({
@@ -34,9 +32,7 @@ const CompanySelectionScreen = () => {
   
   const handleSubmit = async () => {
     if (company !== "" && company !== null && company !== undefined) {
-      
       navigation.navigate("Dashboard");
-      
     } else {
       Alert.alert(
         "Error processing request",

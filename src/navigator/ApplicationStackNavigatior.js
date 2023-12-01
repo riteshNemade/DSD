@@ -19,13 +19,13 @@ const Stack = createStackNavigator();
 export default function ApplicationStackNavigatior() {
   return (
     <Stack.Navigator
-    initialRouteName="CompanySelection"
+    initialRouteName="Dashboard"
     screenOptions={{
         headerShown:false,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}
     >
-      <Stack.Screen name="SelectCompany" component={CompanySelectionScreen} />
+
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
       <Stack.Screen name="AssetOverview" component={AssetOverviewScreen} />
       <Stack.Screen name="AddAsset" component={AddAssetScreen} />
