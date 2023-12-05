@@ -15,7 +15,7 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
   });
   const handleOKPress = () => {
     
-    let url = `/hardware?company_id=${company_id}`;
+    let url = `/hardware?company_id=${company_id}&`;
     let urlFilterObject = {};
 
     InputFieldProps.companyFilter !== null

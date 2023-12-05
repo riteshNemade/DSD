@@ -9,7 +9,6 @@ const DataModalContent = ({ isModalVisible, setModalVisible, data }) => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
-
   return (
     <View>
       <Modal
@@ -29,9 +28,9 @@ const DataModalContent = ({ isModalVisible, setModalVisible, data }) => {
                     : "N/A"}{" "}
                   {"\n"}
                   EOL Date:{" "}
-                  {data.asset_eol_date !== undefined &&
-                  data.asset_eol_date !== null
-                    ? data.asset_eol_date
+                  {data.asset_eol_date?.formatted !== undefined &&
+                  data.asset_eol_date?.formatted !== null
+                    ? data.asset_eol_date?.formatted
                     : "N/A"}{" "}
                   {"\n"}
                   Bay:{" "}
@@ -40,21 +39,21 @@ const DataModalContent = ({ isModalVisible, setModalVisible, data }) => {
                     : "N/A"}{" "}
                   {"\n"}
                   Purchase Date:{" "}
-                  {data.purchase_date !== undefined &&
-                  data.purchase_date !== null
-                    ? data.purchase_date
+                  {data.purchase_date?.formatted !== undefined &&
+                  data.purchase_date?.formatted !== null
+                    ? data.purchase_date?.formatted
                     : "N/A"}{" "}
                   {"\n"}
                   Created At:{" "}
-                  {data.created_at.formatted !== undefined &&
-                  data.created_at.formatted !== null
-                    ? data.created_at.formatted
+                  {data.created_at?.formatted !== undefined &&
+                  data.created_at?.formatted !== null
+                    ? data.created_at?.formatted
                     : "N/A"}{" "}
                   {"\n"}
                   Last Updated:{" "}
-                  {data.updated_at.formatted !== undefined &&
-                  data.updated_at.formatted !== null
-                    ? data.updated_at.formatted
+                  {data.updated_at?.formatted !== undefined &&
+                  data.updated_at?.formatted !== null
+                    ? data.updated_at?.formatted
                     : "N/A"}{" "}
                 </Text>
               </View>

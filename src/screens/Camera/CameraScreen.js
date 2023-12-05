@@ -5,7 +5,7 @@ import { colors, gapH } from "../../constants/global";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import * as MediaLibrary from 'expo-media-library'; // Import MediaLibrary module
+import * as MediaLibrary from "expo-media-library"; // Import MediaLibrary module
 import CameraPreview from "./CameraPreview";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
@@ -15,36 +15,36 @@ let camera;
 export default function CameraScreen() {
   const navigation = useNavigation();
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.on);
+  const [flashMode, setFlashMode] = useState('off');
   const [capturedImage, setCapturedImage] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [startCamera, setStartCamera] = useState(false);
-  
 
   useEffect(() => {
     navigation.getParent()?.setOptions({
       tabBarStyle: {
-        display:'none'
-      }
+        display: "none",
+      },
     });
-    return () => navigation.getParent()?.setOptions({
-      tabBarStyle: {
-        backgroundColor: colors.bottomTabGray,
-        height: verticalScale(71),
-      }
-    });
+    return () =>
+      navigation.getParent()?.setOptions({
+        tabBarStyle: {
+          backgroundColor: colors.bottomTabGray,
+          height: verticalScale(71),
+        },
+      });
   }, [navigation]);
 
   const handleFlashMode = () => {
+
     if (flashMode === "on") {
       setFlashMode("off");
     } else if (flashMode === "off") {
       setFlashMode("on");
-
-      
     } else {
-      setFlashMode("auto");
+      setFlashMode("off");
     }
+    console.log(flashMode);
   };
   const takePicture = async () => {
     if (!camera) return;
@@ -68,7 +68,7 @@ export default function CameraScreen() {
     });
 
     if (!result.canceled) {
-      navigation.navigate('AddAsset', { imageUri: result.assets[0].uri });        //navigate to prev
+      navigation.navigate("AddAsset", { imageUri: result.assets[0].uri }); //navigate to prev
     }
   };
 
@@ -77,9 +77,9 @@ export default function CameraScreen() {
       try {
         const asset = await MediaLibrary.createAssetAsync(capturedImage.uri);
         // After saving the photo to the gallery, navigate back to the previous screen with the image URI
-        navigation.navigate('AddAsset', { imageUri: capturedImage.uri });
+        navigation.navigate("AddAsset", { imageUri: capturedImage.uri });
       } catch (error) {
-        console.error('Error saving photo:', error);
+        console.error("Error saving photo:", error);
       }
     }
   };
@@ -87,7 +87,11 @@ export default function CameraScreen() {
   return (
     <View style={styles.container}>
       {previewVisible && capturedImage ? (
-        <CameraPreview photo={capturedImage} retakePicture={retakePicture} savePhoto={savePhoto}/>
+        <CameraPreview
+          photo={capturedImage}
+          retakePicture={retakePicture}
+          savePhoto={savePhoto}
+        />
       ) : (
         <Camera
           style={styles.camera}
@@ -103,10 +107,17 @@ export default function CameraScreen() {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={takePicture} />
             <TouchableOpacity
-              style={styles.sideButtons}
+              style={[
+                styles.sideButtons,
+                flashMode === "on" ? { backgroundColor: "white" } : {},
+              ]}
               onPress={handleFlashMode}
             >
-              <Ionicons name="flash" size={24} color="white" />
+              <Ionicons
+                name="flash"
+                size={24}
+                color={flashMode === "on" ? "black" : "white"}
+              />
             </TouchableOpacity>
           </View>
         </Camera>
@@ -128,7 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     position: "absolute",
-    marginBottom:30,
+    marginBottom: 30,
   },
   text: {
     fontSize: 24,

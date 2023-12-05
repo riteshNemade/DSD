@@ -5,7 +5,6 @@ import { TouchableOpacity } from "react-native";
 import * as MediaLibrary from 'expo-media-library';
 
 const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
-  console.log("sdsfds", photo);
   return (
     <View
       style={{
