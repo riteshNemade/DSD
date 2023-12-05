@@ -27,7 +27,7 @@ const TopText = ({ setIsModalVisible }) => {
             <Text
               numberOfLines={1}
               style={{
-                fontSize: FONT_SIZE_REGULAR,
+                fontSize: FONT_SIZE_REGULAR-2,
                 fontWeight: 400,
                 color: colors.hyperlinkBlue,
               }}

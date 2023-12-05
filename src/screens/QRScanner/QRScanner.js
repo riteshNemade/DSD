@@ -3,10 +3,14 @@ import { StyleSheet, Text, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/native";
 import api from "../../api/api";
+import { ActivityIndicator } from "react-native-paper";
+import { colors } from "../../constants/global";
+import { Alert } from "react-native";
 
 const QRScanner = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -15,6 +19,13 @@ const QRScanner = () => {
       setHasPermission(status === "granted");
     })();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setScanned(false);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const redirectToAssetOverview = async (route) => {
     try {
@@ -41,12 +52,15 @@ const QRScanner = () => {
 
       await redirectToAssetOverview(route);
     } else {
-      alert(
-        `QR Code with data ${data} doesn't match the expected URL pattern.`
+      setScanned(true);
+      Alert.alert(
+        "QR Scan failed",
+        `QR Code with data ${data} doesn't match the expected URL pattern.`,
+        [{ text: "OK", onPress: () => setScanned(false) }]
       );
     }
   };
-  
+
   const renderCamera = () => {
     return (
       <View style={styles.cameraContainer}>
@@ -68,9 +82,17 @@ const QRScanner = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>QR SCANNER</Text>
-      <Text style={styles.paragraph}>Scan a QR code.</Text>
-      {renderCamera()}
+      {!scanned ? (
+        <>
+          <Text style={styles.title}>QR SCANNER</Text>
+          <Text style={styles.paragraph}>Scan a QR code.</Text>
+          {renderCamera()}
+        </>
+      ) : (
+        <>
+          <ActivityIndicator color={colors.blue} size={30} />
+        </>
+      )}
       {/* <TouchableOpacity style={styles.button} onPress={() => setScanned(false)}>
         <Text style={styles.buttonText}>Scan QR again</Text>
       </TouchableOpacity> */}
