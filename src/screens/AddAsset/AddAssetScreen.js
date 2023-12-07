@@ -15,7 +15,9 @@ import TopContent from "./TopContent";
 const AddAssetScreen = ({ route }) => {
   const [capturedImage, setCapturedImage] = useState(null);
   const [isOffline, setOfflineStatus] = useState(false);
-  const [imageName, setImageName] = useState('')
+  const [imageName, setImageName] = useState('');
+  const [draftsData, setDraftsData] = useState(null);
+
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const offline = !(state.isConnected && state.isInternetReachable);
@@ -25,6 +27,7 @@ const AddAssetScreen = ({ route }) => {
     return () => removeNetInfoSubscription();
   }, []);
 
+  //capture image from camera/image picker
   useEffect(() => {
     if (route.params && route.params.imageUri) {
       console.log(route.params.imageUri)
@@ -33,6 +36,14 @@ const AddAssetScreen = ({ route }) => {
       setCapturedImage(route.params.imageUri);
     }
   }, [route.params?.imageUri]);
+
+  //capture image from camera/image picker
+  useEffect(() => {
+    if (route.params && route.params?.drafts) {
+      console.log(route.params.drafts)
+      setDraftsData(route.params?.drafts);
+    }
+  }, [route.params?.drafts]);
   
   const onClearImage = () =>{
     setCapturedImage('')
@@ -46,7 +57,7 @@ const AddAssetScreen = ({ route }) => {
           {isOffline ? <OfflineHeader /> : null}
           <View style={styles.container}>
             <TopContent onClearImage={onClearImage} imageName={imageName}/>
-            <InputFields isOffline={isOffline} capturedImage={capturedImage} />
+            <InputFields isOffline={isOffline} capturedImage={capturedImage} draftsData={draftsData}/>
           </View>
         </ScrollContentViewComponent>
       </LinearGradientComponent>

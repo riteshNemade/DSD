@@ -13,9 +13,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import initDatabase, { deleteById } from "../../api/sqlite";
 import imagePlaceHolder from "assets/images/image_placeholder.png";
 import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UploadListComponent = ({
   item,
+  listLength,
   setIsDataModalVisible,
   setIsImageModalVisible,
   setImageModalData,
@@ -23,6 +26,7 @@ const UploadListComponent = ({
   refetch,
 }) => {
   let imagePath = require("assets/images/image_placeholder.png");
+  const dispatch = useDispatch();
 
   if (item.imagepath === "null") {
     imagePath = require("assets/images/image_placeholder.png");
@@ -43,21 +47,35 @@ const UploadListComponent = ({
 
   const handleDeletion = async (id) => {
     try {
-      Alert.alert("Deleting an entry", "Are you sure you want to delete this entry?", [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: async () => {
-            const db = await initDatabase();
-            await deleteById(db, id);
-            refetch();
-         
+       Alert.alert(
+        "Deleting an entry",
+        "Are you sure you want to delete this entry?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
           },
-        },
-      ]);
+          {
+            text: "OK",
+            onPress: async () => {
+              const db = await initDatabase();
+              await deleteById(db, id);
+              if (listLength === 1) {
+                dispatch({
+                  type: "DISABLE",
+                });
+                await AsyncStorage.setItem(
+                  "sync",
+                  JSON.stringify({ isEnabled: false })
+                );
+              }
+              refetch();
+            },
+          },
+        ]
+      );
+
+
     } catch (err) {
       console.log("Error: ", err);
     }
@@ -84,7 +102,7 @@ const UploadListComponent = ({
             onPress={() => handleDataModal()}
           >
             <Text style={{ fontSize: 14, color: colors.blue }}>
-              Tag: {item?.tagId}
+              Tag: {item?.tagId} {item?.flag === "1" ? "(Draft)" : ""}
             </Text>
             <Text style={{ fontSize: 14 }}>Name: {item?.assetName}</Text>
             <Text style={{ fontSize: 14 }} numberOfLines={1}>

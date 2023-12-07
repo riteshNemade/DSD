@@ -6,23 +6,27 @@ import { Dropdown } from "react-native-element-dropdown";
 import { fetchOptions } from "../../hooks/AddAsset/AddAssetHooks";
 import { inputFieldState } from "../../hooks/AddAsset/AddAssetFormHooks";
 import FooterButtons from "./FooterButtons";
+
 //prettier-ignore
-import initDatabase, {createTable, getSyncData,saveData} from "../../api/sqlite";
+import initDatabase, {createTable, dropTable, getSyncData,saveData, saveDataToDrafts, updateDraft} from "../../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { initBackgroundFetch } from "../../utils/syncOfflineData";
+import { useEffect } from "react";
 
-const InputFields = ({ isOffline, capturedImage }) => {
-  /***************************************State,Setters,Dropdown List Data******************************************************* */
+const InputFields = ({ isOffline, capturedImage, draftsData }) => {
+  /***************************************State,Setters,Dropdown List Data***************************************** */
   //prettier-ignore
   const {
-    assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, location, description, setAssetName, setModelNumber, setTagId, setCategory, setManufacturers,
-    setSuppliers, setAssetMaintenance, setDepartment, setLocation, setDescription
-  } = inputFieldState();
+    assetTag,  setAssetTag,  serial,  setSerial,  model,  setModel,  status,  setStatus,  location,  setLocation,  assetName,  setAssetName,  warranty,  setWarranty,  orderNumber,  setOrderNumber,  suppliers,  setSuppliers,  purchaseCost,  setPurchaseCost,  notes,  setNotes,  draftAssetId,  setDraftAssetId} = inputFieldState();
   //prettier-ignore
   const {
-    categoriesList, manufacturersList, suppliersList, maintenancesList, departmentsList, locationsList, assetTypeData
+    modelsList,
+statusList,
+locationsList,
+suppliersList
   } = fetchOptions();
+
   const companyName = useSelector((state) => {
     return state.global.companyName;
   });
@@ -30,10 +34,10 @@ const InputFields = ({ isOffline, capturedImage }) => {
   /***************************************Functions****************************************************************/
   const onPressSave = async () => {
     //prettier-ignore
-    const data = {
-      assetName,modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company:companyName , location, description, 
-      imagepath: capturedImage, flag: false,
-    };
+    // const data = {
+    //   assetName,modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company:companyName , location, description,
+    //   imagepath: capturedImage, flag: 0,
+    // };
 
     if (isOffline) {
       console.log("Internet connection unavailabe. Saving data locally...");
@@ -51,24 +55,90 @@ const InputFields = ({ isOffline, capturedImage }) => {
       console.log("Not Offline. Saving data to server immediately.");
       alert("Data Saved Successfully.");
     }
-    setAssetName(null);
-    setModelNumber(null);
-    setTagId(null);
-    setCategory(null);
-    setManufacturers(null);
-    setSuppliers(null);
-    setAssetMaintenance(null);
-    setDepartment(null);
-    setLocation(null);
-    setDescription(null);
+    // setAssetName(null);
+    // setModelNumber(null);
+    // setTagId(null);
+    // setCategory(null);
+    // setManufacturers(null);
+    // setSuppliers(null);
+    // setAssetMaintenance(null);
+    // setDepartment(null);
+    // setLocation(null);
+    // setDescription(null);
   };
 
-  const onPressPrint = async () => {
+  const onSaveToDrafts = async () => {
+    const data = {
+      id: draftAssetId,
+      assetName,
+      modelNumber,
+      // tagId,
+      category,
+      // manufacturers,
+      suppliers,
+      maintenance,
+      department,
+      company: companyName,
+      location,
+      description,
+      imagepath: capturedImage,
+      flag: 0,
+    };
+    console.log("Data: ", data);
     const db = await initDatabase();
-    const result = await getSyncData(db);
-    console.log(result);
-    console.log(await AsyncStorage.getItem("sync"));
+    await createTable(db);
+    if (draftAssetId !== null) {
+      await updateDraft(db, data);
+      await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+      dispatch({
+        type: "ENABLE",
+      });
+    } else {
+      await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+      await saveDataToDrafts(db, data);
+      dispatch({
+        type: "ENABLE",
+      });
+    }
+
+    alert("Data Saved in Drafts.");
+
+    // setAssetName(null);
+    // setModelNumber(null);
+    // setTagId(null);
+    // setCategory(null);
+    // setManufacturers(null);
+    // setSuppliers(null);
+    // setAssetMaintenance(null);
+    // setDepartment(null);
+    // setLocation(null);
+    // setDescription(null);
   };
+
+  const setValues = (dataObject, setters) => {
+    Object.entries(dataObject).forEach(([key, value]) => {
+      if (setters[key]) {
+        setters[key](value === "null" ? "" : value);
+      }
+    });
+  };
+  useEffect(() => {
+    if (draftsData !== null) {
+      setValues(draftsData, {
+        id: setDraftAssetId,
+        assetName: setAssetName,
+        modelNumber: setModelNumber,
+        // tagId: setTagId,
+        category: setCategory,
+        manufacturers: setManufacturers,
+        suppliers: setSuppliers,
+        maintenance: setAssetMaintenance,
+        department: setDepartment,
+        location: setLocation,
+        description: setDescription,
+      });
+    }
+  }, [draftsData]);
 
   return (
     <>
@@ -76,141 +146,157 @@ const InputFields = ({ isOffline, capturedImage }) => {
         editable={false}
         selectTextOnFocus={false}
         value={companyName}
-        placeholder="Company"
-        placeholderStyle={{ color: "#fff" }}
         style={[
           styles.inputContainer,
           { backgroundColor: "#e0e0e0", color: "#000" },
         ]}
       />
+
       <View style={{ flex: 7 }}>
+        {/* AssetTag */}
         <TextInput
           style={styles.inputContainer}
+          placeholder="Asset Tag"
+          placeholderTextColor={colors.gray}
+          value={assetTag}
+          onChangeText={(text) => {
+            setAssetTag(text);
+          }}
+        />
+        {/* SERIAL */}
+        <TextInput
+          style={styles.inputContainer}
+          placeholder="Serial"
+          placeholderTextColor={colors.gray}
+          value={serial}
+          onChangeText={(text) => {
+            setSerial(text);
+          }}
+        />
+        {/* MODEL */}
+        <Dropdown
+          selectedTextStyle={styles.selectedTextStyle}
+          style={styles.inputContainer}
+          placeholderStyle={styles.placeholderStyle}
+          placeholder={"Model"}
+          labelField="name"
+          valueField="id"
+          search
+          searchField={"name"}
+          inputSearchStyle={styles.dropdownSearch}
+          value={model}
+          onChange={(item) => {
+            setModel(item.id);
+          }}
+          data={modelsList}
+        />
+        {/* STATUS */}
+        <Dropdown
+          selectedTextStyle={styles.selectedTextStyle}
+          style={styles.inputContainer}
+          placeholderStyle={styles.placeholderStyle}
+          data={statusList}
+          placeholder={"Status"}
+          value={status}
+          labelField="name"
+          valueField="name"
+          onChange={(item) => {
+            setStatus(item.name);
+          }}
+        />
+        {/* LOCATION */}
+        <Dropdown
+          selectedTextStyle={styles.selectedTextStyle}
+          style={styles.inputContainer}
+          placeholderStyle={styles.placeholderStyle}
+          data={locationsList}
+          placeholder={"Locations"}
+          placeholderTextColor={colors.gray}
+          labelField="name"
+          valueField="id"
+          value={location}
+          onChange={(item) => {
+            setLocation(item.id);
+          }}
+        />
+        {/* ASSETNAME */}
+        <TextInput
+          style={styles.inputContainer}
+          placeholderStyle={styles.placeholderStyle}
+          placeholderTextColor={colors.gray}
           placeholder={"Asset Name"}
-          placeholderStyle={{ color: colors.gray }}
           value={assetName}
           onChangeText={(text) => {
             setAssetName(text);
           }}
         />
-        {/* <Dropdown
-          data={assetTypeData}
-          style={styles.inputContainer}
-          placeholder={"Asset Type"}
-          placeholderStyle={{ color: colors.gray }}
-          labelField="label"
-        /> */}
-        {/* <TextInput
-        style={styles.inputContainer}
-        placeholder="Asset Location"
-        placeholderTextColor={colors.gray}
-      /> */}
+        {/* WARRANTY */}
         <TextInput
           style={styles.inputContainer}
-          placeholder="Model No"
+          placeholderStyle={styles.placeholderStyle}
           placeholderTextColor={colors.gray}
-          value={modelNumber}
+          placeholder="Warranty (months)"
+          value={warranty}
           onChangeText={(text) => {
-            setModelNumber(text);
+            setWarranty(text);
           }}
         />
+        {/* ORDER NUMBER */}
         <TextInput
           style={styles.inputContainer}
-          placeholder="Tag ID"
+          placeholder="Order Number"
           placeholderTextColor={colors.gray}
-          value={tagId}
+          value={orderNumber}
           onChangeText={(text) => {
-            setTagId(text);
+            setOrderNumber(text);
           }}
         />
 
+        {/* PURCHASE_DATE */}
+        {/* EOL_DATE */}
+
+        {/* SUPPLIERS */}
         <Dropdown
-          data={categoriesList}
+          selectedTextStyle={styles.selectedTextStyle}
           style={styles.inputContainer}
-          placeholder={"Categories"}
-          placeholderStyle={{ color: colors.gray }}
-          value={category}
-          labelField="name"
-          valueField="name"
-          onChange={(item) => {
-            setCategory(item.name);
-          }}
-        />
-        <Dropdown
-          data={manufacturersList}
-          style={styles.inputContainer}
-          placeholder={"Manufacturers"}
-          placeholderStyle={{ color: colors.gray }}
-          value={manufacturers}
-          labelField="name"
-          valueField="name"
-          onChange={(item) => {
-            setManufacturers(item.name);
-          }}
-        />
-        <Dropdown
+          placeholderStyle={styles.placeholderStyle}
           data={suppliersList}
-          style={styles.inputContainer}
           placeholder={"Suppliers"}
-          placeholderStyle={{ color: colors.gray }}
           labelField="name"
-          valueField="name"
+          valueField="id"
           value={suppliers}
           onChange={(item) => {
             setSuppliers(item.name);
           }}
         />
-        <Dropdown
-          data={maintenancesList}
+        {/* PURCHASE_COST */}
+        <TextInput
           style={styles.inputContainer}
-          placeholder={"Asset Maintenances"}
-          placeholderStyle={{ color: colors.gray }}
-          labelField="label"
-          valueField="label"
-          value={maintenance}
-          onChange={(item) => {
-            setAssetMaintenance(item.label);
-          }}
-        />
-        <Dropdown
-          data={departmentsList}
-          style={styles.inputContainer}
-          placeholder={"Departments"}
-          placeholderStyle={{ color: colors.gray }}
-          labelField="name"
-          valueField="name"
-          value={department}
-          onChange={(item) => {
-            setDepartment(item.name);
+          placeholder="Estimated Purchase Cost"
+          placeholderTextColor={colors.gray}
+          value={purchaseCost}
+          onChangeText={(text) => {
+            setPurchaseCost(parseFloat(text));
           }}
         />
 
-        <Dropdown
-          data={locationsList}
-          style={styles.inputContainer}
-          placeholder={"Locations"}
-          placeholderStyle={{ color: colors.gray }}
-          labelField="name"
-          valueField="name"
-          value={location}
-          onChange={(item) => {
-            setLocation(item.name);
-          }}
-        />
-
+        {/* NOTES */}
         <TextInput
           style={styles.bigInputContainer}
-          placeholder="Description"
+          placeholder="Notes"
           textAlignVertical="top"
           placeholderTextColor={colors.gray}
-          value={description}
+          value={notes}
           onChangeText={(text) => {
-            setDescription(text);
+            setNotes(text);
           }}
         />
       </View>
       {/* Footer buttons here to manage state here itself */}
-      <FooterButtons handleSave={onPressSave} handlePrint={onPressPrint} />
+      <FooterButtons
+        handleSave={onPressSave}
+        handleSaveToDraft={onSaveToDrafts}
+      />
     </>
   );
 };
@@ -225,6 +311,7 @@ const styles = StyleSheet.create({
     borderRadius: textBox.textBorderRadius,
     marginTop: gapV + 1,
     padding: textBox.padding,
+    fontSize: 14,
   },
   bigInputContainer: {
     height: textBox.bigTextBoxHeight,
@@ -233,5 +320,18 @@ const styles = StyleSheet.create({
     borderRadius: textBox.textBorderRadius,
     marginTop: gapV,
     padding: textBox.padding,
+  },
+  selectedTextStyle: {
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    color: colors.gray,
+    fontSize: 14,
+  },
+  dropdownSearch: {
+    borderColor: colors.gray,
+    borderRadius: textBox.textBorderRadius,
+    marginTop: gapV,
+    fontSize: 14,
   },
 });

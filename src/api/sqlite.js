@@ -27,7 +27,7 @@ export async function createTable(db) {
       location VARCHAR,
       description VARCHAR,
       imagepath VARCHAR,
-      flag BOOLEAN
+      flag VARCHAR
     );
   `;
   await db.transaction((tx) => {
@@ -47,7 +47,7 @@ export const getSyncData = async (db) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `SELECT * from ${tableName} where flag=0`,
+        `SELECT * from ${tableName}`,
         [],
         (_, { rows }) => {
           // Assuming you want to return rows from the query
@@ -69,24 +69,75 @@ export const saveData = async (db, data) => {
         assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance,
         department, company, location, description, imagepath, flag
       ) VALUES (
-        '${data.assetName}',
-        '${data.modelNumber}',
-        '${data.tagId}',
-        '${data.category}',
-        '${data.manufacturers}',
-        '${data.suppliers}',
-        '${data.maintenance}',
-        '${data.department}',
-        '${data.company}',
-        '${data.location}',
-        '${data.description}',
-        '${data.imagepath}',
-        ${data.flag}
+        '${data.assetName | null}',
+        '${data.modelNumber | null}',
+        '${data.tagId | null}',
+        '${data.category | null}',
+        '${data.manufacturers | null}',
+        '${data.suppliers | null}',
+        '${data.maintenance | null}',
+        '${data.department | null}',
+        '${data.company | null}',
+        '${data.location | null}',
+        '${data.description | null}',
+        '${data.imagepath | null}',
+        0
       )
     `;
 
   db.transaction((tx) => {
     tx.executeSql(insertQuery);
+  });
+};
+
+export const saveDataToDrafts = async (db, data) => {
+  const insertQuery = `
+      INSERT OR REPLACE INTO ${tableName} (
+        assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance,
+        department, company, location, description, imagepath, flag
+      ) VALUES (
+        '${data.assetName || null}',
+        '${data.modelNumber || null}',
+        '${data.tagId || null}',
+        '${data.category || null}',
+        '${data.manufacturers || null}',
+        '${data.suppliers || null}',
+        '${data.maintenance || null}',
+        '${data.department || null}',
+        '${data.company || null}',
+        '${data.location || null}',
+        '${data.description || null}',
+        '${data.imagepath || null}',
+        1
+      )
+    `;
+
+  db.transaction((tx) => {
+    tx.executeSql(insertQuery);
+  });
+};
+
+export const updateDraft = async (db, data) => {
+  const updateQuery = `
+  UPDATE ${tableName} SET
+    assetName = '${data.assetName || null}',
+    modelNumber = '${data.modelNumber || null}',
+    tagId = '${data.tagId || null}',
+    category = '${data.category || null}',
+    manufacturers = '${data.manufacturers || null}',
+    suppliers = '${data.suppliers || null}',
+    maintenance = '${data.maintenance || null}',
+    department = '${data.department || null}',
+    company = '${data.company || null}',
+    location = '${data.location || null}',
+    description = '${data.description || null}',
+    imagepath = '${data.imagepath || null}',
+    flag = 1
+  WHERE id = ${data.id}
+`;
+
+  db.transaction((tx) => {
+    tx.executeSql(updateQuery);
   });
 };
 

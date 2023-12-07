@@ -20,6 +20,7 @@ const UploadListContent = ({
           <UploadListComponent
             refetch={refetch}
             item={item}
+            listLength={data?.length}
             setIsDataModalVisible={setIsDataModalVisible}
             setIsImageModalVisible={setIsImageModalVisible}
             setImageModalData={setImageModalData}

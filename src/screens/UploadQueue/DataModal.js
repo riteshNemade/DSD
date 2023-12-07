@@ -4,11 +4,20 @@ import { verticalScale, scale } from "react-native-size-matters/extend";
 import { AntDesign } from "@expo/vector-icons";
 import { colors, hPadding } from "../../constants/global";
 import { Text } from "react-native";
+import ButtonComponent from "../../components/Button/ButtonComponent";
+import { useNavigation } from "@react-navigation/native";
 
 const DataModal = ({ isModalVisible, setModalVisible, data }) => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
+  
+  const handleNavigation = () => {
+    setModalVisible(false);
+    navigation.navigate("AddAsset", {drafts : data});
+  };
+
+  const navigation = useNavigation();
   return (
     <View>
       <Modal
@@ -86,11 +95,22 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
                   {"\n"}
                 </Text>
               </View>
-              <TouchableOpacity style={{ flex: 1 }} onPress={handleModalClose}>
-                <View style={styles.closeButton}>
-                  <AntDesign name="close" size={24} color={colors.gray} />
-                </View>
-              </TouchableOpacity>
+              <View style={styles.editButton}>
+                <ButtonComponent
+                  text="Edit"
+                  onPress={() => handleNavigation()}
+                />
+              </View>
+              <View>
+                <TouchableOpacity
+                  style={{ flex: 1 }}
+                  onPress={handleModalClose}
+                >
+                  <View style={styles.closeButton}>
+                    <AntDesign name="close" size={24} color={colors.gray} />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
@@ -132,5 +152,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 2,
     lineHeight: 19,
+  },
+  editButton: {
+    position: "absolute",
+    bottom: 1,
+    right: 1,
+    flex: 1,
+    marginRight: 10,
+    marginBottom: 10,
   },
 });
