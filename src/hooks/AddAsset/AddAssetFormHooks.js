@@ -1,18 +1,63 @@
-import { useState } from "react";
+import { useReducer } from "react";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_STATE":
+      return { ...state, [action.payload.key]: action.payload.value };
+    case "RESET_STATE":
+      return {
+        assetTag: null,
+        serial: null,
+        model: null,
+        status: null,
+        location: null,
+        assetName: null,
+        warranty: null,
+        orderNumber: null,
+        supplier: null,
+        purchaseCost: null,
+        notes: null,
+        draftAssetId: null,
+        purchaseDate: null,
+        eolDate: null,
+      };
+    default:
+      return state;
+  }
+};
 
 export function inputFieldState() {
-  const [assetTag, setAssetTag] = useState(null);
-  const [serial, setSerial] = useState(null);
-  const [model, setModel] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [assetName, setAssetName] = useState(null);
-  const [warranty, setWarranty] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
-  const [suppliers, setSuppliers] = useState(null);
-  const [purchaseCost, setPurchaseCost] = useState(null);
-  const [notes, setNotes] = useState(null);
-  const [draftAssetId, setDraftAssetId] = useState(null);
+  const initialState = {
+    assetTag: null,
+    serial: null,
+    model: null,
+    status: null,
+    location: null,
+    assetName: null,
+    warranty: null,
+    orderNumber: null,
+    supplier: null,
+    purchaseCost: null,
+    notes: null,
+    draftAssetId: null,
+    purchaseDate: null,
+    eolDate: null,
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const updateState = (key, value) => {
+    dispatch({
+      type: "UPDATE_STATE",
+      payload: { key, value },
+    });
+  };
+  const resetState = (key, value) => {
+    dispatch({
+      type: "RESET_STATE",
+      payload: { key, value },
+    });
+  };
 
   /*
   state,
@@ -22,29 +67,8 @@ export function inputFieldState() {
   */
 
   return {
-    assetTag,
-    setAssetTag,
-    serial,
-    setSerial,
-    model,
-    setModel,
-    status,
-    setStatus,
-    location,
-    setLocation,
-    assetName,
-    setAssetName,
-    warranty,
-    setWarranty,
-    orderNumber,
-    setOrderNumber,
-    suppliers,
-    setSuppliers,
-    purchaseCost,
-    setPurchaseCost,
-    notes,
-    setNotes,
-    draftAssetId,
-    setDraftAssetId,
+    state,
+    updateState,
+    resetState,
   };
 }

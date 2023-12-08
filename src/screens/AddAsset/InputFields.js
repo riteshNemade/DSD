@@ -1,11 +1,12 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
 import { TextInput } from "react-native";
 import { textBox, colors, gapV } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
 import { fetchOptions } from "../../hooks/AddAsset/AddAssetHooks";
 import { inputFieldState } from "../../hooks/AddAsset/AddAssetFormHooks";
 import FooterButtons from "./FooterButtons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 //prettier-ignore
 import initDatabase, {createTable, dropTable, getSyncData,saveData, saveDataToDrafts, updateDraft} from "../../api/sqlite";
@@ -13,19 +14,28 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { initBackgroundFetch } from "../../utils/syncOfflineData";
 import { useEffect } from "react";
+import { Feather } from "@expo/vector-icons";
 
 const InputFields = ({ isOffline, capturedImage, draftsData }) => {
   /***************************************State,Setters,Dropdown List Data***************************************** */
-  //prettier-ignore
-  const {
-    assetTag,  setAssetTag,  serial,  setSerial,  model,  setModel,  status,  setStatus,  location,  setLocation,  assetName,  setAssetName,  warranty,  setWarranty,  orderNumber,  setOrderNumber,  suppliers,  setSuppliers,  purchaseCost,  setPurchaseCost,  notes,  setNotes,  draftAssetId,  setDraftAssetId} = inputFieldState();
-  //prettier-ignore
-  const {
-    modelsList,
-statusList,
-locationsList,
-suppliersList
-  } = fetchOptions();
+  const { state, updateState, resetState } = inputFieldState();
+  const { modelsList, statusList, locationsList, suppliersList } =
+    fetchOptions();
+
+  const [isPurchaseDatePickerVisible, setIsPurchaseDatePickerVisible] =
+    useState(false);
+  const [isEolDatePickerVisible, setIsEolDatePickerVisible] = useState(false);
+
+  const onPurchaseDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setIsPurchaseDatePickerVisible(false);
+    updateState("purchaseDate", currentDate);
+  };
+  const onEolDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setIsEolDatePickerVisible(false);
+    updateState("eolDate", currentDate);
+  };
 
   const companyName = useSelector((state) => {
     return state.global.companyName;
@@ -33,6 +43,11 @@ suppliersList
   const dispatch = useDispatch();
   /***************************************Functions****************************************************************/
   const onPressSave = async () => {
+    console.log(state);
+    const data = {
+      ...state,
+      company: companyName,
+    };
     //prettier-ignore
     // const data = {
     //   assetName,modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company:companyName , location, description,
@@ -55,6 +70,8 @@ suppliersList
       console.log("Not Offline. Saving data to server immediately.");
       alert("Data Saved Successfully.");
     }
+    resetState();
+
     // setAssetName(null);
     // setModelNumber(null);
     // setTagId(null);
@@ -69,40 +86,30 @@ suppliersList
 
   const onSaveToDrafts = async () => {
     const data = {
-      id: draftAssetId,
-      assetName,
-      modelNumber,
-      // tagId,
-      category,
-      // manufacturers,
-      suppliers,
-      maintenance,
-      department,
+      // id: draftAssetId,
+      ...state,
       company: companyName,
-      location,
-      description,
-      imagepath: capturedImage,
-      flag: 0,
     };
     console.log("Data: ", data);
     const db = await initDatabase();
     await createTable(db);
-    if (draftAssetId !== null) {
-      await updateDraft(db, data);
-      await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
-      dispatch({
-        type: "ENABLE",
-      });
-    } else {
-      await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
-      await saveDataToDrafts(db, data);
-      dispatch({
-        type: "ENABLE",
-      });
-    }
+    // if (draftAssetId !== null) {
+    //   await updateDraft(db, data);
+    //   await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+    //   dispatch({
+    //     type: "ENABLE",
+    //   });
+    // } else {
+    await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+    await saveDataToDrafts(db, data);
+    dispatch({
+      type: "ENABLE",
+    });
+    // }
 
     alert("Data Saved in Drafts.");
 
+    resetState();
     // setAssetName(null);
     // setModelNumber(null);
     // setTagId(null);
@@ -158,9 +165,9 @@ suppliersList
           style={styles.inputContainer}
           placeholder="Asset Tag"
           placeholderTextColor={colors.gray}
-          value={assetTag}
+          value={state.assetTag}
           onChangeText={(text) => {
-            setAssetTag(text);
+            updateState("assetTag", text);
           }}
         />
         {/* SERIAL */}
@@ -168,9 +175,9 @@ suppliersList
           style={styles.inputContainer}
           placeholder="Serial"
           placeholderTextColor={colors.gray}
-          value={serial}
+          value={state.serial}
           onChangeText={(text) => {
-            setSerial(text);
+            updateState("serial", text);
           }}
         />
         {/* MODEL */}
@@ -183,10 +190,11 @@ suppliersList
           valueField="id"
           search
           searchField={"name"}
+          searchPlaceholder="Search Model"
           inputSearchStyle={styles.dropdownSearch}
-          value={model}
+          value={state.model}
           onChange={(item) => {
-            setModel(item.id);
+            updateState("model", item.id);
           }}
           data={modelsList}
         />
@@ -197,11 +205,11 @@ suppliersList
           placeholderStyle={styles.placeholderStyle}
           data={statusList}
           placeholder={"Status"}
-          value={status}
+          value={state.status}
           labelField="name"
-          valueField="name"
+          valueField="id"
           onChange={(item) => {
-            setStatus(item.name);
+            updateState("status", item.id);
           }}
         />
         {/* LOCATION */}
@@ -214,9 +222,9 @@ suppliersList
           placeholderTextColor={colors.gray}
           labelField="name"
           valueField="id"
-          value={location}
+          value={state.location}
           onChange={(item) => {
-            setLocation(item.id);
+            updateState("location", item.id);
           }}
         />
         {/* ASSETNAME */}
@@ -225,9 +233,9 @@ suppliersList
           placeholderStyle={styles.placeholderStyle}
           placeholderTextColor={colors.gray}
           placeholder={"Asset Name"}
-          value={assetName}
+          value={state.assetName}
           onChangeText={(text) => {
-            setAssetName(text);
+            updateState("assetName", text);
           }}
         />
         {/* WARRANTY */}
@@ -236,9 +244,9 @@ suppliersList
           placeholderStyle={styles.placeholderStyle}
           placeholderTextColor={colors.gray}
           placeholder="Warranty (months)"
-          value={warranty}
+          value={state.warranty}
           onChangeText={(text) => {
-            setWarranty(text);
+            updateState("warranty", text);
           }}
         />
         {/* ORDER NUMBER */}
@@ -246,14 +254,78 @@ suppliersList
           style={styles.inputContainer}
           placeholder="Order Number"
           placeholderTextColor={colors.gray}
-          value={orderNumber}
+          value={state.orderNumber}
           onChangeText={(text) => {
-            setOrderNumber(text);
+            updateState("orderNumber", text);
           }}
         />
 
         {/* PURCHASE_DATE */}
+        <TouchableOpacity
+          style={[styles.inputContainer, { flexDirection: "row" }]}
+          onPress={() => setIsPurchaseDatePickerVisible(true)}
+        >
+          <TextInput
+            style={{ flex: 9, color: "black" }}
+            placeholder="Purchase Date"
+            placeholderTextColor={colors.gray}
+            value={state.purchaseDate?.toISOString().split("T")[0]}
+            editable={false}
+          />
+          {state.purchaseDate !== null && (
+            <TouchableOpacity
+              style={{ flex: 2, alignItems: "center" }}
+              onPress={() => setPurchaseDate(null)}
+            >
+              <Feather name="x" size={20} color="#555555" />
+            </TouchableOpacity>
+          )}
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <Feather name="calendar" size={20} color="#555555" />
+          </View>
+        </TouchableOpacity>
+
         {/* EOL_DATE */}
+        <TouchableOpacity
+          style={[styles.inputContainer, { flexDirection: "row" }]}
+          onPress={() => setIsEolDatePickerVisible(true)}
+        >
+          <TextInput
+            style={{ flex: 9, color: "black" }}
+            placeholder="EOL Date"
+            placeholderTextColor={colors.gray}
+            value={state.eolDate?.toISOString().split("T")[0]}
+            editable={false}
+          />
+          {state.eolDate !== null && (
+            <TouchableOpacity
+              style={{ flex: 2, alignItems: "center" }}
+              onPress={() => setEolDate(null)}
+            >
+              <Feather name="x" size={20} color="#555555" />
+            </TouchableOpacity>
+          )}
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <Feather name="calendar" size={20} color="#555555" />
+          </View>
+        </TouchableOpacity>
+
+        {isPurchaseDatePickerVisible && (
+          <DateTimePicker
+            display="spinner"
+            value={state.purchaseDate || new Date()}
+            mode={"date"}
+            onChange={onPurchaseDateChange}
+          />
+        )}
+        {isEolDatePickerVisible && (
+          <DateTimePicker
+            display="spinner"
+            value={state.eolDate || new Date()}
+            mode={"date"}
+            onChange={onEolDateChange}
+          />
+        )}
 
         {/* SUPPLIERS */}
         <Dropdown
@@ -264,9 +336,9 @@ suppliersList
           placeholder={"Suppliers"}
           labelField="name"
           valueField="id"
-          value={suppliers}
+          value={state.supplier}
           onChange={(item) => {
-            setSuppliers(item.name);
+            updateState("supplier", item.id);
           }}
         />
         {/* PURCHASE_COST */}
@@ -274,9 +346,9 @@ suppliersList
           style={styles.inputContainer}
           placeholder="Estimated Purchase Cost"
           placeholderTextColor={colors.gray}
-          value={purchaseCost}
+          value={state.purchaseCost?.toString() || ""}
           onChangeText={(text) => {
-            setPurchaseCost(parseFloat(text));
+            updateState("purchaseCost", parseFloat(text));
           }}
         />
 
@@ -286,9 +358,9 @@ suppliersList
           placeholder="Notes"
           textAlignVertical="top"
           placeholderTextColor={colors.gray}
-          value={notes}
+          value={state.notes}
           onChangeText={(text) => {
-            setNotes(text);
+            updateState("notes", text);
           }}
         />
       </View>
@@ -331,7 +403,6 @@ const styles = StyleSheet.create({
   dropdownSearch: {
     borderColor: colors.gray,
     borderRadius: textBox.textBorderRadius,
-    marginTop: gapV,
     fontSize: 14,
   },
 });

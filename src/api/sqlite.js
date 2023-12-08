@@ -15,17 +15,19 @@ export async function createTable(db) {
   const query = `
     CREATE TABLE IF NOT EXISTS ${tableName} (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      assetName VARCHAR,
-      modelNumber VARCHAR,
-      tagId VARCHAR,
-      category VARCHAR,
-      manufacturers VARCHAR,
-      suppliers VARCHAR,
-      maintenance VARCHAR,
-      department VARCHAR,
+      asset_tag VARCHAR,
+      serial VARCHAR,
+      model_id INT,
+      status_id INT,
+      location_id INT,
+      asset_name VARCHAR,
+      warranty INT,
+      purchase_date TEXT,
+      eol_date TEXT,
+      supplier_id INT,
+      purchase_cost REAL,
       company VARCHAR,
-      location VARCHAR,
-      description VARCHAR,
+      notes VARCHAR,
       imagepath VARCHAR,
       flag VARCHAR
     );
@@ -66,21 +68,21 @@ export const getSyncData = async (db) => {
 export const saveData = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
-        assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance,
-        department, company, location, description, imagepath, flag
-      ) VALUES (
-        '${data.assetName | null}',
-        '${data.modelNumber | null}',
-        '${data.tagId | null}',
-        '${data.category | null}',
-        '${data.manufacturers | null}',
-        '${data.suppliers | null}',
-        '${data.maintenance | null}',
-        '${data.department | null}',
-        '${data.company | null}',
-        '${data.location | null}',
-        '${data.description | null}',
-        '${data.imagepath | null}',
+        asset_tag, serial, model_id, status_id, location_id, asset_name, warranty, purchase_date, eol_date, supplier_id, purchase_cost, company, notes, imagepath, flag) VALUES (
+        '${data.assetTag || null}',
+        '${data.serial || null}',
+        '${data.model || null}',
+        '${data.status || null}',
+        '${data.location || null}',
+        '${data.assetName || null}',
+        '${data.warranty || null}',
+        '${data.purchaseDate || null}',
+        '${data.eolDate || null}',
+        '${data.supplier || null}',
+        '${data.purchaseCost || null}',
+        '${data.company || null}',
+        '${data.notes || null}',
+        '${data.imagepath || null}',
         0
       )
     `;
@@ -93,20 +95,20 @@ export const saveData = async (db, data) => {
 export const saveDataToDrafts = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
-        assetName, modelNumber, tagId, category, manufacturers, suppliers, maintenance,
-        department, company, location, description, imagepath, flag
-      ) VALUES (
-        '${data.assetName || null}',
-        '${data.modelNumber || null}',
-        '${data.tagId || null}',
-        '${data.category || null}',
-        '${data.manufacturers || null}',
-        '${data.suppliers || null}',
-        '${data.maintenance || null}',
-        '${data.department || null}',
-        '${data.company || null}',
+        asset_tag, serial, model_id, status_id, location_id, asset_name, warranty, purchase_date, eol_date, supplier_id, purchase_cost, company, notes, imagepath, flag) VALUES (
+        '${data.assetTag || null}',
+        '${data.serial || null}',
+        '${data.model || null}',
+        '${data.status || null}',
         '${data.location || null}',
-        '${data.description || null}',
+        '${data.assetName || null}',
+        '${data.warranty || null}',
+        '${data.purchaseDate || null}',
+        '${data.eolDate || null}',
+        '${data.supplier || null}',
+        '${data.purchaseCost || null}',
+        '${data.company || null}',
+        '${data.notes || null}',
         '${data.imagepath || null}',
         1
       )
