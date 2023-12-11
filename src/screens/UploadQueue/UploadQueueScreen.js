@@ -22,9 +22,11 @@ const UploadQueueScreen = () => {
   const [isImageModalVisible, setIsImageModalVisible] = useState(false);
 
   const dispatch = useDispatch();
+  
   const fetchDataFn = async () => {
     const db = await initDatabase();
     const offlineData = await getSyncData(db);
+    console.log(offlineData)
     setData(offlineData._array);
   };
 

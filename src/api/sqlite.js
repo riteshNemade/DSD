@@ -18,13 +18,17 @@ export async function createTable(db) {
       asset_tag VARCHAR,
       serial VARCHAR,
       model_id INT,
+      model VARCHAR,
       status_id INT,
+      status VARCHAR,
       location_id INT,
+      location VARCHAR,
       asset_name VARCHAR,
       warranty INT,
       purchase_date TEXT,
       eol_date TEXT,
       supplier_id INT,
+      supplier VARCHAR,
       purchase_cost REAL,
       company VARCHAR,
       notes VARCHAR,
@@ -53,6 +57,7 @@ export const getSyncData = async (db) => {
         [],
         (_, { rows }) => {
           // Assuming you want to return rows from the query
+          console.log(rows);
           resolve(rows);
         },
         (_, error) => {
@@ -68,16 +73,20 @@ export const getSyncData = async (db) => {
 export const saveData = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
-        asset_tag, serial, model_id, status_id, location_id, asset_name, warranty, purchase_date, eol_date, supplier_id, purchase_cost, company, notes, imagepath, flag) VALUES (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
         '${data.assetTag || null}',
         '${data.serial || null}',
+        '${data.modelId || null}',
         '${data.model || null}',
+        '${data.statusId || null}',
         '${data.status || null}',
+        '${data.locationId || null}',
         '${data.location || null}',
         '${data.assetName || null}',
         '${data.warranty || null}',
         '${data.purchaseDate || null}',
         '${data.eolDate || null}',
+        '${data.supplierId || null}',
         '${data.supplier || null}',
         '${data.purchaseCost || null}',
         '${data.company || null}',
@@ -94,17 +103,21 @@ export const saveData = async (db, data) => {
 
 export const saveDataToDrafts = async (db, data) => {
   const insertQuery = `
-      INSERT OR REPLACE INTO ${tableName} (
-        asset_tag, serial, model_id, status_id, location_id, asset_name, warranty, purchase_date, eol_date, supplier_id, purchase_cost, company, notes, imagepath, flag) VALUES (
+      INSERT OR REPLACE INTO ${tableName}  (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
         '${data.assetTag || null}',
         '${data.serial || null}',
+        '${data.modelId || null}',
         '${data.model || null}',
+        '${data.statusId || null}',
         '${data.status || null}',
+        '${data.locationId || null}',
         '${data.location || null}',
         '${data.assetName || null}',
         '${data.warranty || null}',
         '${data.purchaseDate || null}',
         '${data.eolDate || null}',
+        '${data.supplierId || null}',
         '${data.supplier || null}',
         '${data.purchaseCost || null}',
         '${data.company || null}',

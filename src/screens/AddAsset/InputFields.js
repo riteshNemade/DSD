@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import React, { useState, useEffect } from "react";
 import { TextInput } from "react-native";
 import { textBox, colors, gapV } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
@@ -13,7 +13,6 @@ import initDatabase, {createTable, dropTable, getSyncData,saveData, saveDataToDr
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { initBackgroundFetch } from "../../utils/syncOfflineData";
-import { useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
 
 const InputFields = ({ isOffline, capturedImage, draftsData }) => {
@@ -26,6 +25,12 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     useState(false);
   const [isEolDatePickerVisible, setIsEolDatePickerVisible] = useState(false);
 
+  const companyName = useSelector((state) => {
+    return state.global.companyName;
+  });
+  const dispatch = useDispatch();
+  /***************************************Functions****************************************************************/
+
   const onPurchaseDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPurchaseDatePickerVisible(false);
@@ -37,22 +42,37 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     updateState("eolDate", currentDate);
   };
 
-  const companyName = useSelector((state) => {
-    return state.global.companyName;
-  });
-  const dispatch = useDispatch();
-  /***************************************Functions****************************************************************/
-  const onPressSave = async () => {
-    console.log(state);
+  const [assetTagBorderColor, setAssetTagBorderColor] = useState(colors.gray);
+  const [modelBorderColor, setModelBorderColor] = useState(colors.gray);
+  const [statusBorderColor, setStatusBorderColor] = useState(colors.gray);
+
+  const [warrantyBorderColor, setWarrantyBorderColor] = useState(colors.gray);
+  const onPressSave = async () => {    
     const data = {
       ...state,
       company: companyName,
     };
-    //prettier-ignore
-    // const data = {
-    //   assetName,modelNumber, tagId, category, manufacturers, suppliers, maintenance, department, company:companyName , location, description,
-    //   imagepath: capturedImage, flag: 0,
-    // };
+
+    if (
+      !(Number.isInteger(data.warranty) || data.warranty > 0) &&
+      data.warranty !== null
+    ) {
+      setWarrantyBorderColor("#FF0000");
+      return;
+    }
+
+    if (data.assetTag === null) {
+      setAssetTagBorderColor("#FF0000");
+      return;
+    }
+    if (data.model === null) {
+      setModelBorderColor("#FF0000");
+      return;
+    }
+    if (data.status === null) {
+      setStatusBorderColor("#FF0000");
+      return;
+    }
 
     if (isOffline) {
       console.log("Internet connection unavailabe. Saving data locally...");
@@ -70,21 +90,14 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
       console.log("Not Offline. Saving data to server immediately.");
       alert("Data Saved Successfully.");
     }
-    resetState();
 
-    // setAssetName(null);
-    // setModelNumber(null);
-    // setTagId(null);
-    // setCategory(null);
-    // setManufacturers(null);
-    // setSuppliers(null);
-    // setAssetMaintenance(null);
-    // setDepartment(null);
-    // setLocation(null);
-    // setDescription(null);
+    resetState();
   };
 
   const onSaveToDrafts = async () => {
+    // const db = await initDatabase();
+    // await getSyncData(db);
+    
     const data = {
       // id: draftAssetId,
       ...state,
@@ -93,33 +106,23 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     console.log("Data: ", data);
     const db = await initDatabase();
     await createTable(db);
-    // if (draftAssetId !== null) {
-    //   await updateDraft(db, data);
-    //   await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
-    //   dispatch({
-    //     type: "ENABLE",
-    //   });
-    // } else {
+    if (draftAssetId !== null) {
+      await updateDraft(db, data);
+      await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
+      dispatch({
+        type: "ENABLE",
+      });
+    } else {
     await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
     await saveDataToDrafts(db, data);
     dispatch({
       type: "ENABLE",
     });
-    // }
+    }
 
     alert("Data Saved in Drafts.");
 
     resetState();
-    // setAssetName(null);
-    // setModelNumber(null);
-    // setTagId(null);
-    // setCategory(null);
-    // setManufacturers(null);
-    // setSuppliers(null);
-    // setAssetMaintenance(null);
-    // setDepartment(null);
-    // setLocation(null);
-    // setDescription(null);
   };
 
   const setValues = (dataObject, setters) => {
@@ -147,6 +150,20 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     }
   }, [draftsData]);
 
+  const dropdownProps = {
+    selectedTextStyle: styles.selectedTextStyle,
+    style: styles.inputContainer,
+    placeholderStyle: styles.placeholderStyle,
+    labelField: "name",
+    valueField: "id",
+  };
+
+  const textInputProps = {
+    style: styles.inputContainer,
+    placeholderStyle: styles.placeholderStyle,
+    placeholderTextColor: colors.gray,
+  };
+
   return (
     <>
       <TextInput
@@ -162,19 +179,20 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
       <View style={{ flex: 7 }}>
         {/* AssetTag */}
         <TextInput
-          style={styles.inputContainer}
-          placeholder="Asset Tag"
-          placeholderTextColor={colors.gray}
+          {...textInputProps}
+          placeholderTextColor={assetTagBorderColor}
+          style={[textInputProps.style, { borderColor: assetTagBorderColor }]}
+          placeholder="Asset Tag * "
           value={state.assetTag}
           onChangeText={(text) => {
+            setAssetTagBorderColor(colors.gray);
             updateState("assetTag", text);
           }}
         />
         {/* SERIAL */}
         <TextInput
-          style={styles.inputContainer}
+          {...textInputProps}
           placeholder="Serial"
-          placeholderTextColor={colors.gray}
           value={state.serial}
           onChangeText={(text) => {
             updateState("serial", text);
@@ -182,56 +200,56 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
         />
         {/* MODEL */}
         <Dropdown
-          selectedTextStyle={styles.selectedTextStyle}
-          style={styles.inputContainer}
-          placeholderStyle={styles.placeholderStyle}
-          placeholder={"Model"}
-          labelField="name"
-          valueField="id"
+          {...dropdownProps}
+          style={[dropdownProps.style, { borderColor: modelBorderColor }]}
+          placeholderStyle={[
+            dropdownProps.placeholderStyle,
+            { color: modelBorderColor },
+          ]}
+          placeholder={"Model *"}
           search
           searchField={"name"}
           searchPlaceholder="Search Model"
           inputSearchStyle={styles.dropdownSearch}
-          value={state.model}
+          value={state.modelId}
           onChange={(item) => {
-            updateState("model", item.id);
+            updateState("modelId", item.id);
+            updateState("model", item.name);
+            setModelBorderColor(colors.gray);
           }}
           data={modelsList}
         />
         {/* STATUS */}
         <Dropdown
-          selectedTextStyle={styles.selectedTextStyle}
-          style={styles.inputContainer}
-          placeholderStyle={styles.placeholderStyle}
+          {...dropdownProps}
+          style={[dropdownProps.style, { borderColor: statusBorderColor }]}
+          placeholderStyle={[
+            dropdownProps.placeholderStyle,
+            { color: statusBorderColor },
+          ]}
           data={statusList}
-          placeholder={"Status"}
-          value={state.status}
-          labelField="name"
-          valueField="id"
+          placeholder={"Status *"}
+          value={state.statusId}
           onChange={(item) => {
-            updateState("status", item.id);
+            updateState("status", item.name);
+            updateState("statusId", item.id);
+            setStatusBorderColor(colors.gray);
           }}
         />
         {/* LOCATION */}
         <Dropdown
-          selectedTextStyle={styles.selectedTextStyle}
-          style={styles.inputContainer}
-          placeholderStyle={styles.placeholderStyle}
+          {...dropdownProps}
           data={locationsList}
           placeholder={"Locations"}
-          placeholderTextColor={colors.gray}
-          labelField="name"
-          valueField="id"
           value={state.location}
           onChange={(item) => {
-            updateState("location", item.id);
+            updateState("location", item.name);
+            updateState("location_id", item.id);
           }}
         />
         {/* ASSETNAME */}
         <TextInput
-          style={styles.inputContainer}
-          placeholderStyle={styles.placeholderStyle}
-          placeholderTextColor={colors.gray}
+          {...textInputProps}
           placeholder={"Asset Name"}
           value={state.assetName}
           onChangeText={(text) => {
@@ -240,20 +258,27 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
         />
         {/* WARRANTY */}
         <TextInput
-          style={styles.inputContainer}
-          placeholderStyle={styles.placeholderStyle}
-          placeholderTextColor={colors.gray}
+          {...textInputProps}
           placeholder="Warranty (months)"
           value={state.warranty}
           onChangeText={(text) => {
+            setWarrantyBorderColor(colors.gray);
             updateState("warranty", text);
           }}
         />
+        {warrantyBorderColor !== colors.gray ? (
+          <View>
+            <Text style={{ fontSize: 12, color: "#FF0000" }}>
+              Warranty should be a number.
+            </Text>
+          </View>
+        ) : (
+          <></>
+        )}
         {/* ORDER NUMBER */}
         <TextInput
-          style={styles.inputContainer}
+          {...textInputProps}
           placeholder="Order Number"
-          placeholderTextColor={colors.gray}
           value={state.orderNumber}
           onChangeText={(text) => {
             updateState("orderNumber", text);
@@ -275,7 +300,7 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
           {state.purchaseDate !== null && (
             <TouchableOpacity
               style={{ flex: 2, alignItems: "center" }}
-              onPress={() => setPurchaseDate(null)}
+              onPress={() => updateState("purchaseDate", null)}
             >
               <Feather name="x" size={20} color="#555555" />
             </TouchableOpacity>
@@ -300,7 +325,7 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
           {state.eolDate !== null && (
             <TouchableOpacity
               style={{ flex: 2, alignItems: "center" }}
-              onPress={() => setEolDate(null)}
+              onPress={() => updateState("eolDate", null)}
             >
               <Feather name="x" size={20} color="#555555" />
             </TouchableOpacity>
@@ -329,23 +354,20 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
 
         {/* SUPPLIERS */}
         <Dropdown
-          selectedTextStyle={styles.selectedTextStyle}
-          style={styles.inputContainer}
-          placeholderStyle={styles.placeholderStyle}
+          {...dropdownProps}
           data={suppliersList}
           placeholder={"Suppliers"}
-          labelField="name"
-          valueField="id"
-          value={state.supplier}
+          value={state.supplierId}
           onChange={(item) => {
-            updateState("supplier", item.id);
+            
+            updateState("supplierId", item.id);
+            updateState("supplier", item.name);
           }}
         />
         {/* PURCHASE_COST */}
         <TextInput
-          style={styles.inputContainer}
+          {...textInputProps}
           placeholder="Estimated Purchase Cost"
-          placeholderTextColor={colors.gray}
           value={state.purchaseCost?.toString() || ""}
           onChangeText={(text) => {
             updateState("purchaseCost", parseFloat(text));
@@ -355,9 +377,9 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
         {/* NOTES */}
         <TextInput
           style={styles.bigInputContainer}
+          placeholderTextColor={textInputProps.placeholderTextColor}
           placeholder="Notes"
           textAlignVertical="top"
-          placeholderTextColor={colors.gray}
           value={state.notes}
           onChangeText={(text) => {
             updateState("notes", text);

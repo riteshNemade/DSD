@@ -16,7 +16,7 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
     setModalVisible(false);
     navigation.navigate("AddAsset", {drafts : data});
   };
-
+  console.log('DATATDATDATA: ',data)
   const navigation = useNavigation();
   return (
     <View>
@@ -31,24 +31,24 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
             <View style={styles.contentContainer}>
               <View style={{ flex: 9 }}>
                 <Text style={styles.textStyle}>
-                  Model Number:{" "}
-                  {data.modelNumber !== undefined && data.modelNumber !== null
-                    ? data.modelNumber
+                  Model:{" "}
+                  {data.model !== undefined || data.model!== 'null'
+                    ? data.model
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
-                  Tag ID:{" "}
-                  {data.tagId !== undefined && data.tagId !== null
-                    ? data.tagId
+                  Asset Tag:{" "}
+                  {data.asset_tag !== undefined || data.asset_tag !== 'null'
+                    ? data.asset_tag
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
                   Asset Name:{" "}
-                  {data.assetName !== undefined ? data.assetName : "N/A"} {"\n"}
+                  {data.asset_name !== undefined || data.asset_name!=='null' ? data.asset_name : "N/A"} {"\n"}
                   {"\n"}
-                  Category:{" "}
-                  {data.category !== undefined && data.category !== null
-                    ? data.category
+                  Status:{" "}
+                  {data.status !== undefined && data.status !== 'null'
+                    ? data.status
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
@@ -57,40 +57,52 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
-                  Department:{" "}
-                  {data.department !== undefined && data.department !== "null"
-                    ? data.department
-                    : "N/A"}{" "}
-                  {"\n"}
-                  {"\n"}
-                  Description:{" "}
-                  {data.description !== undefined && data.description !== null
-                    ? data.description
-                    : "N/A"}{" "}
-                  {"\n"}
-                  {"\n"}
                   Location:{" "}
-                  {data.location !== undefined && data.location !== null
+                  {data.location !== undefined ||data.location !== "null"
                     ? data.location
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
-                  Maintenance:{" "}
-                  {data.maintenance !== undefined && data.maintenance !== null
-                    ? data.maintenance
+                  Notes:{" "}
+                  {data.notes !== undefined && data.notes !== 'null'
+                    ? data.notes
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
-                  Manufacturer:{" "}
-                  {data.manufacturers !== undefined &&
-                  data.manufacturers !== null
-                    ? data.manufacturers
+                  Location:{" "}
+                  {data.location !== undefined && data.location !== 'null'
+                    ? data.location
+                    : "N/A"}{" "}
+                  {"\n"}
+                  {"\n"}
+                  Warranty:{" "}
+                  {data.warranty !== undefined && data.warranty !== 'null'
+                    ? data.warranty
+                    : "N/A"}{" "}
+                  {"\n"}
+                  {"\n"}
+                  EOL Date:{" "}
+                  {data.eolDate !== undefined &&
+                  data.eolDate !== "null"
+                    ? data.eolDate
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
                   Suppliers:{" "}
-                  {data.suppliers !== undefined && data.suppliers !== null
-                    ? data.suppliers
+                  {data.supplier !== undefined && data.supplier !== "null"
+                    ? data.supplier
+                    : "N/A"}{" "}
+                  {"\n"}
+                  {"\n"}
+                  Serial:{" "}
+                  {data.serial !== undefined && data.serial !== "null"
+                    ? data.serial
+                    : "N/A"}{" "}
+                  {"\n"}
+                  {"\n"}
+                  Purchase Date:{" "}
+                  {data.purchase_date !== undefined && data.purchase_date !== "null"
+                    ? data.purchase_date
                     : "N/A"}{" "}
                   {"\n"}
                 </Text>
