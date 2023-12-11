@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -20,7 +20,7 @@ const reducer = (state, action) => {
         draftAssetId: null,
         purchaseDate: null,
         eolDate: null,
-        imagePath:null,
+        imagePath: null,
       };
 
     default:
@@ -48,7 +48,7 @@ export function inputFieldState() {
     draftAssetId: null,
     purchaseDate: null,
     eolDate: null,
-    imagePath:null,
+    imagePath: null,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -72,3 +72,82 @@ export function inputFieldState() {
     resetState,
   };
 }
+
+export const populateDraftData = (draftsData, updateState, resetState) => {
+  useEffect(() => {
+    resetState();
+    if (draftsData !== null) {
+      updateState("draftAssetId", draftsData.id);
+      updateState(
+        "assetTag",
+        draftsData.asset_tag !== "null" ? draftsData.asset_tag : null
+      );
+      updateState(
+        "serial",
+        draftsData.serial !== "null" ? draftsData.serial : null
+      );
+      updateState(
+        "modelId",
+        draftsData.model_id !== "null" ? draftsData.model_id : null
+      );
+      updateState(
+        "model",
+        draftsData.model !== "null" ? draftsData.model : null
+      );
+      updateState(
+        "statusId",
+        draftsData.status_id !== "null" ? draftsData.status_id : null
+      );
+      updateState(
+        "locationId",
+        draftsData.location_id !== "null" ? draftsData.location_id : null
+      );
+      updateState(
+        "assetName",
+        draftsData.asset_name !== "null" ? draftsData.asset_name : null
+      );
+      updateState(
+        "warranty",
+        draftsData.warranty !== "null" ? draftsData.warranty.toString() : null
+      );
+      updateState(
+        "warranty",
+        draftsData.order_number !== "null" ? draftsData.order_number : null
+      );
+      updateState(
+        "orderNumber",
+        draftsData.order_number !== "null" ? draftsData.order_number : null
+      );
+      updateState(
+        "purchaseDate",
+        draftsData.purchase_date !== "null"
+          ? new Date(draftsData.purchase_date)
+          : null
+      );
+      updateState(
+        "eolDate",
+        draftsData.eol_date !== "null" ? new Date(draftsData.eol_date) : null
+      );
+      updateState(
+        "supplierId",
+        draftsData.supplier_id !== "null" ? draftsData.supplier_id : null
+      );
+      updateState(
+        "supplier",
+        draftsData.supplier !== "null" ? draftsData.supplier : null
+      );
+      updateState(
+        "purchaseCost",
+        draftsData.purchase_cost !== "null" ? draftsData.purchase_cost : null
+      );
+      updateState(
+        "notes",
+        draftsData.notes !== "null" ? draftsData.notes : null
+      );
+      updateState(
+        "imagePath",
+        draftsData.imagePath !== "null" ? draftsData.imagepath : null
+      );
+    }
+  }, [draftsData]);
+};

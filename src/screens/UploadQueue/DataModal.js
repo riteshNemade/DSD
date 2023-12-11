@@ -8,7 +8,6 @@ import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useNavigation } from "@react-navigation/native";
 
 const DataModal = ({ isModalVisible, setModalVisible, data }) => {
-  console.log('modal Data: ', data)
   const handleModalClose = () => {
     setModalVisible(false);
   };
