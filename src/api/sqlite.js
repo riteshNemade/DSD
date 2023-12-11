@@ -25,11 +25,13 @@ export async function createTable(db) {
       location VARCHAR,
       asset_name VARCHAR,
       warranty INT,
+      order_number VARCHAR,
       purchase_date TEXT,
       eol_date TEXT,
       supplier_id INT,
       supplier VARCHAR,
       purchase_cost REAL,
+      company_id INT,
       company VARCHAR,
       notes VARCHAR,
       imagepath VARCHAR,
@@ -73,7 +75,7 @@ export const getSyncData = async (db) => {
 export const saveData = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
-        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
         '${data.assetTag || null}',
         '${data.serial || null}',
         '${data.modelId || null}',
@@ -84,6 +86,7 @@ export const saveData = async (db, data) => {
         '${data.location || null}',
         '${data.assetName || null}',
         '${data.warranty || null}',
+        '${data.orderNumber || null}',
         '${data.purchaseDate || null}',
         '${data.eolDate || null}',
         '${data.supplierId || null}',
@@ -102,9 +105,10 @@ export const saveData = async (db, data) => {
 };
 
 export const saveDataToDrafts = async (db, data) => {
+  console.log(data);
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName}  (
-        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
         '${data.assetTag || null}',
         '${data.serial || null}',
         '${data.modelId || null}',
@@ -115,6 +119,7 @@ export const saveDataToDrafts = async (db, data) => {
         '${data.location || null}',
         '${data.assetName || null}',
         '${data.warranty || null}',
+        '${data.orderNumber || null}',
         '${data.purchaseDate || null}',
         '${data.eolDate || null}',
         '${data.supplierId || null}',
@@ -122,7 +127,7 @@ export const saveDataToDrafts = async (db, data) => {
         '${data.purchaseCost || null}',
         '${data.company || null}',
         '${data.notes || null}',
-        '${data.imagepath || null}',
+        '${data.imagePath || null}',
         1
       )
     `;
@@ -133,22 +138,30 @@ export const saveDataToDrafts = async (db, data) => {
 };
 
 export const updateDraft = async (db, data) => {
+  console.log('updateData',data)
   const updateQuery = `
   UPDATE ${tableName} SET
-    assetName = '${data.assetName || null}',
-    modelNumber = '${data.modelNumber || null}',
-    tagId = '${data.tagId || null}',
-    category = '${data.category || null}',
-    manufacturers = '${data.manufacturers || null}',
-    suppliers = '${data.suppliers || null}',
-    maintenance = '${data.maintenance || null}',
-    department = '${data.department || null}',
-    company = '${data.company || null}',
-    location = '${data.location || null}',
-    description = '${data.description || null}',
-    imagepath = '${data.imagepath || null}',
-    flag = 1
-  WHERE id = ${data.id}
+  asset_tag = '${data.assetTag || null}', 
+  serial = '${data.serial || null}', 
+  model_id = '${data.modelId || null}', 
+  model = '${data.model || null}',  
+  status_id = '${data.statusId || null}', 
+  status = '${data.status || null}', 
+  location_id = '${data.locationId || null}', 
+  location = '${data.location || null}', 
+  asset_name = '${data.assetName || null}',
+  warranty = '${data.warranty || null}',
+  order_number = '${data.orderNumber || null}',
+  purchase_date = '${data.purchaseDate || null}',
+  eol_date = '${data.eolDate || null}',
+  supplier_id = '${data.supplierId || null}', 
+  supplier = '${data.supplier || null}', 
+  purchase_cost = '${data.purchaseCost || null}',
+  company = '${data.company || null}',
+  notes = '${data.notes || null}',
+  imagepath = '${data.imagepath || null}',
+  flag = 1
+  WHERE id = ${data.draftAssetId}
 `;
 
   db.transaction((tx) => {

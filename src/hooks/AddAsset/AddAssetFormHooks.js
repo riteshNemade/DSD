@@ -20,7 +20,9 @@ const reducer = (state, action) => {
         draftAssetId: null,
         purchaseDate: null,
         eolDate: null,
+        imagePath:null,
       };
+
     default:
       return state;
   }
@@ -46,6 +48,7 @@ export function inputFieldState() {
     draftAssetId: null,
     purchaseDate: null,
     eolDate: null,
+    imagePath:null,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -62,13 +65,6 @@ export function inputFieldState() {
       payload: { key, value },
     });
   };
-
-  /*
-  state,
-  corresponding setter, 
-  state,
-  corresponding setter, 
-  */
 
   return {
     state,

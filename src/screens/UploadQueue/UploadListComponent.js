@@ -27,7 +27,7 @@ const UploadListComponent = ({
 }) => {
   let imagePath = require("assets/images/image_placeholder.png");
   const dispatch = useDispatch();
-
+  console.log('WHOLE ITEM: ', item)
   if (item.imagepath === "null") {
     imagePath = require("assets/images/image_placeholder.png");
   } else {
@@ -101,10 +101,10 @@ const UploadListComponent = ({
             activeOpacity={0.2}
             onPress={() => handleDataModal()}
           >
-            <Text style={{ fontSize: 14, color: colors.blue }}>
-              Tag: {item?.tagId} {item?.flag === "1" ? "(Draft)" : ""}
+            <Text style={{ fontSize: 14, color: colors.blue }} numberOfLines={1}> 
+              Tag: {item?.asset_tag} {item?.flag === "1" ? "(Draft)" : ""}
             </Text>
-            <Text style={{ fontSize: 14 }}>Name: {item?.assetName}</Text>
+            <Text style={{ fontSize: 14 }} numberOfLines={1}>Name: {item?.asset_name}</Text>
             <Text style={{ fontSize: 14 }} numberOfLines={1}>
               Company: {item?.company}
             </Text>

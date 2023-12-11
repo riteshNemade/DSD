@@ -39,9 +39,15 @@ const AddAssetScreen = ({ route }) => {
 
   //capture image from camera/image picker
   useEffect(() => {
-    if (route.params && route.params?.drafts) {
-      console.log(route.params.drafts)
+    
+    if (route.params && route.params?.drafts!== undefined && route.params?.drafts !== null) {
       setDraftsData(route.params?.drafts);
+      if(route.params?.drafts.imagepath !== 'null' && route.params?.drafts.imagepath!== null){
+        console.log(route.params?.drafts)
+        const filePath = route.params?.drafts.imagepath;
+      setImageName(filePath.split('/').pop());
+      setCapturedImage(route.params?.drafts.imagepath);
+      }
     }
   }, [route.params?.drafts]);
   

@@ -8,6 +8,7 @@ import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useNavigation } from "@react-navigation/native";
 
 const DataModal = ({ isModalVisible, setModalVisible, data }) => {
+  console.log('modal Data: ', data)
   const handleModalClose = () => {
     setModalVisible(false);
   };
@@ -16,7 +17,6 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
     setModalVisible(false);
     navigation.navigate("AddAsset", {drafts : data});
   };
-  console.log('DATATDATDATA: ',data)
   const navigation = useNavigation();
   return (
     <View>
@@ -69,12 +69,6 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
-                  Location:{" "}
-                  {data.location !== undefined && data.location !== 'null'
-                    ? data.location
-                    : "N/A"}{" "}
-                  {"\n"}
-                  {"\n"}
                   Warranty:{" "}
                   {data.warranty !== undefined && data.warranty !== 'null'
                     ? data.warranty
@@ -82,9 +76,9 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
                   {"\n"}
                   {"\n"}
                   EOL Date:{" "}
-                  {data.eolDate !== undefined &&
-                  data.eolDate !== "null"
-                    ? data.eolDate
+                  {data.eol_date !== undefined &&
+                  data.eol_date !== "null"
+                    ? data.eol_date
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
@@ -143,6 +137,7 @@ const styles = StyleSheet.create({
     width: scale(390),
     flexDirection: "row",
     padding: hPadding,
+
   },
   containerBehindModal: {
     backgroundColor: "rgba(0, 0, 0, 0.76)",
@@ -167,10 +162,8 @@ const styles = StyleSheet.create({
   },
   editButton: {
     position: "absolute",
-    bottom: 1,
-    right: 1,
-    flex: 1,
-    marginRight: 10,
-    marginBottom: 10,
+    bottom: 5,
+    right: 10,
+  
   },
 });
