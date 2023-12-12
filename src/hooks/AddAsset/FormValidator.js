@@ -18,7 +18,7 @@ const reducer = (state, action) => {
   }
 };
 
-export function formValidator() {
+export function formErrorState() {
   const initialState = {
     assetTagBorderColor: colors.gray,
     modelBorderColor: colors.gray,

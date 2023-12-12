@@ -1,6 +1,5 @@
 import * as FileSystem from "expo-file-system";
 
-
 export const sendDataToServer = async (data) => {
   const dataToSend = new FormData();
   if (
@@ -39,12 +38,12 @@ export const sendDataToServer = async (data) => {
     dataToSend.append("warranty_months", data.warranty);
   }
   if (data.supplierId !== null && data.supplierId !== "null") {
+    console.log('supplier',data.supplierId)
     dataToSend.append("supplier_id", data.supplierId);
   }
 
-  if(data.purchaseCost !== null && data.purchaseCost!== 'null'){
-
-      dataToSend.append("purchase_cost", data.purchaseCost);
+  if (data.purchaseCost !== null && data.purchaseCost !== "null") {
+    dataToSend.append("purchase_cost", data.purchaseCost);
   }
   if (data.purchaseDate !== null) {
     dataToSend.append(
@@ -52,7 +51,8 @@ export const sendDataToServer = async (data) => {
       data.purchaseDate?.toISOString().split("T")[0]
     );
   }
-  if (data.locationId !== null) {
+  if (data.locationId !== null && data.locationId !== "null") {
+    console.log('locationId',data.locationId)
     dataToSend.append("rtd_location_id", data.locationId);
   }
 

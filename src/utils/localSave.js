@@ -25,14 +25,13 @@ export const onSaveToDrafts = async (data, resetState, dispatch) => {
       type: "ENABLE",
     });
   } else {
-    console.log("jump here");
     await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: true }));
     await saveDataToDrafts(db, data);
     dispatch({
       type: "ENABLE",
     });
   }
-  alert("Data Saved in Drafts.");
+  Alert.alert("Data Saved in Drafts.");
 
   resetState();
 };

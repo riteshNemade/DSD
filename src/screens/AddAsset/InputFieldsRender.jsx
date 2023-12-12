@@ -1,4 +1,4 @@
-import { TextInput, TouchableOpacity, StyleSheet, View } from "react-native";
+import { TextInput, TouchableOpacity, StyleSheet, View, Text } from "react-native";
 import { colors, gapV, textBox } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
 import { Feather } from "@expo/vector-icons";
@@ -138,8 +138,8 @@ export default InputFieldsRender = ({ props }) => {
       />
       {props.formState.warrantyBorderColor !== colors.gray ? (
         <View>
-          <Text style={{ fontSize: 12, color: "#FF0000" }}>
-            Warranty should be a number.
+          <Text style={{ fontSize: 12, color: "#FF0000", marginTop:5, }}>
+            Warranty should be a number between 0 and 240.
           </Text>
         </View>
       ) : (

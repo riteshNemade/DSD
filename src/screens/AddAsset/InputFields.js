@@ -11,7 +11,7 @@ import FooterButtons from "./FooterButtons";
 import { useDispatch, useSelector } from "react-redux";
 
 import validateInputs from "../../utils/validateInputs";
-import { formValidator } from "../../hooks/AddAsset/FormValidator";
+import { formErrorState } from "../../hooks/AddAsset/FormValidator";
 import { onSaveToDrafts, saveOfflineData } from "../../utils/localSave";
 import { sendDataToServer } from "../../api/AddAsset/addAssetApi";
 import InputFieldsRender from "./InputFieldsRender";
@@ -19,7 +19,7 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
   /***************************************State,Setters,Dropdown List Data***************************************** */
   const { state, updateState, resetState } = inputFieldState();
   const { formState, resetValidatorState, updateValidatorState } =
-    formValidator();
+    formErrorState();
   const companyName = useSelector((state) => {
     return state.global.companyName;
   });
@@ -37,9 +37,8 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
   };
   const onPressSave = async () => {
     const isFormValidated = validateInputs(
-      updateValidatorState,
       data,
-      resetValidatorState
+      updateValidatorState,
     );
     if (!isFormValidated) {
       return;

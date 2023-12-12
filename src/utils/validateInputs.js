@@ -1,8 +1,4 @@
-export default validateInputs = (
-  updateValidatorState,
-  data,
-  resetValidatorState
-) => {
+export default validateInputs = (data, updateValidatorState) => {
   console.log(data.statusId);
   if (
     !data.assetTag &&
@@ -23,14 +19,13 @@ export default validateInputs = (
     return false;
   }
   if (
-    !(Number.isInteger(data.warranty) || data.warranty > 0) &&
-    data.warranty !== null
+    !Number.isInteger(data.warranty) &&
+    data.warranty !== null &&
+    (data.warranty < 0 || data.warranty > 240)
   ) {
     updateValidatorState("warrantyBorderColor", "#FF0000");
     return false;
   }
 
   return true;
-
-  //   resetValidatorState();
 };
