@@ -6,7 +6,8 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import AuthNavigator from "./AuthNavigator";
 import BottomTabNavigator from "./BottomTabNavigator";
-import { startupSync } from "../utils/syncOfflineData";
+import { startupSync } from "../utils/backgroundServices";
+
 
 export default function RootNavigator() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -14,7 +15,7 @@ export default function RootNavigator() {
 
   const setGlobalState = async () => {
     const isSyncDataAvailable =
-      JSON.parse(await AsyncStorage.getItem("sync"))?.isEnabled || false;
+      JSON.parse(await AsyncStorage.getItem("localData"))?.isAvailable || false;
     if (isSyncDataAvailable) {
       dispatch({
         type: "ENABLE",

@@ -1,5 +1,4 @@
 export default validateInputs = (data, updateValidatorState) => {
-  console.log(data.statusId);
   if (
     !data.assetTag &&
     (data.assetTag === null || data.assetTag === undefined)

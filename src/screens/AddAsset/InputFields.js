@@ -1,33 +1,31 @@
-import { StyleSheet } from "react-native";
 import React from "react";
-import { TextInput } from "react-native";
-import { textBox, colors, gapV } from "../../constants/global";
+import { Alert, StyleSheet, TextInput } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   inputFieldState,
   populateDraftData,
 } from "../../hooks/AddAsset/AddAssetFormHooks";
 import FooterButtons from "./FooterButtons";
-
-import { useDispatch, useSelector } from "react-redux";
-
+import { textBox, colors, gapV } from "../../constants/global";
 import validateInputs from "../../utils/validateInputs";
 import { formErrorState } from "../../hooks/AddAsset/FormValidator";
 import { onSaveToDrafts, saveOfflineData } from "../../utils/localSave";
 import { sendDataToServer } from "../../api/AddAsset/addAssetApi";
 import InputFieldsRender from "./InputFieldsRender";
+
 const InputFields = ({ isOffline, capturedImage, draftsData }) => {
-  /***************************************State,Setters,Dropdown List Data***************************************** */
   const { state, updateState, resetState } = inputFieldState();
   const { formState, resetValidatorState, updateValidatorState } =
     formErrorState();
+
+  const dispatch = useDispatch();
   const companyName = useSelector((state) => {
     return state.global.companyName;
   });
   const companyId = useSelector((state) => {
     return state.global.company_id;
   });
-  const dispatch = useDispatch();
-  /***************************************Functions****************************************************************/
 
   const data = {
     ...state,
@@ -35,21 +33,20 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     company_id: companyId,
     imagepath: capturedImage || null,
   };
+
   const onPressSave = async () => {
-    const isFormValidated = validateInputs(
-      data,
-      updateValidatorState,
-    );
+    const isFormValidated = validateInputs(data, updateValidatorState);
     if (!isFormValidated) {
       return;
     } else {
-      if (isOffline) {
+      if (!isOffline) {
         saveOfflineData(data, dispatch);
       } else {
-        sendDataToServer(data);
+        const isSuccessful = await sendDataToServer(data);
+        isSuccessful ? Alert.alert('Data Uploaded Successfully') : Alert.alert('There was an error. Please try again');
       }
       resetValidatorState();
-      resetState();
+      // resetState();
     }
   };
 
@@ -57,6 +54,7 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     await onSaveToDrafts(data, resetState, dispatch);
   };
 
+  //useEffect call
   populateDraftData(draftsData, updateState, resetState);
 
   const inputFieldRenderProps = {

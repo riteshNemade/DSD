@@ -44,7 +44,6 @@ export default function CameraScreen() {
     } else {
       setFlashMode("off");
     }
-    console.log(flashMode);
   };
   const takePicture = async () => {
     if (!camera) return;
@@ -62,7 +61,6 @@ export default function CameraScreen() {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });

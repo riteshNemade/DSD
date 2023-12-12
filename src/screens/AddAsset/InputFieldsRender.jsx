@@ -19,12 +19,12 @@ export default InputFieldsRender = ({ props }) => {
   const onPurchaseDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPurchaseDatePickerVisible(false);
-    updateState("purchaseDate", currentDate);
+    props.updateState("purchaseDate", currentDate);
   };
   const onEolDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsEolDatePickerVisible(false);
-    updateState("eolDate", currentDate);
+    props.updateState("eolDate", currentDate);
   };
 
   const dropdownProps = {
@@ -164,7 +164,7 @@ export default InputFieldsRender = ({ props }) => {
           style={{ flex: 9, color: "black" }}
           placeholder="Purchase Date"
           placeholderTextColor={colors.gray}
-          value={props.state.purchaseDate?.toISOString().split("T")[0]}
+          value={props.state.purchaseDate?.toISOString().split("T")[0] || null}
           editable={false}
         />
         {props.state.purchaseDate !== null && (
@@ -179,6 +179,15 @@ export default InputFieldsRender = ({ props }) => {
           <Feather name="calendar" size={20} color="#555555" />
         </View>
       </TouchableOpacity>
+
+      {isPurchaseDatePickerVisible && (
+        <DateTimePicker
+          display="spinner"
+          value={props.state.purchaseDate || new Date()}
+          mode={"date"}
+          onChange={onPurchaseDateChange}
+        />
+      )}
 
       {/* EOL_DATE */}
       <TouchableOpacity
@@ -205,14 +214,6 @@ export default InputFieldsRender = ({ props }) => {
         </View>
       </TouchableOpacity>
 
-      {isPurchaseDatePickerVisible && (
-        <DateTimePicker
-          display="spinner"
-          value={props.state.purchaseDate || new Date()}
-          mode={"date"}
-          onChange={onPurchaseDateChange}
-        />
-      )}
       {isEolDatePickerVisible && (
         <DateTimePicker
           display="spinner"

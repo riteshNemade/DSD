@@ -1,7 +1,6 @@
 import {
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -27,7 +26,6 @@ const UploadListComponent = ({
 }) => {
   let imagePath = require("assets/images/image_placeholder.png");
   const dispatch = useDispatch();
-  console.log('WHOLE ITEM: ', item)
   if (item.imagepath === "null") {
     imagePath = require("assets/images/image_placeholder.png");
   } else {
@@ -102,7 +100,7 @@ const UploadListComponent = ({
             onPress={() => handleDataModal()}
           >
             <Text style={{ fontSize: 14, color: colors.blue }} numberOfLines={1}> 
-              Tag: {item?.asset_tag} {item?.flag === "1" ? "(Draft)" : ""}
+              Tag: {item?.asset_tag!== 'null' ? item.asset_tag : 'N/A'} {item?.flag === "1" ? "(Draft)" : ""}
             </Text>
             <Text style={{ fontSize: 14 }} numberOfLines={1}>Name: {item?.asset_name}</Text>
             <Text style={{ fontSize: 14 }} numberOfLines={1}>

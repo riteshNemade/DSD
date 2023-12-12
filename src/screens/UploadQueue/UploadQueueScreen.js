@@ -6,13 +6,12 @@ import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
 
-import { handleManualSync } from "../../utils/syncOfflineData";
-import initDatabase, { getSyncData } from "../../api/sqlite";
+import { handleSync } from "../../utils/syncOfflineData";
+import initDatabase, { getLocalData } from "../../api/sqlite";
 import UploadListContent from "./UploadListContent";
 import FloatingSyncButton from "./FloatingSyncButton";
 import ImageModal from "./ImageModal";
 import DataModal from "./DataModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UploadQueueScreen = () => {
   const [data, setData] = useState([]);
@@ -25,21 +24,21 @@ const UploadQueueScreen = () => {
   
   const fetchDataFn = async () => {
     const db = await initDatabase();
-    const offlineData = await getSyncData(db);
-    console.log(offlineData)
+    const offlineData = await getLocalData(db);
     setData(offlineData._array);
   };
 
   const handleSyncPress = async () => {
     console.log("Syncing....");
-    const isSyncSuccessful = await handleManualSync();
+    const isSyncSuccessful = await handleSync();
     if (isSyncSuccessful) {
       ToastAndroid.show("Sync Successful", ToastAndroid.LONG);
-      dispatch({
-        type: "DISABLE",
-      });
-      await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
-      setData([]);
+      // dispatch({
+      //   type: "DISABLE",
+      // });
+      // await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
+      // setData([]);
+      fetchDataFn();
     } else {
       ToastAndroid.show(
         "Please check you internet connection",

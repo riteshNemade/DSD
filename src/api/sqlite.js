@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 const tableName = "pending_asset_data";
-
+const batchSize = 10;
 export default async function initDatabase() {
   try {
     const db = SQLite.openDatabase("dsd.db");
@@ -51,7 +51,7 @@ export async function dropTable(db) {
   });
 }
 
-export const getSyncData = async (db) => {
+export const getLocalData = async (db) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -59,7 +59,25 @@ export const getSyncData = async (db) => {
         [],
         (_, { rows }) => {
           // Assuming you want to return rows from the query
-          console.log(rows);
+          resolve(rows);
+        },
+        (_, error) => {
+          console.error(error);
+          reject(new Error("Error executing SQL query"));
+          return true; // Return true to stop the transaction on error
+        }
+      );
+    });
+  });
+};
+export const getOfflineSyncData = async (db) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * from ${tableName} where flag=0`,
+        [],
+        (_, { rows }) => {
+          // Assuming you want to return rows from the query
           resolve(rows);
         },
         (_, error) => {
@@ -94,7 +112,7 @@ export const saveData = async (db, data) => {
           '${data.purchaseCost || null}',
           '${data.company || null}',
           '${data.notes || null}',
-          '${data.imagePath || null}',
+          '${data.imagepath || null}',
         0
       )
     `;
@@ -105,7 +123,6 @@ export const saveData = async (db, data) => {
 };
 
 export const saveDataToDrafts = async (db, data) => {
-  console.log(data);
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName}  (
         asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
@@ -127,7 +144,7 @@ export const saveDataToDrafts = async (db, data) => {
         '${data.purchaseCost || null}',
         '${data.company || null}',
         '${data.notes || null}',
-        '${data.imagePath || null}',
+        '${data.imagepath || null}',
         1
       )
     `;
@@ -138,7 +155,6 @@ export const saveDataToDrafts = async (db, data) => {
 };
 
 export const updateDraft = async (db, data) => {
-  console.log('updateData',data)
   const updateQuery = `
   UPDATE ${tableName} SET
   asset_tag = '${data.assetTag || null}', 
@@ -175,6 +191,7 @@ export async function deleteData(db) {
     tx.executeSql(deleteQuery);
   });
 }
+
 
 export async function deleteById(db, id) {
   const deleteQuery = `DELETE from ${tableName} WHERE id=${id}`;

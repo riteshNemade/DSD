@@ -1,151 +1,82 @@
 import * as BackgroundFetch from "expo-background-fetch";
-import * as TaskManager from "expo-task-manager";
-import * as Notifications from "expo-notifications";
 import * as Network from "expo-network";
-import initDatabase, { deleteData, getSyncData } from "../api/sqlite";
+import * as Notifications from "expo-notifications";
+import initDatabase, { deleteById, getOfflineSyncData } from "../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { syncInterval, fetchInterval } from "../constants/syncConstants";
-import store from '../redux/store'
+import { uploadDataFromDatabase } from "../api/AddAsset/addAssetApi";
 const BACKGROUND_FETCH_TASK = "upload-job-task";
 
 export const dataSyncService = async () => {
-  let notificationBodyContent;
-  const db = await initDatabase();
+  await handleSync();
+};
 
-  // Function to check internet connectivity
-  const checkInternetConnectivity = async () => {
-    const isConnected = await Network.getNetworkStateAsync();
-    return isConnected.isConnected;
-  };
+export const handleSync = async () => {
+  let syncCompleted = false;
+  let isOfflineDataAvailable = JSON.parse(
+    await AsyncStorage.getItem("offlineData")
+  )?.isAvailable;
+  const networkStatus = await Network.getNetworkStateAsync();
 
-  // Check internet connectivity
-  const isConnected = await checkInternetConnectivity();
+  if (
+    networkStatus.isConnected &&
+    networkStatus.isInternetReachable &&
+    isOfflineDataAvailable
+  ) {
+    const db = await initDatabase();
+    const databaseResult = await getOfflineSyncData(db);
+    const offlineData = databaseResult._array;
+    let dataLength = databaseResult.length;
 
-  if (isConnected) {
-    let result;
+    for (const data of offlineData) {
+      console.log(data);
+      let operationSuccessful = await uploadAndDeleteEntry(db, data);
+      operationSuccessful ? dataLength-- : dataLength;
+    }
 
-    await getSyncData(db).then((res) => {
-      notificationBodyContent = "Data synced successfully";
-      Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-          shouldShowAlert: true,
-          shouldPlaySound: false,
-          shouldSetBadge: false,
-        }),
-      });
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: "DSD",
-          body: notificationBodyContent,
-        },
-        trigger: null,
-      });
-      result = res;
-      console.log(
-        new Date().toISOString(),
-        "✅ This represents the SQLite data can be synced: ",
-        result
+    //all data synced?
+    if (dataLength === 0) {
+      AsyncStorage.setItem(
+        "offlineData",
+        JSON.stringify({ isAvailable: false })
       );
-    });
-    await deleteData(db);
-    console.log("Background Fetch Task unregistering...");
+      notifyOfflineSyncComplete("Offline Data synced successfully");
+    } else {
+      notifyOfflineSyncComplete(
+        "There was an error while synchronizing offline data. Please check the app."
+      );
+    }
     await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-    console.log("Disabling syncService...");
-    AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
-    store.dispatch({
-      type:'DISABLE'
-    })
+    syncCompleted = true;
+  } else {
+    syncCompleted = false;
+  }
+  return syncCompleted;
+};
+
+export const uploadAndDeleteEntry = async (db, data) => {
+  const isOperationSuccessful = await uploadDataFromDatabase(data);
+  if (isOperationSuccessful) {
+    deleteById(db, data.id);
     return true;
   } else {
-    console.log("No internet connectivity. Skipping sync.");
-
     return false;
   }
 };
 
-TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-  console.log(BACKGROUND_FETCH_TASK, "running");
-  const dataSyncComplete = dataSyncService();
-  if (dataSyncComplete) return BackgroundFetch.BackgroundFetchResult.NewData;
-  else return BackgroundFetch.BackgroundFetchResult.NoData;
-});
 
-export const initBackgroundFetch = async () => {
-  let isRegistered = await TaskManager.isTaskRegisteredAsync(
-    BACKGROUND_FETCH_TASK
-  );
-  if (isRegistered) {
-    console.log(`Task is already registered`);
-  } else {
-    console.log("Background Fetch Task not found - Registering task");
-  }
-  await BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: 10, //unit is seconds
-    startOnBoot: true,
-    stopOnTerminate: false,
-    enableHeadless: true, // Allow the task to run in the background
-    forceAlarmManager: true, // Use AlarmManager on Android for greater reliability
+export const notifyOfflineSyncComplete = (notificationBody) => {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
   });
-  await BackgroundFetch.setMinimumIntervalAsync(100);
+  Notifications.scheduleNotificationAsync({
+    content: {
+      title: "DSD",
+      body: notificationBody,
+    },
+    trigger: null,
+  });
 };
-
-export const startupSync = async () => {
-  const isSyncDataAvailable =
-    JSON.parse(await AsyncStorage.getItem("sync"))?.isEnabled || false;
-
-  if (isSyncDataAvailable) {
-    console.log("🔁 sync was started");
-    initBackgroundFetch();
-  }
-};
-
-export const handleManualSync = async () =>{
-  let notificationBodyContent;
-  const db = await initDatabase();
-  let syncCompleted = false;
-  // Function to check internet connectivity
-  const checkInternetConnectivity = async () => {
-    const isConnected = await Network.getNetworkStateAsync();
-    return isConnected.isConnected;
-  };
-
-  // Check internet connectivity
-  const isConnected = await checkInternetConnectivity();
-  console.log('Connection Status: ',isConnected);
-
-  if (isConnected) {
-    let result;
-
-    await getSyncData(db).then((res) => {
-      notificationBodyContent = "Data synced successfully";
-      Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-          shouldShowAlert: true,
-          shouldPlaySound: false,
-          shouldSetBadge: false,
-        }),
-      });
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: "DSD",
-          body: notificationBodyContent,
-        },
-        trigger: null,
-      });
-      result = res;
-      console.log(
-        new Date().toISOString(),
-        "✅ This represents the SQLite data can be synced: ",
-        result
-      );
-    });
-    await deleteData(db);
-    AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
-
-    syncCompleted = true;
-  }else{
-    syncCompleted = false;
-  }
-
-  return syncCompleted
-}
