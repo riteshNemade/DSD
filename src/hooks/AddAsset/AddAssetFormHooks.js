@@ -25,6 +25,7 @@ const reducer = (state, action) => {
         purchaseDate: null,
         eolDate: null,
         imagePath: null,
+        flag: null,
       };
 
     default:
@@ -53,6 +54,7 @@ export function inputFieldState() {
     purchaseDate: null,
     eolDate: null,
     imagePath: null,
+    flag:null,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -150,7 +152,11 @@ export const populateDraftData = (draftsData, updateState, resetState) => {
       );
       updateState(
         "imagePath",
-        draftsData.imagePath !== "null" ? draftsData.imagepath : null
+        draftsData.imagepath !== "null" ? draftsData.imagepath : null
+      );
+      updateState(
+        "flag",
+        draftsData.flag !== "null" ? draftsData.flag : null
       );
     }
   }, [draftsData]);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, StyleSheet, TextInput } from "react-native";
+import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -7,14 +7,13 @@ import {
   populateDraftData,
 } from "../../hooks/AddAsset/AddAssetFormHooks";
 import FooterButtons from "./FooterButtons";
-import { textBox, colors, gapV } from "../../constants/global";
 import validateInputs from "../../utils/validateInputs";
 import { formErrorState } from "../../hooks/AddAsset/FormValidator";
 import { onSaveToDrafts, saveOfflineData } from "../../utils/localSave";
 import { sendDataToServer } from "../../api/AddAsset/addAssetApi";
 import InputFieldsRender from "./InputFieldsRender";
 
-const InputFields = ({ isOffline, capturedImage, draftsData }) => {
+const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
   const { state, updateState, resetState } = inputFieldState();
   const { formState, resetValidatorState, updateValidatorState } =
     formErrorState();
@@ -39,14 +38,17 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     if (!isFormValidated) {
       return;
     } else {
-      if (!isOffline) {
+      if (isOffline) {
         saveOfflineData(data, dispatch);
       } else {
         const isSuccessful = await sendDataToServer(data);
-        isSuccessful ? Alert.alert('Data Uploaded Successfully') : Alert.alert('There was an error. Please try again');
+        isSuccessful
+          ? Alert.alert("Data Uploaded Successfully")
+          : Alert.alert("There was an error. Please try again");
       }
       resetValidatorState();
-      // resetState();
+      resetState();
+      clearImage();
     }
   };
 
@@ -61,20 +63,11 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
     updateState,
     state: { ...state },
     formState,
+    companyName,
   };
 
   return (
     <>
-      {/* COMPANY NAME */}
-      <TextInput
-        editable={false}
-        selectTextOnFocus={false}
-        value={companyName}
-        style={[
-          styles.inputContainer,
-          { backgroundColor: "#e0e0e0", color: "#000" },
-        ]}
-      />
       <InputFieldsRender props={inputFieldRenderProps} formState={formState} />
       <FooterButtons
         handleSave={onPressSave}
@@ -84,15 +77,3 @@ const InputFields = ({ isOffline, capturedImage, draftsData }) => {
   );
 };
 export default InputFields;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    height: textBox.textInputHeight,
-    borderColor: colors.gray,
-    borderWidth: 1,
-    borderRadius: textBox.textBorderRadius,
-    marginTop: gapV + 1,
-    padding: textBox.padding,
-    fontSize: 14,
-  },
-});

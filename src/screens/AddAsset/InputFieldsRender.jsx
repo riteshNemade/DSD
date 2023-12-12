@@ -1,4 +1,10 @@
-import { TextInput, TouchableOpacity, StyleSheet, View, Text } from "react-native";
+import {
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Text,
+} from "react-native";
 import { colors, gapV, textBox } from "../../constants/global";
 import { Dropdown } from "react-native-element-dropdown";
 import { Feather } from "@expo/vector-icons";
@@ -8,7 +14,6 @@ import { useState } from "react";
 export default InputFieldsRender = ({ props }) => {
   const { modelsList, statusList, locationsList, suppliersList } =
     fetchOptions();
-
 
   const [isPurchaseDatePickerVisible, setIsPurchaseDatePickerVisible] =
     useState(false);
@@ -42,6 +47,16 @@ export default InputFieldsRender = ({ props }) => {
   };
   return (
     <View style={{ flex: 7 }}>
+      {/* COMPANY NAME */}
+      <TextInput
+        editable={false}
+        selectTextOnFocus={false}
+        value={props.companyName}
+        style={[
+          styles.inputContainer,
+          { backgroundColor: "#e0e0e0", color: "#000" },
+        ]}
+      />
       {/* AssetTag */}
       <TextInput
         {...textInputProps}
@@ -138,7 +153,7 @@ export default InputFieldsRender = ({ props }) => {
       />
       {props.formState.warrantyBorderColor !== colors.gray ? (
         <View>
-          <Text style={{ fontSize: 12, color: "#FF0000", marginTop:5, }}>
+          <Text style={{ fontSize: 12, color: "#FF0000", marginTop: 5 }}>
             Warranty should be a number between 0 and 240.
           </Text>
         </View>

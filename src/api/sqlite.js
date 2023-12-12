@@ -90,7 +90,7 @@ export const getOfflineSyncData = async (db) => {
   });
 };
 
-export const saveData = async (db, data) => {
+export const saveDataOffline = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
         asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
@@ -119,6 +119,37 @@ export const saveData = async (db, data) => {
 
   db.transaction((tx) => {
     tx.executeSql(insertQuery);
+  });
+};
+
+export const updateOfflineData = async (db, data) => {
+  const updateQuery = `
+  UPDATE ${tableName} SET
+  asset_tag = '${data.assetTag || null}', 
+  serial = '${data.serial || null}', 
+  model_id = '${data.modelId || null}', 
+  model = '${data.model || null}',  
+  status_id = '${data.statusId || null}', 
+  status = '${data.status || null}', 
+  location_id = '${data.locationId || null}', 
+  location = '${data.location || null}', 
+  asset_name = '${data.assetName || null}',
+  warranty = '${data.warranty || null}',
+  order_number = '${data.orderNumber || null}',
+  purchase_date = '${data.purchaseDate || null}',
+  eol_date = '${data.eolDate || null}',
+  supplier_id = '${data.supplierId || null}', 
+  supplier = '${data.supplier || null}', 
+  purchase_cost = '${data.purchaseCost || null}',
+  company = '${data.company || null}',
+  notes = '${data.notes || null}',
+  imagepath = '${data.imagepath || null}',
+  flag = 0
+  WHERE id = ${data.draftAssetId}
+`;
+
+  db.transaction((tx) => {
+    tx.executeSql(updateQuery);
   });
 };
 
@@ -184,14 +215,6 @@ export const updateDraft = async (db, data) => {
     tx.executeSql(updateQuery);
   });
 };
-
-export async function deleteData(db) {
-  const deleteQuery = `DELETE FROM ${tableName} WHERE flag=0`;
-  db.transaction((tx) => {
-    tx.executeSql(deleteQuery);
-  });
-}
-
 
 export async function deleteById(db, id) {
   const deleteQuery = `DELETE from ${tableName} WHERE id=${id}`;

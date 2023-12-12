@@ -1,7 +1,6 @@
 import * as FileSystem from "expo-file-system";
-
+import initDatabase, { deleteById } from "../sqlite";
 export const sendDataToServer = async (data) => {
-
   let isSuccessful = false;
   const dataToSend = new FormData();
   if (
@@ -74,11 +73,15 @@ export const sendDataToServer = async (data) => {
     .catch((err) => {
       console.log("API Error: ", err);
     });
+
+  if (data.draftAssetId && data.draftAssetId !== null && isSuccessful) {
+    const db = await initDatabase();
+    await deleteById(db, data.draftAssetId);
+  }
   return isSuccessful;
 };
 
 export const uploadDataFromDatabase = async (data) => {
-
   let isSuccessful = false;
   const dataToSend = new FormData();
   if (
@@ -123,8 +126,8 @@ export const uploadDataFromDatabase = async (data) => {
   if (data.purchase_cost !== null && data.purchase_cost !== "null") {
     dataToSend.append("purchase_cost", data.purchase_cost);
   }
-  if (data.purchase_date !== null && data.purchase_date!== 'null') {
-    console.log(new Date(data.purchase_date).toISOString())
+  if (data.purchase_date !== null && data.purchase_date !== "null") {
+    console.log(new Date(data.purchase_date).toISOString());
     dataToSend.append(
       "purchase_date",
       new Date(data.purchase_date).toISOString()?.split("T")[0]

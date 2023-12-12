@@ -63,7 +63,7 @@ const AddAssetScreen = ({ route }) => {
           {isOffline ? <OfflineHeader /> : null}
           <View style={styles.container}>
             <TopContent onClearImage={onClearImage} imageName={imageName}/>
-            <InputFields isOffline={isOffline} capturedImage={capturedImage} draftsData={draftsData}/>
+            <InputFields isOffline={isOffline} capturedImage={capturedImage} clearImage={onClearImage} draftsData={draftsData}/>
           </View>
         </ScrollContentViewComponent>
       </LinearGradientComponent>
