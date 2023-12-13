@@ -93,7 +93,7 @@ export const getOfflineSyncData = async (db) => {
 export const saveDataOffline = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
-        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company_id, company, notes, imagepath, flag) VALUES (
           '${data.assetTag || null}',
           '${data.serial || null}',
           '${data.modelId || null}',
@@ -110,6 +110,7 @@ export const saveDataOffline = async (db, data) => {
           '${data.supplierId || null}',
           '${data.supplier || null}',
           '${data.purchaseCost || null}',
+          '${data.company_id || null}',
           '${data.company || null}',
           '${data.notes || null}',
           '${data.imagepath || null}',
