@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./AuthNavigator";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { startupSync } from "../utils/backgroundServices";
+import initDatabase, { getLocalData } from "../api/sqlite";
 
 
 export default function RootNavigator() {
@@ -14,9 +15,10 @@ export default function RootNavigator() {
   const dispatch = useDispatch();
 
   const setGlobalState = async () => {
-    const isSyncDataAvailable =
-      JSON.parse(await AsyncStorage.getItem("localData"))?.isAvailable || false;
-    if (isSyncDataAvailable) {
+    const db = await initDatabase();
+    const isLocalDataAvailable = await getLocalData(db);
+    console.log(isLocalDataAvailable)
+    if (isLocalDataAvailable.length > 0) {
       dispatch({
         type: "ENABLE",
       });
@@ -27,7 +29,7 @@ export default function RootNavigator() {
     }
   };
   useEffect(() => {
-    setGlobalState();
+    (async () => await setGlobalState())();
     startupSync();
   }, []);
 

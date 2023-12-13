@@ -143,7 +143,7 @@ export const updateOfflineData = async (db, data) => {
   supplier_id = '${data.supplierId || null}', 
   supplier = '${data.supplier || null}', 
   purchase_cost = '${data.purchaseCost || null}',
-  company_id = '${data.company_id || null}'
+  company_id = '${data.company_id || null}',
   company = '${data.company || null}',
   notes = '${data.notes || null}',
   imagepath = '${data.imagepath || null}',

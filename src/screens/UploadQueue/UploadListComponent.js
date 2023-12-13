@@ -32,6 +32,7 @@ const UploadListComponent = ({
     imagePath = { uri: item.imagepath };
   }
 
+  console.log('item: ',item)
   const handleImagePress = () => {
     if (item.imagepath === "null") return;
     setIsImageModalVisible(true);

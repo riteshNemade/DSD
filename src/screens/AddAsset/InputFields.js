@@ -31,14 +31,16 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
     company: companyName,
     company_id: companyId,
     imagepath: capturedImage || null,
+    imagePath: capturedImage || null,
   };
 
   const onPressSave = async () => {
     const isFormValidated = validateInputs(data, updateValidatorState);
+    console.log('final Data: ',data)
     if (!isFormValidated) {
       return;
     } else {
-      if (isOffline) {
+      if (!isOffline) {
         saveOfflineData(data, dispatch);
       } else {
         const isSuccessful = await sendDataToServer(data);

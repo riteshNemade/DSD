@@ -1,6 +1,6 @@
 import { Camera, CameraType } from "expo-camera";
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors, gapH } from "../../constants/global";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,10 +15,18 @@ let camera;
 export default function CameraScreen() {
   const navigation = useNavigation();
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const [flashMode, setFlashMode] = useState('off');
+  const [flashMode, setFlashMode] = useState("off");
   const [capturedImage, setCapturedImage] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [startCamera, setStartCamera] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      console.log(status);
+      setHasPermission(status === "granted");
+    })();
+  }, []);
 
   useEffect(() => {
     navigation.getParent()?.setOptions({
@@ -36,7 +44,6 @@ export default function CameraScreen() {
   }, [navigation]);
 
   const handleFlashMode = () => {
-
     if (flashMode === "on") {
       setFlashMode("off");
     } else if (flashMode === "off") {
@@ -84,7 +91,11 @@ export default function CameraScreen() {
 
   return (
     <View style={styles.container}>
-      {previewVisible && capturedImage ? (
+      {!hasPermission ? (
+        <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
+          <Text>Camera Permission not granted</Text>
+        </View>
+      ) : previewVisible && capturedImage ? (
         <CameraPreview
           photo={capturedImage}
           retakePicture={retakePicture}

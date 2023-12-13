@@ -1,10 +1,11 @@
 import * as BackgroundFetch from "expo-background-fetch";
 import * as Network from "expo-network";
 import * as Notifications from "expo-notifications";
-import initDatabase, { deleteById, getOfflineSyncData } from "../api/sqlite";
+import initDatabase, { deleteById, getLocalData, getOfflineSyncData } from "../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { uploadDataFromDatabase } from "../api/AddAsset/addAssetApi";
 const BACKGROUND_FETCH_TASK = "upload-job-task";
+import store from "../redux/store";
 
 export const dataSyncService = async () => {
   await handleSync();
@@ -46,6 +47,14 @@ export const handleSync = async () => {
       );
     }
     await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
+    const isDataAvailable = await getLocalData().length;
+    
+    if(!(isDataAvailable > 0)){
+      store.dispatch({
+        type:'DISABLE'
+      })
+    }
+
     syncCompleted = true;
   } else {
     syncCompleted = false;
@@ -56,7 +65,7 @@ export const handleSync = async () => {
 export const uploadAndDeleteEntry = async (db, data) => {
   const isOperationSuccessful = await uploadDataFromDatabase(data);
   if (isOperationSuccessful) {
-    deleteById(db, data.id);
+    await deleteById(db, data.id);
     return true;
   } else {
     return false;
