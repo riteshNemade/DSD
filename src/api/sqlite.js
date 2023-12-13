@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 const tableName = "pending_asset_data";
-const batchSize = 10;
+
 export default async function initDatabase() {
   try {
     const db = SQLite.openDatabase("dsd.db");
@@ -90,6 +90,7 @@ export const getOfflineSyncData = async (db) => {
   });
 };
 
+/******************************************OFFLINE DATA****************************************************/
 export const saveDataOffline = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
@@ -142,6 +143,7 @@ export const updateOfflineData = async (db, data) => {
   supplier_id = '${data.supplierId || null}', 
   supplier = '${data.supplier || null}', 
   purchase_cost = '${data.purchaseCost || null}',
+  company_id = '${data.company_id || null}'
   company = '${data.company || null}',
   notes = '${data.notes || null}',
   imagepath = '${data.imagepath || null}',
@@ -154,10 +156,12 @@ export const updateOfflineData = async (db, data) => {
   });
 };
 
+
+/********************************DRAFT DATA*********************************************/
 export const saveDataToDrafts = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName}  (
-        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company, notes, imagepath, flag) VALUES (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company_id, company, notes, imagepath, flag) VALUES (
         '${data.assetTag || null}',
         '${data.serial || null}',
         '${data.modelId || null}',
@@ -174,6 +178,7 @@ export const saveDataToDrafts = async (db, data) => {
         '${data.supplierId || null}',
         '${data.supplier || null}',
         '${data.purchaseCost || null}',
+        '${data.company_id || null}',
         '${data.company || null}',
         '${data.notes || null}',
         '${data.imagepath || null}',
@@ -205,6 +210,7 @@ export const updateDraft = async (db, data) => {
   supplier_id = '${data.supplierId || null}', 
   supplier = '${data.supplier || null}', 
   purchase_cost = '${data.purchaseCost || null}',
+  company_id = '${data.company_id || null}',
   company = '${data.company || null}',
   notes = '${data.notes || null}',
   imagepath = '${data.imagepath || null}',
@@ -216,6 +222,8 @@ export const updateDraft = async (db, data) => {
     tx.executeSql(updateQuery);
   });
 };
+/*******************************************************************************/
+
 
 export async function deleteById(db, id) {
   const deleteQuery = `DELETE from ${tableName} WHERE id=${id}`;
