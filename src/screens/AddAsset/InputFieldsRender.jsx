@@ -71,6 +71,20 @@ export default InputFieldsRender = ({ props }) => {
           props.updateState("assetTag", text);
         }}
       />
+      {/* Bay # */}
+      <TextInput
+        {...textInputProps}
+        placeholderTextColor={props.formState.bay_infoBorderColor}
+        style={[
+          textInputProps.style,
+          { borderColor: props.formState.bay_infoBorderColor },
+        ]}
+        placeholder="Bay #(Actual Location) *"
+        value={props.state.bay_info}
+        onChangeText={(text) => {
+          props.updateState("bay_info", text);
+        }}
+      />
       {/* SERIAL */}
       <TextInput
         {...textInputProps}

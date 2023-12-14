@@ -9,8 +9,7 @@ import CardViewComponent from "../../components/CardView/CardViewComponent";
 import { colors, hPadding } from "../../constants/global";
 import { Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import initDatabase, { deleteById } from "../../api/sqlite";
-import imagePlaceHolder from "assets/images/image_placeholder.png";
+import initDatabase, { deleteById, dropTable } from "../../api/sqlite";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,7 +31,6 @@ const UploadListComponent = ({
     imagePath = { uri: item.imagepath };
   }
 
-  console.log('item: ',item)
   const handleImagePress = () => {
     if (item.imagepath === "null") return;
     setIsImageModalVisible(true);
@@ -42,6 +40,10 @@ const UploadListComponent = ({
   const handleDataModal = () => {
     setIsDataModalVisible(true);
     setModalData(item);
+  };
+
+  const handleOpenErrorModal =async  () => {
+    console.log(item)
   };
 
   const handleDeletion = async (id) => {
@@ -109,17 +111,25 @@ const UploadListComponent = ({
             </Text>
           </TouchableOpacity>
         </View>
+        <View style={{justifyContent:'center'}}>
+        <TouchableOpacity onPress={() => handleOpenErrorModal(item?.id)}>
+          <View
+            style={{
+              marginBottom: 10
+            }}
+          >
+            <MaterialIcons name="error-outline" size={22} color="#FFC107" />
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => handleDeletion(item?.id)}>
           <View
             style={{
-              flex: 1,
-              alignItems: "flex-end",
-              justifyContent: "center",
             }}
           >
-            <MaterialIcons name="delete" size={22} color="red" />
+            <MaterialIcons name="delete" size={22} color="#FF1744" />
           </View>
         </TouchableOpacity>
+        </View>
       </View>
     </CardViewComponent>
   );

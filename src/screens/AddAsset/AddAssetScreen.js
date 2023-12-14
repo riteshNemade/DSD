@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 
@@ -11,11 +11,10 @@ import InputFields from "./InputFields";
 import { hPadding } from "../../constants/global";
 import TopContent from "./TopContent";
 
-
 const AddAssetScreen = ({ route }) => {
   const [capturedImage, setCapturedImage] = useState(null);
   const [isOffline, setOfflineStatus] = useState(false);
-  const [imageName, setImageName] = useState('');
+  const [imageName, setImageName] = useState("");
   const [draftsData, setDraftsData] = useState(null);
 
   useEffect(() => {
@@ -30,43 +29,57 @@ const AddAssetScreen = ({ route }) => {
   //capture image from camera/image picker
   useEffect(() => {
     if (route.params && route.params.imageUri) {
-      console.log(route.params.imageUri)
+      console.log(route.params.imageUri);
       const filePath = route.params.imageUri;
-      setImageName(filePath.split('/').pop());
+      setImageName(filePath.split("/").pop());
       setCapturedImage(route.params.imageUri);
     }
   }, [route.params?.imageUri]);
 
   //capture image from camera/image picker
   useEffect(() => {
-    
-    if (route.params && route.params?.drafts!== undefined && route.params?.drafts !== null) {
+    if (
+      route.params &&
+      route.params?.drafts !== undefined &&
+      route.params?.drafts !== null
+    ) {
       setDraftsData(route.params?.drafts);
-      if(route.params?.drafts.imagepath !== 'null' && route.params?.drafts.imagepath!== null){
-        console.log(route.params?.drafts)
+      if (
+        route.params?.drafts.imagepath !== "null" &&
+        route.params?.drafts.imagepath !== null
+      ) {
+        console.log(route.params?.drafts);
         const filePath = route.params?.drafts.imagepath;
-      setImageName(filePath.split('/').pop());
-      setCapturedImage(route.params?.drafts.imagepath);
+        setImageName(filePath.split("/").pop());
+        setCapturedImage(route.params?.drafts.imagepath);
       }
     }
   }, [route.params?.drafts]);
-  
-  const onClearImage = () =>{
-    setCapturedImage('')
-    setImageName('');
-  }
+
+  const onClearImage = () => {
+    setCapturedImage("");
+    setImageName("");
+  };
   return (
     <View style={{ flex: 1 }}>
-      <LinearGradientComponent>
-        <HeaderComponent title="Add Asset" iconName="Menu" />
-        <ScrollContentViewComponent backgroundColor="#fff">
-          {isOffline ? <OfflineHeader /> : null}
-          <View style={styles.container}>
-            <TopContent onClearImage={onClearImage} imageName={imageName}/>
-            <InputFields isOffline={isOffline} capturedImage={capturedImage} clearImage={onClearImage} draftsData={draftsData}/>
-          </View>
-        </ScrollContentViewComponent>
-      </LinearGradientComponent>
+      <KeyboardAvoidingView behavior="height" style={{flex:1}}>
+        <LinearGradientComponent>
+          <HeaderComponent title="Add Asset" iconName="Menu" />
+          <ScrollContentViewComponent backgroundColor="#fff">
+            {isOffline ? <OfflineHeader /> : null}
+
+            <View style={styles.container}>
+              <TopContent onClearImage={onClearImage} imageName={imageName} />
+              <InputFields
+                isOffline={isOffline}
+                capturedImage={capturedImage}
+                clearImage={onClearImage}
+                draftsData={draftsData}
+              />
+            </View>
+          </ScrollContentViewComponent>
+        </LinearGradientComponent>
+      </KeyboardAvoidingView>
     </View>
   );
 };

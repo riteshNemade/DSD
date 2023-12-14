@@ -6,6 +6,13 @@ export default validateInputs = (data, updateValidatorState) => {
     updateValidatorState("assetTagBorderColor", "#FF0000");
     return false;
   }
+  if (
+    !data.bay_info &&
+    (data.bay_info === null || data.bay_info === undefined)
+  ) {
+    updateValidatorState("bay_infoBorderColor", "#FF0000");
+    return false;
+  }
   if (!data.modelId && (data.modelId === null || data.modelId === undefined)) {
     updateValidatorState("modelBorderColor", "#FF0000");
     return false;

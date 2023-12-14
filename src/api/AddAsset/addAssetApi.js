@@ -1,7 +1,7 @@
 import * as FileSystem from "expo-file-system";
 import initDatabase, { deleteById } from "../sqlite";
 export const sendDataToServer = async (data) => {
-  let isSuccessful = false;
+  let result = {};
   const dataToSend = new FormData();
   if (
     data.imagepath !== null &&
@@ -65,9 +65,17 @@ export const sendDataToServer = async (data) => {
     .then((res) => {
       console.log(res.data);
       if (res.data.status === "error") {
-        isSuccessful = false;
+
+        const error = JSON.stringify(res.data?.messages)
+
+        result = {
+          isSuccessful: false,
+          error
+        };
       } else {
-        isSuccessful = true;
+        result = {
+          isSuccessful: true,
+        };
       }
     })
     .catch((err) => {
@@ -78,11 +86,11 @@ export const sendDataToServer = async (data) => {
     const db = await initDatabase();
     await deleteById(db, data.draftAssetId);
   }
-  return isSuccessful;
+  return result;
 };
 
 export const uploadDataFromDatabase = async (data) => {
-  let isSuccessful = false;
+  let result = {};
   const dataToSend = new FormData();
   if (
     data.imagepath !== null &&
@@ -137,6 +145,7 @@ export const uploadDataFromDatabase = async (data) => {
     console.log("locationId", data.location_id);
     dataToSend.append("rtd_location_id", data.location_id);
   }
+  dataToSend.append("_snipeit_bay_5","A");
 
   await api
     .post("/hardware", dataToSend, {
@@ -145,15 +154,20 @@ export const uploadDataFromDatabase = async (data) => {
       },
     })
     .then((res) => {
-      console.log(res.data);
       if (res.data.status === "error") {
-        isSuccessful = false;
+        const error = JSON.stringify(res.data?.messages);
+        result = {
+          isSuccessful: false,
+          error
+        }
       } else {
-        isSuccessful = true;
+        result = {
+          isSuccessful: true,
+        }
       }
     })
     .catch((err) => {
       console.log("API Error: ", err);
     });
-  return isSuccessful;
+  return result;
 };

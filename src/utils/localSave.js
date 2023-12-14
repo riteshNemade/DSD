@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import initDatabase, {
   createTable,
+  dropTable,
   saveDataOffline,
   saveDataToDrafts,
   updateDraft,
@@ -11,7 +12,6 @@ import { Alert } from "react-native";
 import { initBackgroundFetch } from "./backgroundServices";
 
 export const saveOfflineData = async (data, dispatch) => {
-  console.log(data);
   const db = await initDatabase();
   await createTable(db);
 

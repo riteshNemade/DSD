@@ -1,17 +1,24 @@
 import * as BackgroundFetch from "expo-background-fetch";
 import * as Network from "expo-network";
 import * as Notifications from "expo-notifications";
-import initDatabase, { deleteById, getLocalData, getOfflineSyncData } from "../api/sqlite";
+import initDatabase, {
+  createTable,
+  deleteById,
+  getLocalData,
+  getOfflineSyncData,
+  updateError,
+  updateOfflineData,
+} from "../api/sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { uploadDataFromDatabase } from "../api/AddAsset/addAssetApi";
 const BACKGROUND_FETCH_TASK = "upload-job-task";
 import store from "../redux/store";
 
 export const dataSyncService = async () => {
-  await handleSync();
+  await handleOfflineDataUpload();
 };
 
-export const handleSync = async () => {
+export const handleOfflineDataUpload = async () => {
   let syncCompleted = false;
   let isOfflineDataAvailable = JSON.parse(
     await AsyncStorage.getItem("offlineData")
@@ -24,19 +31,20 @@ export const handleSync = async () => {
     isOfflineDataAvailable
   ) {
     const db = await initDatabase();
+    await createTable(db);
     const databaseResult = await getOfflineSyncData(db);
     const offlineData = databaseResult._array;
     let dataLength = databaseResult.length;
 
     for (const data of offlineData) {
-      console.log(data);
-      let operationSuccessful = await uploadAndDeleteEntry(db, data);
+      let operationSuccessful = await uploadAndDeleteEntry(data);
+
       operationSuccessful ? dataLength-- : dataLength;
     }
 
     //all data synced?
     if (dataLength === 0) {
-      AsyncStorage.setItem(
+      await AsyncStorage.setItem(
         "offlineData",
         JSON.stringify({ isAvailable: false })
       );
@@ -47,14 +55,13 @@ export const handleSync = async () => {
       );
     }
     await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-    const isDataAvailable = await getLocalData().length;
-    
-    if(!(isDataAvailable > 0)){
-      store.dispatch({
-        type:'DISABLE'
-      })
-    }
+    const isDataAvailable = await getLocalData(db).length;
 
+    if (!(isDataAvailable > 0)) {
+      store.dispatch({
+        type: "DISABLE",
+      });
+    }
     syncCompleted = true;
   } else {
     syncCompleted = false;
@@ -62,16 +69,23 @@ export const handleSync = async () => {
   return syncCompleted;
 };
 
-export const uploadAndDeleteEntry = async (db, data) => {
-  const isOperationSuccessful = await uploadDataFromDatabase(data);
-  if (isOperationSuccessful) {
+export const uploadAndDeleteEntry = async (data) => {
+  let success = false;
+  const result = await uploadDataFromDatabase(data);
+  if (result?.isSuccessful) {
+    const db = await initDatabase();
+    await createTable(db);
     await deleteById(db, data.id);
-    return true;
+    success = true;
   } else {
-    return false;
+    const db = await initDatabase();
+    await createTable(db);
+    await updateError(db, result.error, data.id);
+    success = false;
   }
-};
 
+  return success;
+};
 
 export const notifyOfflineSyncComplete = (notificationBody) => {
   Notifications.setNotificationHandler({

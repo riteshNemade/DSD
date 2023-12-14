@@ -14,6 +14,7 @@ const reducer = (state, action) => {
         status: null,
         locationId: null,
         location: null,
+        bay_info: null,
         assetName: null,
         warranty: null,
         orderNumber: null,
@@ -43,6 +44,7 @@ export function inputFieldState() {
     status: null,
     locationId: null,
     location: null,
+    bay_info: null,
     assetName: null,
     warranty: null,
     orderNumber: null,
@@ -107,6 +109,10 @@ export const populateDraftData = (draftsData, updateState, resetState) => {
       updateState(
         "locationId",
         draftsData.location_id !== "null" ? draftsData.location_id : null
+      );
+      updateState(
+        "bay_info",
+        draftsData.bay_info !== "null" ? draftsData.bay_info : null
       );
       updateState(
         "assetName",

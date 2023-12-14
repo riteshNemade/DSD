@@ -8,6 +8,7 @@ const reducer = (state, action) => {
     case "RESET_FORM":
       return {
         assetTagBorderColor: colors.gray,
+        bay_infoBorderColor: colors.gray,
         modelBorderColor: colors.gray,
         statusBorderColor: colors.gray,
         warrantyBorderColor: colors.gray,
@@ -21,6 +22,7 @@ const reducer = (state, action) => {
 export function formErrorState() {
   const initialState = {
     assetTagBorderColor: colors.gray,
+    bay_infoBorderColor: colors.gray,
     modelBorderColor: colors.gray,
     statusBorderColor: colors.gray,
     warrantyBorderColor: colors.gray,

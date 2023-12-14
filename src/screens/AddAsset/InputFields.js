@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "react-native";
+import { Alert, KeyboardAvoidingView, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -35,15 +35,16 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
   };
 
   const onPressSave = async () => {
+    
     const isFormValidated = validateInputs(data, updateValidatorState);
     console.log('final Data: ',data)
     if (!isFormValidated) {
       return;
     } else {
-      if (isOffline) {
+      if (!isOffline) {
         saveOfflineData(data, dispatch);
       } else {
-        const isSuccessful = await sendDataToServer(data);
+        const isSuccessful = await sendDataToServer(data)?.isSuccessful;
         isSuccessful
           ? Alert.alert("Data Uploaded Successfully")
           : Alert.alert("There was an error. Please try again");

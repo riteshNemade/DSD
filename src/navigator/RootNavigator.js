@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import { KeyboardAvoidingView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 
 import AuthNavigator from "./AuthNavigator";
@@ -18,7 +16,6 @@ export default function RootNavigator() {
   const setGlobalState = async () => {
     const db = await initDatabase();
     const isLocalDataAvailable = await getLocalData(db);
-    console.log(isLocalDataAvailable)
     if (isLocalDataAvailable.length > 0) {
       dispatch({
         type: "ENABLE",

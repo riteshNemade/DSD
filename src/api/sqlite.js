@@ -23,6 +23,7 @@ export async function createTable(db) {
       status VARCHAR,
       location_id INT,
       location VARCHAR,
+      bay_info VARCHAR,
       asset_name VARCHAR,
       warranty INT,
       order_number VARCHAR,
@@ -35,7 +36,8 @@ export async function createTable(db) {
       company VARCHAR,
       notes VARCHAR,
       imagepath VARCHAR,
-      flag VARCHAR
+      flag VARCHAR,
+      error VARCHAR
     );
   `;
   await db.transaction((tx) => {
@@ -94,7 +96,7 @@ export const getOfflineSyncData = async (db) => {
 export const saveDataOffline = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName} (
-        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company_id, company, notes, imagepath, flag) VALUES (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, bay_info, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company_id, company, notes, imagepath, flag) VALUES (
           '${data.assetTag || null}',
           '${data.serial || null}',
           '${data.modelId || null}',
@@ -103,6 +105,7 @@ export const saveDataOffline = async (db, data) => {
           '${data.status || null}',
           '${data.locationId || null}',
           '${data.location || null}',
+          '${data.bay_info || null}',
           '${data.assetName || null}',
           '${data.warranty || null}',
           '${data.orderNumber || null}',
@@ -129,39 +132,51 @@ export const updateOfflineData = async (db, data) => {
   UPDATE ${tableName} SET
   asset_tag = '${data.assetTag || null}', 
   serial = '${data.serial || null}', 
-  model_id = '${data.modelId || null}', 
+  model_id = '${data.modelId || data.model_id || null}', 
   model = '${data.model || null}',  
-  status_id = '${data.statusId || null}', 
+  status_id = '${data.statusId || data.status_id || null}', 
   status = '${data.status || null}', 
-  location_id = '${data.locationId || null}', 
+  location_id = '${data.locationId || data.location_id || null}', 
   location = '${data.location || null}', 
+  bay_info = '${data.bay_info || null}', 
   asset_name = '${data.assetName || null}',
   warranty = '${data.warranty || null}',
   order_number = '${data.orderNumber || null}',
   purchase_date = '${data.purchaseDate || null}',
   eol_date = '${data.eolDate || null}',
-  supplier_id = '${data.supplierId || null}', 
+  supplier_id = '${data.supplierId || data.supplier_id || null}', 
   supplier = '${data.supplier || null}', 
   purchase_cost = '${data.purchaseCost || null}',
   company_id = '${data.company_id || null}',
   company = '${data.company || null}',
   notes = '${data.notes || null}',
   imagepath = '${data.imagepath || null}',
-  flag = 0
+  flag = 0,
+  error = '${data.error || null}'
   WHERE id = ${data.draftAssetId}
 `;
 
-  db.transaction((tx) => {
+  await db.transaction((tx) => {
     tx.executeSql(updateQuery);
   });
 };
+export const updateError = async (db, error, id) => {
+  const updateQuery = `
+  UPDATE ${tableName} SET
+  error = '${error || null}'
+  WHERE id = ${id};
+`;
 
+  await db.transaction((tx) => {
+    tx.executeSql(updateQuery);
+  });
+};
 
 /********************************DRAFT DATA*********************************************/
 export const saveDataToDrafts = async (db, data) => {
   const insertQuery = `
       INSERT OR REPLACE INTO ${tableName}  (
-        asset_tag, serial, model_id, model, status_id, status, location_id, location, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company_id, company, notes, imagepath, flag) VALUES (
+        asset_tag, serial, model_id, model, status_id, status, location_id, location, bay_info, asset_name, warranty, order_number, purchase_date, eol_date, supplier_id, supplier, purchase_cost, company_id, company, notes, imagepath, flag) VALUES (
         '${data.assetTag || null}',
         '${data.serial || null}',
         '${data.modelId || null}',
@@ -170,6 +185,7 @@ export const saveDataToDrafts = async (db, data) => {
         '${data.status || null}',
         '${data.locationId || null}',
         '${data.location || null}',
+        '${data.bay_info || null}',
         '${data.assetName || null}',
         '${data.warranty || null}',
         '${data.orderNumber || null}',
@@ -202,6 +218,7 @@ export const updateDraft = async (db, data) => {
   status = '${data.status || null}', 
   location_id = '${data.locationId || null}', 
   location = '${data.location || null}', 
+  bay_info = '${data.bay_info || null}', 
   asset_name = '${data.assetName || null}',
   warranty = '${data.warranty || null}',
   order_number = '${data.orderNumber || null}',
@@ -223,7 +240,6 @@ export const updateDraft = async (db, data) => {
   });
 };
 /*******************************************************************************/
-
 
 export async function deleteById(db, id) {
   const deleteQuery = `DELETE from ${tableName} WHERE id=${id}`;

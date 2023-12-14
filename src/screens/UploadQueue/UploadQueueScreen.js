@@ -6,7 +6,7 @@ import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
 
-import { handleSync } from "../../utils/syncOfflineData";
+import { handleOfflineDataUpload } from "../../utils/syncOfflineData";
 import initDatabase, { getLocalData } from "../../api/sqlite";
 import UploadListContent from "./UploadListContent";
 import FloatingSyncButton from "./FloatingSyncButton";
@@ -30,7 +30,7 @@ const UploadQueueScreen = () => {
 
   const handleSyncPress = async () => {
     console.log("Syncing....");
-    const isSyncSuccessful = await handleSync();
+    const isSyncSuccessful = await handleOfflineDataUpload();
     if (isSyncSuccessful) {
       ToastAndroid.show("Sync Successful", ToastAndroid.LONG);
       // dispatch({
@@ -38,7 +38,7 @@ const UploadQueueScreen = () => {
       // });
       // await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
       // setData([]);
-      fetchDataFn();
+      await fetchDataFn();
     } else {
       ToastAndroid.show(
         "Please check you internet connection",
