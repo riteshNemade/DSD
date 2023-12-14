@@ -4,10 +4,12 @@ import UploadListComponent from "./UploadListComponent";
 import { FlashList } from "@shopify/flash-list";
 const UploadListContent = ({
   data,
-  setIsDataModalVisible,
-  setIsImageModalVisible,
-  setImageModalData,
   setModalData,
+  setIsDataModalVisible,
+  setErrorModalData,
+  setIsErrorModalVisible,
+  setImageModalData,
+  setIsImageModalVisible,
   refetch,
 }) => {
   return (
@@ -21,10 +23,12 @@ const UploadListContent = ({
             refetch={refetch}
             item={item}
             listLength={data?.length}
-            setIsDataModalVisible={setIsDataModalVisible}
-            setIsImageModalVisible={setIsImageModalVisible}
-            setImageModalData={setImageModalData}
             setModalData={setModalData}
+            setIsDataModalVisible={setIsDataModalVisible}
+            setImageModalData={setImageModalData}
+            setIsImageModalVisible={setIsImageModalVisible}
+            setErrorModalData={setErrorModalData}
+            setIsErrorModalVisible={setIsErrorModalVisible}
           />
         )}
         keyExtractor={(item) => item.id}

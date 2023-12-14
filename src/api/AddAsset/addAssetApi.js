@@ -19,6 +19,9 @@ export const sendDataToServer = async (data) => {
   if (data.assetTag !== null && data.assetTag !== "null") {
     dataToSend.append("asset_tag", data.assetTag);
   }
+  if (data.assetTag !== null && data.assetTag !== "null") {
+    dataToSend.append("_snipeit_bay_5", data.bay_info);
+  }
   dataToSend.append("company_id", data.company_id);
   dataToSend.append("status_id", data.statusId);
   dataToSend.append("model_id", data.modelId);
@@ -169,5 +172,6 @@ export const uploadDataFromDatabase = async (data) => {
     .catch((err) => {
       console.log("API Error: ", err);
     });
+    console.log("result: ", result)
   return result;
 };

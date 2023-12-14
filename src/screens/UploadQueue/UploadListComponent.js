@@ -17,10 +17,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const UploadListComponent = ({
   item,
   listLength,
-  setIsDataModalVisible,
-  setIsImageModalVisible,
-  setImageModalData,
   setModalData,
+  setIsDataModalVisible,
+  setImageModalData,
+  setIsImageModalVisible,
+  setErrorModalData,
+  setIsErrorModalVisible,
   refetch,
 }) => {
   let imagePath = require("assets/images/image_placeholder.png");
@@ -44,8 +46,11 @@ const UploadListComponent = ({
 
   const handleOpenErrorModal =async  () => {
     console.log(item)
+    setErrorModalData(item);
+    setIsErrorModalVisible(true);
   };
 
+  console.log('ITEM: ',item)
   const handleDeletion = async (id) => {
     try {
        Alert.alert(
@@ -112,7 +117,7 @@ const UploadListComponent = ({
           </TouchableOpacity>
         </View>
         <View style={{justifyContent:'center'}}>
-        <TouchableOpacity onPress={() => handleOpenErrorModal(item?.id)}>
+        {item.error !== 'null' && item.error!== null ? <TouchableOpacity onPress={() => handleOpenErrorModal(item?.id)}>
           <View
             style={{
               marginBottom: 10
@@ -120,7 +125,7 @@ const UploadListComponent = ({
           >
             <MaterialIcons name="error-outline" size={22} color="#FFC107" />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> : <></>}
         <TouchableOpacity onPress={() => handleDeletion(item?.id)}>
           <View
             style={{

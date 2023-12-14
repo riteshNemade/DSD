@@ -44,10 +44,13 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
       if (!isOffline) {
         saveOfflineData(data, dispatch);
       } else {
-        const isSuccessful = await sendDataToServer(data)?.isSuccessful;
-        isSuccessful
-          ? Alert.alert("Data Uploaded Successfully")
-          : Alert.alert("There was an error. Please try again");
+        const result = await sendDataToServer(data);
+        console.log(result)
+        if(result.isSuccessful){
+          Alert.alert('Success',"Data Uploaded Successfully")
+        }else{
+          Alert.alert('Error',"Asset Tag must be unique. Please enter a unique Asset Tag");
+        }
       }
       resetValidatorState();
       resetState();

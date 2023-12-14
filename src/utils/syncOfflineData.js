@@ -37,7 +37,7 @@ export const handleOfflineDataUpload = async () => {
     let dataLength = databaseResult.length;
 
     for (const data of offlineData) {
-      let operationSuccessful = await uploadAndDeleteEntry(data);
+      let operationSuccessful = await uploadAndDeleteEntry(db, data);
 
       operationSuccessful ? dataLength-- : dataLength;
     }
@@ -49,15 +49,16 @@ export const handleOfflineDataUpload = async () => {
         JSON.stringify({ isAvailable: false })
       );
       notifyOfflineSyncComplete("Offline Data synced successfully");
+      await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
     } else {
+
       notifyOfflineSyncComplete(
         "There was an error while synchronizing offline data. Please check the app."
       );
     }
-    await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-    const isDataAvailable = await getLocalData(db).length;
-
-    if (!(isDataAvailable > 0)) {
+    const isDataAvailable = await getLocalData(db);
+    console.log('AASDUOOOO: ', isDataAvailable)
+    if (!(isDataAvailable.length > 0)) {
       store.dispatch({
         type: "DISABLE",
       });
@@ -69,17 +70,14 @@ export const handleOfflineDataUpload = async () => {
   return syncCompleted;
 };
 
-export const uploadAndDeleteEntry = async (data) => {
+export const uploadAndDeleteEntry = async (db, data) => {
   let success = false;
   const result = await uploadDataFromDatabase(data);
+
   if (result?.isSuccessful) {
-    const db = await initDatabase();
-    await createTable(db);
     await deleteById(db, data.id);
     success = true;
   } else {
-    const db = await initDatabase();
-    await createTable(db);
     await updateError(db, result.error, data.id);
     success = false;
   }

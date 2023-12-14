@@ -1,54 +1,55 @@
 import { StyleSheet, ToastAndroid, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
 
+import AssetListPlaceholder from "../../components/AssetListPlaceholder/AssetListPlaceholder";
 import { handleOfflineDataUpload } from "../../utils/syncOfflineData";
 import initDatabase, { getLocalData } from "../../api/sqlite";
 import UploadListContent from "./UploadListContent";
 import FloatingSyncButton from "./FloatingSyncButton";
 import ImageModal from "./ImageModal";
 import DataModal from "./DataModal";
+import ErrorModal from "./ErrorModal";
 
 const UploadQueueScreen = () => {
   const [data, setData] = useState([]);
   const [modalData, setModalData] = useState([]);
-  const [imageModalData, setImageModalData] = useState([]);
   const [isDataModalVisible, setIsDataModalVisible] = useState(false);
+  const [errorModalData, setErrorModalData] = useState([]);
+  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const [imageModalData, setImageModalData] = useState([]);
   const [isImageModalVisible, setIsImageModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch();
-  
   const fetchDataFn = async () => {
+    console.log("RUNNING");
     const db = await initDatabase();
     const offlineData = await getLocalData(db);
     setData(offlineData._array);
   };
 
   const handleSyncPress = async () => {
-    console.log("Syncing....");
+    // setData([]);
+
     const isSyncSuccessful = await handleOfflineDataUpload();
     if (isSyncSuccessful) {
       ToastAndroid.show("Sync Successful", ToastAndroid.LONG);
-      // dispatch({
-      //   type: "DISABLE",
-      // });
-      // await AsyncStorage.setItem("sync", JSON.stringify({ isEnabled: false }));
-      // setData([]);
-      await fetchDataFn();
     } else {
       ToastAndroid.show(
         "Please check you internet connection",
         ToastAndroid.LONG
       );
     }
+
+    await fetchDataFn();
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchDataFn();
+    (async () => fetchDataFn())();
   }, []);
 
   return (
@@ -63,7 +64,16 @@ const UploadQueueScreen = () => {
                   isModalVisible={isDataModalVisible}
                   setModalVisible={setIsDataModalVisible}
                   data={modalData}
-                ></DataModal>
+                />
+              ) : (
+                <></>
+              )}
+              {isErrorModalVisible ? (
+                <ErrorModal
+                  isModalVisible={isErrorModalVisible}
+                  setModalVisible={setIsErrorModalVisible}
+                  data={errorModalData}
+                />
               ) : (
                 <></>
               )}
@@ -80,13 +90,18 @@ const UploadQueueScreen = () => {
                 <UploadListContent
                   data={data}
                   refetch={fetchDataFn}
-                  setIsDataModalVisible={setIsDataModalVisible}
-                  setIsImageModalVisible={setIsImageModalVisible}
-                  setImageModalData={setImageModalData}
                   setModalData={setModalData}
+                  setIsDataModalVisible={setIsDataModalVisible}
+                  setImageModalData={setImageModalData}
+                  setIsImageModalVisible={setIsImageModalVisible}
+                  setErrorModalData={setErrorModalData}
+                  setIsErrorModalVisible={setIsErrorModalVisible}
                 />
               </View>
-              <FloatingSyncButton handleSyncPress={handleSyncPress} />
+              <FloatingSyncButton
+                handleSyncPress={handleSyncPress}
+                isLoading={isLoading}
+              />
             </>
           ) : (
             <View
