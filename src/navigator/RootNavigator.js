@@ -8,6 +8,7 @@ import AuthNavigator from "./AuthNavigator";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { startupSync } from "../utils/backgroundServices";
 import initDatabase, { getLocalData } from "../api/sqlite";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function RootNavigator() {
@@ -34,10 +35,10 @@ export default function RootNavigator() {
   }, []);
 
   return (
-    <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges='top'>
       <NavigationContainer>
         {!isLoggedIn ? <AuthNavigator /> : <BottomTabNavigator />}
       </NavigationContainer>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

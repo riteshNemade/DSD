@@ -40,7 +40,7 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
     if (!isFormValidated) {
       return;
     } else {
-      if (!isOffline) {
+      if (isOffline) {
         saveOfflineData(data, dispatch);
       } else {
         const isSuccessful = await sendDataToServer(data);

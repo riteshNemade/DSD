@@ -35,18 +35,6 @@ const FilterModalInputFields = ({ props }) => {
   } = { ...props };
   return (
     <>
-      {/* <Dropdown
-        data={companies}
-        placeholderStyle={styles.placeholder}
-        labelField="name"
-        valueField="id"
-        placeholder={"Company"}
-        onChange={(item) => {
-          setCompanyFilter(item.id);
-        }}
-        style={styles.inputContainer}
-      /> */}
-
       <TextInput
         style={styles.inputContainer}
         placeholder={"Asset Tag"}
