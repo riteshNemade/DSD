@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "DSD_Asset_Management",
-    "slug": "qr_scanner",
+    "name": "Asset Management Tool",
+    "slug": "asset_management",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -37,8 +37,8 @@
     
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#FFF"
       },
       "package": "com.datafortune.DSD"
     },
