@@ -30,7 +30,7 @@ export const saveOfflineData = async (data, dispatch) => {
       type: "ENABLE",
     });
   }
-  Alert.alert("Data Saved Successfully.");
+  Alert.alert('Offline Data',"Data Saved Successfully.");
 };
 
 export const onSaveToDrafts = async (data, resetState, dispatch) => {
@@ -52,7 +52,7 @@ export const onSaveToDrafts = async (data, resetState, dispatch) => {
       type: "ENABLE",
     });
   }
-  Alert.alert("Data Saved in Drafts.");
+  Alert.alert('Drafts',"Data Saved in Drafts.");
 
   resetState();
 };

@@ -1,11 +1,10 @@
-import { StyleSheet, ToastAndroid, View, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "components/ContentView/ContentViewComponent";
 
-import AssetListPlaceholder from "../../components/AssetListPlaceholder/AssetListPlaceholder";
 import { handleOfflineDataUpload } from "../../utils/syncOfflineData";
 import initDatabase, { getLocalData } from "../../api/sqlite";
 import UploadListContent from "./UploadListContent";
@@ -25,25 +24,13 @@ const UploadQueueScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchDataFn = async () => {
-    console.log("RUNNING");
     const db = await initDatabase();
     const offlineData = await getLocalData(db);
     setData(offlineData._array);
   };
 
   const handleSyncPress = async () => {
-    // setData([]);
-
-    const isSyncSuccessful = await handleOfflineDataUpload();
-    if (isSyncSuccessful) {
-      ToastAndroid.show("Sync Successful", ToastAndroid.LONG);
-    } else {
-      ToastAndroid.show(
-        "Please check you internet connection",
-        ToastAndroid.LONG
-      );
-    }
-
+    await handleOfflineDataUpload();
     await fetchDataFn();
     setIsLoading(false);
   };
