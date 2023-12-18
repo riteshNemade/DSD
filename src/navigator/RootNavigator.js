@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./AuthNavigator";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { startupSync } from "../utils/backgroundServices";
-import initDatabase, { getLocalData } from "../api/sqlite";
+import initDatabase, { createTable, getLocalData } from "../api/sqlite";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
@@ -15,6 +15,7 @@ export default function RootNavigator() {
 
   const setGlobalState = async () => {
     const db = await initDatabase();
+    await createTable(db);
     const isLocalDataAvailable = await getLocalData(db);
     if (isLocalDataAvailable.length > 0) {
       dispatch({

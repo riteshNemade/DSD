@@ -8,8 +8,8 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#4086d6"
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF"
     },
     "plugins": [
       [ 
