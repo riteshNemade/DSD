@@ -148,7 +148,7 @@ export const uploadDataFromDatabase = async (data) => {
     console.log("locationId", data.location_id);
     dataToSend.append("rtd_location_id", data.location_id);
   }
-  dataToSend.append("_snipeit_bay_5","A");
+  dataToSend.append("_snipeit_bay_5",data.bay_info);
 
   await api
     .post("/hardware", dataToSend, {

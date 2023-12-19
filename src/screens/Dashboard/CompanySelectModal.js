@@ -38,6 +38,7 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
   const { data } = useQuery({
     queryKey: ["Companies"],
     queryFn: fetchCompanies,
+    staleTime: 1000 * 60,
   });
 
   const handleSelect = (id, name) => {

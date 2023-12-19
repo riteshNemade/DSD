@@ -11,17 +11,21 @@ import { useState } from "react";
 import api from "../../api/api";
 import { ActivityIndicator } from "react-native-paper";
 import { Alert } from "react-native";
+import { useSelector } from "react-redux";
 
 const QRScannerScreen = () => {
   const navigation = useNavigation();
   const [isAPILoading, setAPILoadingStatus] = useState(false);
-
+  const company_id = useSelector((state) => {
+    return state.global.company_id;
+  });
   const handleSubmit = async (searchTerm) => {
     setAPILoadingStatus(true);
     if (searchTerm !== "") {
-      await api.get(`/hardware/bytag/${searchTerm}`).then((response) => {
+      await api.get(`/hardware?company_id=${company_id}&search=${searchTerm}`).then((response) => {
         const data = response.data;
-        if (data.status === "error") {
+        console.log(data)
+        if (data.status === "error" || data.total !== 1) {
           setAPILoadingStatus(false);
           Alert.alert(
             "Asset does not exist",
@@ -29,7 +33,7 @@ const QRScannerScreen = () => {
           );
         } else {
           setAPILoadingStatus(false);
-          navigation.navigate("AssetOverview", data);
+          navigation.navigate("AssetOverview", data.rows[0]);
         }
       });
     }
