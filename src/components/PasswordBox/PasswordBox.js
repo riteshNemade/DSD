@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { verticalScale } from "react-native-size-matters/extend";
-import {FONT_SIZE_REGULAR} from '../../constants/global'
+import { FONT_SIZE_REGULAR } from "../../constants/global";
 let FONT_SIZE = 16;
 if (PixelRatio.get() > 3.5) {
   FONT_SIZE = 12;
 }
-const PasswordBox = ({ size }) => {
+const PasswordBox = ({ size, password, setPassword }) => {
   const [isPasswordVisible, setPasswordVisibility] = useState(true);
 
   function togglePasswordVisibility() {
@@ -29,6 +29,7 @@ const PasswordBox = ({ size }) => {
       <View style={{ flex: 9, height: verticalScale(60) }}>
         <TextInput
           placeholder={"Password"}
+          value={password}
           style={{
             height: verticalScale(70),
             fontSize: FONT_SIZE_REGULAR,
@@ -38,6 +39,9 @@ const PasswordBox = ({ size }) => {
           secureTextEntry={isPasswordVisible}
           textContentType="password"
           autoCapitalize="none"
+          onChangeText={(text) => {
+            setPassword(text);
+          }}
         />
       </View>
       <View
