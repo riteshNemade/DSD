@@ -12,7 +12,7 @@ const CardViewComponent = ({ children,size }) => {
     cardHeight = verticalScale(120);
   }
 
-  return <View style={[styles.container,{height:verticalScale(cardHeight)}]}>{children}</View>;
+  return <View style={[styles.container,{height: size || cardHeight}]}>{children}</View>;
 };
 
 export default CardViewComponent;

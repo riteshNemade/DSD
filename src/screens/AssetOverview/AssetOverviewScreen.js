@@ -5,10 +5,10 @@ import LinearGradientComponent from "components/LinearGradient/LinearGradientCom
 import HeaderComponent from "components/Header/HeaderComponent";
 import AssetOverviewContent from "./InfoScreen/AssetOverviewContent";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { scale } from "react-native-size-matters/extend";
 import { StyleSheet } from "react-native";
 import AssetHistory from "./HistoryScreen/AssetHistory";
 import AssetFiles from "./FilesScreen/AssetFiles";
+import MaintenanceScreen from "./MaintenanceScreen/MaintenanceScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -17,8 +17,10 @@ function MyTabs({ data, imageUrl, qrUrl }) {
     <Tab.Navigator
       initialRouteName="Info"
       screenOptions={{
-        
+        tabBarScrollEnabled: true,
+        tabBarItemStyle:{width:150},
         //styling
+        tabBarAllowFontScaling: true,
         tabBarStyle: styles.tabBarStyle,
         tabBarContentContainerStyle: styles.tabBarContentContainerStyle,
         tabBarActiveTintColor: "white",
@@ -29,6 +31,11 @@ function MyTabs({ data, imageUrl, qrUrl }) {
         name="Info"
         component={AssetOverviewContent}
         initialParams={{ data: data, imageUrl: imageUrl, qrUrl: qrUrl }}
+      />
+      <Tab.Screen
+        name="Maintenances"
+        component={MaintenanceScreen}
+        initialParams={{ id: data.id}}
       />
       <Tab.Screen
         name="History"
@@ -73,7 +80,5 @@ const styles = StyleSheet.create({
   },
   tabBarIndicatorStyle: {
     backgroundColor: "white",
-    left: scale(28),
-    width: "20%",
   },
 });

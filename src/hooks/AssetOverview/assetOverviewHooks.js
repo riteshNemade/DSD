@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../../api/api";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export const fetchHistoricalData = (id) => {
   const [historicalData, setHistoricalData] = useState([]);
@@ -10,15 +11,21 @@ export const fetchHistoricalData = (id) => {
   const [searchTerm, setSearchTerm] = useState();
 
   const getHistoricalData = async () => {
-    await api.get(url).then((response) => {
-      setHistoricalData(response.data.rows);
-    }).catch(err=> console.log(err));
+    await api
+      .get(url)
+      .then((response) => {
+        setHistoricalData(response.data.rows);
+      })
+      .catch((err) => console.log(err));
   };
   const search = async () => {
-    await api.get(url + searchTerm).then((response) => {
-      setHistoricalData([])
-      setHistoricalData(response.data.rows);
-    }).catch(err=> console.log(err));
+    await api
+      .get(url + searchTerm)
+      .then((response) => {
+        setHistoricalData([]);
+        setHistoricalData(response.data.rows);
+      })
+      .catch((err) => console.log(err));
   };
   useEffect(() => {
     getHistoricalData();
@@ -35,5 +42,21 @@ export const fetchHistoricalData = (id) => {
     url,
     setUrl,
     setSearchTerm,
+  };
+};
+
+export const fetchMaintenanceData = (id) => {
+  const getMaintenanceData = async () => {
+    const response = await api.get(`/maintenances?asset_id=${id}`);
+    return response.data.rows;
+  };
+
+  const maintenanceQuery = useQuery({
+    queryKey: ["maintenance"],
+    queryFn: () => getMaintenanceData(),
+  });
+
+  return {
+    maintenanceList: maintenanceQuery.data || [],
   };
 };
