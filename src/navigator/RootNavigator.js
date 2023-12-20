@@ -7,6 +7,9 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import { startupSync } from "../utils/backgroundServices";
 import initDatabase, { createTable, getLocalData } from "../api/sqlite";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 
 export default function RootNavigator() {
@@ -35,7 +38,19 @@ export default function RootNavigator() {
   return (
     <SafeAreaView style={{ flex: 1 }} edges='top'>
       <NavigationContainer>
-        {!isLoggedIn ? <AuthNavigator /> : <BottomTabNavigator />}
+      <Stack.Navigator
+
+          screenOptions={{
+            ...TransitionPresets.SlideFromRightIOS, // Apply fade transition
+            headerShown:false
+          }}
+        >
+          {!isLoggedIn ? (
+            <Stack.Screen name="Auth" component={AuthNavigator} />
+          ) : (
+            <Stack.Screen name="Main" component={BottomTabNavigator} />
+          )}
+        </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
   );

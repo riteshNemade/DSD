@@ -3,34 +3,28 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { verticalScale } from "react-native-size-matters/extend";
-import {FONT_SIZE_REGULAR} from '../../constants/global'
+import { FONT_SIZE_REGULAR, colors } from "../../constants/global";
 let FONT_SIZE = 16;
 
 if (PixelRatio.get() > 3.5) {
   FONT_SIZE = 12;
 }
 
-const TextBox = ({text,setText}) => {
+const TextBox = ({ text, setText, isError }) => {
   return (
     <View
-      style={{
-        flexDirection: "row",
-        backgroundColor: "white",
-        height: verticalScale(70),
-        borderRadius: 10,
-      }}
+      style={[
+        styles.container,
+        isError ? { borderWidth: 1, borderColor: "red" } : styles.container,
+      ]}
     >
       <View style={{ flex: 9, height: verticalScale(60) }}>
         <TextInput
           placeholder={"Enter Email"}
+          placeholderTextColor={isError ? 'red': colors.gray}
           value={text}
-          style={{
-            height: verticalScale(70),
-            fontSize: FONT_SIZE_REGULAR,
-            paddingLeft: 15,
-            color: "#667085",
-          }}
-          onChangeText={(text)=>{
+          style={[styles.inputStyle]}
+          onChangeText={(text) => {
             setText(text);
           }}
         />
@@ -51,7 +45,7 @@ const TextBox = ({text,setText}) => {
           }}
           onPress={() => setText(null)}
         >
-          <AntDesign name="closecircleo" size={18} color="#667085" />
+          <AntDesign name="closecircleo" size={18} color={isError ? 'red' : colors.gray} />
         </TouchableOpacity>
       </View>
     </View>
@@ -60,4 +54,17 @@ const TextBox = ({text,setText}) => {
 
 export default TextBox;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    height: verticalScale(70),
+    borderRadius: 10,
+  },
+  inputStyle: {
+    height: verticalScale(70),
+    fontSize: FONT_SIZE_REGULAR,
+    paddingLeft: 15,
+    color: "#667085",
+  },
+});

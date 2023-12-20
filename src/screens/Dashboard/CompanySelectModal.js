@@ -1,12 +1,20 @@
-import { StyleSheet, Text, View, Modal } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Modal, Animated } from "react-native";
+import React, { useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { verticalScale } from "react-native-size-matters/extend";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { colors, gapV, hPadding, textBox, FONT_SIZE_REGULAR, FONT_SIZE_LARGE, DROPDOWN_HEIGHT } from "../../constants/global";
+import {
+  colors,
+  gapV,
+  hPadding,
+  textBox,
+  FONT_SIZE_REGULAR,
+  FONT_SIZE_LARGE,
+  DROPDOWN_HEIGHT,
+} from "../../constants/global";
 
 const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
   const dispatch = useDispatch();
@@ -25,7 +33,7 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
           name: company,
         },
       });
-      setIsOptionSelected(true)
+      setIsOptionSelected(true);
     } else {
       setInputBorderColor("#FF0000");
     }
@@ -42,7 +50,7 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
   });
 
   const handleSelect = (id, name) => {
-    setIsOptionSelected(false)
+    setIsOptionSelected(false);
     setInputBorderColor(colors.gray);
     setCompany(name);
     setCompanyID(id);
@@ -55,10 +63,26 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
       return;
     }
   };
+
+  const [animation] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    // Start animation after a certain delay
+    const animationTimeout = setTimeout(() => {
+      Animated.timing(animation, {
+        toValue: 1,
+        duration: 300, // Adjust duration as needed
+        useNativeDriver: true,
+      }).start();
+    }, 200); // Delay duration in milliseconds
+
+    return () => clearTimeout(animationTimeout);
+  }, [animation]);
+
   return (
     <Modal
       transparent={true}
-      animationType="fade"
+      animationType="slide"
       visible={isModalVisible}
       onRequestClose={() => handleModalCloseRequest()}
     >
@@ -70,7 +94,21 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
           height: "110%",
         }}
       >
-        <View style={styles.containerBehindModal}>
+        <Animated.View
+          style={[
+            styles.containerBehindModal,
+            {
+              transform: [
+                {
+                  translateY: animation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [900, 0], // Slide up from 600px below to 0
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
           <View style={styles.contentContainer}>
             <View style={{ flex: 1, marginTop: gapV }}>
               <Text style={{ fontSize: FONT_SIZE_LARGE, fontWeight: 600 }}>
@@ -82,9 +120,18 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
                 valueField="name"
                 value={company}
                 placeholder={"Select Company"}
-                placeholderStyle={{ color: inputBorderColor, fontSize:FONT_SIZE_REGULAR }}
+                placeholderStyle={{
+                  color: inputBorderColor,
+                  fontSize: FONT_SIZE_REGULAR,
+                }}
                 iconColor={inputBorderColor}
-                style={[styles.dropdown, { borderColor: inputBorderColor, fontSize:FONT_SIZE_REGULAR }]}
+                style={[
+                  styles.dropdown,
+                  {
+                    borderColor: inputBorderColor,
+                    fontSize: FONT_SIZE_REGULAR,
+                  },
+                ]}
                 onChange={(item) => {
                   handleSelect(item.id, item.name);
                 }}
@@ -99,7 +146,7 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
               </View>
             </View>
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
@@ -128,7 +175,6 @@ const styles = StyleSheet.create({
     borderRadius: textBox.textBorderRadius,
     marginTop: gapV + 1,
     padding: textBox.padding,
-    height:DROPDOWN_HEIGHT,
-    
+    height: DROPDOWN_HEIGHT,
   },
 });
