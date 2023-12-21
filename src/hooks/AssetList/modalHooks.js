@@ -2,7 +2,6 @@ import api from "../../api/api";
 import { useState, useEffect } from "react";
 
 export const fetchFilterData = () => {
-  const [companies, setCompanies] = useState([]);
   const [categories, setCategories] = useState([]);
   const [models, setModels] = useState([]);
   const [status, setStatus] = useState([]);
@@ -16,21 +15,8 @@ export const fetchFilterData = () => {
     { label: "Asset Name (desc)", value: "name-desc" },
     { label: "EOL Date (asc)", value: "asset_eol_date-asc" },
     { label: "EOL Date (desc)", value: "asset_eol_date-desc" },
-  ])
+  ]);
   const fetchAllOptions = async () => {
-    /*****************Set Companies****************/
-    await api.get("/companies").then((response) => {
-      const rows = response.data.rows;
-
-      const updateCompanies = rows.map((item) => ({
-        //extract only name and id of statusLabels
-        id: item.id,
-        name: item.name,
-      }));
-
-      setCompanies(updateCompanies); //set companies
-    });
-
     /*****************Set Categories****************/
     await api.get("/categories").then((response) => {
       const rows = response.data.rows;
@@ -110,14 +96,13 @@ export const fetchFilterData = () => {
   }, []);
 
   return {
-    companies,
     categories,
     models,
     status,
     locations,
     manufacturers,
     suppliers,
-    sortingOptions
+    sortingOptions,
   };
 };
 
@@ -140,19 +125,19 @@ export function filters() {
     setCategoryFilter,
     modelFilter,
     setModelFilter,
-    statusFilter, 
-    setStatusFilter, 
+    statusFilter,
+    setStatusFilter,
     locationFilter,
     setLocationFilter,
     manufacturerFilter,
     setManufacturerFilter,
     supplierFilter,
     setSupplierFilter,
-    sortOption, 
+    sortOption,
     setSortOption,
-    assetNameFilter, 
+    assetNameFilter,
     setAssetNameFilter,
-    assetTagFilter, 
-    setAssetTagFilter
+    assetTagFilter,
+    setAssetTagFilter,
   };
-};
+}

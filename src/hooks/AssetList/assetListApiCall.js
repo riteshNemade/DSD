@@ -13,7 +13,6 @@ export function fetchData() {
   const [url, setUrl] = useState(
     `/hardware?company_id=${company_id}&sort=created_at&order=asc&limit=20&offset=`
   );
-  console.log(url);
   onlineManager.setEventListener((setOnline) => {
     return NetInfo.addEventListener((state) => {
       setOnline(!!state.isConnected);
