@@ -60,7 +60,7 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
   return (
     <View>
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         visible={isModalVisible}
         onRequestClose={() => setModalVisible(false)}

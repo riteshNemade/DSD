@@ -15,7 +15,17 @@ import LoginOptions from "./LoginOptions";
 const statusBarHeight = Math.ceil(getStatusBarHeight());
 
 const LoginScreen = () => {
-  const { email, handleSignIn, password, setEmail, setPassword } = loginHooks();
+  const {
+    email,
+    handleSignIn,
+    password,
+    setEmail,
+    setPassword,
+    isError,
+    checked,
+    setChecked,
+  } = loginHooks();
+
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
@@ -26,12 +36,17 @@ const LoginScreen = () => {
               style={{ width: 114, height: 114, alignSelf: "center" }}
             />
             <View style={{ marginTop: 24 }}>
-              <TextBox text={email} setText={setEmail}/>
+              <TextBox text={email} setText={setEmail} isError={isError} />
             </View>
             <View style={{ marginTop: 24 }}>
-              <PasswordBox size={verticalScale(70)} password={password} setPassword={setPassword}/>
+              <PasswordBox
+                isError={isError}
+                size={verticalScale(70)}
+                password={password}
+                setPassword={setPassword}
+              />
             </View>
-            <LoginOptions />
+            <LoginOptions checked={checked} setChecked={setChecked}/>
             <View style={{ marginTop: "5%", height: verticalScale(70) }}>
               <ButtonComponent text={"Sign In"} onPress={handleSignIn} />
             </View>

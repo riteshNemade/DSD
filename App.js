@@ -7,7 +7,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 

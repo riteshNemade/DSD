@@ -14,10 +14,10 @@ import { colors, gapV, hPadding, textBox } from "../../../../constants/global";
 import { verticalScale } from "react-native-size-matters";
 import { CheckBox } from "@rneui/base";
 import ButtonComponent from "../../../../components/Button/ButtonComponent";
-import DateTimePicker from '@react-native-community/datetimepicker'
+import DateTimePicker from "@react-native-community/datetimepicker";
 
-
-export const MaintenanceForm = ({props}) => {
+export const MaintenanceForm = ({ props }) => {
+  
   const onStartDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     props.updateState("isStartDatePickerVisible", false);
@@ -80,7 +80,6 @@ export const MaintenanceForm = ({props}) => {
                     }}
                   />
 
-
                   <Dropdown
                     data={props.suppliersList}
                     labelField="name"
@@ -100,7 +99,6 @@ export const MaintenanceForm = ({props}) => {
                       props.updateState("supplier", item.id);
                     }}
                   />
-
 
                   <TextInput
                     style={[
@@ -178,7 +176,9 @@ export const MaintenanceForm = ({props}) => {
                       placeholderTextColor={colors.gray}
                       value={
                         props.state.completionDate !== null
-                          ? props.state.completionDate.toISOString().split("T")[0]
+                          ? props.state.completionDate
+                              .toISOString()
+                              .split("T")[0]
                           : null
                       }
                       editable={false}
@@ -186,7 +186,9 @@ export const MaintenanceForm = ({props}) => {
                     {props.state.completionDate !== null && (
                       <TouchableOpacity
                         style={{ flex: 2, alignItems: "center" }}
-                        onPress={() => props.updateState("completionDate", null)}
+                        onPress={() =>
+                          props.updateState("completionDate", null)
+                        }
                       >
                         <Feather name="x" size={20} color="#555555" />
                       </TouchableOpacity>
@@ -220,18 +222,28 @@ export const MaintenanceForm = ({props}) => {
                     <View
                       style={{
                         flex: 7,
-                        flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
-                      <Text>Warranty Improvement</Text>
-                      <CheckBox
-                        checked={props.state.isWarranty}
-                        onPress={() =>
-                          props.updateState("isWarranty", !props.state.isWarranty)
-                        }
-                      />
+                      <View
+                        style={{
+                          alignItems: "center",
+                          flexDirection: "row",
+                          marginTop: 2,
+                        }}
+                      >
+                        <Text>Warranty Improvement</Text>
+                        <CheckBox
+                          checked={props.state.isWarranty}
+                          onPress={() =>
+                            props.updateState(
+                              "isWarranty",
+                              !props.state.isWarranty
+                            )
+                          }
+                        />
+                      </View>
                     </View>
                   </View>
 
@@ -246,7 +258,10 @@ export const MaintenanceForm = ({props}) => {
                   />
                 </KeyboardAvoidingView>
                 <View style={{ marginTop: gapV }}>
-                  <ButtonComponent text="Save" onPress={() => props.handleSave()} />
+                  <ButtonComponent
+                    text="Save"
+                    onPress={() => props.handleSave()}
+                  />
                 </View>
               </ScrollView>
             </View>

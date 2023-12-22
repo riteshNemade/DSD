@@ -1,10 +1,35 @@
 import axios from "axios";
+import store from "../redux/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default api = axios.create({
-  baseURL: 'https://www.dev.dsdfacilicare.com/api/v1',
+const axiosInstance = axios.create({
+  baseURL: "https://www.dev.dsdfacilicare.com/api/v1",
   headers: {
-    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNzE3NDMwMTNmN2VjMzBhNTY3YzFmN2M5NDRhYmRjNTQ4ZDVkMjBhMzVhMzc5ZGVkNjVjMjBlMDg0NmU0M2FmODljMGVjZGUxYTg0ZWYxOTEiLCJpYXQiOjE3MDI5Njk1NzQuOTQxNzQ2LCJuYmYiOjE3MDI5Njk1NzQuOTQxNzQ4LCJleHAiOjIxNzYzNTUxNzQuOTM5MTI2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.N__ytCj2TJfGEEP8mQz1KoIwSiRHHcCDehvsgBGfWuKKy5Vg5gLF1lrbfxCrtzojlJqH89lNv4PCJwLaW7IpOHanpriF3HbCc0AeMSVU4pddNDFFRoLMBnFNYHxpyZKGRCC2w9Wx75EA4z9YFeNp-eqX-Cy2118G60eMK_Lyk-EImSTNtThn03Lh3kwc8Ye6IdS01XBV2p54eCI8HKMapH-yQ4Iz9yPgznYOYF8nfnWMy8Vp3j9-cKqx2JzEtIhH5j0TQsub5Emvj0rD4qo5Fcpg5KIl3GE193HMnpWu_ZyBe4RdY0IsxdOWS_bC1AvjkUP3yGF0clKqBJRO-3kTwtrf8Mm6UTfUIHllBMG-_BoTemjgruwSyYxqxQI7u0JE2LyqXpkZbKI4akNdsobqP7PRw3e60hcf6k7TFO8ZsBGKh2OHayNtFKEtTAccTzCn3gHde42-3K-ylB8Sp045y4Rnu8CM7pI80mptbltMg-jfRtutgOVtnIWDf-_V35237dUrEZPQhFQws203RrMULnWWjRVAGxHF2kfnf7utS7ATaS7xbkWPKoiu02fQPtdVSDY3KWn7W3hGckj0pbda4xbTLEIry9XnNGniN01rHsThgpAAphCSTfppFeFvmvs9uuK3ZhY6MxOkXp3FqCbYV5ZNzRumB_WB7FZc-i0NlnE',
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
+  },
+});
+// import 'core-js/stable/atob'
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const token = store.getState()?.auth.token || await AsyncStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+export default api = axiosInstance;
+
+export const auth = axios.create({
+  baseURL: "https://www.dev.dsdfacilicare.com/apidsd/v1",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
   },
 });

@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Checkbox } from "react-native-paper";
-const LoginOptions = () => {
-    const [checked, setChecked] = useState(false);
+const LoginOptions = ({checked, setChecked}) => {
+
   return (
     <View
       style={{
