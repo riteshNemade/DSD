@@ -10,7 +10,7 @@ const MaintenanceModal = ({ modalData, isModalVisible, setModalVisible }) => {
   };
   return (
     <>
-      {modalData!== null ? (
+      {modalData !== null ? (
         <View>
           <Modal
             animationType="fade"
@@ -47,8 +47,7 @@ const MaintenanceModal = ({ modalData, isModalVisible, setModalVisible }) => {
                         : "N/A"}{" "}
                       {"\n\n"}
                       Title:{" "}
-                      {modalData.title !== undefined &&
-                      modalData.title !== null
+                      {modalData.title !== undefined && modalData.title !== null
                         ? modalData.title
                         : "N/A"}{" "}
                       {"\n\n"}
@@ -75,7 +74,8 @@ const MaintenanceModal = ({ modalData, isModalVisible, setModalVisible }) => {
                         : "N/A"}{" "}
                       {"\n\n"}
                       Admin:{" "}
-                      {modalData.user_id?.name !== undefined && modalData.user_id?.name !== null
+                      {modalData.user_id?.name !== undefined &&
+                      modalData.user_id?.name !== null
                         ? modalData.user_id?.name
                         : "N/A"}{" "}
                       {"\n"}

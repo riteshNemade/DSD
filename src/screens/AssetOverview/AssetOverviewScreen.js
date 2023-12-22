@@ -25,6 +25,7 @@ function MyTabs({ data, imageUrl, qrUrl }) {
         tabBarContentContainerStyle: styles.tabBarContentContainerStyle,
         tabBarActiveTintColor: "white",
         tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
+        lazy:true,
       }}
     >
       <Tab.Screen
@@ -35,7 +36,7 @@ function MyTabs({ data, imageUrl, qrUrl }) {
       <Tab.Screen
         name="Maintenances"
         component={MaintenanceScreen}
-        initialParams={{ id: data.id}}
+        initialParams={{ id: data.id, asset_tag: data.asset_tag}}
       />
       <Tab.Screen
         name="History"

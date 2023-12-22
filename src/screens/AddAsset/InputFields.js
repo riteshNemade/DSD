@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, KeyboardAvoidingView, ScrollView } from "react-native";
+import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import {

@@ -35,3 +35,21 @@ export default validateInputs = (data, updateValidatorState) => {
 
   return true;
 };
+
+export const validateMaintenanceInput = (
+  supplier,
+  assetMaintenance,
+  title,
+  startDate
+) => {
+  if (
+    supplier === null ||
+    assetMaintenance === null ||
+    title === null ||
+    startDate === null
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};

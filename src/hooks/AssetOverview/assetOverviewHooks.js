@@ -58,5 +58,22 @@ export const fetchMaintenanceData = (id) => {
 
   return {
     maintenanceList: maintenanceQuery.data || [],
+    maintenanceRefetch: maintenanceQuery.refetch,
+  };
+};
+
+export const fetchAssetTag = (id) => {
+  const getAssetTag = async () => {
+    const response = await api.get(`/hardware/${id}`);
+    return response.data?.asset_tag;
+  };
+
+  const assetQuery = useQuery({
+    queryKey: ["assetTag"],
+    queryFn: () => getAssetTag(),
+  });
+
+  return {
+    assetTag: assetQuery.data || "",
   };
 };

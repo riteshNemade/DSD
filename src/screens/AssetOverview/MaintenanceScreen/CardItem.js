@@ -25,7 +25,7 @@ const CardItem = ({ data, setModalVisible, setModalData }) => {
               {data.title}
             </Text>
           </Text>
-          <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: "500" }}>
+          <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: "500" }} numberOfLines={1}>
             Maintenance Type:{" "}
             <Text style={{ fontSize: FONT_SIZE_SMALL, fontWeight: "400" }}>
               {data.asset_maintenance_type}
