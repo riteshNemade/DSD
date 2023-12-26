@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
     Accept: "application/json",
   },
 });
-// import 'core-js/stable/atob'
+
 axiosInstance.interceptors.request.use(
   async (config) => {
     const token = store.getState()?.auth.token || await AsyncStorage.getItem('token');

@@ -1,34 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { colors } from "../../../../constants/global";
 import { fetchOptions } from "../../../../hooks/AddAsset/AddAssetHooks";
 import { maintenanceFormState } from "../../../../hooks/AssetOverview/MaintenanceFormState";
 import { validateMaintenanceInput } from "../../../../utils/validateInputs";
 import { MaintenanceForm } from "./MaintenanceForm";
 
-const AddMaintenance = ({
+const AddEditMaintenance = ({
   assetTag,
   assetId,
   isModalVisible,
   setModalVisible,
   refetch,
+  editMaintenanceData,
+  setEditMaintenanceData,
 }) => {
+  const { suppliersList, maintenancesList } = fetchOptions();
+  const { state, updateState, resetState, populateEditInfo } =
+    maintenanceFormState();
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const handleModalClose = () => {
+    setEditMaintenanceData("");
+    resetState();
     setModalVisible(false);
   };
-
-  const { suppliersList } = fetchOptions();
-  const assetMaintenanceList = [
-    { label: "Maintenance" },
-    { label: "Repair" },
-    { label: "Upgrade" },
-    { label: "PAT Test" },
-    { label: "Calibration" },
-    { label: "Software Support" },
-    { label: "Hardware Support" },
-    { label: "Configuration Change" },
-  ];
-  const { state, updateState, resetState } = maintenanceFormState();
-
   const handleSave = async () => {
     const isFormValidated = validateMaintenanceInput(
       state.supplier,
@@ -40,16 +35,18 @@ const AddMaintenance = ({
       updateState("errorBorderColor", "red");
       return;
     } else {
+      setIsDisabled(true);
       let start_date = state.startDate.toISOString().split("T")[0];
       const data = {
         ...state,
         assetId,
         start_date,
       };
-      await uploadMaintenenace(data, refetch).then(() => {
-        refetch();
-        handleModalClose();
+      await uploadMaintenenace(data).then(() => {
         resetState();
+        setIsDisabled(false);
+        handleModalClose();
+        refetch();
       });
       updateState("errorBorderColor", colors.gray);
     }
@@ -57,6 +54,7 @@ const AddMaintenance = ({
 
   const uploadMaintenenace = async (data) => {
     const {
+      id,
       title,
       assetId,
       supplier,
@@ -67,6 +65,7 @@ const AddMaintenance = ({
       cost,
       notes,
     } = data;
+
     const uploadData = {
       title,
       asset_id: assetId,
@@ -78,21 +77,29 @@ const AddMaintenance = ({
       ...(cost !== null && { cost }),
       ...(notes !== null && { notes }),
     };
-
-    await api.post("/maintenances", uploadData).then((response) => {
-      console.log(response.data);
-    });
+    if (id !== null && id !== undefined) {
+      await api.patch(`/maintenances/${id}`, uploadData);
+    } else {
+      await api.post("/maintenances", uploadData);
+    }
   };
+
+  useEffect(() => {
+    if (editMaintenanceData !== null) {
+      populateEditInfo(editMaintenanceData);
+    }
+  }, [editMaintenanceData]);
 
   const formState = {
     assetTag,
     isModalVisible,
-    setModalVisible,
+    handleModalClose,
     suppliersList,
-    assetMaintenanceList,
+    assetMaintenanceList: maintenancesList,
     state,
     updateState,
     handleSave,
+    isDisabled,
   };
 
   return (
@@ -100,4 +107,4 @@ const AddMaintenance = ({
   );
 };
 
-export default AddMaintenance;
+export default AddEditMaintenance;

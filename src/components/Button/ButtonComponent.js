@@ -7,7 +7,7 @@ import { colors } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 import { FONT_SIZE_REGULAR } from "../../constants/global";
 
-const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption }) => {
+const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption, disabled }) => {
   let color1;
   let color2;
   gradientOption === "Blue" || gradientOption === undefined
@@ -15,7 +15,7 @@ const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption }) => {
       (color2 = colors.buttonGradientColor2))
     : ((color1 = colors.gradientColor3), (color2 = colors.gradientColor4));
   return (
-    <TouchableOpacity onPress={onPress} style={{ height: "100%", flex: 1 }}>
+    <TouchableOpacity onPress={onPress} style={{ height: "100%", flex: 1 }} disabled={disabled || false}>
       <LinearGradient
         style={{ borderRadius: 10, height: verticalScale(55) }}
         locations={[0, 1]}

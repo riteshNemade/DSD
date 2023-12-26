@@ -5,8 +5,6 @@ import { API_CACHE_TIME } from "../../constants/cacheConstants";
 const CACHE_TIME = 1000 * 60;
 
 export function fetchOptions() {
-
-
   /*************API calling functions***************/
   const fetchModels = async () => {
     const response = await api.get("/models");
@@ -28,6 +26,16 @@ export function fetchOptions() {
     return response.data.rows;
   };
 
+  const fetchAssetMaintenanceTypes = async () => {
+    const response = await api.get("/asset-maintenance-type");
+    const result = response.data.data;
+  
+    const assetMaintenanceTypes = Object.keys(result)
+      .filter((key) => key !== "") // Exclude the empty key
+      .map((key) => ({ label: result[key] }));
+   
+    return assetMaintenanceTypes;
+  };
 
   /*************Query Functions********************/
   const modelsQuery = useQuery({
@@ -51,13 +59,16 @@ export function fetchOptions() {
     queryFn: () => fetchSuppliers(),
     staleTime: CACHE_TIME,
   });
+  const assetMaintenanceQuery = useQuery({
+    queryKey: ["maintenances"],
+    queryFn: () => fetchAssetMaintenanceTypes(),
+  });
   /************************************************/
-
-  
   return {
     modelsList: modelsQuery.data || [],
     statusList: statusQuery.data || [],
     locationsList: locationsQuery.data || [],
     suppliersList: suppliersQuery.data || [],
+    maintenancesList: assetMaintenanceQuery.data || [],
   };
 }

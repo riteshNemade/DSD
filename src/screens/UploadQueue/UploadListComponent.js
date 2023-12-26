@@ -8,8 +8,8 @@ import React from "react";
 import CardViewComponent from "../../components/CardView/CardViewComponent";
 import { colors, hPadding } from "../../constants/global";
 import { Image } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import initDatabase, { deleteById, dropTable } from "../../api/sqlite";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
+import initDatabase, { deleteById } from "../../api/sqlite";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -45,12 +45,10 @@ const UploadListComponent = ({
   };
 
   const handleOpenErrorModal =async  () => {
-    console.log(item)
     setErrorModalData(item);
     setIsErrorModalVisible(true);
   };
 
-  console.log('ITEM: ',item)
   const handleDeletion = async (id) => {
     try {
        Alert.alert(
@@ -83,7 +81,6 @@ const UploadListComponent = ({
 
 
     } catch (err) {
-      console.log("Error: ", err);
     }
   };
   return (
@@ -131,7 +128,7 @@ const UploadListComponent = ({
             style={{
             }}
           >
-            <MaterialIcons name="delete" size={22} color="#FF1744" />
+            <Feather name="trash" size={20} color={colors.red} />
           </View>
         </TouchableOpacity>
         </View>

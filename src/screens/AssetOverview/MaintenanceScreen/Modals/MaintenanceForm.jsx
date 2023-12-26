@@ -20,6 +20,7 @@ export const MaintenanceForm = ({ props }) => {
   
   const onStartDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
+    console.log(selectedDate)
     props.updateState("isStartDatePickerVisible", false);
     props.updateState("startDate", currentDate);
   };
@@ -35,7 +36,7 @@ export const MaintenanceForm = ({ props }) => {
         animationType="slide"
         transparent={true}
         visible={props.isModalVisible}
-        onRequestClose={() => props.setModalVisible(false)}
+        onRequestClose={() => props.handleModalClose()}
       >
         <View style={styles.container}>
           <View style={styles.containerBehindModal}>
@@ -260,6 +261,7 @@ export const MaintenanceForm = ({ props }) => {
                 <View style={{ marginTop: gapV }}>
                   <ButtonComponent
                     text="Save"
+                    disabled={props.isDisabled}
                     onPress={() => props.handleSave()}
                   />
                 </View>

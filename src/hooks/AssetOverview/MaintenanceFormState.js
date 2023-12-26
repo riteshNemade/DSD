@@ -7,6 +7,7 @@ const reducer = (state, action) => {
       return { ...state, [action.payload.key]: action.payload.value };
     case "RESET_STATE":
       return {
+        id:null,
         supplier: null,
         assetMaintenance: null,
         title: null,
@@ -16,6 +17,8 @@ const reducer = (state, action) => {
         isWarranty: false,
         notes: null,
         errorBorderColor: colors.gray,
+        isStartDatePickerVisible: false,
+        isCompletionDatePickerVisible: false,
       };
 
     default:
@@ -25,6 +28,7 @@ const reducer = (state, action) => {
 
 export function maintenanceFormState() {
   const initialState = {
+    id: null,
     supplier: null,
     assetMaintenance: null,
     title: null,
@@ -46,10 +50,29 @@ export function maintenanceFormState() {
       payload: { key, value },
     });
   };
-  const resetState = (key, value) => {
+  const resetState = () => {
     dispatch({
       type: "RESET_STATE",
-      payload: { key, value },
+    });
+  };
+  const populateEditInfo = (data) => {
+    const mapping = {
+      id: data => data.id !== null ? data.id : null,
+      supplier: (data) =>
+        data.supplier !== undefined ? data.supplier?.id : null,
+      assetMaintenance: (data) => data.asset_maintenance_type,
+      title: (data) => data.title || null,
+      startDate: (data) =>
+        data.start_date ? new Date(data.start_date.date) : null,
+      completionDate: (data) =>
+        data.completion_date ? new Date(data.completion_date.date) : null,
+      cost: (data) => data.cost || null,
+      isWarranty: (data) => (data.is_warranty === 1 ? true : false),
+      notes: (data) => data.notes || null,
+    };
+
+    Object.keys(mapping).forEach((key) => {
+      updateState(key, mapping[key](data));
     });
   };
 
@@ -57,39 +80,6 @@ export function maintenanceFormState() {
     state,
     updateState,
     resetState,
+    populateEditInfo,
   };
 }
-
-export const populateExistingData = (formData, updateState, resetState) => {
-  useEffect(() => {
-    resetState();
-    if (formData !== null) {
-      updateState("supplier", formData.supplier);
-      updateState(
-        "assetMaintenance",
-        formData.assetMaintenance !== "null" ? formData.assetMaintenance : null
-      );
-      updateState("title", formData.title !== "null" ? formData.title : null);
-      updateState(
-        "startDate",
-        formData.startDate !== "null" ? formData.startDate : null
-      );
-      updateState(
-        "completionDate",
-        formData.completionDate !== "null" ? formData.completionDate : null
-      );
-      updateState("cost", formData.cost !== "null" ? formData.cost : null);
-      updateState(
-        "isWarranty",
-        formData.isWarranty !== "null" ? formData.isWarranty : false
-      );
-      updateState("notes", formData.notes !== "null" ? formData.notes : null);
-      updateState(
-        "errorBorderColor",
-        formData.errorBorderColor !== "null"
-          ? formData.errorBorderColor
-          : colors.gray
-      );
-    }
-  }, [formData]);
-};

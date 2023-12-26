@@ -15,7 +15,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   export const startupSync = async () => {
     const isSyncDataAvailable =
       JSON.parse(await AsyncStorage.getItem("offlineData"))?.isAvailable || false;
-  
+    
     if (isSyncDataAvailable) {
       console.log("🔁 sync was started");
       initBackgroundFetch();
