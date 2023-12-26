@@ -11,11 +11,16 @@ import { gapH } from "../../../constants/global";
 import ProfileHeader from "./ProfileHeader";
 import ProfileScreenContent from "./ProfileScreenContent";
 import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../../../api/api";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await api.get("/logout").then(async () => {
+      await AsyncStorage.removeItem("token"); //logout first then remove the token
+    });
     dispatch({
       type: "LOGOUT",
     }); // LOGOUT action
