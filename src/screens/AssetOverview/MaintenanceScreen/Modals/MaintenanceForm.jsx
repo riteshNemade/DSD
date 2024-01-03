@@ -211,7 +211,7 @@ export const MaintenanceForm = ({ props }) => {
                   {/* DATE PICKERS END */}
 
                   <View style={{ flexDirection: "row" }}>
-                    <View style={{ flex: 3 }}>
+                    <View style={{ flex: 3, marginRight:10 }}>
                       <TextInput
                         style={[styles.inputContainer]}
                         value={props.state.cost}
@@ -234,7 +234,7 @@ export const MaintenanceForm = ({ props }) => {
                           marginTop: 2,
                         }}
                       >
-                        <Text>Warranty Improvement</Text>
+                        <Text>Not under Open Warranty</Text>
                         <CheckBox
                           checked={props.state.isWarranty}
                           onPress={() =>
