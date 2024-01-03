@@ -36,16 +36,12 @@ export default loginHooks = () => {
           });
         })
         .catch((err) => {
-          console.log(err);
           setIsError(true);
           setEmail(null);
           setPassword(null);
           Alert.alert("Login failed", "The Username or Password is incorrect.");
         });
     }
-    // dispatch({
-    //     type:"LOGIN"
-    // })
   };
 
   return {
