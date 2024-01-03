@@ -22,6 +22,7 @@ const TextBox = ({ text, setText, isError }) => {
         <TextInput
           placeholder={"Enter Email"}
           placeholderTextColor={isError ? 'red': colors.gray}
+          autoCapitalize="none"
           value={text}
           style={[styles.inputStyle]}
           onChangeText={(text) => {
