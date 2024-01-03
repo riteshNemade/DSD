@@ -20,16 +20,22 @@ export function fetchData() {
   });
 
   const nextPageCheckerFn = (lastPage, allPages, lastPageParam) => {
-    if (lastPageParam > lastPage.total + 20) {
-      return undefined;
+    if (lastPageParam > lastPage?.total + 20) {
+      return null;
     }
     return lastPageParam + 20;
   };
 
   const getApiData = async (pageParam) => {
     const finalUrl = url + pageParam;
-    const res = await api.get(finalUrl);
-    return res.data;
+    let data = null;
+    try {
+      const res = await api.get(finalUrl);
+      data = res.data;
+    } catch (err) {
+      console.log(err);
+    }
+    return data;
   };
 
   const {
@@ -46,9 +52,8 @@ export function fetchData() {
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       nextPageCheckerFn(lastPage, allPages, lastPageParam),
-    staleTime: ASSET_LIST_CACHE_TIME, //5 minutes
   });
-
+  console.log(isError)
   return {
     data,
     isLoading,

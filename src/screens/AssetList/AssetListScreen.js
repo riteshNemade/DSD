@@ -31,7 +31,6 @@ const AssetListScreen = ({ route }) => {
     url,
     setUrl,
   } = fetchData();
-
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const offline = !(state.isConnected && state.isInternetReachable);
@@ -72,7 +71,7 @@ const AssetListScreen = ({ route }) => {
           ) : (
             <View style={{ flex: 9 }}>
               <AssetListContent
-                assetListData={data.pages}
+                assetListData={data || []}
                 loadNext={fetchNextPage}
                 isFetching={isFetching}
                 refreshFn={refetch}

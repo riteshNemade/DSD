@@ -13,9 +13,12 @@ const AssetListContent = ({
   refreshFn,
 }) => {
   const [refreshing, setIsRefreshing] = useState(false);
-  const flatData = assetListData.flatMap((page) => page.rows);
-  const length = assetListData?.length;
+  const flatData =
+  assetListData?.pages?.length > 0
+    ? assetListData.pages.flatMap((page) => page?.rows || [])
+    : [];
 
+  const length = flatData?.length;
   return (
     <View style={{ flex: 1, marginTop: verticalScale(10) }}>
       {length > 0 ? (
@@ -23,7 +26,7 @@ const AssetListContent = ({
           data={flatData}
           estimatedItemSize={verticalScale(150)}
           renderItem={({ item }) => <AssetListComponent item={item} />}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item?.id}
           initialNumToRender={50}
           onEndReachedThreshold={0.1}
           onEndReached={loadNext}
@@ -58,4 +61,4 @@ const AssetListContent = ({
   );
 };
 
-export default memo(AssetListContent);
+export default AssetListContent;
