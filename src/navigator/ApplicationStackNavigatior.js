@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import DashboardScreen from "../screens/Dashboard/DashboardScreen";
 import AddAssetScreen from "../screens/AddAsset/AddAssetScreen";
 import QRScanner from "../screens/QRScanner/QRScanner";
-import QRScannerScreen from "../screens/QRScreen/QRScannerScreen";
+import SearchAsset from "../screens/SearchAsset/SearchAssetScreen";
 import AssetAuditScreen from "../screens/AssetAudit/AssetAuditScreen";
 import AssetOverviewScreen from "../screens/AssetOverview/AssetOverviewScreen";
 import { CardStyleInterpolators } from '@react-navigation/stack';
@@ -32,7 +32,7 @@ export default function ApplicationStackNavigatior() {
       <Stack.Screen name="QRScanner" component={QRScanner} />
       <Stack.Screen name="AssetAudit" component={AssetAuditScreen} />
       <Stack.Screen name="AssetList" component={AssetListScreen} />
-      <Stack.Screen name="QRScannerScreen" component={QRScannerScreen} />
+      <Stack.Screen name="QRScannerScreen" component={SearchAsset} />
       <Stack.Screen name="EditAsset" component={EditAssetScreen} />
       <Stack.Screen name="Camera" component={CameraScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />

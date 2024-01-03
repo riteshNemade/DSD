@@ -18,7 +18,7 @@ const AssetTagEntryComponent = ({handleSubmit}) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
-        <Text style={styles.title}>Asset Tag Entry</Text>
+        <Text style={styles.title}>Search by Asset Tag</Text>
       </View>
       <View
         style={{

@@ -22,7 +22,7 @@ const QRScannerScreen = () => {
   const handleSubmit = async (searchTerm) => {
     setAPILoadingStatus(true);
     if (searchTerm !== "") {
-      await api.get(`/hardware?company_id=${company_id}&search=${searchTerm}`).then((response) => {
+      await api.get(`/hardware?company_id=${company_id}/bytag/${searchTerm}`).then((response) => {
         const data = response.data;
         console.log(data)
         if (data.status === "error" || data.total !== 1) {
@@ -35,6 +35,12 @@ const QRScannerScreen = () => {
           setAPILoadingStatus(false);
           navigation.navigate("AssetOverview", data.rows[0]);
         }
+      }).catch((err)=>{
+        setAPILoadingStatus(false);
+        Alert.alert(
+          "Asset does not exist",
+          "The Asset you are trying to search does not exist."
+        );
       });
     }
   };
