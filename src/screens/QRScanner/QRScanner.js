@@ -6,6 +6,7 @@ import api from "../../api/api";
 import { ActivityIndicator } from "react-native-paper";
 import { colors } from "../../constants/global";
 import { Alert } from "react-native";
+import BarcodeMask from "react-native-barcode-mask";
 
 const QRScanner = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -66,8 +67,10 @@ const QRScanner = () => {
       <View style={styles.cameraContainer}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={styles.camera}
-        />
+          style={[ styles.camera]}
+        >
+         <BarcodeMask edgeColor="#62B1F6" showAnimatedLine width={'75%'} height={'100%'} outerMaskOpacity={0.0}/>
+        </BarCodeScanner>
       </View>
     );
   };
@@ -93,9 +96,6 @@ const QRScanner = () => {
           <ActivityIndicator color={colors.blue} size={30} />
         </>
       )}
-      {/* <TouchableOpacity style={styles.button} onPress={() => setScanned(false)}>
-        <Text style={styles.buttonText}>Scan QR again</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };
@@ -120,9 +120,7 @@ const styles = StyleSheet.create({
   cameraContainer: {
     width: "80%",
     aspectRatio: 1,
-    overflow: "hidden",
-    borderRadius: 10,
-    marginBottom: 40,
+    // overflow: "hidden",
   },
   camera: {
     flex: 1,
