@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Modal, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import HeaderComponent from "components/Header/HeaderComponent";
@@ -20,28 +20,32 @@ const QRScannerScreen = () => {
     return state.global.company_id;
   });
   const handleSubmit = async (searchTerm) => {
-    setAPILoadingStatus(true);
     if (searchTerm !== "") {
-      await api.get(`/hardware?company_id=${company_id}/bytag/${searchTerm}`).then((response) => {
-        const data = response.data;
-        console.log(data)
-        if (data.status === "error" || data.total !== 1) {
+      setAPILoadingStatus(true);
+      console.log(`/hardware?company_id=${company_id}&search=${searchTerm}`);
+      await api
+        .get(`/hardware?company_id=${company_id}&search=${searchTerm}`)
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          if (data.status === "error" || data.total !== 1) {
+            setAPILoadingStatus(false);
+            Alert.alert(
+              "Asset does not exist",
+              "The Asset you are trying to search does not exist."
+            );
+          } else {
+            setAPILoadingStatus(false);
+            navigation.navigate("AssetOverview", data.rows[0]);
+          }
+        })
+        .catch((err) => {
           setAPILoadingStatus(false);
           Alert.alert(
             "Asset does not exist",
             "The Asset you are trying to search does not exist."
           );
-        } else {
-          setAPILoadingStatus(false);
-          navigation.navigate("AssetOverview", data.rows[0]);
-        }
-      }).catch((err)=>{
-        setAPILoadingStatus(false);
-        Alert.alert(
-          "Asset does not exist",
-          "The Asset you are trying to search does not exist."
-        );
-      });
+        });
     }
   };
 
@@ -50,38 +54,36 @@ const QRScannerScreen = () => {
       <LinearGradientComponent>
         <HeaderComponent title="Search Asset" iconName="Menu" />
 
-        {isAPILoading ? (
-          <View
-            style={{
-              flex: 1,
-              alignContent: "center",
-              justifyContent: "center",
-              backgroundColor: "#fff",
-              borderTopLeftRadius: 30,
-              borderTopRightRadius: 30,
-            }}
-          >
-            <ActivityIndicator animating={true} size={48} />
-          </View>
-        ) : (
-          <ScrollContentViewComponent backgroundColor={"#fff"}>
-            <View style={styles.container}>
-              <View style={{ flex: 1 }}>
-                <AssetTagEntryComponent handleSubmit={handleSubmit} />
-              </View>
-              <View style={styles.textContainer}>
-                <Text style={styles.textStyle}>OR</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <ButtonComponent
-                  iconEnabled
-                  text={"Scan a QR Code"}
-                  onPress={() => navigation.navigate("QRScanner")}
-                />
-              </View>
+        <ScrollContentViewComponent backgroundColor={"#fff"}>
+          <View style={styles.container}>
+            <View style={{ flex: 1 }}>
+              <AssetTagEntryComponent handleSubmit={handleSubmit} />
             </View>
-          </ScrollContentViewComponent>
-        )}
+            <View style={styles.textContainer}>
+              <Text style={styles.textStyle}>OR</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <ButtonComponent
+                iconEnabled
+                text={"Scan a QR Code"}
+                onPress={() => navigation.navigate("QRScanner")}
+              />
+            </View>
+          </View>
+        </ScrollContentViewComponent>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={isAPILoading}
+          onRequestClose={() => {
+            setLoading(false);
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <ActivityIndicator animating={isAPILoading} size={48} />
+          </View>
+        </Modal>
       </LinearGradientComponent>
     </View>
   );
@@ -106,5 +108,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     letterSpacing: 1.1,
     fontWeight: "600",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust opacity as needed
   },
 });

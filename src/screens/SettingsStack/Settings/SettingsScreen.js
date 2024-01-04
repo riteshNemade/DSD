@@ -13,60 +13,6 @@ const SettingsScreen = () => {
       options: [
         { icon: "ProfileIcon", title: "Profile", navigate: "ProfileScreen" },
         { icon: "SecurityIcon", title: "Security", navigate: "ProfileScreen" },
-        {
-          icon: "NotificationIcon",
-          title: "Notifications",
-          navigate: "ProfileScreen",
-          toggle: true,
-        },
-      ],
-    },
-    {
-      title: "TERMS & SUPPORT",
-      options: [
-        {
-          icon: "WarningIcon",
-          title: "Terms and Policies",
-          navigate: "ProfileScreen",
-        },
-        { icon: "PrivacyIcon", title: "Privacy", navigate: "ProfileScreen" },
-        {
-          icon: "HelpIcon",
-          title: "Help & Support",
-          navigate: "ProfileScreen",
-        },
-      ],
-    },
-    {
-      title: "CACHE & CELLULAR",
-      options: [
-        {
-          icon: "DataSaverIcon",
-          title: "Data Saver",
-          navigate: "ProfileScreen",
-        },
-        {
-          icon: "DeleteIcon",
-          title: "Free up space",
-          navigate: "ProfileScreen",
-        },
-      ],
-    },
-    {
-      title: "App Settings",
-      options: [
-        {
-          icon: "StorageIcon",
-          title: "Data & Storage",
-          navigate: "ProfileScreen",
-        },
-        { icon: "SoundIcon", title: "Sound", navigate: "ProfileScreen" },
-        {
-          icon: "LocationSecurityIcon",
-          title: "Location & Security",
-          navigate: "ProfileScreen",
-        },
-        { icon: "DisplayIcon", title: "Display", navigate: "ProfileScreen" },
       ],
     },
   ];
@@ -94,3 +40,66 @@ const SettingsScreen = () => {
 export default SettingsScreen;
 
 const styles = StyleSheet.create({});
+// const Settings = [
+//   {
+//     title: "GENERAL",
+//     options: [
+//       { icon: "ProfileIcon", title: "Profile", navigate: "ProfileScreen" },
+//       { icon: "SecurityIcon", title: "Security", navigate: "ProfileScreen" },
+//       {
+//         icon: "NotificationIcon",
+//         title: "Notifications",
+//         navigate: "ProfileScreen",
+//         toggle: true,
+//       },
+//     ],
+//   },
+//   {
+//     title: "TERMS & SUPPORT",
+//     options: [
+//       {
+//         icon: "WarningIcon",
+//         title: "Terms and Policies",
+//         navigate: "ProfileScreen",
+//       },
+//       { icon: "PrivacyIcon", title: "Privacy", navigate: "ProfileScreen" },
+//       {
+//         icon: "HelpIcon",
+//         title: "Help & Support",
+//         navigate: "ProfileScreen",
+//       },
+//     ],
+//   },
+//   {
+//     title: "CACHE & CELLULAR",
+//     options: [
+//       {
+//         icon: "DataSaverIcon",
+//         title: "Data Saver",
+//         navigate: "ProfileScreen",
+//       },
+//       {
+//         icon: "DeleteIcon",
+//         title: "Free up space",
+//         navigate: "ProfileScreen",
+//       },
+//     ],
+//   },
+//   {
+//     title: "App Settings",
+//     options: [
+//       {
+//         icon: "StorageIcon",
+//         title: "Data & Storage",
+//         navigate: "ProfileScreen",
+//       },
+//       { icon: "SoundIcon", title: "Sound", navigate: "ProfileScreen" },
+//       {
+//         icon: "LocationSecurityIcon",
+//         title: "Location & Security",
+//         navigate: "ProfileScreen",
+//       },
+//       { icon: "DisplayIcon", title: "Display", navigate: "ProfileScreen" },
+//     ],
+//   },
+// ];

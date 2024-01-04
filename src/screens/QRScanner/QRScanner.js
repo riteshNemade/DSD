@@ -8,6 +8,25 @@ import { colors } from "../../constants/global";
 import { Alert } from "react-native";
 import BarcodeMask from "react-native-barcode-mask";
 
+const renderCamera = (handleBarCodeScanned) => {
+  return (
+    <View style={styles.cameraContainer}>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={[styles.camera]}
+      >
+        <BarcodeMask
+          edgeColor="#62B1F6"
+          showAnimatedLine
+          width={"75%"}
+          height={"100%"}
+          outerMaskOpacity={0.0}
+        />
+      </BarCodeScanner>
+    </View>
+  );
+};
+
 const QRScanner = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -31,10 +50,17 @@ const QRScanner = () => {
   const redirectToAssetOverview = async (route) => {
     try {
       const response = await api.get(route);
-      const newData = response.data;
-      navigation.navigate("AssetOverview", newData);
+      const newData = response?.data;
+      if (newData?.status === "error") {
+        throw new Error();
+      } else {
+        navigation.navigate("AssetOverview", newData);
+      }
     } catch (error) {
-      alert(`There was an error. Please try again.`);
+      Alert.alert(
+        `There was an error`,
+        `Please try again or scan a valid QR code.`
+      );
     }
   };
 
@@ -42,6 +68,7 @@ const QRScanner = () => {
     setScanned(true);
 
     // Regular expression pattern for matching the URL pattern
+    // api/hardware/987654
     const urlPattern = /\/hardware\/(\d+)$/;
     const match = data.match(urlPattern);
 
@@ -52,27 +79,14 @@ const QRScanner = () => {
       //route format is like /hardware/3
 
       await redirectToAssetOverview(route);
+      setScanned(false);
     } else {
-      setScanned(true);
       Alert.alert(
         "QR Scan failed",
         `QR Code with data ${data} doesn't match the expected URL pattern.`,
         [{ text: "OK", onPress: () => setScanned(false) }]
       );
     }
-  };
-
-  const renderCamera = () => {
-    return (
-      <View style={styles.cameraContainer}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={[ styles.camera]}
-        >
-         <BarcodeMask edgeColor="#62B1F6" showAnimatedLine width={'75%'} height={'100%'} outerMaskOpacity={0.0}/>
-        </BarCodeScanner>
-      </View>
-    );
   };
 
   if (hasPermission === false || hasPermission === null) {
@@ -89,7 +103,7 @@ const QRScanner = () => {
         <>
           <Text style={styles.title}>QR SCANNER</Text>
           <Text style={styles.paragraph}>Scan a QR code.</Text>
-          {renderCamera()}
+          {renderCamera(handleBarCodeScanned)}
         </>
       ) : (
         <>
@@ -120,7 +134,7 @@ const styles = StyleSheet.create({
   cameraContainer: {
     width: "80%",
     aspectRatio: 1,
-    // overflow: "hidden",
+    overflow: "hidden",
   },
   camera: {
     flex: 1,
