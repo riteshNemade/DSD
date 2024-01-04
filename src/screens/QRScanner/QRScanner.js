@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Linking,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/native";
+import ButtonComponent from "../../components/Button/ButtonComponent";
 import api from "../../api/api";
 import { ActivityIndicator } from "react-native-paper";
-import { colors } from "../../constants/global";
+import { FONT_SIZE_REGULAR, colors, hPadding } from "../../constants/global";
 import { Alert } from "react-native";
 import BarcodeMask from "react-native-barcode-mask";
 
-const renderCamera = (handleBarCodeScanned) => {
+const renderCamera = (scanned, handleBarCodeScanned) => {
   return (
     <View style={styles.cameraContainer}>
       <BarCodeScanner
@@ -76,8 +83,6 @@ const QRScanner = () => {
       //capturing the '/hardware/:id' part
       const route = "/hardware/" + match[1];
 
-      //route format is like /hardware/3
-
       await redirectToAssetOverview(route);
       setScanned(false);
     } else {
@@ -88,30 +93,53 @@ const QRScanner = () => {
       );
     }
   };
-
   if (hasPermission === false || hasPermission === null) {
+    const openSettings = async () => {
+      try {
+        await Linking.openSettings();
+      } catch (error) {
+        console.error("Error opening settings:", error);
+      }
+    };
+    return (
+      <View style={{ flex: 1, paddingHorizontal: hPadding }}>
+        <View style={{ flex: 1 }}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "flex-end",
+              marginBottom: 20,
+            }}
+          >
+            <Text style={styles.text}>Camera permission not granted</Text>
+          </View>
+          <View style={{ flex: 1, paddingHorizontal: hPadding }}>
+            <ButtonComponent
+              text="Grant Permission Manually"
+              onPress={openSettings}
+            />
+          </View>
+        </View>
+      </View>
+    );
+  } else {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Camera permission not granted</Text>
+        {!scanned ? (
+          <>
+            <Text style={styles.title}>QR SCANNER</Text>
+            <Text style={styles.paragraph}>Scan a QR code.</Text>
+            {renderCamera(scanned, handleBarCodeScanned)}
+          </>
+        ) : (
+          <>
+            <ActivityIndicator color={colors.blue} size={30} />
+          </>
+        )}
       </View>
     );
   }
-
-  return (
-    <View style={styles.container}>
-      {!scanned ? (
-        <>
-          <Text style={styles.title}>QR SCANNER</Text>
-          <Text style={styles.paragraph}>Scan a QR code.</Text>
-          {renderCamera(handleBarCodeScanned)}
-        </>
-      ) : (
-        <>
-          <ActivityIndicator color={colors.blue} size={30} />
-        </>
-      )}
-    </View>
-  );
 };
 
 export default QRScanner;
@@ -119,8 +147,9 @@ export default QRScanner;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
   },
   title: {
     fontSize: 24,
@@ -149,5 +178,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  text: {
+    fontSize: FONT_SIZE_REGULAR,
+    fontWeight: "500",
   },
 });
