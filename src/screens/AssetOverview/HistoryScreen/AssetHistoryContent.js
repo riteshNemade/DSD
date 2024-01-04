@@ -56,7 +56,7 @@ const AssetHistoryContent = ({ historicalData }) => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <Text style={{}}>No History Data.</Text>
+            <Text>No History Data.</Text>
           </View>
         )}
       </View>
