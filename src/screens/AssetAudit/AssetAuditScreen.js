@@ -15,6 +15,7 @@ const AssetAuditScreen = () => {
 
   useEffect(() => {
     api.get("/hardware/audit/due").then((response) => {
+      console.log(response.data.rows)
       setAuditListData(response.data.rows);
       setIsLoading(false);
     });

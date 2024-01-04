@@ -18,12 +18,12 @@ const FlatListComponent = ({ props }) => {
           <Text style={{ color: "gray" }}>Unavailable</Text>
         )}
 
-        {props.next_audit_date !== undefined && props.next_audit_date !== "" ? (
+        {props.next_audit_date !== undefined && props.next_audit_date !== "" && props.next_audit_date !== null? (
           <Text style={styles.subText}>
-            Audit Date : {props.next_audit_date.formatted}
+            Audit Date : {props.next_audit_date?.formatted}
           </Text>
         ) : (
-          <Text style={{ color: "gray" }}>Unavailable</Text>
+          <Text style={{ color: "gray" }}>Audit Date :  Unavailable</Text>
         )}
       </View>
       <View
