@@ -13,12 +13,13 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
 import "core-js/stable/atob";
+import * as SplashScreen from 'expo-splash-screen'
 const Stack = createStackNavigator();
 
 export default function RootNavigator() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
-
+  
   const wasUserAuthenticated = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
@@ -45,6 +46,7 @@ export default function RootNavigator() {
   };
 
   useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
     (async () => {
       await setGlobalState();
       const isAuthenticated = await wasUserAuthenticated();
@@ -52,7 +54,11 @@ export default function RootNavigator() {
         dispatch({ type: "LOGIN" });
       }
       startupSync();
-    })();
+    })().then(()=>{
+      setTimeout(() => {
+        SplashScreen.hideAsync();
+      }, 100); 
+    });
   }, []);
 
   return (
