@@ -6,8 +6,15 @@ import QRScanner from "assets/svg/qrScanner";
 import { colors } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 import { FONT_SIZE_REGULAR } from "../../constants/global";
+import { ActivityIndicator } from "react-native-paper";
 
-const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption, disabled }) => {
+const ButtonComponent = ({
+  text,
+  onPress,
+  iconEnabled,
+  gradientOption,
+  disabled,
+}) => {
   let color1;
   let color2;
   gradientOption === "Blue" || gradientOption === undefined
@@ -15,7 +22,11 @@ const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption, disabled 
       (color2 = colors.buttonGradientColor2))
     : ((color1 = colors.gradientColor3), (color2 = colors.gradientColor4));
   return (
-    <TouchableOpacity onPress={onPress} style={{ height: "100%", flex: 1 }} disabled={disabled || false}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{ height: "100%", flex: 1 }}
+      disabled={disabled || false}
+    >
       <LinearGradient
         style={{ borderRadius: 10, height: verticalScale(55) }}
         locations={[0, 1]}
@@ -35,7 +46,11 @@ const ButtonComponent = ({ text, onPress, iconEnabled, gradientOption, disabled 
             </>
           ) : (
             <View style={{ flex: 4, alignItems: "center" }}>
-              <Text style={styles.buttonText}>{text}</Text>
+              {!disabled ? (
+                <Text style={styles.buttonText}>{text}</Text>
+              ) : (
+                <ActivityIndicator size={24} color="white" />
+              )}
             </View>
           )}
         </View>

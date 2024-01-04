@@ -9,6 +9,7 @@ export default loginHooks = () => {
   const [password, setPassword] = useState(null);
   const [isError, setIsError] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleSignIn = () => {
@@ -19,7 +20,7 @@ export default loginHooks = () => {
       Alert.alert("Login Failed", "Please enter the credentials properly");
     } else {
       setIsError(false);
-
+      setIsLoading(true);
       auth
         .post("/login", { email, password })
         .then((res) => {
@@ -34,9 +35,11 @@ export default loginHooks = () => {
           dispatch({
             type: "LOGIN",
           });
+          setIsLoading(false)
         })
         .catch((err) => {
           setIsError(true);
+          setIsLoading(false);
           setEmail(null);
           setPassword(null);
           Alert.alert("Login failed", "The Username or Password is incorrect.");
@@ -54,5 +57,6 @@ export default loginHooks = () => {
     checked,
     setChecked,
     handleSignIn,
+    isLoading
   };
 };

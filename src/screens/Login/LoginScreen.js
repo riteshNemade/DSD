@@ -24,6 +24,7 @@ const LoginScreen = () => {
     isError,
     checked,
     setChecked,
+    isLoading
   } = loginHooks();
 
   return (
@@ -48,7 +49,7 @@ const LoginScreen = () => {
             </View>
             <LoginOptions checked={checked} setChecked={setChecked}/>
             <View style={{ marginTop: "5%", height: verticalScale(70) }}>
-              <ButtonComponent text={"Sign In"} onPress={handleSignIn} />
+              <ButtonComponent text={"Sign In"} onPress={handleSignIn} disabled={isLoading}/>
             </View>
           </View>
         </View>
