@@ -1,8 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Checkbox } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 const LoginOptions = ({checked, setChecked}) => {
-
+  const navigation = useNavigation()
   return (
     <View
       style={{
@@ -21,6 +22,7 @@ const LoginOptions = ({checked, setChecked}) => {
       />
       <Text style={{ color: "white" }}>Remember me</Text>
       <TouchableOpacity
+      onPress={()=> navigation.navigate('ForgotPassword')}
         style={{
           alignItems: "flex-end",
           justifyContent: "flex-end",

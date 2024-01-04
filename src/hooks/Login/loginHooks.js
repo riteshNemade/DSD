@@ -5,7 +5,7 @@ import { auth } from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default loginHooks = () => {
-  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [isError, setIsError] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -13,7 +13,7 @@ export default loginHooks = () => {
   const dispatch = useDispatch();
 
   const handleSignIn = () => {
-    if (!email?.trim() || !password?.trim()) {
+    if (!username?.trim() || !password?.trim()) {
       setIsError(true);
       setEmail(null);
       setPassword(null);
@@ -22,7 +22,7 @@ export default loginHooks = () => {
       setIsError(false);
       setIsLoading(true);
       auth
-        .post("/login", { email, password })
+        .post("/login", { username, password })
         .then((res) => {
           const token = res.data.data.token;
           dispatch({
@@ -48,8 +48,8 @@ export default loginHooks = () => {
   };
 
   return {
-    email,
-    setEmail,
+    username,
+    setUsername,
     password,
     setPassword,
     isError,

@@ -20,7 +20,7 @@ const TextBox = ({ text, setText, isError }) => {
     >
       <View style={{ flex: 9, height: verticalScale(60) }}>
         <TextInput
-          placeholder={"Enter Email"}
+          placeholder={"Enter Username"}
           placeholderTextColor={isError ? 'red': colors.gray}
           autoCapitalize="none"
           value={text}

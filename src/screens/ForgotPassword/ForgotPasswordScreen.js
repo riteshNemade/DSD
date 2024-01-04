@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, Text } from "react-native";
 import React from "react";
 
 import TextBox from "components/TextBoxComponent/TextBox";
@@ -7,23 +7,21 @@ import PasswordBox from "components/PasswordBox/PasswordBox";
 import getStatusBarHeight from "utils/getStatusBarHeight";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
 import ButtonComponent from "../../components/Button/ButtonComponent";
-import { hPadding } from "../../constants/global";
+import { FONT_SIZE_REGULAR, FONT_SIZE_SMALL, hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 import loginHooks from "../../hooks/Login/loginHooks";
-import LoginOptions from "./LoginOptions";
+// import LoginOptions from "./LoginOptions";
 
 const statusBarHeight = Math.ceil(getStatusBarHeight());
 
-const LoginScreen = () => {
+const ForgotPasswordScreen = () => {
   const {
-    username,
+    email,
     handleSignIn,
     password,
-    setUsername,
+    setEmail,
     setPassword,
     isError,
-    checked,
-    setChecked,
     isLoading
   } = loginHooks();
 
@@ -33,23 +31,24 @@ const LoginScreen = () => {
         <View style={styles.container}>
           <View style={{ marginTop: "35%" }}>
             <Image
-              source={require("assets/images/user.png")}
-              style={{ width: 114, height: 114, alignSelf: "center" }}
+              source={require("assets/images/lock.png")}
+              style={{ width: 114, height: 150, alignSelf: "center" }}
             />
             <View style={{ marginTop: 24 }}>
-              <TextBox text={username} setText={setUsername} isError={isError} />
+              <TextBox text={email} setText={setEmail} isError={isError} />
+            </View>
+            <View style={{ marginTop: 24, height: verticalScale(70) }}>
+              <ButtonComponent text={"Send reset link to email"} />
             </View>
             <View style={{ marginTop: 24 }}>
-              <PasswordBox
-                isError={isError}
-                size={verticalScale(70)}
-                password={password}
-                setPassword={setPassword}
-              />
+                <Text style={{color:'white', fontSize:FONT_SIZE_REGULAR}}>
+                    Your username and email MAY OR MAY NOT be same, depending on your configuration. If you cannot remember your username, please contact your administrator. 
+                </Text>
             </View>
-            <LoginOptions checked={checked} setChecked={setChecked}/>
-            <View style={{ marginTop: "5%", height: verticalScale(70) }}>
-              <ButtonComponent text={"Sign In"} onPress={handleSignIn} disabled={isLoading}/>
+            <View style={{ marginTop: 24 }}>
+                <Text style={{color:'#FF9C29', fontSize:FONT_SIZE_REGULAR, fontWeight:"600"}}>
+                Usernames without an associated email address will not be emailed a password reset link.
+                </Text>
             </View>
           </View>
         </View>
@@ -58,7 +57,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default ForgotPasswordScreen;
 
 const styles = StyleSheet.create({
   container: {
