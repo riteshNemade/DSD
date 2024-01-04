@@ -53,7 +53,6 @@ export function fetchData() {
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       nextPageCheckerFn(lastPage, allPages, lastPageParam),
   });
-  console.log(isError)
   return {
     data,
     isLoading,
