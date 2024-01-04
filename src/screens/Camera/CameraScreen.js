@@ -1,7 +1,7 @@
 import { Camera, CameraType } from "expo-camera";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colors, gapH } from "../../constants/global";
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { colors, gapH, hPadding } from "../../constants/global";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -10,6 +10,7 @@ import CameraPreview from "./CameraPreview";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { verticalScale } from "react-native-size-matters/extend";
+import ButtonComponent from "../../components/Button/ButtonComponent";
 
 let camera;
 export default function CameraScreen() {
@@ -88,12 +89,33 @@ export default function CameraScreen() {
       }
     }
   };
-
+  const openSettings = async () => {
+    try {
+      await Linking.openSettings();
+    } catch (error) {
+      console.error("Error opening settings:", error);
+    }
+  };
   return (
     <View style={styles.container}>
       {!hasPermission ? (
-        <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
-          <Text>Camera Permission not granted</Text>
+        <View style={{ flex: 1, paddingHorizontal: hPadding }}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "flex-end",
+              marginBottom: 20,
+            }}
+          >
+            <Text>Camera Permission not granted</Text>
+          </View>
+          <View style={{ flex: 1, paddingHorizontal: hPadding }}>
+            <ButtonComponent
+              text="Grant Permission Manually"
+              onPress={openSettings}
+            />
+          </View>
         </View>
       ) : previewVisible && capturedImage ? (
         <CameraPreview
