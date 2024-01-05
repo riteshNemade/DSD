@@ -9,21 +9,20 @@ import LinearGradientComponent from "components/LinearGradient/LinearGradientCom
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { FONT_SIZE_REGULAR, FONT_SIZE_SMALL, hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
-import loginHooks from "../../hooks/Login/loginHooks";
+import loginHooks, { forgotPasswordHooks } from "../../hooks/Login/loginHooks";
 // import LoginOptions from "./LoginOptions";
 
 const statusBarHeight = Math.ceil(getStatusBarHeight());
 
 const ForgotPasswordScreen = () => {
   const {
-    email,
-    handleSignIn,
-    password,
+    username,
+    setUsername,
+    handleSubmit,
     setEmail,
-    setPassword,
     isError,
     isLoading
-  } = loginHooks();
+  } = forgotPasswordHooks();
 
   return (
     <View style={{ flex: 1 }}>
@@ -35,10 +34,10 @@ const ForgotPasswordScreen = () => {
               style={{ width: 114, height: 150, alignSelf: "center" }}
             />
             <View style={{ marginTop: 24 }}>
-              <TextBox text={email} setText={setEmail} isError={isError} />
+              <TextBox text={username} setText={setUsername} isError={isError} />
             </View>
             <View style={{ marginTop: 24, height: verticalScale(70) }}>
-              <ButtonComponent text={"Send reset link to email"} />
+              <ButtonComponent text={"Send reset link to email"} disabled={isLoading} onPress={handleSubmit}/>
             </View>
             <View style={{ marginTop: 24 }}>
                 <Text style={{color:'white', fontSize:FONT_SIZE_REGULAR}}>

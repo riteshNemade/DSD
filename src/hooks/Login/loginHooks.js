@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { auth } from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 export default loginHooks = () => {
   const [username, setUsername] = useState(null);
@@ -12,7 +13,7 @@ export default loginHooks = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!username?.trim() || !password?.trim()) {
       setIsError(true);
       setEmail(null);
@@ -21,7 +22,7 @@ export default loginHooks = () => {
     } else {
       setIsError(false);
       setIsLoading(true);
-      auth
+      await auth
         .post("/login", { username, password })
         .then((res) => {
           const token = res.data.data.token;
@@ -35,7 +36,7 @@ export default loginHooks = () => {
           dispatch({
             type: "LOGIN",
           });
-          setIsLoading(false)
+          setIsLoading(false);
         })
         .catch((err) => {
           setIsError(true);
@@ -57,6 +58,45 @@ export default loginHooks = () => {
     checked,
     setChecked,
     handleSignIn,
-    isLoading
+    isLoading,
+  };
+};
+
+export const forgotPasswordHooks = () => {
+  const [username, setUsername] = useState(null);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
+
+  const handleSuccess = () => {
+    setIsLoading(false);
+    setUsername(null);
+    navigation.goBack();
+  };
+
+  const handleSubmit = async () => {
+    if (!username?.trim()) {
+      setIsError(true);
+      setEmail(null);
+      Alert.alert("Login Failed", "Please enter the credentials properly");
+    } else {
+      setIsError(false);
+      setIsLoading(true);
+      await auth.post("/reset-password", { username }).then((res) => {
+        Alert.alert(
+          "Reset Password",
+          "An email with the password reset link is sent to your registered email. If you didnt recieve the email try again or contact your administrator.",
+          [{ text: "OK", onPress: () => handleSuccess() }]
+        );
+      });
+    }
+  };
+
+  return {
+    username,
+    setUsername,
+    isError,
+    isLoading,
+    handleSubmit,
   };
 };
