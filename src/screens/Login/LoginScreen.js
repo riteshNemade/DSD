@@ -9,7 +9,7 @@ import LinearGradientComponent from "components/LinearGradient/LinearGradientCom
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
-import loginHooks from "../../hooks/Login/loginHooks";
+import loginHooks from "../../hooks/Auth/authHooks";
 import LoginOptions from "./LoginOptions";
 
 const statusBarHeight = Math.ceil(getStatusBarHeight());

@@ -9,7 +9,7 @@ import LinearGradientComponent from "components/LinearGradient/LinearGradientCom
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { FONT_SIZE_REGULAR, FONT_SIZE_SMALL, hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
-import loginHooks, { forgotPasswordHooks } from "../../hooks/Login/loginHooks";
+import loginHooks, { forgotPasswordHooks } from "../../hooks/Auth/authHooks";
 // import LoginOptions from "./LoginOptions";
 
 const statusBarHeight = Math.ceil(getStatusBarHeight());
