@@ -41,7 +41,7 @@ export default loginHooks = () => {
         .catch((err) => {
           setIsError(true);
           setIsLoading(false);
-          setEmail(null);
+          setUsername(null);
           setPassword(null);
           Alert.alert("Login failed", "The Username or Password is incorrect.");
         });
