@@ -12,8 +12,9 @@ export default loginHooks = () => {
   const [checked, setChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-
+  
   const handleSignIn = async () => {
+    //validate
     if (!username?.trim() || !password?.trim()) {
       setIsError(true);
       setEmail(null);
@@ -24,26 +25,47 @@ export default loginHooks = () => {
       setIsLoading(true);
       await auth
         .post("/login", { username, password })
-        .then((res) => {
+        .then(async (res) => {
           const token = res.data.data.token;
+          let canEdit = "0";
+          if (
+            res.data.data.user?.permissions.superuser === "1" ||
+            res.data.data?.user?.permissions["users.edit"] === "1" ||
+            res.data.data.user?.permissions.admin == 1
+          ) {
+            canEdit = "1";
+          }
+          console.log(canEdit)
+          const localUserData = {
+            firstName: res.data.data.user.first_name,
+            lastName: res.data.data.user.last_name,
+            username: res.data.data.user.username,
+            phone: res.data.data.user.phone,
+            email: res.data.data.user.email,
+            canEdit,
+          };
+
           dispatch({
             type: "SET_TOKEN",
             payload: token,
           });
           if (checked) {
-            AsyncStorage.setItem("token", token);
+            await AsyncStorage.setItem("token", token);
           }
+          await AsyncStorage.setItem("userInfo", JSON.stringify(localUserData));
           dispatch({
             type: "LOGIN",
           });
-          setIsLoading(false);
         })
         .catch((err) => {
+          console.log(err);
           setIsError(true);
+          Alert.alert("Login failed", "The Username or Password is incorrect.");
+        })
+        .finally(() => {
           setIsLoading(false);
           setUsername(null);
           setPassword(null);
-          Alert.alert("Login failed", "The Username or Password is incorrect.");
         });
     }
   };
