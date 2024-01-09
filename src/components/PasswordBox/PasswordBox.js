@@ -8,7 +8,7 @@ let FONT_SIZE = 16;
 if (PixelRatio.get() > 3.5) {
   FONT_SIZE = 12;
 }
-const PasswordBox = ({ size, password, setPassword, isError }) => {
+const PasswordBox = ({ size, password, setPassword, isError, placeholder }) => {
   const [isPasswordVisible, setPasswordVisibility] = useState(true);
 
   function togglePasswordVisibility() {
@@ -27,7 +27,7 @@ const PasswordBox = ({ size, password, setPassword, isError }) => {
     >
       <View style={{ flex: 9, height: size || verticalScale(60) }}>
         <TextInput
-          placeholder={"Password"}
+          placeholder={placeholder ? placeholder : "Password"}
           placeholderTextColor={isError ? "red" : colors.gray}
           value={password}
           style={[styles.inputStyle, { height: size || verticalScale(70) }]}

@@ -1,29 +1,32 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    presets: ["babel-preset-expo"],
     plugins: [
+      "react-native-reanimated/plugin",
       [
-        'module-resolver',
+        "module-resolver",
         {
           alias: {
-            components: './src/components',
-            assets:'./assets',
-            hooks:'./src/hooks',
-            utils:'./src/utils',
-            constants: './src/constants'
+            components: "./src/components",
+            assets: "./assets",
+            hooks: "./src/hooks",
+            utils: "./src/utils",
+            constants: "./src/constants",
           },
         },
-        
       ],
-      ["dotenv-import", {
-        "moduleName": "@env",
-        "path": ".env",
-        "blocklist": null,
-        "allowlist": null,
-        "safe": false,
-        "allowUndefined": false
-      }]  
+      [
+        "dotenv-import",
+        {
+          moduleName: "@env",
+          path: ".env",
+          blocklist: null,
+          allowlist: null,
+          safe: false,
+          allowUndefined: false,
+        },
+      ],
     ],
   };
 };

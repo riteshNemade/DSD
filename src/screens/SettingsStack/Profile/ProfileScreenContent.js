@@ -36,6 +36,7 @@ export default function ProfileScreenContent({ firstName, lastName }) {
             <ProfileHeader
               firstName={firstName || formState.firstName}
               lastName={lastName || formState.lastName}
+              image={formState.avatar}
             />
           }
           ListFooterComponent={

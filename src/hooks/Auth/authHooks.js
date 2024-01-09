@@ -12,7 +12,7 @@ export default loginHooks = () => {
   const [checked, setChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  
+
   const handleSignIn = async () => {
     //validate
     if (!username?.trim() || !password?.trim()) {
@@ -35,13 +35,14 @@ export default loginHooks = () => {
           ) {
             canEdit = "1";
           }
-          console.log(canEdit)
+          const avatar = res.data.data.user.avatar;
           const localUserData = {
             firstName: res.data.data.user.first_name,
             lastName: res.data.data.user.last_name,
             username: res.data.data.user.username,
             phone: res.data.data.user.phone,
             email: res.data.data.user.email,
+            avatar,
             canEdit,
           };
 

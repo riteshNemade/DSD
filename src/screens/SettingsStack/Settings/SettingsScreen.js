@@ -12,7 +12,7 @@ const SettingsScreen = () => {
       title: "GENERAL",
       options: [
         { icon: "ProfileIcon", title: "Profile", navigate: "ProfileScreen" },
-        { icon: "SecurityIcon", title: "Security", navigate: "ProfileScreen" },
+        { icon: "SecurityIcon", title: "Change Password", navigate: "Password" },
       ],
     },
   ];

@@ -13,9 +13,8 @@ import { verticalScale } from "react-native-size-matters/extend";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 
 let camera;
-export default function CameraScreen() {
+export default function CameraScreen({route}) {
   const navigation = useNavigation();
-  const [permission, requestPermission] = Camera.useCameraPermissions();
   const [flashMode, setFlashMode] = useState("off");
   const [capturedImage, setCapturedImage] = useState(null);
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -24,7 +23,6 @@ export default function CameraScreen() {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      console.log(status);
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -73,8 +71,10 @@ export default function CameraScreen() {
       quality: 1,
     });
 
-    if (!result.canceled) {
+    if (!result.canceled && route.params === undefined) {
       navigation.navigate("AddAsset", { imageUri: result.assets[0].uri }); //navigate to prev
+    }else if(!result.canceled && route.params ==='Profile'){
+      navigation.navigate('EditProfile', { imageUri: result.assets[0].uri })
     }
   };
 

@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
@@ -15,8 +15,16 @@ import { profileFormState } from "../../../hooks/EditProfile/editProfileHooks";
 import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
 
-const EditProfileScreen = () => {
-  const { formState, isLoading, setFormState,updateUser } = profileFormState();
+const EditProfileScreen = ({ route }) => {
+  const { formState, isLoading, setFormState, updateUser } = profileFormState();
+  const [isImageChanged, setIsImageChanged] = useState(false);
+
+  useEffect(() => {
+    if (route.params !== undefined && route.params.imageUri !== undefined) {
+      setFormState((prev) => ({ ...prev, avatar: route.params?.imageUri }));
+      setIsImageChanged(true)
+    }
+  }, [route.params?.imageUri]);
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
@@ -28,7 +36,7 @@ const EditProfileScreen = () => {
               style={{ paddingBottom: 100 }}
             >
               <View style={{ alignItems: "center", marginTop: gapV }}>
-                <ProfilePicture enableEdit />
+                <ProfilePicture enableEdit image={formState.avatar} />
               </View>
               <View>
                 <EditProfileContent
@@ -37,7 +45,10 @@ const EditProfileScreen = () => {
                 />
               </View>
               <View style={styles.buttonStyle}>
-                <ButtonComponent text="Save The Information" onPress={() => updateUser()}/>
+                <ButtonComponent
+                  text="Save The Information"
+                  onPress={() => updateUser(isImageChanged)}
+                />
               </View>
             </KeyboardAvoidingView>
           </ScrollContentViewComponent>

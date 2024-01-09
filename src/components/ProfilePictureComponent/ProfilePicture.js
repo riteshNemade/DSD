@@ -1,11 +1,13 @@
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import ProfileSVG from "../../../assets/svg/ProfilePicture/ProfileSVG";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../../constants/global";
 import { scale, verticalScale } from "react-native-size-matters/extend";
+import { useNavigation } from "@react-navigation/core";
 
-const ProfilePicture = ({ enableEdit }) => {
+const ProfilePicture = ({ enableEdit, image }) => {
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -14,10 +16,18 @@ const ProfilePicture = ({ enableEdit }) => {
         alignItems: "flex-start",
       }}
     >
-      <View style={{ flex: 1, width: scale(120), justifyContent: "flex-end" }}>
-        <ProfileSVG />
+      <View style={{ height:scale(115), width: scale(115), justifyContent: "flex-end",borderRadius:300 }}>
+        {image !== null && image !== undefined ? (
+          <Image
+            source={{uri: image}}
+            style={{ height:scale(115), width: scale(115), borderRadius:300 }}
+          />
+        ) : (
+          <ProfileSVG />
+        )}
         {enableEdit && (
           <TouchableOpacity
+            onPress={() => navigation.navigate("Camera", "Profile")}
             style={{
               position: "absolute",
               right: 1,
@@ -38,5 +48,3 @@ const ProfilePicture = ({ enableEdit }) => {
 };
 
 export default ProfilePicture;
-
-const styles = StyleSheet.create({});

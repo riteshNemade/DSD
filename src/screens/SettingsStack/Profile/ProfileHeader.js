@@ -6,7 +6,7 @@ import { scale } from "react-native-size-matters/extend";
 import ProfilePicture from "../../../components/ProfilePictureComponent/ProfilePicture";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ProfileHeader({ firstName, lastName }) {
+export default function ProfileHeader({ firstName, lastName, image }) {
   const navigation = useNavigation()
   return (
     <View
@@ -18,7 +18,7 @@ export default function ProfileHeader({ firstName, lastName }) {
     >
       <View style={{ flexDirection: "row" }}>
         <View>
-          <ProfilePicture />
+          <ProfilePicture image={image}/>
         </View>
         <View
           style={{

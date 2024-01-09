@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import api from "../../api/api";
 import { Alert } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-
+import * as FileSystem from "expo-file-system";
 export const profileFormState = () => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
@@ -14,6 +14,7 @@ export const profileFormState = () => {
     username: "",
     phone: "",
     email: "",
+    avatar: null,
     canEdit: false,
   });
   const [error, setIsError] = useState(false);
@@ -28,7 +29,7 @@ export const profileFormState = () => {
     }
   };
 
-  const updateUser = async () => {
+  const updateUser = async (isImageChanged) => {
     if (
       formState.firstName === "" ||
       formState.lastName === "" ||
@@ -38,15 +39,29 @@ export const profileFormState = () => {
       Alert.alert("There was and error", "Please fill the required fields");
       return;
     } else {
-      const reqObj = {
-        first_name: formState.firstName,
-        last_name: formState.lastName,
-        username: formState.username,
-        phone: formState.phone || "",
-        email: formState.email || "",
-      };
+      const reqObj = new FormData();
+      reqObj.append("first_name", formState.firstName);
+      reqObj.append("last_name", formState.lastName);
+      reqObj.append("username", formState.username);
+      reqObj.append("phone", formState.phone || "");
+      reqObj.append("email", formState.email || "");
+
+      console.log(isImageChanged)
+      if (isImageChanged) {
+        const imagePath = formState.avatar; //path to image on the device
+        console.log(imagePath);
+        // const imageBlob = await FileSystem.readAsStringAsync(imagePath, {
+        //   encoding: FileSystem.EncodingType.Base64,
+        // });
+        reqObj.append("avatar", {uri: imagePath, name: 'image.jpg', type: 'image/jpeg'});
+      }
+
       await api
-        .post("/users/me", reqObj)
+        .post("/users/me", reqObj, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then(async (res) => {
           await AsyncStorage.removeItem("userInfo");
           await AsyncStorage.setItem("userInfo", JSON.stringify(formState));
@@ -83,6 +98,7 @@ export const profileFormState = () => {
         username: userInfo.username || "",
         phone: userInfo.phone || "",
         email: userInfo.email || "",
+        avatar: userInfo.avatar || null,
         canEdit: userInfo.canEdit,
       }));
       setIsLoading(false);
