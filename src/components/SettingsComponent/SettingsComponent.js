@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { colors, gapH, gapV, hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 import SettingsFragment from "./SettingsFragment";
 
-const SettingsComponent = ({ title, options }) => {
+const SettingsComponent = memo(({ title, options }) => {
   return (
     <View style={{ flex: 1, marginTop: gapV, paddingHorizontal: hPadding }}>
       <View style={{ flex: 1 }}>
@@ -33,7 +33,7 @@ const SettingsComponent = ({ title, options }) => {
       </View>
     </View>
   );
-};
+});
 
 export default SettingsComponent;
 

@@ -22,14 +22,15 @@ const PasswordBox = ({ size, password, setPassword, isError }) => {
       style={[
         styles.container,
         isError ? { borderWidth: 1, borderColor: "red" } : styles.container,
+        { height: size || verticalScale(70) },
       ]}
     >
-      <View style={{ flex: 9, height: verticalScale(60) }}>
+      <View style={{ flex: 9, height: size || verticalScale(60) }}>
         <TextInput
           placeholder={"Password"}
-          placeholderTextColor={isError ? 'red' : colors.gray}
+          placeholderTextColor={isError ? "red" : colors.gray}
           value={password}
-          style={styles.inputStyle}
+          style={[styles.inputStyle, { height: size || verticalScale(70) }]}
           secureTextEntry={isPasswordVisible}
           textContentType="password"
           autoCapitalize="none"
@@ -41,7 +42,7 @@ const PasswordBox = ({ size, password, setPassword, isError }) => {
       <View
         style={{
           flex: 1,
-          height: verticalScale(70),
+          height: size || verticalScale(70),
           alignItems: "flex-end",
           paddingRight: "5%",
           justifyContent: "center",
@@ -55,9 +56,17 @@ const PasswordBox = ({ size, password, setPassword, isError }) => {
           onPress={() => togglePasswordVisibility()}
         >
           {isPasswordVisible ? (
-            <Feather name="eye" size={18} color={isError ? 'red': colors.gray} />
+            <Feather
+              name="eye"
+              size={18}
+              color={isError ? "red" : colors.gray}
+            />
           ) : (
-            <Feather name="eye-off" size={18} color={isError ? 'red': colors.gray} />
+            <Feather
+              name="eye-off"
+              size={18}
+              color={isError ? "red" : colors.gray}
+            />
           )}
         </TouchableOpacity>
       </View>
@@ -71,7 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     backgroundColor: "white",
-    height: verticalScale(70),
+
     borderRadius: 10,
   },
   inputStyle: {
