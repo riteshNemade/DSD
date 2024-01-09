@@ -18,8 +18,8 @@ const Password = () => {
             style={{ flex: 1, paddingBottom: 100 }}
             behavior="position"
           >
-            <TopContent />
-            <View style={{}}>
+            <TopContent flag={0} />
+            <View>
               <View style={styles.textInputContainer}>
                 <PasswordBox placeholder={"Enter Old password"} />
               </View>

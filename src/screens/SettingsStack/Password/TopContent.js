@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FONT_SIZE_LARGE,
   FONT_SIZE_REGULAR,
@@ -7,8 +7,29 @@ import {
   gapV,
   hPadding,
 } from "../../../constants/global";
-import Animated, { useSharedValue, withTiming, useAnimatedStyle } from "react-native-reanimated";
-const TopContent = () => {
+import Animated, {
+    useSharedValue,
+    withTiming,
+    useAnimatedStyle,
+    Easing,
+  } from "react-native-reanimated";
+const TopContent = ({flag}) => {
+    const textColor = useSharedValue("#333366");
+    useEffect(() => {
+        if (flag === 1) {
+          textColor.value = withTiming("#00FF00", { duration: 100, easing: Easing.linear }); // Change to green slowly over 1 second
+        } else if (flag === 0) {
+          textColor.value = withTiming("#333366", { duration: 100, easing: Easing.linear }); // Return to default color over 0.5 second
+        } else if (flag === -1) {
+          textColor.value = withTiming("#FF0000", { duration: 100, easing: Easing.linear }); // Change to red slowly over 1 second
+        }
+      }, [flag]);
+    
+      const animatedTextStyle = useAnimatedStyle(() => {
+        return {
+          color: textColor.value,
+        };
+      });
   return (
     <View
       style={{
@@ -45,9 +66,17 @@ const TopContent = () => {
           Pick a strong password that is different from your old password.
         </Text>
         <View style={{ marginTop: gapV }}>
-          <Text style={{ fontSize: FONT_SIZE_REGULAR, textAlign: "center" }}>
+        <Animated.Text
+            style={[
+              {
+                fontSize: FONT_SIZE_REGULAR,
+                textAlign: "center",
+              },
+              animatedTextStyle,
+            ]}
+          >
             Password must be atleast 10 characters.
-          </Text>
+          </Animated.Text>
         </View>
       </View>
     </View>

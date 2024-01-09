@@ -9,7 +9,6 @@ import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persi
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
