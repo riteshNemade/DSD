@@ -23,8 +23,8 @@ export const saveOfflineData = async (data, dispatch) => {
     updateOfflineData(db, data);
   } else {
     await saveDataOffline(db, data);
-    AsyncStorage.setItem("localData", JSON.stringify({ isAvailable: true }));
-    AsyncStorage.setItem("offlineData", JSON.stringify({ isAvailable: true }));
+    await AsyncStorage.setItem("localData", JSON.stringify({ isAvailable: true }));
+    await AsyncStorage.setItem("offlineData", JSON.stringify({ isAvailable: true }));
     initBackgroundFetch();
     dispatch({
       type: "ENABLE",

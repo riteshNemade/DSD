@@ -1,0 +1,62 @@
+[
+  {
+    "title": "USER INFORMATION",
+    "options": [
+      {
+        "icon": "ProfileIcon",
+        "title": "Edit profile",
+        "navigate": "EditProfile"
+      },
+      {
+        "icon": "SecurityIcon",
+        "title": "Mobile No",
+        "navigate": "ProfileScreen"
+      },
+      {
+        "icon": "NotificationIcon",
+        "title": "Notifications",
+        "navigate": "ProfileScreen"
+      },
+      {
+        "icon": "LocationIcon",
+        "title": "Saved Addresses",
+        "navigate": "ProfileScreen"
+      },
+      {
+        "icon": "WalletIcon",
+        "title": "Saved Cards & Wallets",
+        "navigate": "ProfileScreen"
+      }
+    ]
+  },
+  {
+    "title": "MY ACTIVITY",
+    "options": [
+      {
+        "icon": "ReviewIcon",
+        "title": "Reviews",
+        "navigate": "ProfileScreen"
+      },
+      {
+        "icon": "HelpIcon",
+        "title": "Questions & Answers",
+        "navigate": "ProfileScreen"
+      }
+    ]
+  },
+  {
+    "title": "FEEDBACK & INFORMATION",
+    "options": [
+      {
+        "icon": "WarningIcon",
+        "title": "Terms, Policies and Licenses",
+        "navigate": "ProfileScreen"
+      },
+      {
+        "icon": "FeedbackIcon",
+        "title": "Feedback",
+        "navigate": "ProfileScreen"
+      }
+    ]
+  }
+]

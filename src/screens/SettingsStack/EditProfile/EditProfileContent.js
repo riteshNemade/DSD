@@ -1,37 +1,80 @@
 import { View, TextInput, StyleSheet } from "react-native";
 import React from "react";
 import { colors, gapV, gapH } from "../../../constants/global";
-import PasswordBox from "../../../components/PasswordBox/PasswordBox";
 import { verticalScale } from "react-native-size-matters/extend";
 
-export default function EditProfileContent() {
+export default function EditProfileContent({ formState, setFormState }) {
   return (
     <>
       <View style={styles.textInputContainer}>
-        <TextInput placeholder="Full Name" style={styles.textStyle} />
+        <TextInput
+          placeholder="First Name"
+          style={styles.textStyle}
+          placeholderTextColor={colors.gray}
+          value={formState?.firstName}
+          onChangeText={(text) => {
+            setFormState((prev) => ({
+              ...prev,
+              firstName: text,
+            }));
+          }}
+        />
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput placeholder="Phone Number" style={styles.textStyle} />
+        <TextInput
+          placeholder="Last Name"
+          style={styles.textStyle}
+          placeholderTextColor={colors.gray}
+          value={formState?.lastName}
+          onChangeText={(text) => {
+            setFormState((prev) => ({
+              ...prev,
+              lastName: text,
+            }));
+          }}
+        />
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput placeholder="Email Id" style={styles.textStyle} />
+        <TextInput
+          placeholder="Username"
+          style={styles.textStyle}
+          placeholderTextColor={colors.gray}
+          value={formState?.username}
+          onChangeText={(text) => {
+            setFormState((prev) => ({
+              ...prev,
+              username: text,
+            }));
+          }}
+        />
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput placeholder="Profile Id" style={styles.textStyle} />
-      </View>
-      <View
-        style={styles.textInputContainer}
-      >
-        <PasswordBox size={60}/>
+        <TextInput
+          placeholder="Phone Number"
+          style={styles.textStyle}
+          placeholderTextColor={colors.gray}
+          value={formState?.phone}
+          onChangeText={(text) => {
+            setFormState((prev) => ({
+              ...prev,
+              phone: text,
+            }));
+          }}
+        />
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput placeholder="Gender" style={styles.textStyle} />
-      </View>
-      <View style={styles.textInputContainer}>
-        <TextInput placeholder="Address" style={styles.textStyle} />
-      </View>
-      <View style={styles.textInputContainer}>
-        <TextInput placeholder="State" style={styles.textStyle} />
+        <TextInput
+          placeholder="Email Id"
+          style={styles.textStyle}
+          placeholderTextColor={colors.gray}
+          value={formState?.email}
+          onChangeText={(text) => {
+            setFormState((prev) => ({
+              ...prev,
+              email: text,
+            }));
+          }}
+        />
       </View>
     </>
   );
@@ -50,6 +93,5 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 14,
     paddingLeft: 15,
-    color: colors.gray,
   },
 });

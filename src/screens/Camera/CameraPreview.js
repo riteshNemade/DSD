@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { ImageBackground } from "react-native";
 import { TouchableOpacity } from "react-native";
-import * as MediaLibrary from 'expo-media-library';
 
 const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
   return (

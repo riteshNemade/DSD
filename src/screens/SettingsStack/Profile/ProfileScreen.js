@@ -1,53 +1,26 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 
 import HeaderComponent from "components/Header/HeaderComponent";
 import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ScrollContentViewComponent from "components/ScrollContentView/ScrollContentViewComponent";
+import ContentViewComponent from "components/ContentView/ContentViewComponent";
 
-import ButtonComponent from "../../../components/Button/ButtonComponent";
-
-import { gapH } from "../../../constants/global";
-import ProfileHeader from "./ProfileHeader";
 import ProfileScreenContent from "./ProfileScreenContent";
-import { useDispatch } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import api from "../../../api/api";
-
-const ProfileScreen = () => {
-  const dispatch = useDispatch();
-
-  const handleLogout = async () => {
-    await api.get("/logout").then(async () => {
-      await AsyncStorage.removeItem("token"); //logout first then remove the token
-    });
-    dispatch({
-      type: "LOGOUT",
-    }); // LOGOUT action
-  };
-
+const ProfileScreen = ({route}) => {
+  const firstName = route.params?.firstName;
+  const lastName = route.params?.lastName;
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
         <HeaderComponent title="Profile" iconName="Menu" />
-        <ScrollContentViewComponent backgroundColor="#fff">
-          <ProfileHeader />
-          <ProfileScreenContent />
-          <View style={styles.buttonStyle}>
-            <ButtonComponent text="Log Out" onPress={handleLogout} />
+        <ContentViewComponent backgroundColor="#fff">
+          <View style={{ flex: 1 }}>
+            <ProfileScreenContent firstName={firstName} lastName={lastName}/>
           </View>
-        </ScrollContentViewComponent>
+        </ContentViewComponent>
       </LinearGradientComponent>
     </View>
   );
 };
 
 export default ProfileScreen;
-
-const styles = StyleSheet.create({
-  buttonStyle: {
-    flex: 1,
-    paddingBottom: 120,
-    paddingHorizontal: gapH,
-  },
-});
