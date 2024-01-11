@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 import React from "react";
 import { verticalScale, scale } from "react-native-size-matters/extend";
 import { AntDesign } from "@expo/vector-icons";
-import { colors, hPadding } from "constants/global";
+import { colors, hPadding } from "@constants/global";
 
 const MaintenanceModal = ({ modalData, isModalVisible, setModalVisible }) => {
   const handleModalClose = () => {

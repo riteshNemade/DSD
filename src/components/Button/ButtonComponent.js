@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import QRScanner from "assets/svg/qrScanner";
+import QRScanner from "@assets/svg/qrScanner";
 import { colors } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 import { FONT_SIZE_REGULAR } from "../../constants/global";

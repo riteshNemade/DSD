@@ -1,9 +1,9 @@
 import { StyleSheet, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "components/ContentView/ContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 
 import { handleOfflineDataUpload } from "../../utils/syncOfflineData";
 import initDatabase, { getLocalData } from "../../api/sqlite";

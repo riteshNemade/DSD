@@ -1,11 +1,10 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import React from "react";
 
-import TextBox from "components/TextBoxComponent/TextBox";
-import PasswordBox from "components/PasswordBox/PasswordBox";
+import TextBox from "@components/TextBoxComponent/TextBox";
 
-import getStatusBarHeight from "utils/getStatusBarHeight";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
+import getStatusBarHeight from "@utils/getStatusBarHeight";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { FONT_SIZE_REGULAR, FONT_SIZE_SMALL, hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
@@ -30,7 +29,7 @@ const ForgotPasswordScreen = () => {
         <View style={styles.container}>
           <View style={{ marginTop: "35%" }}>
             <Image
-              source={require("assets/images/lock.png")}
+              source={require("@assets/images/lock.png")}
               style={{ width: 114, height: 150, alignSelf: "center" }}
             />
             <View style={{ marginTop: 24 }}>

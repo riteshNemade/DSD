@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -25,10 +24,10 @@ const UploadListComponent = ({
   setIsErrorModalVisible,
   refetch,
 }) => {
-  let imagePath = require("assets/images/image_placeholder.png");
+  let imagePath = require("@assets/images/image_placeholder.png");
   const dispatch = useDispatch();
   if (item.imagepath === "null") {
-    imagePath = require("assets/images/image_placeholder.png");
+    imagePath = require("@assets/images/image_placeholder.png");
   } else {
     imagePath = { uri: item.imagepath };
   }
@@ -139,4 +138,3 @@ const UploadListComponent = ({
 
 export default UploadListComponent;
 
-const styles = StyleSheet.create({});

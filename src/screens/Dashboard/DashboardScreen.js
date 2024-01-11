@@ -1,9 +1,8 @@
-import { View } from "react-native";
 import React, { useState } from "react";
 
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "components/ContentView/ContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 
 import DashboardContent from "./DashboardContent";
 

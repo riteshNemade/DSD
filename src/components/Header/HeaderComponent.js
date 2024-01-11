@@ -4,8 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import getStatusBarHeight from "../../utils/getStatusBarHeight";
-import MenuIcon from "assets/svg/MenuIcon";
-import TickIcon from "assets/svg/TickIcon";
+import MenuIcon from "@assets/svg/MenuIcon";
+import TickIcon from "@assets/svg/TickIcon";
 import { useSelector } from "react-redux";
 
 export default function Header({ title, iconName }) {

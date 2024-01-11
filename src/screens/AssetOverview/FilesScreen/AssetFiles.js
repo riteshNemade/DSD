@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import React from "react";
-import ContentViewComponent from "components/ContentView/ContentViewComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import AssetFilesContent from "./AssetFilesContent";
-import { fetchHistoricalData } from "hooks/AssetOverview/assetOverviewHooks";
+import { fetchHistoricalData } from "@hooks/AssetOverview/assetOverviewHooks";
 
 const AssetFiles = ({ route }) => {
   const { id } = route.params;

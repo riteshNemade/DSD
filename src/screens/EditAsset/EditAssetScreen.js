@@ -1,11 +1,9 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ScrollContentViewComponent from "components/ScrollContentView/ScrollContentViewComponent";
-import HeaderComponent from "components/Header/HeaderComponent";
-import ButtonComponent from "../../components/Button/ButtonComponent";
-import PlaceholderComponent from "../../components/placeholder/placeholderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
 
 import InputFields from "./InputFields";
 import { hPadding, gapV } from "../../constants/global";

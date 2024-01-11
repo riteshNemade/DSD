@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import HeaderComponent from "components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
 import AssetOverviewContent from "./InfoScreen/AssetOverviewContent";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { StyleSheet } from "react-native";

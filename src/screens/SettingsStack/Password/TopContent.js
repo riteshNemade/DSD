@@ -85,7 +85,7 @@ const TopContent = ({ flag1 = 0, flag2 = 0 }) => {
         }}
       >
         <Image
-          source={require("assets/images/lock_yellow.png")}
+          source={require("@assets/images/lock_yellow.png")}
           style={{ height: 175, width: 175 }}
         />
       </View>

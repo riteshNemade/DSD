@@ -1,7 +1,7 @@
 import { Modal, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import HeaderComponent from "components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
 import ScrollContentViewComponent from "../../components/ScrollContentView/ScrollContentViewComponent";
 import AssetTagEntryComponent from "../../components/AssetTagEntry/AssetTagEntryComponent";
 import ButtonComponent from "../../components/Button/ButtonComponent";
@@ -73,7 +73,7 @@ const QRScannerScreen = () => {
         </ScrollContentViewComponent>
 
         <Modal
-          animationType="fade"
+          animationType="slide"
           transparent={true}
           visible={isAPILoading}
           onRequestClose={() => {

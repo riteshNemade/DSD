@@ -1,11 +1,11 @@
 import { StyleSheet, View, Image } from "react-native";
 import React from "react";
 
-import TextBox from "components/TextBoxComponent/TextBox";
-import PasswordBox from "components/PasswordBox/PasswordBox";
+import TextBox from "@components/TextBoxComponent/TextBox";
+import PasswordBox from "@components/PasswordBox/PasswordBox";
 
-import getStatusBarHeight from "utils/getStatusBarHeight";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
+import getStatusBarHeight from "@utils/getStatusBarHeight";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import { hPadding } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
@@ -33,7 +33,7 @@ const LoginScreen = () => {
         <View style={styles.container}>
           <View style={{ marginTop: "35%" }}>
             <Image
-              source={require("assets/images/user.png")}
+              source={require("@assets/images/user.png")}
               style={{ width: 114, height: 114, alignSelf: "center" }}
             />
             <View style={{ marginTop: 24 }}>

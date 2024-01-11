@@ -6,7 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import GradientSwitch from "../GradientSwitch/GradientSwitch";
 
-import settingsIconCollection from 'assets/svg/Settings'
+import settingsIconCollection from '@assets/svg/Settings'
 
 export default function SettingsFragment({ iconName, title, navigate, toggle }) {
   let Icon = settingsIconCollection[iconName]

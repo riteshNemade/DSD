@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ScrollContentViewComponent from "components/ScrollContentView/ScrollContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 import ContentViewComponent from "../../../components/ContentView/ContentViewComponent";
 
 import ProfilePicture from "../../../components/ProfilePictureComponent/ProfilePicture";

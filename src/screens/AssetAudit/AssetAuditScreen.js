@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import HeaderComponent from "components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
 import ContentViewComponent from "../../components/ContentView/ContentViewComponent";
 
 import api from "../../api/api";

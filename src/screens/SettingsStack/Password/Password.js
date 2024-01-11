@@ -1,9 +1,9 @@
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import React from "react";
 
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ScrollContentViewComponent from "components/ScrollContentView/ScrollContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 import TopContent from "./TopContent";
 import PasswordBox from "../../../components/PasswordBox/PasswordBox";
 import { colors, gapH, gapV } from "../../../constants/global";

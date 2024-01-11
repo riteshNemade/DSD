@@ -21,10 +21,11 @@ export const buttonHeight = verticalScale(50);
 export const FONT_SIZE_SMALL = PixelRatio.get() > 3.5 ? 12 : 14;
 export const FONT_SIZE_REGULAR = PixelRatio.get() > 3.5 ? 12 : 16;
 export const FONT_SIZE_LARGE = PixelRatio.get() > 3.5 ? 16 : 20;
-export const DROPDOWN_HEIGHT =  verticalScale(60)
-export const DASHBOARD_BUTTON_HEIGHT = PixelRatio.get() > 3.5 ? verticalScale(100):verticalScale(100) 
-export const DASHBOARD_BUTTON_WIDTH = PixelRatio.get() > 3.5 ? scale(100):verticalScale(100) 
-
+export const DROPDOWN_HEIGHT = verticalScale(60);
+export const DASHBOARD_BUTTON_HEIGHT =
+  PixelRatio.get() > 3.5 ? verticalScale(100) : verticalScale(100);
+export const DASHBOARD_BUTTON_WIDTH =
+  PixelRatio.get() > 3.5 ? scale(100) : verticalScale(100);
 
 /* colors */
 export const colors = {

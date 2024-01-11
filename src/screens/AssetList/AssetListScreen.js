@@ -2,17 +2,17 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "components/ContentView/ContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 import TopContent from "./TopContent";
 import AssetListContent from "./AssetListContent";
-import FilterIcon from "assets/svg/FilterIcon";
+import FilterIcon from "@assets/svg/FilterIcon";
 import FilterModal from "./Filter/FilterModal";
 import OfflineHeader from "../../components/OfflineHeader/OfflineHeader";
 
 import { scale } from "react-native-size-matters/extend";
-import { colors, gapH, gapV } from "constants/global";
+import { colors, gapH, gapV } from "@constants/global";
 
 import { fetchData } from "../../hooks/AssetList/assetListApiCall";
 import AssetListPlaceholder from "../../components/AssetListPlaceholder/AssetListPlaceholder";

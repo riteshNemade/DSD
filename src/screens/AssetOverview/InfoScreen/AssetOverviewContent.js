@@ -6,7 +6,7 @@ import { gapV } from "../../../constants/global";
 
 import TableComponent from "../../../components/Table/TableComponent";
 import ScrollContentViewComponent from "../../../components/ScrollContentView/ScrollContentViewComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import AssetImage from "./AssetImage";
 
 const AssetOverviewContent = ({ route }) => {

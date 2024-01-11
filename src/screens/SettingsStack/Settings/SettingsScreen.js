@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ScrollContentViewComponent from "components/ScrollContentView/ScrollContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 import SettingsComponent from "../../../components/SettingsComponent/SettingsComponent";
 
 const SettingsScreen = () => {

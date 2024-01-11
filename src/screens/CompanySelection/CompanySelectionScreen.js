@@ -1,8 +1,8 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "components/ContentView/ContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 import api from "../../api/api";
 import { useQuery } from "@tanstack/react-query";
 import { Dropdown } from "react-native-element-dropdown";

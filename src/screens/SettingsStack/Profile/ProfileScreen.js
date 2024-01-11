@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import React from "react";
 
-import HeaderComponent from "components/Header/HeaderComponent";
-import LinearGradientComponent from "components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "components/ContentView/ContentViewComponent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 
 import ProfileScreenContent from "./ProfileScreenContent";
 const ProfileScreen = ({route}) => {
