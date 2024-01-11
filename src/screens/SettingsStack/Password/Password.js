@@ -6,9 +6,23 @@ import LinearGradientComponent from "components/LinearGradient/LinearGradientCom
 import ScrollContentViewComponent from "components/ScrollContentView/ScrollContentViewComponent";
 import TopContent from "./TopContent";
 import PasswordBox from "../../../components/PasswordBox/PasswordBox";
-import { colors, gapH, gapV, hPadding } from "../../../constants/global";
-import { verticalScale } from "react-native-size-matters/extend";
+import { colors, gapH, gapV } from "../../../constants/global";
+import ButtonComponent from "../../../components/Button/ButtonComponent";
+import { changePassword } from "../../../hooks/EditProfile/changePasswordHooks";
 const Password = () => {
+  const {
+    oldPassword,
+    setOldPassword,
+    newPassword,
+    setNewPassword,
+    confirmPassword,
+    setConfirmPassword,
+    isValidLength,
+    passwordMatch,
+    handleSubmit,
+    isLoading
+  } = changePassword();
+  
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
@@ -18,16 +32,31 @@ const Password = () => {
             style={{ flex: 1, paddingBottom: 100 }}
             behavior="position"
           >
-            <TopContent flag={0} />
-            <View>
+            <TopContent flag1={isValidLength} flag2={passwordMatch} />
+            <View style={{ marginHorizontal: gapH }}>
               <View style={styles.textInputContainer}>
-                <PasswordBox placeholder={"Enter Old password"} />
+                <PasswordBox
+                  placeholder={"Enter Old password"}
+                  password={oldPassword}
+                  setPassword={setOldPassword}
+                />
               </View>
               <View style={styles.textInputContainer}>
-                <PasswordBox placeholder={"Enter New password"} />
+                <PasswordBox
+                  placeholder={"Enter New password"}
+                  password={newPassword}
+                  setPassword={setNewPassword}
+                />
               </View>
               <View style={styles.textInputContainer}>
-                <PasswordBox placeholder={"Confirm New password"} />
+                <PasswordBox
+                  placeholder={"Confirm New password"}
+                  password={confirmPassword}
+                  setPassword={setConfirmPassword}
+                />
+              </View>
+              <View style={{ marginTop: gapV }}>
+                <ButtonComponent text={"Submit"} onPress={()=> handleSubmit()} disabled={isLoading}/>
               </View>
             </View>
           </KeyboardAvoidingView>
@@ -41,10 +70,9 @@ export default Password;
 
 const styles = StyleSheet.create({
   textInputContainer: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: colors.gray,
     borderRadius: 10,
-    marginHorizontal: gapH,
     marginTop: gapV,
   },
 });
