@@ -14,24 +14,12 @@ const MaintenanceScreen = ({ route }) => {
       <LinearGradientComponent>
         <ContentViewComponent backgroundColor={"#fff"}>
           <View style={{ flex: 1, borderRadius: 30, marginTop: 24 }}>
-            {maintenanceList.length > 0 ? (
-              <MaintenanceList
-                data={maintenanceList}
-                assetTag={asset_tag}
-                assetId={id}
-                refetch={maintenanceRefetch}
-              />
-            ) : (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text>No Maintenance Data.</Text>
-              </View>
-            )}
+            <MaintenanceList
+              data={maintenanceList}
+              assetTag={asset_tag}
+              assetId={id}
+              refetch={maintenanceRefetch}
+            />
           </View>
         </ContentViewComponent>
       </LinearGradientComponent>

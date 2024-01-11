@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import CardItem from "./CardItem";
 import { FlashList } from "@shopify/flash-list";
@@ -15,20 +15,33 @@ const MaintenanceList = ({ data, assetTag, assetId, refetch }) => {
 
   return (
     <>
-      <FlashList
-        data={data}
-        estimatedItemSize={129}
-        renderItem={({ item }) => (
-          <CardItem
-            refetch={refetch}
-            data={item}
-            setEditModalVisible={setIsAddModalVisible}
-            setModalData={setModalData}
-            setModalVisible={setModalVisible}
-            setEditMaintenanceData={setEditMaintenanceData}
-          />
-        )}
-      />
+      {data.length > 0 ? (
+        <FlashList
+          data={data}
+          estimatedItemSize={129}
+          renderItem={({ item }) => (
+            <CardItem
+              refetch={refetch}
+              data={item}
+              setEditModalVisible={setIsAddModalVisible}
+              setModalData={setModalData}
+              setModalVisible={setModalVisible}
+              setEditMaintenanceData={setEditMaintenanceData}
+            />
+          )}
+        />
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text>No Maintenance Data.</Text>
+        </View>
+      )}
+
       <MaintenanceModal
         modalData={modalData}
         isModalVisible={isModalVisible}
@@ -43,7 +56,9 @@ const MaintenanceList = ({ data, assetTag, assetId, refetch }) => {
         editMaintenanceData={editMaintenanceData}
         setEditMaintenanceData={setEditMaintenanceData}
       />
-      <TouchableOpacity activeOpacity={0.6} style={styles.floatingButton}
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={styles.floatingButton}
         onPress={() => setIsAddModalVisible(true)}
       >
         <Entypo name="plus" size={24} color="white" />
