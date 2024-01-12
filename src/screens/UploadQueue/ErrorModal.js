@@ -1,10 +1,10 @@
-import { StyleSheet, View, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Modal, TouchableOpacity, Text } from "react-native";
 import React, { memo, useEffect, useState } from "react";
-import { verticalScale, scale } from "react-native-size-matters/extend";
+
 import { AntDesign } from "@expo/vector-icons";
-import { colors, hPadding } from "../../constants/global";
-import { Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { verticalScale, scale } from "react-native-size-matters/extend";
+
+import { colors, hPadding } from "@constants/global";
 
 const ErrorModal = ({ isModalVisible, setModalVisible, data }) => {
   const handleModalClose = async () => {

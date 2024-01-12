@@ -1,8 +1,10 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
+
 import { FlashList } from "@shopify/flash-list";
-import FlatListComponent from "../../components/FlatList/FlatListComponent";
 import { useNavigation } from "@react-navigation/native";
+
+import FlatListComponent from "@components/FlatList/FlatListComponent";
 
 export default function AssetAuditContent({ auditListData }) {
   const navigation = useNavigation();

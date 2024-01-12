@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import api from "../../api/api";
 import { Alert } from "react-native";
+import { useEffect, useState } from "react";
+
+import api from "@api/api";
+
 export const changePassword = () => {
   const [oldPassword, setOldPassword] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
@@ -8,6 +10,7 @@ export const changePassword = () => {
   const [isValidLength, setIsValidLength] = useState(0);
   const [passwordMatch, setPasswordMatch] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  
   useEffect(() => {
     if (newPassword && newPassword.length >= 10) {
       setIsValidLength(1);

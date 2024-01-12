@@ -1,12 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
-import CardItem from "./CardItem";
-import { FlashList } from "@shopify/flash-list";
-import MaintenanceModal from "./Modals/MaintenanceModal";
-import { scale } from "react-native-size-matters";
-import { colors, gapH, gapV } from "../../../constants/global";
+
 import { Entypo } from "@expo/vector-icons";
+import { FlashList } from "@shopify/flash-list";
+import { scale } from "react-native-size-matters";
+
+import { colors, gapH, gapV } from "@constants/global";
+
+import CardItem from "./CardItem";
+import MaintenanceModal from "./Modals/MaintenanceModal";
 import AddEditMaintenance from "./Modals/AddEditMaintenanceModal";
+
 const MaintenanceList = ({ data, assetTag, assetId, refetch }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);

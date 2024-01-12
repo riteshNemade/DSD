@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
-import React, { memo, useState } from "react";
-import { verticalScale } from "react-native-size-matters/extend";
-import AssetListComponent from "./AssetListComponent";
-import { ActivityIndicator } from "react-native-paper";
-import { RefreshControl } from "react-native";
+import { View, Text, RefreshControl } from "react-native";
+import React, { useState } from "react";
+
 import { FlashList } from "@shopify/flash-list";
+import { ActivityIndicator } from "react-native-paper";
+import { verticalScale } from "react-native-size-matters/extend";
+
+import AssetListComponent from "./AssetListComponent";
 
 const AssetListContent = ({
   assetListData,
@@ -13,6 +14,7 @@ const AssetListContent = ({
   refreshFn,
 }) => {
   const [refreshing, setIsRefreshing] = useState(false);
+  
   const flatData =
   assetListData?.pages?.length > 0
     ? assetListData.pages.flatMap((page) => page?.rows || [])

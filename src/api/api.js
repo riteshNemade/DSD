@@ -10,6 +10,7 @@ const axiosInstance = axios.create({
   },
 });
 
+//intercept the request and add the token from redux
 axiosInstance.interceptors.request.use(
   async (config) => {
     const token = store.getState()?.auth.token || await AsyncStorage.getItem('token');

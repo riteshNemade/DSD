@@ -1,17 +1,14 @@
-import {
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View, Image, Alert } from "react-native";
 import React from "react";
-import CardViewComponent from "../../components/CardView/CardViewComponent";
-import { colors, hPadding } from "../../constants/global";
-import { Image } from "react-native";
-import { Feather, MaterialIcons } from "@expo/vector-icons";
-import initDatabase, { deleteById } from "../../api/sqlite";
-import { Alert } from "react-native";
+
 import { useDispatch } from "react-redux";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { colors, hPadding } from "@constants/global";
+import initDatabase, { deleteById } from "@api/sqlite";
+
+import CardViewComponent from "@components/CardView/CardViewComponent";
 
 const UploadListComponent = ({
   item,
@@ -34,6 +31,7 @@ const UploadListComponent = ({
 
   const handleImagePress = () => {
     if (item.imagepath === "null") return;
+
     setIsImageModalVisible(true);
     setImageModalData(imagePath);
   };
@@ -43,14 +41,14 @@ const UploadListComponent = ({
     setModalData(item);
   };
 
-  const handleOpenErrorModal =async  () => {
+  const handleOpenErrorModal = async () => {
     setErrorModalData(item);
     setIsErrorModalVisible(true);
   };
 
   const handleDeletion = async (id) => {
     try {
-       Alert.alert(
+      Alert.alert(
         "Deleting an entry",
         "Are you sure you want to delete this entry?",
         [
@@ -63,6 +61,7 @@ const UploadListComponent = ({
             onPress: async () => {
               const db = await initDatabase();
               await deleteById(db, id);
+
               if (listLength === 1) {
                 dispatch({
                   type: "DISABLE",
@@ -72,15 +71,13 @@ const UploadListComponent = ({
                   JSON.stringify({ isEnabled: false })
                 );
               }
+
               refetch();
             },
           },
         ]
       );
-
-
-    } catch (err) {
-    }
+    } catch (err) {}
   };
   return (
     <CardViewComponent key={item.id}>
@@ -103,33 +100,40 @@ const UploadListComponent = ({
             activeOpacity={0.2}
             onPress={() => handleDataModal()}
           >
-            <Text style={{ fontSize: 14, color: colors.blue }} numberOfLines={1}> 
-              Tag: {item?.asset_tag!== 'null' ? item.asset_tag : 'N/A'} {item?.flag === "1" ? "(Draft)" : ""}
+            <Text
+              style={{ fontSize: 14, color: colors.blue }}
+              numberOfLines={1}
+            >
+              Tag: {item?.asset_tag !== "null" ? item.asset_tag : "N/A"}{" "}
+              {item?.flag === "1" ? "(Draft)" : ""}
             </Text>
-            <Text style={{ fontSize: 14 }} numberOfLines={1}>Name: {item?.asset_name}</Text>
+            <Text style={{ fontSize: 14 }} numberOfLines={1}>
+              Name: {item?.asset_name}
+            </Text>
             <Text style={{ fontSize: 14 }} numberOfLines={1}>
               Company: {item?.company}
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{justifyContent:'center'}}>
-        {item.error !== 'null' && item.error!== null ? <TouchableOpacity onPress={() => handleOpenErrorModal(item?.id)}>
-          <View
-            style={{
-              marginBottom: 10
-            }}
-          >
-            <MaterialIcons name="error-outline" size={22} color="#FFC107" />
-          </View>
-        </TouchableOpacity> : <></>}
-        <TouchableOpacity onPress={() => handleDeletion(item?.id)}>
-          <View
-            style={{
-            }}
-          >
-            <Feather name="trash" size={20} color={colors.red} />
-          </View>
-        </TouchableOpacity>
+        <View style={{ justifyContent: "center" }}>
+          {item.error !== "null" && item.error !== null ? (
+            <TouchableOpacity onPress={() => handleOpenErrorModal(item?.id)}>
+              <View
+                style={{
+                  marginBottom: 10,
+                }}
+              >
+                <MaterialIcons name="error-outline" size={22} color="#FFC107" />
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
+          <TouchableOpacity onPress={() => handleDeletion(item?.id)}>
+            <View style={{}}>
+              <Feather name="trash" size={20} color={colors.red} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </CardViewComponent>
@@ -137,4 +141,3 @@ const UploadListComponent = ({
 };
 
 export default UploadListComponent;
-

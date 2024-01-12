@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { gapV } from '../../constants/global'
-import PlaceholderComponent from '../../components/placeholder/placeholderComponent'
-import ButtonComponent from '../../components/Button/ButtonComponent'
+import { gapV } from '@constants/global'
+import PlaceholderComponent from '@components/placeholder/placeholderComponent'
+import ButtonComponent from '@components/Button/ButtonComponent'
 
 const TopContent = () => {
   return (

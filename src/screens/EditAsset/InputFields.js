@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { TextInput } from "react-native";
-import { textBox, colors, gapV } from "../../constants/global";
-import { Dropdown } from "react-native-element-dropdown";
-import { useState } from "react";
-import { fetchOptions } from "../../hooks/AddAsset/AddAssetHooks";
+import { StyleSheet, View, TextInput } from "react-native";
+import React, { useState } from "react";
 
+import { Dropdown } from "react-native-element-dropdown";
+
+import { textBox, colors, gapV } from "@constants/global";
+import { fetchOptions } from "@hooks/AddAsset/AddAssetHooks";
 
 const assetTypeData = [];
-const InputFields = ({defaultData}) => {
+
+const InputFields = ({ defaultData }) => {
   const {
     categoriesList,
     manufacturersList,
@@ -54,21 +54,25 @@ const InputFields = ({defaultData}) => {
         style={styles.inputContainer}
         placeholder="Asset Location"
         value={assetLocation}
-        onChangeText={(text)=>{setAssetLocation(text)}}
+        onChangeText={(text) => {
+          setAssetLocation(text);
+        }}
         placeholderTextColor={colors.gray}
       />
       <TextInput
         style={styles.inputContainer}
         placeholder="Model No"
         value={modelNumber}
-        onChangeText={(text)=>setModelNumber(text)}
+        onChangeText={(text) => setModelNumber(text)}
         placeholderTextColor={colors.gray}
       />
       <TextInput
         style={styles.inputContainer}
         placeholder="Tag ID"
         value={assetTag}
-        onChangeText={(text)=>{setAssetTag(text)}}
+        onChangeText={(text) => {
+          setAssetTag(text);
+        }}
         placeholderTextColor={colors.gray}
       />
 
@@ -173,7 +177,7 @@ const styles = StyleSheet.create({
     borderColor: colors.gray,
     borderWidth: 1,
     borderRadius: textBox.textBorderRadius,
-    marginTop: gapV+1,
+    marginTop: gapV + 1,
     padding: textBox.padding,
   },
   bigInputContainer: {

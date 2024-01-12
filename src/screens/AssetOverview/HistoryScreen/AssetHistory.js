@@ -1,8 +1,11 @@
 import { View } from "react-native";
 import React from "react";
+
+import AssetHistoryContent from "./AssetHistoryContent";
+
 import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import AssetHistoryContent from "./AssetHistoryContent";
+
 import { fetchHistoricalData } from "@hooks/AssetOverview/assetOverviewHooks";
 
 const AssetHistory = ({ route }) => {

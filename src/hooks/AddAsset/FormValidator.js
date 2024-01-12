@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { colors } from "../../constants/global";
+import { colors } from "@constants/global";
 
 const reducer = (state, action) => {
   switch (action.type) {

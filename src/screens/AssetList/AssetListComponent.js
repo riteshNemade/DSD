@@ -1,32 +1,31 @@
-import { View, Image, TouchableOpacity, Text } from "react-native";
+import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
 import React, { memo, useState } from "react";
 
-import PopupIcon from "../../../assets/svg/PopupIcon";
-import CardViewComponent from "../../components/CardView/CardViewComponent";
-import DataModalContent from "./AssetModalContent";
+import { useNavigation } from "@react-navigation/native";
+import { scale, verticalScale } from "react-native-size-matters/extend";
 
 import {
   hPadding,
   colors,
   popUpButtonWidth,
   popUpButtonHeight,
-  FONT_SIZE_REGULAR,
   FONT_SIZE_SMALL,
-} from "../../constants/global";
-import { scale, verticalScale } from "react-native-size-matters/extend";
-import { StyleSheet } from "react-native";
+} from "@constants/global";
+
+import PopupIcon from "@assets/svg/PopupIcon";
 import AssetImageModal from "./AssetImageModal";
-import { useNavigation } from "@react-navigation/native";
+import DataModalContent from "./AssetModalContent";
+import CardViewComponent from "@components/CardView/CardViewComponent";
 
 export default memo(function AssetListComponent({ item }) {
-  const navigation = useNavigation();
-
   const [modalData, setModalData] = useState({});
   const [imageModalData, setImageModalData] = useState("");
   const [isDataModalVisible, setIsDataModalVisible] = useState(false);
   const [isImageModalVisible, setIsImageModalVisible] = useState(false);
   const [modalToRender, setModalToRender] = useState("");
-
+  
+  const navigation = useNavigation();
+  
   const handleTagClick = () => {
     setModalToRender("Details");
     setModalData(item);

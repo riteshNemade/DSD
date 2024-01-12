@@ -1,5 +1,6 @@
 import * as FileSystem from "expo-file-system";
 import initDatabase, { deleteById } from "../sqlite";
+
 export const sendDataToServer = async (data) => {
   let result = {};
   const dataToSend = new FormData();

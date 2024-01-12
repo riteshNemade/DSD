@@ -1,17 +1,18 @@
-import { Modal, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import HeaderComponent from "@components/Header/HeaderComponent";
-import ScrollContentViewComponent from "../../components/ScrollContentView/ScrollContentViewComponent";
-import AssetTagEntryComponent from "../../components/AssetTagEntry/AssetTagEntryComponent";
-import ButtonComponent from "../../components/Button/ButtonComponent";
-import { useNavigation } from "@react-navigation/native";
-import { gapV, hPadding } from "../../constants/global";
-import { useState } from "react";
-import api from "../../api/api";
-import { ActivityIndicator } from "react-native-paper";
-import { Alert } from "react-native";
+import { Modal, StyleSheet, Text, View, Alert } from "react-native";
+import React, { useState } from "react";
+
 import { useSelector } from "react-redux";
+import { gapV, hPadding } from "@constants/global";
+import { ActivityIndicator } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+
+import HeaderComponent from "@components/Header/HeaderComponent";
+import ButtonComponent from "@components/Button/ButtonComponent";
+import AssetTagEntryComponent from "@components/AssetTagEntry/AssetTagEntryComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
+
+import api from "@api/api";
 
 const QRScannerScreen = () => {
   const navigation = useNavigation();

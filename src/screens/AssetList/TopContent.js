@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, TouchableOpacity } from "react";
 import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
+
 import { verticalScale } from "react-native-size-matters/extend";
 
-import SortIcon from "../../../assets/svg/SortIcon";
-import AssetListSearch from "../../components/AssetListSearch/AssetListSearch";
-import { colors, gapV, hPadding } from "../../constants/global";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { colors, gapV, hPadding } from "@constants/global";
 
 import SortModal from "./Sort/SortModal";
+import SortIcon from "@assets/svg/SortIcon";
+import AssetListSearch from "@components/AssetListSearch/AssetListSearch";
 
 const TopContent = ({ url, setUrl }) => {
   const [isSortModalVisible, setSortModalVisible] = useState(false);
@@ -18,7 +18,7 @@ const TopContent = ({ url, setUrl }) => {
       behavior={Platform.OS === "ios" ? "height" : "padding"}
     >
       {isSortModalVisible ? (
-        <SortModal 
+        <SortModal
           isSortModalVisible={isSortModalVisible}
           setSortModalVisible={setSortModalVisible}
           url={url}
@@ -30,7 +30,7 @@ const TopContent = ({ url, setUrl }) => {
             <AssetListSearch setUrl={setUrl} />
           </View>
           <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={()=>setSortModalVisible(true)}>
+            <TouchableOpacity onPress={() => setSortModalVisible(true)}>
               <View style={styles.iconStyle}>
                 <SortIcon color={colors.gray} />
               </View>

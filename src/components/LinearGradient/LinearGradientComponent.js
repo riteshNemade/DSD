@@ -1,7 +1,10 @@
 import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
-import { colors } from "../../constants/global";
+
+import { LinearGradient } from "expo-linear-gradient";
+
+import { colors } from "@constants/global";
+
 const LinearGradientComponent = ({ children }) => {
   return (
     <View style={{ flex: 1 }}>

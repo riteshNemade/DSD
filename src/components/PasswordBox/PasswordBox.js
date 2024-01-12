@@ -1,9 +1,17 @@
-import { StyleSheet, TextInput, View, Text, PixelRatio } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  PixelRatio,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
+
 import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { verticalScale } from "react-native-size-matters/extend";
-import { FONT_SIZE_REGULAR, colors } from "../../constants/global";
+
+import { FONT_SIZE_REGULAR, colors } from "@constants/global";
+
 let FONT_SIZE = 16;
 if (PixelRatio.get() > 3.5) {
   FONT_SIZE = 12;

@@ -1,12 +1,13 @@
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity, TextInput } from "react-native";
 import React, { useState } from "react";
-import { colors, gapV, hPadding } from "../../constants/global";
-import { MaterialIcons } from "@expo/vector-icons";
-import { TextInput } from "react-native-gesture-handler";
-import QRScannerSmall from "../../../assets/svg/QRScannerSmall";
+
 import { scale } from "react-native-size-matters/extend";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
+import { MaterialIcons } from "@expo/vector-icons";
+
+import QRScannerSmall from "@assets/svg/QRScannerSmall";
+import { colors, gapV, hPadding } from "@constants/global";
 
 const AssetListSearch = ({ setUrl }) => {
   const navigation = useNavigation();
@@ -19,8 +20,6 @@ const AssetListSearch = ({ setUrl }) => {
     return state.global.company_id;
   });
   const handleSubmit = () => {
-    
-    
     setUrl(
       `/hardware?company_id=${company_id}&search=${inputText}&sort=created_at&order=asc&limit=20&offset=`
     );

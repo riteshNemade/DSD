@@ -1,4 +1,3 @@
-import { Feather } from "@expo/vector-icons";
 import {
   KeyboardAvoidingView,
   Modal,
@@ -9,18 +8,21 @@ import {
   View,
   Text,
 } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
-import { colors, gapV, hPadding, textBox } from "../../../../constants/global";
-import { verticalScale } from "react-native-size-matters";
+
 import { CheckBox } from "@rneui/base";
-import ButtonComponent from "../../../../components/Button/ButtonComponent";
+import { Feather } from "@expo/vector-icons";
+import { Dropdown } from "react-native-element-dropdown";
+import { verticalScale } from "react-native-size-matters";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+import { colors, gapV, hPadding, textBox } from "@constants/global";
+
+import ButtonComponent from "@components/Button/ButtonComponent";
+
 export const MaintenanceForm = ({ props }) => {
-  
   const onStartDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-    console.log(selectedDate)
+    console.log(selectedDate);
     props.updateState("isStartDatePickerVisible", false);
     props.updateState("startDate", currentDate);
   };
@@ -211,7 +213,7 @@ export const MaintenanceForm = ({ props }) => {
                   {/* DATE PICKERS END */}
 
                   <View style={{ flexDirection: "row" }}>
-                    <View style={{ flex: 3, marginRight:10 }}>
+                    <View style={{ flex: 3, marginRight: 10 }}>
                       <TextInput
                         style={[styles.inputContainer]}
                         value={props.state.cost}

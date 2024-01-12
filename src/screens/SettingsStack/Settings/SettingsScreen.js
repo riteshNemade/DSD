@@ -2,9 +2,9 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 
 import HeaderComponent from "@components/Header/HeaderComponent";
+import SettingsComponent from "@components/SettingsComponent/SettingsComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
-import SettingsComponent from "../../../components/SettingsComponent/SettingsComponent";
 
 const SettingsScreen = () => {
   const Settings = [
@@ -12,7 +12,11 @@ const SettingsScreen = () => {
       title: "GENERAL",
       options: [
         { icon: "ProfileIcon", title: "Profile", navigate: "ProfileScreen" },
-        { icon: "SecurityIcon", title: "Change Password", navigate: "Password" },
+        {
+          icon: "SecurityIcon",
+          title: "Change Password",
+          navigate: "Password",
+        },
       ],
     },
   ];

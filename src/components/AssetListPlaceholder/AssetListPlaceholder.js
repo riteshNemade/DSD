@@ -1,19 +1,12 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+
 import { Skeleton } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
-import CardViewComponent from "../CardView/CardViewComponent";
 import { scale, verticalScale } from "react-native-size-matters/extend";
-import { hPadding } from "../../constants/global";
 
-{
-  /* <Skeleton
-  LinearGradientComponent={LinearGradient}
-  animation="wave"
-  width={80}
-  height={40}
-/> */
-}
+import { hPadding } from "@constants/global";
+import CardViewComponent from "../CardView/CardViewComponent";
+
 const SkeletonCard = () => (
   <CardViewComponent>
     <View style={styles.container}>

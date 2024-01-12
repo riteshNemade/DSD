@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Modal, Animated } from "react-native";
-import React, { useEffect } from "react";
-import { Dropdown } from "react-native-element-dropdown";
-import { verticalScale } from "react-native-size-matters/extend";
-import ButtonComponent from "../../components/Button/ButtonComponent";
+import React, { useEffect, useState } from "react";
+
 import { useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { Dropdown } from "react-native-element-dropdown";
+import { verticalScale } from "react-native-size-matters/extend";
+
+import ButtonComponent from "@components/Button/ButtonComponent";
+
 import {
   colors,
   gapV,
@@ -14,14 +16,14 @@ import {
   FONT_SIZE_REGULAR,
   FONT_SIZE_LARGE,
   DROPDOWN_HEIGHT,
-} from "../../constants/global";
+} from "@constants/global";
 
 const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
-  const dispatch = useDispatch();
   const [company, setCompany] = useState("");
   const [companyID, setCompanyID] = useState(null);
-  const [inputBorderColor, setInputBorderColor] = useState(colors.gray);
   const [isOptionSelected, setIsOptionSelected] = useState(false);
+  const [inputBorderColor, setInputBorderColor] = useState(colors.gray);
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     if (company !== "" && company !== null && company !== undefined) {

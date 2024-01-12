@@ -2,22 +2,26 @@ import React from "react";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
+//hooks and utils
 import {
   inputFieldState,
   populateDraftData,
-} from "../../hooks/AddAsset/AddAssetFormHooks";
-import FooterButtons from "./FooterButtons";
-import validateInputs from "../../utils/validateInputs";
-import { formErrorState } from "../../hooks/AddAsset/FormValidator";
-import { onSaveToDrafts, saveOfflineData } from "../../utils/localSave";
-import { sendDataToServer } from "../../api/AddAsset/addAssetApi";
+} from "@hooks/AddAsset/AddAssetFormHooks";
+import { formErrorState } from "@hooks/AddAsset/FormValidator";
+import { sendDataToServer } from "@api/AddAsset/addAssetApi";
+import { onSaveToDrafts, saveOfflineData } from "@utils/localSave";
+import validateInputs from "@utils/validateInputs";
+
+//JSX components
 import InputFieldsRender from "./InputFieldsRender";
+import FooterButtons from "./FooterButtons";
 
 const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
   const { state, updateState, resetState } = inputFieldState();
   const { formState, resetValidatorState, updateValidatorState } =
     formErrorState();
 
+  //fetch company from redux
   const dispatch = useDispatch();
   const companyName = useSelector((state) => {
     return state.global.companyName;
@@ -35,9 +39,8 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
   };
 
   const onPressSave = async () => {
-    
     const isFormValidated = validateInputs(data, updateValidatorState);
-    console.log('final Data: ',data)
+
     if (!isFormValidated) {
       return;
     } else {
@@ -45,11 +48,13 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
         saveOfflineData(data, dispatch);
       } else {
         const result = await sendDataToServer(data);
-        console.log(result)
-        if(result.isSuccessful){
-          Alert.alert('Success',"Data Uploaded Successfully")
-        }else{
-          Alert.alert('Error',"Asset Tag must be unique. Please enter a unique Asset Tag");
+        if (result.isSuccessful) {
+          Alert.alert("Success", "Data Uploaded Successfully");
+        } else {
+          Alert.alert(
+            "Error",
+            "Asset Tag must be unique. Please enter a unique Asset Tag"
+          );
         }
       }
       resetValidatorState();
@@ -62,7 +67,7 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
     await onSaveToDrafts(data, resetState, dispatch);
   };
 
-  //useEffect call
+  //this is a useEffect call
   populateDraftData(draftsData, updateState, resetState);
 
   const inputFieldRenderProps = {

@@ -2,12 +2,12 @@ import { StyleSheet, View, Image } from "react-native";
 import React from "react";
 
 import { scale } from "react-native-size-matters/extend";
-import { gapV } from "../../../constants/global";
+import { gapV } from "@constants/global";
 
-import TableComponent from "../../../components/Table/TableComponent";
-import ScrollContentViewComponent from "../../../components/ScrollContentView/ScrollContentViewComponent";
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import AssetImage from "./AssetImage";
+import TableComponent from "@components/Table/TableComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 
 const AssetOverviewContent = ({ route }) => {
   const { imageUrl, qrUrl, data } = route.params;
@@ -16,7 +16,7 @@ const AssetOverviewContent = ({ route }) => {
       <LinearGradientComponent>
         <ScrollContentViewComponent backgroundColor={"#fff"}>
           <View style={{ flex: 1, borderRadius: 30, paddingBottom: 50 }}>
-            <AssetImage imageUrl={imageUrl} data={data}/>
+            <AssetImage imageUrl={imageUrl} data={data} />
 
             <View style={{ flex: 3 }}>
               <TableComponent items={data} />

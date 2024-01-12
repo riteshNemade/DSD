@@ -1,17 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+
 import { Checkbox } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-const LoginOptions = ({checked, setChecked}) => {
-  const navigation = useNavigation()
+
+const LoginOptions = ({ checked, setChecked }) => {
+  const navigation = useNavigation();
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: "5%",
-      }}
-    >
+    <View style={styles.container}>
       <Checkbox
         status={checked ? "checked" : "unchecked"}
         onPress={() => {
@@ -22,12 +18,8 @@ const LoginOptions = ({checked, setChecked}) => {
       />
       <Text style={{ color: "white" }}>Remember me</Text>
       <TouchableOpacity
-      onPress={()=> navigation.navigate('ForgotPassword')}
-        style={{
-          alignItems: "flex-end",
-          justifyContent: "flex-end",
-          flex: 1,
-        }}
+        style={styles.forgotPasswordTouchable}
+        onPress={() => navigation.navigate("ForgotPassword")}
       >
         <Text style={{ color: "white" }}>Forgot Password ?</Text>
       </TouchableOpacity>
@@ -37,4 +29,15 @@ const LoginOptions = ({checked, setChecked}) => {
 
 export default LoginOptions;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "5%",
+  },
+  forgotPasswordTouchable: {
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    flex: 1,
+  },
+});

@@ -1,13 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { colors, gapV, hPadding } from "../../../constants/global";
-import { Modal } from "react-native";
+import { StyleSheet, Text, View, Modal } from "react-native";
+import React, { useState } from "react";
+
 import { Feather } from "@expo/vector-icons";
-import ButtonComponent from "../../../components/Button/ButtonComponent";
-import { scale, verticalScale } from "react-native-size-matters/extend";
 import { RadioButton } from "react-native-paper";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { scale, verticalScale } from "react-native-size-matters/extend";
+
+import { colors, gapV, hPadding } from "@constants/global";
+import ButtonComponent from "@components/Button/ButtonComponent";
 
 const SortModal = ({
   isSortModalVisible,
@@ -16,11 +15,8 @@ const SortModal = ({
   setUrl,
 }) => {
   const [selectedOption, setSelectedOption] = useState("created_at-asc");
-  const company_id = useSelector((state) => {
-    return state.global.company_id;
-  });
+
   const handleSortPressed = () => {
-    
     //URL format1= /hardware?sort=name&order=asc&limit=20&offset=
     //URL format2= /hardware?category_id=2&company_id=57&limit=20&offset=
     //split selectedOption
@@ -46,6 +42,7 @@ const SortModal = ({
       setSortModalVisible(false);
     }
   };
+  
   return (
     <View>
       <Modal

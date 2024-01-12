@@ -5,12 +5,13 @@ import LinearGradientComponent from "@components/LinearGradient/LinearGradientCo
 import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 import HeaderComponent from "@components/Header/HeaderComponent";
 
-import InputFields from "./InputFields";
-import { hPadding, gapV } from "../../constants/global";
 import TopContent from "./TopContent";
+import InputFields from "./InputFields";
 import FooterButtons from "./FooterButtons";
 
-const EditAssetScreen = ({route}) => {
+import { hPadding } from "@constants/global";
+
+const EditAssetScreen = ({ route }) => {
   const data = route.params;
   return (
     <View style={{ flex: 1 }}>
@@ -19,7 +20,7 @@ const EditAssetScreen = ({route}) => {
         <ScrollContentViewComponent backgroundColor="#fff">
           <View style={styles.container}>
             <TopContent />
-            <InputFields defaultData={data}/>
+            <InputFields defaultData={data} />
             <FooterButtons />
           </View>
         </ScrollContentViewComponent>

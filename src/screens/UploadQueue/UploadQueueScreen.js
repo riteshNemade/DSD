@@ -1,27 +1,29 @@
-import { StyleSheet, View, Text } from "react-native";
+import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import HeaderComponent from "@components/Header/HeaderComponent";
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 
-import { handleOfflineDataUpload } from "../../utils/syncOfflineData";
-import initDatabase, { getLocalData } from "../../api/sqlite";
+import DataModal from "./DataModal";
+import ImageModal from "./ImageModal";
+import ErrorModal from "./ErrorModal";
 import UploadListContent from "./UploadListContent";
 import FloatingSyncButton from "./FloatingSyncButton";
-import ImageModal from "./ImageModal";
-import DataModal from "./DataModal";
-import ErrorModal from "./ErrorModal";
+
+import { handleOfflineDataUpload } from "@utils/syncOfflineData";
+import initDatabase, { getLocalData } from "@api/sqlite";
 
 const UploadQueueScreen = () => {
   const [data, setData] = useState([]);
   const [modalData, setModalData] = useState([]);
-  const [isDataModalVisible, setIsDataModalVisible] = useState(false);
   const [errorModalData, setErrorModalData] = useState([]);
-  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [imageModalData, setImageModalData] = useState([]);
-  const [isImageModalVisible, setIsImageModalVisible] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
+  const [isDataModalVisible, setIsDataModalVisible] = useState(false);
+  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const [isImageModalVisible, setIsImageModalVisible] = useState(false);
 
   const fetchDataFn = async () => {
     const db = await initDatabase();
@@ -108,5 +110,3 @@ const UploadQueueScreen = () => {
 };
 
 export default UploadQueueScreen;
-
-const styles = StyleSheet.create({});

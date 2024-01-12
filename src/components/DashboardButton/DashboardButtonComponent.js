@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useMemo } from "react";
+
+import { scale, verticalScale } from "react-native-size-matters/extend";
+
 import AddBoxSVG from "@assets/svg/addBox";
 import QRScanner from "@assets/svg/qrScanner";
 import AssetList from "@assets/svg/assetList";
 import AuditList from "@assets/svg/auditList";
-import { scale, verticalScale } from "react-native-size-matters/extend";
 
 const DashboardButton = ({ color, iconName, text }) => {
   const SVGicon = useMemo(() => {

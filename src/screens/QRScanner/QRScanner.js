@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Linking,
-} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { useNavigation } from "@react-navigation/native";
-import ButtonComponent from "../../components/Button/ButtonComponent";
-import api from "../../api/api";
-import { ActivityIndicator } from "react-native-paper";
-import { FONT_SIZE_REGULAR, colors, hPadding } from "../../constants/global";
-import { Alert } from "react-native";
+import { StyleSheet, Text, View, Linking, Alert } from "react-native";
+
 import BarcodeMask from "react-native-barcode-mask";
+import { ActivityIndicator } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+
+import ButtonComponent from "@components/Button/ButtonComponent";
+
+import api from "@api/api";
+import { FONT_SIZE_REGULAR, colors, hPadding } from "@constants/global";
 
 const renderCamera = (scanned, handleBarCodeScanned) => {
   return (
@@ -47,6 +43,7 @@ const QRScanner = () => {
     })();
   }, []);
 
+  //user scans->gets redirected to info screen->comes back to this screen->clear the state
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       setScanned(false);

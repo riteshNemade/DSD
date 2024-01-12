@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import ButtonComponent from "../../components/Button/ButtonComponent";
+
+import ButtonComponent from "@components/Button/ButtonComponent";
 
 const FooterButtons = () => {
   return (

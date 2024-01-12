@@ -1,14 +1,15 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import HeaderComponent from "@components/Header/HeaderComponent";
-import AssetOverviewContent from "./InfoScreen/AssetOverviewContent";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { StyleSheet } from "react-native";
-import AssetHistory from "./HistoryScreen/AssetHistory";
+
 import AssetFiles from "./FilesScreen/AssetFiles";
+import AssetHistory from "./HistoryScreen/AssetHistory";
+import AssetOverviewContent from "./InfoScreen/AssetOverviewContent";
 import MaintenanceScreen from "./MaintenanceScreen/MaintenanceScreen";
+
+import HeaderComponent from "@components/Header/HeaderComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -18,14 +19,14 @@ function MyTabs({ data, imageUrl, qrUrl }) {
       initialRouteName="Info"
       screenOptions={{
         tabBarScrollEnabled: true,
-        tabBarItemStyle:{width:150},
+        tabBarItemStyle: { width: 150 },
         //styling
         tabBarAllowFontScaling: true,
         tabBarStyle: styles.tabBarStyle,
         tabBarContentContainerStyle: styles.tabBarContentContainerStyle,
         tabBarActiveTintColor: "white",
         tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
-        lazy:true,
+        lazy: true,
       }}
     >
       <Tab.Screen
@@ -36,17 +37,17 @@ function MyTabs({ data, imageUrl, qrUrl }) {
       <Tab.Screen
         name="Maintenances"
         component={MaintenanceScreen}
-        initialParams={{ id: data.id, asset_tag: data.asset_tag}}
+        initialParams={{ id: data.id, asset_tag: data.asset_tag }}
       />
       <Tab.Screen
         name="History"
         component={AssetHistory}
-        initialParams={{ id: data.id}}
+        initialParams={{ id: data.id }}
       />
       <Tab.Screen
         name="Files"
         component={AssetFiles}
-        initialParams={{ id: data.id}}
+        initialParams={{ id: data.id }}
       />
     </Tab.Navigator>
   );

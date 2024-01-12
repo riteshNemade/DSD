@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+
 import { verticalScale } from "react-native-size-matters/extend";
 
-import TableImage from "../../../components/TableImage/TableImage";
-
 import MenuModal from "./MenuModal";
-import { useState } from "react";
 import ImageModal from "./AssetOverviewImageModal";
+import TableImage from "@components/TableImage/TableImage";
 
 const AssetImage = ({ imageUrl, data }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -22,9 +21,9 @@ const AssetImage = ({ imageUrl, data }) => {
             />
           ) : (
             <>
-              <TouchableOpacity 
-              activeOpacity={0.8}
-              onPress={() => setModalVisible(true)}
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => setModalVisible(true)}
               >
                 <TableImage url={imageUrl} />
                 <View style={styles.imageOverlay}></View>
@@ -34,8 +33,14 @@ const AssetImage = ({ imageUrl, data }) => {
           )}
         </>
       ) : (
-        <View style={{height:verticalScale(250), justifyContent:'center', alignSelf:'center'}}>
-        <Text>No Preview Available.</Text>
+        <View
+          style={{
+            height: verticalScale(250),
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+        >
+          <Text>No Preview Available.</Text>
         </View>
       )}
     </View>

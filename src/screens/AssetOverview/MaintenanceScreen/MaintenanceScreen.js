@@ -1,10 +1,11 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 
+import MaintenanceList from "./MaintenanceList";
 import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import { fetchMaintenanceData } from "../../../hooks/AssetOverview/assetOverviewHooks";
-import MaintenanceList from "./MaintenanceList";
+
+import { fetchMaintenanceData } from "@hooks/AssetOverview/assetOverviewHooks";
 
 const MaintenanceScreen = ({ route }) => {
   const { id, asset_tag } = route.params;

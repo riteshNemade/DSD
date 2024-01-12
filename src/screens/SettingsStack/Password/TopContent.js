@@ -1,18 +1,21 @@
 import { Image, Text, View } from "react-native";
 import React, { useEffect } from "react";
-import {
-  FONT_SIZE_LARGE,
-  FONT_SIZE_REGULAR,
-  colors,
-  gapV,
-  hPadding,
-} from "../../../constants/global";
+
 import Animated, {
   useSharedValue,
   withTiming,
   useAnimatedStyle,
   Easing,
 } from "react-native-reanimated";
+
+import {
+  FONT_SIZE_LARGE,
+  FONT_SIZE_REGULAR,
+  colors,
+  gapV,
+  hPadding,
+} from "@constants/global";
+
 const TopContent = ({ flag1 = 0, flag2 = 0 }) => {
   const passwordLengthColor = useSharedValue("#333366");
   const passwordMatchColor = useSharedValue("#333366");
@@ -35,13 +38,12 @@ const TopContent = ({ flag1 = 0, flag2 = 0 }) => {
     }
   }, [flag1]);
 
-
   useEffect(() => {
     if (flag2 === 1) {
       passwordMatchColor.value = withTiming(colors.green, {
         duration: 200,
         easing: Easing.linear,
-      });  // Change to green slowly over 200 ms
+      }); // Change to green slowly over 200 ms
     } else if (flag2 === 0) {
       passwordMatchColor.value = withTiming("#333366", {
         duration: 200,
@@ -117,7 +119,7 @@ const TopContent = ({ flag1 = 0, flag2 = 0 }) => {
           <Animated.Text
             style={[
               {
-                fontSize: FONT_SIZE_REGULAR-1,
+                fontSize: FONT_SIZE_REGULAR - 1,
                 textAlign: "center",
               },
               passMatchTextStyle,

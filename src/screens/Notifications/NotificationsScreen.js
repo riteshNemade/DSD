@@ -1,14 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { View, FlatList } from "react-native";
 import React from "react";
-import HeaderComponent from "@components/Header/HeaderComponent";
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "@components/ContentView/ContentViewComponent";
-import NotificationComponent from "../../components/Notifications/NotificationComponent";
 
-import { hPadding } from "../../constants/global";
-import { FlashList } from "@shopify/flash-list";
-import { verticalScale } from "react-native-size-matters/extend";
-import { FlatList } from "react-native";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+import NotificationComponent from "@components/Notifications/NotificationComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+
+import { hPadding } from "@constants/global";
 
 const DATA = [
   {
@@ -61,14 +59,11 @@ const NotificationsScreen = () => {
       <LinearGradientComponent>
         <HeaderComponent title="Notifications" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          <View style={{paddingTop: 5 }}>
+          <View style={{ paddingTop: 5 }}>
             <FlatList
               data={DATA}
-
               renderItem={({ item }) => (
-                <View
-                  style={{ paddingHorizontal: hPadding}}
-                >
+                <View style={{ paddingHorizontal: hPadding }}>
                   <NotificationComponent
                     color={item.color}
                     title={item.title}
@@ -85,5 +80,3 @@ const NotificationsScreen = () => {
 };
 
 export default NotificationsScreen;
-
-const styles = StyleSheet.create({});

@@ -6,10 +6,10 @@ import PasswordBox from "@components/PasswordBox/PasswordBox";
 
 import getStatusBarHeight from "@utils/getStatusBarHeight";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import ButtonComponent from "../../components/Button/ButtonComponent";
-import { hPadding } from "../../constants/global";
+import ButtonComponent from "@components/Button/ButtonComponent";
+import { hPadding } from "@constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
-import loginHooks from "../../hooks/Auth/authHooks";
+import loginHooks from "@hooks/Auth/authHooks";
 import LoginOptions from "./LoginOptions";
 
 const statusBarHeight = Math.ceil(getStatusBarHeight());

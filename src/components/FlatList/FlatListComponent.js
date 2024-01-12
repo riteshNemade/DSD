@@ -1,34 +1,29 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
 import { MaterialIcons } from "@expo/vector-icons";
 
 const FlatListComponent = ({ props }) => {
+  const { asset_tag, name, next_audit_date } = props;
+
+  const renderText = (label, value) => {
+    return value !== undefined && value !== "" ? (
+      <Text style={styles.subText}>
+        {label} : {value}
+      </Text>
+    ) : (
+      <Text style={{ color: "gray" }}>{label} : Unavailable</Text>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <View style={{ flex: 9, justifyContent: "center" }}>
-        {props.asset_tag !== undefined && props.asset_tag !== "" ? (
-          <Text style={styles.title}>Asset Tag: {props.asset_tag}</Text>
-        ) : (
-          <Text style={{ color: "gray" }}>Unavailable</Text>
-        )}
-
-        {props.name !== undefined && props.name !== "" ? (
-          <Text style={styles.subText}>Name : {props.name}</Text>
-        ) : (
-          <Text style={{ color: "gray" }}>Unavailable</Text>
-        )}
-
-        {props.next_audit_date !== undefined && props.next_audit_date !== "" && props.next_audit_date !== null? (
-          <Text style={styles.subText}>
-            Audit Date : {props.next_audit_date?.formatted}
-          </Text>
-        ) : (
-          <Text style={{ color: "gray" }}>Audit Date :  Unavailable</Text>
-        )}
+      <View style={styles.contentContainer}>
+        {renderText("Asset Tag", asset_tag)}
+        {renderText("Name", name)}
+        {renderText("Audit Date", next_audit_date?.formatted)}
       </View>
-      <View
-        style={{ flex: 1, alignItems: "flex-end", justifyContent: "center" }}
-      >
+      <View style={styles.iconContainer}>
         <MaterialIcons
           name="arrow-back-ios"
           color={"#667085"}
@@ -40,19 +35,9 @@ const FlatListComponent = ({ props }) => {
   );
 };
 
-export default FlatListComponent;
-
 const styles = StyleSheet.create({
   container: {
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    shadowRadius: 14,
-    elevation: 3,
-    shadowOpacity: 0.5,
-    
+    ...shadowStyles,
     flexDirection: "row",
     borderRadius: 10,
     backgroundColor: "#fff",
@@ -61,6 +46,15 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 28,
     marginVertical: 15,
+  },
+  contentContainer: {
+    flex: 9,
+    justifyContent: "center",
+  },
+  iconContainer: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   title: {
     fontSize: 17,
@@ -79,3 +73,16 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "180deg" }],
   },
 });
+
+const shadowStyles = {
+  shadowColor: "#000000",
+  shadowOffset: {
+    width: 1,
+    height: 1,
+  },
+  shadowRadius: 14,
+  elevation: 3,
+  shadowOpacity: 0.5,
+};
+
+export default FlatListComponent;

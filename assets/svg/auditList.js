@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-import { DASHBOARD_BUTTON_HEIGHT, DASHBOARD_BUTTON_WIDTH } from "../../src/constants/global";
+import { DASHBOARD_BUTTON_HEIGHT, DASHBOARD_BUTTON_WIDTH } from "@constants/global";
 
 function AuditList(props) {
   return (

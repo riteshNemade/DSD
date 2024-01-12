@@ -1,13 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { scale, verticalScale } from "react-native-size-matters/extend";
-import { colors } from "../../constants/global";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, StyleSheet } from "react-native";
+
 import { useSelector } from "react-redux";
+import { scale } from "react-native-size-matters/extend";
+import { useNavigation } from "@react-navigation/native";
+
+import { colors } from "@constants/global";
 
 const TableComponent = ({ items }) => {
   const navigation = useNavigation();
-  // Define the fields you want to display
+
   const company_id = useSelector((state) => {
     return state.global.company_id;
   });
@@ -55,7 +57,7 @@ const TableComponent = ({ items }) => {
     <View style={styles.container}>
       {fieldsToDisplay.map((item, index) => (
         <View
-        key={item.key}
+          key={item.key}
           style={[
             styles.row,
             {

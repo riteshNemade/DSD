@@ -1,13 +1,15 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { gapH, gapV } from "../../../constants/global";
-import ButtonComponent from "../../../components/Button/ButtonComponent";
+
 import { scale } from "react-native-size-matters/extend";
-import ProfilePicture from "../../../components/ProfilePictureComponent/ProfilePicture";
 import { useNavigation } from "@react-navigation/native";
 
+import { gapH, gapV } from "@constants/global";
+import ButtonComponent from "@components/Button/ButtonComponent";
+import ProfilePicture from "@components/ProfilePictureComponent/ProfilePicture";
+
 export default function ProfileHeader({ firstName, lastName, image }) {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -18,7 +20,7 @@ export default function ProfileHeader({ firstName, lastName, image }) {
     >
       <View style={{ flexDirection: "row" }}>
         <View>
-          <ProfilePicture image={image}/>
+          <ProfilePicture image={image} />
         </View>
         <View
           style={{

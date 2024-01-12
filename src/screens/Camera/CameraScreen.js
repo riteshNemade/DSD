@@ -1,24 +1,32 @@
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Camera, CameraType } from "expo-camera";
-import React, { useState } from "react";
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colors, gapH, hPadding } from "../../constants/global";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
-import * as MediaLibrary from "expo-media-library"; // Import MediaLibrary module
-import CameraPreview from "./CameraPreview";
+import React, { useState, useEffect } from "react";
+
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
 import { verticalScale } from "react-native-size-matters/extend";
-import ButtonComponent from "../../components/Button/ButtonComponent";
+
+import { colors, gapH, hPadding } from "@constants/global";
+
+import CameraPreview from "./CameraPreview";
+import ButtonComponent from "@components/Button/ButtonComponent";
 
 let camera;
-export default function CameraScreen({route}) {
-  const navigation = useNavigation();
+export default function CameraScreen({ route }) {
   const [flashMode, setFlashMode] = useState("off");
   const [capturedImage, setCapturedImage] = useState(null);
-  const [previewVisible, setPreviewVisible] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -73,8 +81,8 @@ export default function CameraScreen({route}) {
 
     if (!result.canceled && route.params === undefined) {
       navigation.navigate("AddAsset", { imageUri: result.assets[0].uri }); //navigate to prev
-    }else if(!result.canceled && route.params ==='Profile'){
-      navigation.navigate('EditProfile', { imageUri: result.assets[0].uri })
+    } else if (!result.canceled && route.params === "Profile") {
+      navigation.navigate("EditProfile", { imageUri: result.assets[0].uri });
     }
   };
 
@@ -100,14 +108,7 @@ export default function CameraScreen({route}) {
     <View style={styles.container}>
       {!hasPermission ? (
         <View style={{ flex: 1, paddingHorizontal: hPadding }}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "flex-end",
-              marginBottom: 20,
-            }}
-          >
+          <View style={styles.permission}>
             <Text>Camera Permission not granted</Text>
           </View>
           <View style={{ flex: 1, paddingHorizontal: hPadding }}>
@@ -194,5 +195,11 @@ const styles = StyleSheet.create({
     marginHorizontal: gapH * 3,
     alignItems: "center",
     justifyContent: "center",
+  },
+  permission: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginBottom: 20,
   },
 });

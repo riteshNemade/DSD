@@ -1,17 +1,25 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import CardViewComponent from "../../../components/CardView/CardViewComponent";
+
+import { Feather } from "@expo/vector-icons";
+import { verticalScale } from "react-native-size-matters";
+
 import {
   FONT_SIZE_REGULAR,
   FONT_SIZE_SMALL,
   colors,
   hPadding,
-} from "../../../constants/global";
-import { verticalScale } from "react-native-size-matters";
-import { Feather } from "@expo/vector-icons";
-import { deleteMaintenance } from "../../../hooks/AssetOverview/assetOverviewHooks";
+} from "@constants/global";
+import { deleteMaintenance } from "@hooks/AssetOverview/assetOverviewHooks";
 
-const RightSection = ({ data, refetch, setEditModalVisible, setEditMaintenanceData }) => {
+import CardViewComponent from "@components/CardView/CardViewComponent";
+
+const RightSection = ({
+  data,
+  refetch,
+  setEditModalVisible,
+  setEditMaintenanceData,
+}) => {
   const handleDelete = () => {
     Alert.alert(
       "Deleting Maintenance Entry",
@@ -30,11 +38,11 @@ const RightSection = ({ data, refetch, setEditModalVisible, setEditMaintenanceDa
     );
   };
 
-  const handleEdit = () =>{
+  const handleEdit = () => {
     setEditMaintenanceData(null);
     setEditMaintenanceData(data);
-    setEditModalVisible(true)
-  }
+    setEditModalVisible(true);
+  };
   return (
     <View style={{ flex: 3 }}>
       <View
@@ -123,7 +131,7 @@ const CardItem = ({
   setModalData,
   refetch,
   setEditModalVisible,
-  setEditMaintenanceData
+  setEditMaintenanceData,
 }) => {
   const handleItemPress = () => {
     setModalData(data);

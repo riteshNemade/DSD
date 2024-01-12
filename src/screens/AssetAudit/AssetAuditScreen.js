@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import HeaderComponent from "@components/Header/HeaderComponent";
-import ContentViewComponent from "../../components/ContentView/ContentViewComponent";
-
-import api from "../../api/api";
-import AssetAuditContent from "./AssetAuditContent";
 import { ActivityIndicator } from "react-native-paper";
+
+import api from "@api/api";
+
+import AssetAuditContent from "./AssetAuditContent";
+import HeaderComponent from "@components/Header/HeaderComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 
 const AssetAuditScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,7 @@ const AssetAuditScreen = () => {
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
         <HeaderComponent title="Due for Audit" iconName="Menu" />
-        {isLoading | auditListData.length > 0 ? (
+        {isLoading | (auditListData.length > 0) ? (
           <ContentViewComponent backgroundColor={"#fff"}>
             {isLoading ? (
               <View style={{ flex: 1, justifyContent: "center" }}>

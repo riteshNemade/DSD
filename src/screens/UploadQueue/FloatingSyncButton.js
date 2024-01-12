@@ -1,12 +1,13 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { scale } from "react-native-size-matters/extend";
-import { colors, gapH, gapV } from "../../constants/global";
-import { TouchableOpacity } from "react-native";
+
 import { Feather } from "@expo/vector-icons";
 import { ActivityIndicator } from "react-native-paper";
+import { scale } from "react-native-size-matters/extend";
 
-const FloatingSyncButton = ({handleSyncPress, isLoading}) => {
+import { colors, gapH, gapV } from "@constants/global";
+
+const FloatingSyncButton = ({ handleSyncPress, isLoading }) => {
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity
@@ -14,7 +15,11 @@ const FloatingSyncButton = ({handleSyncPress, isLoading}) => {
         style={styles.floatingButton}
         onPress={() => handleSyncPress()}
       >
-        {isLoading ? <ActivityIndicator animating={isLoading} size={24} color="white"/>:<Feather name="upload" size={24} color="white" />}
+        {isLoading ? (
+          <ActivityIndicator animating={isLoading} size={24} color="white" />
+        ) : (
+          <Feather name="upload" size={24} color="white" />
+        )}
       </TouchableOpacity>
     </View>
   );

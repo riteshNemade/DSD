@@ -1,13 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import api from "../../api/api";
 import { Alert } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import * as FileSystem from "expo-file-system";
+
+import api from "@api/api";
+
 export const profileFormState = () => {
-  const isFocused = useIsFocused();
-  const navigation = useNavigation();
-  const [isLoading, setIsLoading] = useState(false);
   const [formState, setFormState] = useState({
     firstName: "",
     lastName: "",
@@ -18,6 +17,9 @@ export const profileFormState = () => {
     canEdit: false,
   });
   const [error, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const isFocused = useIsFocused();
+  const navigation = useNavigation();
 
   const getUserInfo = async () => {
     try {
@@ -30,6 +32,7 @@ export const profileFormState = () => {
   };
 
   const updateUser = async (isImageChanged) => {
+    //validate
     if (
       formState.firstName === "" ||
       formState.lastName === "" ||
@@ -46,14 +49,13 @@ export const profileFormState = () => {
       reqObj.append("phone", formState.phone || "");
       reqObj.append("email", formState.email || "");
 
-      console.log(isImageChanged)
       if (isImageChanged) {
-        const imagePath = formState.avatar; //path to image on the device
-        console.log(imagePath);
-        // const imageBlob = await FileSystem.readAsStringAsync(imagePath, {
-        //   encoding: FileSystem.EncodingType.Base64,
-        // });
-        reqObj.append("avatar", {uri: imagePath, name: 'image.jpg', type: 'image/jpeg'});
+        const imagePath = formState.avatar;
+        reqObj.append("avatar", {
+          uri: imagePath,
+          name: "image.jpg",
+          type: "image/jpeg",
+        });
       }
 
       await api
@@ -78,7 +80,6 @@ export const profileFormState = () => {
           ]);
         })
         .catch((err) => {
-          console.log(err);
           Alert.alert(
             "There was an Error.",
             "Either the username is or input format is wrong"
@@ -91,6 +92,7 @@ export const profileFormState = () => {
     const fetchData = async () => {
       setIsLoading(true);
       const userInfo = await getUserInfo();
+
       setFormState((prevState) => ({
         ...prevState,
         firstName: userInfo.firstName || "",
@@ -101,8 +103,10 @@ export const profileFormState = () => {
         avatar: userInfo.avatar || null,
         canEdit: userInfo.canEdit,
       }));
+
       setIsLoading(false);
     };
+
     isFocused && fetchData();
   }, []);
 

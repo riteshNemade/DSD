@@ -1,31 +1,33 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import DashboardScreen from "../screens/Dashboard/DashboardScreen";
-import AddAssetScreen from "../screens/AddAsset/AddAssetScreen";
+
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
+
 import QRScanner from "../screens/QRScanner/QRScanner";
-import SearchAsset from "../screens/SearchAsset/SearchAssetScreen";
-import AssetAuditScreen from "../screens/AssetAudit/AssetAuditScreen";
-import AssetOverviewScreen from "../screens/AssetOverview/AssetOverviewScreen";
-import { CardStyleInterpolators } from '@react-navigation/stack';
-import NotificationsScreen from "../screens/Notifications/NotificationsScreen";
-import AssetListScreen from "../screens/AssetList/AssetListScreen";
-import SettingsStackNavigator from "./SettingsStackNavigator";
-import EditAssetScreen from "../screens/EditAsset/EditAssetScreen";
 import CameraScreen from "../screens/Camera/CameraScreen";
+import SettingsStackNavigator from "./SettingsStackNavigator";
+import AddAssetScreen from "../screens/AddAsset/AddAssetScreen";
+import SearchAsset from "../screens/SearchAsset/SearchAssetScreen";
+import DashboardScreen from "../screens/Dashboard/DashboardScreen";
+import AssetListScreen from "../screens/AssetList/AssetListScreen";
+import EditAssetScreen from "../screens/EditAsset/EditAssetScreen";
+import AssetAuditScreen from "../screens/AssetAudit/AssetAuditScreen";
 import UploadQueueScreen from "../screens/UploadQueue/UploadQueueScreen";
-import CompanySelectionScreen from "../screens/CompanySelection/CompanySelectionScreen";
+import AssetOverviewScreen from "../screens/AssetOverview/AssetOverviewScreen";
+import NotificationsScreen from "../screens/Notifications/NotificationsScreen";
 
 const Stack = createStackNavigator();
 export default function ApplicationStackNavigatior() {
   return (
     <Stack.Navigator
-    initialRouteName="Dashboard"
-    screenOptions={{
-        headerShown:false,
+      initialRouteName="Dashboard"
+      screenOptions={{
+        headerShown: false,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    }}
+      }}
     >
-
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
       <Stack.Screen name="AssetOverview" component={AssetOverviewScreen} />
       <Stack.Screen name="AddAsset" component={AddAssetScreen} />

@@ -1,5 +1,4 @@
-import { StyleSheet } from "react-native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
 const ListContent = ({
   historicalData,
@@ -42,28 +41,28 @@ const ListContent = ({
 export default ListContent;
 
 const styles = StyleSheet.create({
-    column: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        height: 50,
-      },
-      firstColumn: {
-        justifyContent: "center",
-        alignItems: "center",
-        height: 50,
-        flex: 1,
-      },
-      secondColumn: {
-        justifyContent: "center",
-        alignItems: "center",
-        height: 50,
-        flex: 1,
-      },
-      thirdColumn: {
-        justifyContent: "center",
-        alignItems: "center",
-        height: 50,
-        flex: 1,
-      },
-})
+  column: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    height: 50,
+  },
+  firstColumn: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    flex: 1,
+  },
+  secondColumn: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    flex: 1,
+  },
+  thirdColumn: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    flex: 1,
+  },
+});

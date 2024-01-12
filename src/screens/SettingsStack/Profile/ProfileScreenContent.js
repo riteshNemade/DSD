@@ -1,15 +1,20 @@
 import { StyleSheet, FlatList, View } from "react-native";
 import React from "react";
-import { gapV, gapH } from "../../../constants/global";
-import SettingsComponent from "../../../components/SettingsComponent/SettingsComponent";
-import ButtonComponent from "../../../components/Button/ButtonComponent";
+
 import { useDispatch } from "react-redux";
-import api from "../../../api/api";
-import { profileFormState } from "../../../hooks/EditProfile/editProfileHooks";
-import ProfileHeader from "./ProfileHeader";
-import ContentViewComponent from "../../../components/ContentView/ContentViewComponent";
 import { ActivityIndicator } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import api from "@api/api";
+import { gapV, gapH } from "@constants/global";
+import { profileFormState } from "@hooks/EditProfile/editProfileHooks";
+
+import ProfileHeader from "./ProfileHeader";
+import ButtonComponent from "@components/Button/ButtonComponent";
+import SettingsComponent from "@components/SettingsComponent/SettingsComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+
+//hardcoded list items
 import settingsData from "./profileOptions.json";
 
 const renderSettings = ({ item }) => (
@@ -21,8 +26,10 @@ export default function ProfileScreenContent({ firstName, lastName }) {
 
   const handleLogout = async () => {
     await api.get("/logout").then(async () => {
-      await AsyncStorage.multiRemove(["token", "userInfo"]); //logout first then remove the token
+      //logout first then remove the token
+      await AsyncStorage.multiRemove(["token", "userInfo"]);
     });
+
     dispatch({
       type: "LOGOUT",
     }); // LOGOUT action

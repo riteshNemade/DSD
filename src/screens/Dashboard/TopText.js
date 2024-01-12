@@ -1,8 +1,10 @@
 import { Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { verticalScale } from "react-native-size-matters/extend";
-import { FONT_SIZE_REGULAR, colors, hPadding } from "../../constants/global";
+
 import { useSelector } from "react-redux";
+import { verticalScale } from "react-native-size-matters/extend";
+
+import { FONT_SIZE_REGULAR, colors, hPadding } from "@constants/global";
 
 const TopText = ({ setIsModalVisible }) => {
   const company = useSelector((state) => {

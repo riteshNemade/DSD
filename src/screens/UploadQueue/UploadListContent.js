@@ -1,7 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
-import UploadListComponent from "./UploadListComponent";
+
 import { FlashList } from "@shopify/flash-list";
+
+import UploadListComponent from "./UploadListComponent";
+
 const UploadListContent = ({
   data,
   setModalData,
@@ -40,5 +43,3 @@ const UploadListContent = ({
 };
 
 export default UploadListContent;
-
-const styles = StyleSheet.create({});

@@ -1,18 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
-import { ScrollView } from "react-native";
 
 const ContentView = ({ children, backgroundColor }) => {
   return (
-    <View style={{ flexGrow: 8, height:'100%' }}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: backgroundColor,
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-        }}
-      >
+    <View style={{ flexGrow: 8, height: "100%" }}>
+      <View style={[styles.container, { backgroundColor: backgroundColor }]}>
         <ScrollView>{children}</ScrollView>
       </View>
     </View>
@@ -21,4 +13,10 @@ const ContentView = ({ children, backgroundColor }) => {
 
 export default ContentView;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+});

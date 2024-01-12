@@ -1,16 +1,17 @@
+import { Alert } from "react-native";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { initBackgroundFetch } from "./backgroundServices";
 import initDatabase, {
   createTable,
-  dropTable,
   saveDataOffline,
   saveDataToDrafts,
   updateDraft,
   updateOfflineData,
-} from "../api/sqlite";
-import { Alert } from "react-native";
-import { initBackgroundFetch } from "./backgroundServices";
+} from "@api/sqlite";
 
+//saves data to localSQLite db
 export const saveOfflineData = async (data, dispatch) => {
   const db = await initDatabase();
   await createTable(db);
@@ -33,6 +34,7 @@ export const saveOfflineData = async (data, dispatch) => {
   Alert.alert('Offline Data',"Data Saved Successfully.");
 };
 
+//saves draft data to SQLite
 export const onSaveToDrafts = async (data, resetState, dispatch) => {
   const db = await initDatabase();
   await createTable(db);

@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+
 import { LinearGradient } from "expo-linear-gradient";
-import QRScanner from "@assets/svg/qrScanner";
-import { colors } from "../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
-import { FONT_SIZE_REGULAR } from "../../constants/global";
 import { ActivityIndicator } from "react-native-paper";
+
+import QRScanner from "@assets/svg/qrScanner";
+import { colors, FONT_SIZE_REGULAR } from "@constants/global";
 
 const ButtonComponent = ({
   text,

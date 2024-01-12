@@ -2,13 +2,16 @@ import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 
+import { hPadding } from "@constants/global";
+
+//components
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 import HeaderComponent from "@components/Header/HeaderComponent";
-import OfflineHeader from "../../components/OfflineHeader/OfflineHeader";
+import OfflineHeader from "@components/OfflineHeader/OfflineHeader";
 
+//separated JSX
 import InputFields from "./InputFields";
-import { hPadding } from "../../constants/global";
 import TopContent from "./TopContent";
 
 const AddAssetScreen = ({ route }) => {
@@ -17,12 +20,12 @@ const AddAssetScreen = ({ route }) => {
   const [imageName, setImageName] = useState("");
   const [draftsData, setDraftsData] = useState(null);
 
+  //check internet
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const offline = !(state.isConnected && state.isInternetReachable);
       setOfflineStatus(offline);
     });
-
     return () => removeNetInfoSubscription();
   }, []);
 
@@ -36,7 +39,7 @@ const AddAssetScreen = ({ route }) => {
     }
   }, [route.params?.imageUri]);
 
-  //capture image from camera/image picker
+  //capture image from navigation picker
   useEffect(() => {
     if (
       route.params &&
@@ -62,7 +65,7 @@ const AddAssetScreen = ({ route }) => {
   };
   return (
     <View style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior="height" style={{flex:1}}>
+      <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
         <LinearGradientComponent>
           <HeaderComponent title="Add Asset" iconName="Menu" />
           <ScrollContentViewComponent backgroundColor="#fff">

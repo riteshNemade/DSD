@@ -1,14 +1,19 @@
-import RootNavigator from "./src/navigator/RootNavigator";
-import store from "./src/redux/store";
+import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { StatusBar } from "expo-status-bar";
+import * as Notifications from "expo-notifications";
+
 import { MenuProvider } from "react-native-popup-menu";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Notifications from "expo-notifications";
-import { useEffect } from "react";
+
+import store from "./src/redux/store";
+import RootNavigator from "./src/navigator/RootNavigator";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -21,6 +26,7 @@ const asyncStoragePersister = createAsyncStoragePersister({
   storage: AsyncStorage,
 });
 
+//declaration for notification here to enable notification permissions
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,

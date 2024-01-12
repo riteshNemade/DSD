@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { colors } from "../../../../constants/global";
-import { fetchOptions } from "../../../../hooks/AddAsset/AddAssetHooks";
-import { maintenanceFormState } from "../../../../hooks/AssetOverview/MaintenanceFormState";
-import { validateMaintenanceInput } from "../../../../utils/validateInputs";
+
+import { colors } from "@constants/global";
+import { fetchOptions } from "@hooks/AddAsset/AddAssetHooks";
+import { validateMaintenanceInput } from "@utils/validateInputs";
+import { maintenanceFormState } from "@hooks/AssetOverview/MaintenanceFormState";
+
 import { MaintenanceForm } from "./MaintenanceForm";
 
 const AddEditMaintenance = ({

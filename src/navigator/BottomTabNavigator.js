@@ -1,14 +1,19 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ApplicationStackNavigatior from "./ApplicationStackNavigatior";
-import NotificationsScreen from "../screens/Notifications/NotificationsScreen";
-import { colors } from "../constants/global";
-import HomeIcon from "@assets/svg/BottomTabIcons/HomeIcon";
-import NotificationIcon from "../../assets/svg/BottomTabIcons/NotificationIcon";
-import AddIcon from "../../assets/svg/BottomTabIcons/AddIcon";
-import ListIcon from "../../assets/svg/BottomTabIcons/ListIcon";
+
 import { verticalScale } from "react-native-size-matters/extend";
+
+import { colors } from "@constants/global";
+import ApplicationStackNavigatior from "./ApplicationStackNavigatior";
+
+import HomeIcon from "@assets/svg/BottomTabIcons/HomeIcon";
+import NotificationIcon from "@assets/svg/BottomTabIcons/NotificationIcon";
+import AddIcon from "@assets/svg/BottomTabIcons/AddIcon";
+import ListIcon from "@assets/svg/BottomTabIcons/ListIcon";
+
 import AddAssetScreen from "../screens/AddAsset/AddAssetScreen";
 import AssetAuditScreen from "../screens/AssetAudit/AssetAuditScreen";
+import NotificationsScreen from "../screens/Notifications/NotificationsScreen";
+
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {

@@ -6,6 +6,7 @@ import LinearGradientComponent from "@components/LinearGradient/LinearGradientCo
 import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 
 import ProfileScreenContent from "./ProfileScreenContent";
+
 const ProfileScreen = ({route}) => {
   const firstName = route.params?.firstName;
   const lastName = route.params?.lastName;

@@ -1,20 +1,22 @@
-import { StyleSheet, View, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Modal, TouchableOpacity, Text } from "react-native";
 import React, { memo } from "react";
-import { verticalScale, scale } from "react-native-size-matters/extend";
+
 import { AntDesign } from "@expo/vector-icons";
-import { colors, hPadding } from "../../constants/global";
-import { Text } from "react-native";
-import ButtonComponent from "../../components/Button/ButtonComponent";
 import { useNavigation } from "@react-navigation/native";
+import { verticalScale, scale } from "react-native-size-matters/extend";
+
+import { colors, hPadding } from "@constants/global";
+
+import ButtonComponent from "@components/Button/ButtonComponent";
 
 const DataModal = ({ isModalVisible, setModalVisible, data }) => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
-  
+
   const handleNavigation = () => {
     setModalVisible(false);
-    navigation.navigate("AddAsset", {drafts : data});
+    navigation.navigate("AddAsset", { drafts: data });
   };
   const navigation = useNavigation();
   return (
@@ -31,22 +33,25 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
               <View style={{ flex: 9 }}>
                 <Text style={styles.textStyle}>
                   Model:{" "}
-                  {data.model !== undefined || data.model!== 'null'
+                  {data.model !== undefined || data.model !== "null"
                     ? data.model
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
                   Asset Tag:{" "}
-                  {data.asset_tag !== undefined || data.asset_tag !== 'null'
+                  {data.asset_tag !== undefined || data.asset_tag !== "null"
                     ? data.asset_tag
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
                   Asset Name:{" "}
-                  {data.asset_name !== undefined || data.asset_name!=='null' ? data.asset_name : "N/A"} {"\n"}
+                  {data.asset_name !== undefined || data.asset_name !== "null"
+                    ? data.asset_name
+                    : "N/A"}{" "}
+                  {"\n"}
                   {"\n"}
                   Status:{" "}
-                  {data.status !== undefined && data.status !== 'null'
+                  {data.status !== undefined && data.status !== "null"
                     ? data.status
                     : "N/A"}{" "}
                   {"\n"}
@@ -57,26 +62,25 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
                   {"\n"}
                   {"\n"}
                   Location:{" "}
-                  {data.location !== undefined ||data.location !== "null"
+                  {data.location !== undefined || data.location !== "null"
                     ? data.location
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
                   Notes:{" "}
-                  {data.notes !== undefined && data.notes !== 'null'
+                  {data.notes !== undefined && data.notes !== "null"
                     ? data.notes
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
                   Warranty:{" "}
-                  {data.warranty !== undefined && data.warranty !== 'null'
+                  {data.warranty !== undefined && data.warranty !== "null"
                     ? data.warranty
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
                   EOL Date:{" "}
-                  {data.eol_date !== undefined &&
-                  data.eol_date !== "null"
+                  {data.eol_date !== undefined && data.eol_date !== "null"
                     ? data.eol_date
                     : "N/A"}{" "}
                   {"\n"}
@@ -94,7 +98,8 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
                   {"\n"}
                   {"\n"}
                   Purchase Date:{" "}
-                  {data.purchase_date !== undefined && data.purchase_date !== "null"
+                  {data.purchase_date !== undefined &&
+                  data.purchase_date !== "null"
                     ? data.purchase_date
                     : "N/A"}{" "}
                   {"\n"}
@@ -136,7 +141,6 @@ const styles = StyleSheet.create({
     width: scale(390),
     flexDirection: "row",
     padding: hPadding,
-
   },
   containerBehindModal: {
     backgroundColor: "rgba(0, 0, 0, 0.76)",
@@ -163,6 +167,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 5,
     right: 10,
-  
   },
 });

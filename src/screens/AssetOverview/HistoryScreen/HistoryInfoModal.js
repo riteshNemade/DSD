@@ -1,9 +1,10 @@
-import { StyleSheet, View, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Modal, TouchableOpacity, Text } from "react-native";
 import React from "react";
-import { verticalScale, scale } from "react-native-size-matters/extend";
+
 import { AntDesign } from "@expo/vector-icons";
+import { verticalScale, scale } from "react-native-size-matters/extend";
+
 import { colors, hPadding } from "@constants/global";
-import { Text } from "react-native";
 
 const HistoryModal = ({ modalData, isModalVisible, setModalVisible }) => {
   const handleModalClose = () => {
@@ -36,8 +37,7 @@ const HistoryModal = ({ modalData, isModalVisible, setModalVisible }) => {
                         : "N/A"}{" "}
                       {"\n\n"}
                       Notes:{" "}
-                      {modalData.note !== undefined &&
-                      modalData.note !== null
+                      {modalData.note !== undefined && modalData.note !== null
                         ? modalData.note
                         : "N/A"}{" "}
                       {"\n"}

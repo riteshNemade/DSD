@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Alert } from "react-native";
+
 import { useDispatch } from "react-redux";
-import { auth } from "../../api/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { auth } from "@api/api";
 
 export default loginHooks = () => {
   const [username, setUsername] = useState(null);

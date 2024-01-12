@@ -1,36 +1,29 @@
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
+
 import NetInfo from "@react-native-community/netinfo";
+import { scale } from "react-native-size-matters/extend";
 
 import HeaderComponent from "@components/Header/HeaderComponent";
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import OfflineHeader from "@components/OfflineHeader/OfflineHeader";
 import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import AssetListPlaceholder from "@components/AssetListPlaceholder/AssetListPlaceholder";
+
 import TopContent from "./TopContent";
-import AssetListContent from "./AssetListContent";
-import FilterIcon from "@assets/svg/FilterIcon";
 import FilterModal from "./Filter/FilterModal";
-import OfflineHeader from "../../components/OfflineHeader/OfflineHeader";
+import AssetListContent from "./AssetListContent";
 
-import { scale } from "react-native-size-matters/extend";
+import FilterIcon from "@assets/svg/FilterIcon";
 import { colors, gapH, gapV } from "@constants/global";
-
-import { fetchData } from "../../hooks/AssetList/assetListApiCall";
-import AssetListPlaceholder from "../../components/AssetListPlaceholder/AssetListPlaceholder";
+import { fetchData } from "@hooks/AssetList/assetListApiCall";
 
 const AssetListScreen = ({ route }) => {
   const [isFilterModalVisible, setModalVisible] = useState(false);
   const [isOffline, setOfflineStatus] = useState(false);
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    fetchNextPage,
-    isFetching,
-    refetch,
-    url,
-    setUrl,
-  } = fetchData();
+  const { data, isLoading, fetchNextPage, isFetching, refetch, url, setUrl } =
+    fetchData();
+
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const offline = !(state.isConnected && state.isInternetReachable);
@@ -59,7 +52,6 @@ const AssetListScreen = ({ route }) => {
           <TopContent url={url} setUrl={setUrl} />
           {isLoading ? (
             <View style={styles.loadingIndicator}>
-              {/* <ActivityIndicator size={100} color="#4290df" /> */}
               <AssetListPlaceholder />
             </View>
           ) : isFilterModalVisible ? (

@@ -1,35 +1,41 @@
 import React, { useEffect } from "react";
+
+import "core-js/stable/atob";
+import { jwtDecode } from "jwt-decode";
+import * as SplashScreen from "expo-splash-screen";
 import { useDispatch, useSelector } from "react-redux";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
-import AuthNavigator from "./AuthNavigator";
-import BottomTabNavigator from "./BottomTabNavigator";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+//offline services
 import { startupSync } from "../utils/backgroundServices";
 import initDatabase, { createTable, getLocalData } from "../api/sqlite";
-import { SafeAreaView } from "react-native-safe-area-context";
+
+import BottomTabNavigator from "./BottomTabNavigator";
+import AuthNavigator from "./AuthNavigator";
+
 import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { jwtDecode } from "jwt-decode";
-import "core-js/stable/atob";
-import * as SplashScreen from 'expo-splash-screen'
+
 const Stack = createStackNavigator();
 
 export default function RootNavigator() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
-  
+
   const wasUserAuthenticated = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
       if (!token) {
         return false;
+      } else {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000);
+        return decodedToken.exp && decodedToken.exp > currentTime;
       }
-      const decodedToken = jwtDecode(token);
-      const currentTime = Math.floor(Date.now() / 1000);
-
-      return decodedToken.exp && decodedToken.exp > currentTime;
     } catch (error) {
       console.error("Error checking token validity:", error);
       return false;
@@ -54,10 +60,10 @@ export default function RootNavigator() {
         dispatch({ type: "LOGIN" });
       }
       startupSync();
-    })().then(()=>{
+    })().then(() => {
       setTimeout(() => {
         SplashScreen.hideAsync();
-      }, 100); 
+      }, 100);
     });
   }, []);
 

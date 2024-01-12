@@ -1,12 +1,15 @@
 import { StyleSheet, View, Modal } from "react-native";
 import React from "react";
-import ButtonComponent from "../../../components/Button/ButtonComponent";
-import { verticalScale } from "react-native-size-matters/extend";
-import { colors, gapV, hPadding } from "../../../constants/global";
-import FilterModalInputFields from "./FilterModalInputFields";
-import { filters } from "../../../hooks/AssetList/modalHooks";
-import { Feather } from "@expo/vector-icons";
+
 import { useSelector } from "react-redux";
+import { Feather } from "@expo/vector-icons";
+import { verticalScale } from "react-native-size-matters/extend";
+
+import { filters } from "@hooks/AssetList/modalHooks";
+import { colors, gapV, hPadding } from "@constants/global";
+
+import FilterModalInputFields from "./FilterModalInputFields";
+import ButtonComponent from "@components/Button/ButtonComponent";
 
 const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
   const InputFieldProps = filters();
@@ -14,7 +17,6 @@ const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
     return state.global.company_id;
   });
   const handleOKPress = () => {
-    
     let url = `/hardware?company_id=${company_id}&`;
     let urlFilterObject = {};
 

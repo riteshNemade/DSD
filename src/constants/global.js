@@ -1,5 +1,5 @@
-import { scale, verticalScale } from "react-native-size-matters/extend";
 import { PixelRatio } from "react-native";
+import { scale, verticalScale } from "react-native-size-matters/extend";
 
 export const gapV = verticalScale(20);
 export const gapH = scale(20);

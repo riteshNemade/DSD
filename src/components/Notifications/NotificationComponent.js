@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { gapV } from "../../constants/global";
+
 import { verticalScale } from "react-native-size-matters/extend";
-import WarningIcon from "../../../assets/svg/warningIcon.";
-import NewEmail from "../../../assets/svg/NewEmailIcon";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const NotificationComponent = ({ color, duration, subText, title }) => {
+import { gapV } from "@constants/global";
+import WarningIcon from "@assets/svg/warningIcon.";
+import NewEmail from "@assets/svg/NewEmailIcon";
+
+const NotificationComponent = ({ color, duration, title }) => {
   let Icon;
   switch (color) {
     case "orange":
@@ -31,15 +33,7 @@ const NotificationComponent = ({ color, duration, subText, title }) => {
       {/* Top Row*/}
       <View style={{ flexDirection: "row", flex: 1 }}>
         <View style={{ flex: 1, justifyContent: "center" }}>
-          <View
-            style={{
-              backgroundColor: color,
-              borderRadius: 30,
-              height: 20,
-              width: 20,
-              padding: 4,
-            }}
-          >
+          <View style={[styles.iconWrapper, { backgroundColor: color }]}>
             {Icon !== undefined ? <Icon /> : null}
           </View>
         </View>
@@ -82,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     height: verticalScale(105),
     paddingHorizontal: 24,
-    marginVertical: gapV/2,
+    marginVertical: gapV / 2,
   },
   title: {
     fontSize: 16,
@@ -95,5 +89,11 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     color: "#a1a1a1",
     textAlign: "left",
+  },
+  iconWrapper: {
+    borderRadius: 30,
+    height: 20,
+    width: 20,
+    padding: 4,
   },
 });

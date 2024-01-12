@@ -1,14 +1,17 @@
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import React from "react";
 
+import TopContent from "./TopContent";
+
+import PasswordBox from "@components/PasswordBox/PasswordBox";
 import HeaderComponent from "@components/Header/HeaderComponent";
+import ButtonComponent from "@components/Button/ButtonComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
-import TopContent from "./TopContent";
-import PasswordBox from "../../../components/PasswordBox/PasswordBox";
-import { colors, gapH, gapV } from "../../../constants/global";
-import ButtonComponent from "../../../components/Button/ButtonComponent";
-import { changePassword } from "../../../hooks/EditProfile/changePasswordHooks";
+
+import { colors, gapH, gapV } from "@constants/global";
+import { changePassword } from "@hooks/EditProfile/changePasswordHooks";
+
 const Password = () => {
   const {
     oldPassword,
@@ -20,9 +23,9 @@ const Password = () => {
     isValidLength,
     passwordMatch,
     handleSubmit,
-    isLoading
+    isLoading,
   } = changePassword();
-  
+
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
@@ -56,7 +59,11 @@ const Password = () => {
                 />
               </View>
               <View style={{ marginTop: gapV }}>
-                <ButtonComponent text={"Submit"} onPress={()=> handleSubmit()} disabled={isLoading}/>
+                <ButtonComponent
+                  text={"Submit"}
+                  onPress={() => handleSubmit()}
+                  disabled={isLoading}
+                />
               </View>
             </View>
           </KeyboardAvoidingView>

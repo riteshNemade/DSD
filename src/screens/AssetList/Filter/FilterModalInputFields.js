@@ -1,23 +1,15 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import React from "react";
+
 import { Dropdown } from "react-native-element-dropdown";
-import { fetchFilterData } from "../../../hooks/AssetList/modalHooks";
-import {
-  FONT_SIZE_SMALL,
-  colors,
-  gapV,
-} from "../../../constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 
+import { FONT_SIZE_SMALL, colors, gapV } from "@constants/global";
+import { fetchFilterData } from "@hooks/AssetList/modalHooks";
+
 const FilterModalInputFields = ({ props }) => {
-  const {
-    categories,
-    models,
-    status,
-    locations,
-    manufacturers,
-    suppliers,
-  } = fetchFilterData();
+  const { categories, models, status, locations, manufacturers, suppliers } =
+    fetchFilterData();
 
   const {
     setCategoryFilter,

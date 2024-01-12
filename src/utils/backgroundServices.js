@@ -2,12 +2,18 @@ import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { dataSyncService } from "./syncOfflineData";
-const BACKGROUND_FETCH_TASK = "upload-job-task";
+
+
+const BACKGROUND_FETCH_TASK = "upload-job-task";  //set name of the task
 
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+
     console.log(BACKGROUND_FETCH_TASK, "running");
-    const dataSyncComplete = dataSyncService();
+
+    const dataSyncComplete = dataSyncService(); //function that handles offline upload
+
     if (dataSyncComplete) return BackgroundFetch.BackgroundFetchResult.NewData;
     else return BackgroundFetch.BackgroundFetchResult.NoData;
   });
@@ -22,7 +28,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     }
   };
 
-
+  //registering the background task
   export const initBackgroundFetch = async () => {
     let isRegistered = await TaskManager.isTaskRegisteredAsync(
       BACKGROUND_FETCH_TASK

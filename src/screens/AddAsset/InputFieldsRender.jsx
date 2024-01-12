@@ -5,12 +5,15 @@ import {
   View,
   Text,
 } from "react-native";
-import { colors, gapV, textBox } from "../../constants/global";
-import { Dropdown } from "react-native-element-dropdown";
-import { Feather } from "@expo/vector-icons";
-import { fetchOptions } from "../../hooks/AddAsset/AddAssetHooks";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
+
+import { Feather } from "@expo/vector-icons";
+import { Dropdown } from "react-native-element-dropdown";
+import DateTimePicker from "@react-native-community/datetimepicker";
+
+import { colors, gapV, textBox } from "@constants/global";
+import { fetchOptions } from "@hooks/AddAsset/AddAssetHooks";
+
 export default InputFieldsRender = ({ props }) => {
   const { modelsList, statusList, locationsList, suppliersList } =
     fetchOptions();

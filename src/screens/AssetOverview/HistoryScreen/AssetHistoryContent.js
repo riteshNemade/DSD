@@ -1,11 +1,13 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
-import { colors, gapV } from "@constants/global";
-import { Text } from "react-native";
-import HistoryModal from "./HistoryInfoModal";
-import { useState } from "react";
-import ListContent from "./ListContent";
+import { StyleSheet, View, Text } from "react-native";
+import React, { useState } from "react";
+
 import { FlashList } from "@shopify/flash-list";
+
+import ListContent from "./ListContent";
+import HistoryModal from "./HistoryInfoModal";
+
+import { colors, gapV } from "@constants/global";
+
 const Header = () => {
   return (
     <View style={{ flexDirection: "row" }}>
@@ -23,9 +25,11 @@ const Header = () => {
 };
 
 const AssetHistoryContent = ({ historicalData }) => {
+
   const dataLength = historicalData.length;
-  const [isModalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={{ marginTop: gapV, flex: 1, marginTop: gapV * 2 }}>
       <View style={{ flex: 9 }}>
