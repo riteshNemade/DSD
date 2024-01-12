@@ -102,8 +102,7 @@ export const forgotPasswordHooks = () => {
   const handleSubmit = async () => {
     if (!username?.trim()) {
       setIsError(true);
-      setEmail(null);
-      Alert.alert("Login Failed", "Please enter the credentials properly");
+      Alert.alert("Process Failed", "Please enter the username properly");
     } else {
       setIsError(false);
       setIsLoading(true);

@@ -1,5 +1,10 @@
-import React, { useState, TouchableOpacity } from "react";
-import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from "react-native";
 
 import { verticalScale } from "react-native-size-matters/extend";
 

@@ -1,16 +1,17 @@
 import { StyleSheet, View, Image } from "react-native";
 import React from "react";
 
+import { verticalScale } from "react-native-size-matters/extend";
+
+import LoginOptions from "./LoginOptions";
 import TextBox from "@components/TextBoxComponent/TextBox";
 import PasswordBox from "@components/PasswordBox/PasswordBox";
-
-import getStatusBarHeight from "@utils/getStatusBarHeight";
-import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import ButtonComponent from "@components/Button/ButtonComponent";
+import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+
 import { hPadding } from "@constants/global";
-import { verticalScale } from "react-native-size-matters/extend";
 import loginHooks from "@hooks/Auth/authHooks";
-import LoginOptions from "./LoginOptions";
+import getStatusBarHeight from "@utils/getStatusBarHeight";
 
 const statusBarHeight = Math.ceil(getStatusBarHeight());
 
@@ -24,7 +25,7 @@ const LoginScreen = () => {
     isError,
     checked,
     setChecked,
-    isLoading
+    isLoading,
   } = loginHooks();
 
   return (
@@ -37,7 +38,11 @@ const LoginScreen = () => {
               style={{ width: 114, height: 114, alignSelf: "center" }}
             />
             <View style={{ marginTop: 24 }}>
-              <TextBox text={username} setText={setUsername} isError={isError} />
+              <TextBox
+                text={username}
+                setText={setUsername}
+                isError={isError}
+              />
             </View>
             <View style={{ marginTop: 24 }}>
               <PasswordBox
@@ -47,9 +52,13 @@ const LoginScreen = () => {
                 setPassword={setPassword}
               />
             </View>
-            <LoginOptions checked={checked} setChecked={setChecked}/>
+            <LoginOptions checked={checked} setChecked={setChecked} />
             <View style={{ marginTop: "5%", height: verticalScale(70) }}>
-              <ButtonComponent text={"Sign In"} onPress={handleSignIn} disabled={isLoading}/>
+              <ButtonComponent
+                text={"Sign In"}
+                onPress={handleSignIn}
+                disabled={isLoading}
+              />
             </View>
           </View>
         </View>
