@@ -22,7 +22,7 @@ const TopText = ({ setIsModalVisible }) => {
         >
           <View style={{}}>
             <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: 800 }}>
-              Company:{" "}
+              Location:{" "}
             </Text>
           </View>
           <View style={{ flex: 1 }}>

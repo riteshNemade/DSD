@@ -113,14 +113,14 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
           <View style={styles.contentContainer}>
             <View style={{ flex: 1, marginTop: gapV }}>
               <Text style={{ fontSize: FONT_SIZE_LARGE, fontWeight: 600 }}>
-                Please select a Company:{" "}
+                Please select a Location:{" "}
               </Text>
               <Dropdown
                 data={data || []}
                 labelField="name"
                 valueField="name"
                 value={company}
-                placeholder={"Select Company"}
+                placeholder={"Select Location"}
                 placeholderStyle={{
                   color: inputBorderColor,
                   fontSize: FONT_SIZE_REGULAR,
