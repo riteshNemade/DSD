@@ -26,14 +26,19 @@ export function fetchOptions() {
     return response.data.rows;
   };
 
+  const fetchCompanies = async () => {
+    const response = await api.get("/companies");
+    return response.data.rows;
+  };
+
   const fetchAssetMaintenanceTypes = async () => {
     const response = await api.get("/asset-maintenance-type");
     const result = response.data.data;
-  
+
     const assetMaintenanceTypes = Object.keys(result)
       .filter((key) => key !== "") // Exclude the empty key
       .map((key) => ({ label: result[key] }));
-   
+
     return assetMaintenanceTypes;
   };
 
@@ -41,27 +46,33 @@ export function fetchOptions() {
   const modelsQuery = useQuery({
     queryKey: ["models"],
     queryFn: () => fetchModels(),
-    staleTime: CACHE_TIME,
+    cacheTime: API_CACHE_TIME,
   });
 
   const statusQuery = useQuery({
     queryKey: ["status"],
-    staleTime: CACHE_TIME,
     queryFn: () => fetchStatus(),
+    cacheTime: API_CACHE_TIME,
   });
   const locationsQuery = useQuery({
     queryKey: ["locations"],
     queryFn: () => fetchLocations(),
-    staleTime: CACHE_TIME,
+    cacheTime: API_CACHE_TIME,
   });
   const suppliersQuery = useQuery({
     queryKey: ["suppliers"],
     queryFn: () => fetchSuppliers(),
-    staleTime: CACHE_TIME,
+    cacheTime: API_CACHE_TIME,
+  });
+  const companiesQuery = useQuery({
+    queryKey: ["companies"],
+    queryFn: () => fetchCompanies(),
+    cacheTime: API_CACHE_TIME,
   });
   const assetMaintenanceQuery = useQuery({
     queryKey: ["maintenances"],
     queryFn: () => fetchAssetMaintenanceTypes(),
+    cacheTime: API_CACHE_TIME,
   });
   /************************************************/
   return {
@@ -69,6 +80,7 @@ export function fetchOptions() {
     statusList: statusQuery.data || [],
     locationsList: locationsQuery.data || [],
     suppliersList: suppliersQuery.data || [],
+    companiesList: companiesQuery.data || [],
     maintenancesList: assetMaintenanceQuery.data || [],
   };
 }

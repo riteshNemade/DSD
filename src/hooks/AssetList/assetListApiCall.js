@@ -78,6 +78,7 @@ export function fetchData() {
     queryKey: ["assetList", url],
     queryFn: ({ pageParam }) => getApiData(pageParam),
     initialPageParam: 0,
+    cacheTime: ASSET_LIST_CACHE_TIME,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       nextPageCheckerFn(lastPage, allPages, lastPageParam),
   });
