@@ -23,15 +23,16 @@ import api from "@api/api";
 const LocationSelectModal = ({
   isModalVisible,
   setIsModalVisible,
-  locationId,
   locationName,
 }) => {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () => { 
+    setIsLoading(true);
     await api
       .post("/users/me/change-location", { location_id: id })
       .then(async () => {
@@ -46,7 +47,9 @@ const LocationSelectModal = ({
             name: name,
           },
         });
-        setIsModalVisible(false);
+      }).finally(()=>{
+        setIsModalVisible(false); 
+        setIsLoading(false);
       });
   };
 
@@ -144,6 +147,7 @@ const LocationSelectModal = ({
               <View style={{ marginTop: gapV }}>
                 <ButtonComponent
                   text={"GO"}
+                  disabled={isLoading}
                   onPress={() => {
                     handleSubmit();
                   }}

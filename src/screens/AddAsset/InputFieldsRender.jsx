@@ -15,9 +15,14 @@ import { colors, gapV, textBox } from "@constants/global";
 import { fetchOptions } from "@hooks/AddAsset/AddAssetHooks";
 
 export default InputFieldsRender = ({ props }) => {
-  const { modelsList, statusList, locationsList, suppliersList } =
-    fetchOptions();
-
+  const {
+    modelsList,
+    statusList,
+    locationsList,
+    suppliersList,
+    companiesList,
+  } = fetchOptions();
+  
   const [isPurchaseDatePickerVisible, setIsPurchaseDatePickerVisible] =
     useState(false);
   //prettier-ignore
@@ -48,18 +53,32 @@ export default InputFieldsRender = ({ props }) => {
     placeholderStyle: styles.placeholderStyle,
     placeholderTextColor: colors.gray,
   };
+  
   return (
     <View style={{ flex: 7 }}>
       {/* COMPANY NAME */}
-      <TextInput
-        editable={false}
-        selectTextOnFocus={false}
-        value={props.companyName}
-        style={[
-          styles.inputContainer,
-          { backgroundColor: "#e0e0e0", color: "#000" },
-        ]}
-      />
+      {props.isSuperUser ? (
+        <Dropdown
+          {...dropdownProps}
+          data={companiesList}
+          placeholder={"Companies"}
+          value={props.state.company_id}
+          onChange={(item) => {
+            props.updateState("company", item.name);
+            props.updateState("company_id", item.id);
+          }}
+        />
+      ) : (
+        <TextInput
+          editable={false}
+          selectTextOnFocus={false}
+          value={props.companyName}
+          style={[
+            styles.inputContainer,
+            { backgroundColor: "#e0e0e0", color: "#000" },
+          ]}
+        />
+      )}
       {/* AssetTag */}
       <TextInput
         {...textInputProps}

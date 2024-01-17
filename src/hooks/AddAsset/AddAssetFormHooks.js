@@ -37,6 +37,8 @@ const reducer = (state, action) => {
 export function inputFieldState() {
   const initialState = {
     assetTag: null,
+    company: null,
+    company_id:null,
     serial: null,
     modelId: null,
     model: null,

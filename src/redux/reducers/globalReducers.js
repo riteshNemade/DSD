@@ -1,6 +1,8 @@
 const initialState = {
-  locationId: null,
-  locationName: "N/A",
+  locationId: "",
+  locationName: "",
+  companyId: "",
+  companyName: "",
   userType: "USER",
 };
 
@@ -11,6 +13,12 @@ const globalReducer = (state = initialState, action) => {
         ...state,
         locationId: action.payload?.id,
         locationName: action.payload?.name,
+      };
+    case "SET_COMPANY":
+      return {
+        ...state,
+        companyId: action.payload?.id,
+        companyName: action.payload?.name,
       };
     case "SET_USER_TYPE":
       return {

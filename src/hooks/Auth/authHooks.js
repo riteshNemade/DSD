@@ -9,7 +9,8 @@ import { auth } from "@api/api";
 import {
   dispatchLocalDataToRedux,
   setLocalUserProfileData,
-  setLocalUserRole,
+  setLocalUserRoleAndPermissions,
+  setUserCompany,
   setUserLocations,
 } from "@utils/localStorageHandler";
 
@@ -43,8 +44,9 @@ export default loginHooks = () => {
           const { user, token } = res.data?.data;
           //set localstorage items
           if (user) {
-            await setLocalUserRole(user, dispatch);
+            await setLocalUserRoleAndPermissions(user);
             await setUserLocations(user);
+            await setUserCompany(user);
             await setLocalUserProfileData(user);
           }
           if (checked) {
@@ -62,6 +64,7 @@ export default loginHooks = () => {
               type: "LOGIN",
             });
           });
+          
         })
         .catch((err) => {
           console.log(err);

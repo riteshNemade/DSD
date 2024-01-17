@@ -8,7 +8,9 @@ import { FONT_SIZE_REGULAR, colors, hPadding } from "@constants/global";
 const TopText = ({ setIsModalVisible, locationName }) => {
   return (
     <>
-      {locationName !== "" && locationName !== undefined && locationName !== null ? (
+      {locationName !== "" &&
+      locationName !== undefined &&
+      locationName !== null ? (
         <View
           style={{
             paddingHorizontal: hPadding,
@@ -16,33 +18,33 @@ const TopText = ({ setIsModalVisible, locationName }) => {
             flexDirection: "row",
           }}
         >
-          <View style={{}}>
-            <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: '800' }}>
+          <View>
+            <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: "800" }}>
               Location:{" "}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
             <Text
-              style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: '400' }}
+              style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: "400" }}
               numberOfLines={1}
             >
               {locationName}{" "}
             </Text>
           </View>
-          <View style={{}}>
-            <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+          <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+            <View style={{ padding: 2 }}>
               <Text
                 numberOfLines={1}
                 style={{
                   fontSize: FONT_SIZE_REGULAR - 2,
-                  fontWeight: '800',
+                  fontWeight: "800",
                   color: colors.hyperlinkBlue,
                 }}
               >
                 (change)
               </Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         </View>
       ) : (
         <></>
