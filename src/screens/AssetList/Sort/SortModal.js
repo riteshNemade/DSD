@@ -23,7 +23,7 @@ const SortModal = ({
     const sortCriteria = selectedOption.split("-")[0];
     const order = selectedOption.split("-")[1];
 
-    //regex to match `sort=something&order=something pattern`
+    //regex to match `sort=something&order=something` pattern
     const regex = new RegExp(/sort=[^&]*&order=[^&]*/);
 
     //if pattern matched, change only sort and order section of the URL

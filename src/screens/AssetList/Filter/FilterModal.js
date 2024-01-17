@@ -13,11 +13,22 @@ import ButtonComponent from "@components/Button/ButtonComponent";
 
 const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
   const InputFieldProps = filters();
-  const company_id = useSelector((state) => {
-    return state.global.company_id;
+  
+  //check usertype and location id
+  const location_id = useSelector((state) => {
+    return state.global.locationId;
   });
+  const userType = useSelector((state) => {
+    return state.global.userType;
+  });
+
   const handleOKPress = () => {
-    let url = `/hardware?company_id=${company_id}&`;
+    let url = `/hardware?location_id=${location_id}&`;
+
+    userType === "SUPER"
+      ? (url = `/hardware?`)
+      : (url = `/hardware?location_id=${location_id}&`);
+
     let urlFilterObject = {};
 
     InputFieldProps.companyFilter !== null

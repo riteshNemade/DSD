@@ -10,25 +10,36 @@ import { colors } from "@constants/global";
 const TableComponent = ({ items }) => {
   const navigation = useNavigation();
 
-  const company_id = useSelector((state) => {
-    return state.global.company_id;
+  //check user type and fetch location id
+  const location_id = useSelector((state) => {
+    return state.global.locationId;
   });
+  const userType = useSelector((state) => {
+    return state.global.userType;
+  });
+
+  let BASE_URL = `/hardware?location_id=${location_id}&`;
+
+  userType === "SUPER"
+    ? (BASE_URL = `/hardware?`)
+    : `/hardware?location_id=${location_id}&`;
+
   const fieldsToDisplay = [
     {
       key: "Status",
       value: items.status_label?.name || "N/A",
-      url: `/hardware?company_id=${company_id}&status_id=${items.status_label?.id}&limit=20&offset=`,
+      url: `${BASE_URL}status_id=${items.status_label?.id}&limit=20&offset=`,
     },
     {
       key: "Company",
       value: items.company?.name || "N/A",
-      url: `/hardware?company_id=${items.company?.id}&limit=20&offset=`,
+      url: `${BASE_URL}limit=20&offset=`,
     },
     { key: "Asset Name", value: items.name || "N/A", url: null },
     {
       key: "Model",
       value: items.model?.name || "N/A",
-      url: `/hardware?company_id=${company_id}&model_id=${items.model?.id}&limit=20&offset=`,
+      url: `${BASE_URL}model_id=${items.model?.id}&limit=20&offset=`,
     },
     { key: "Category", value: items.category?.name || "N/A", url: null },
     { key: "Serial No", value: items.serial || "N/A", url: null },

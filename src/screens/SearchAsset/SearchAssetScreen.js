@@ -17,13 +17,21 @@ import api from "@api/api";
 const QRScannerScreen = () => {
   const navigation = useNavigation();
   const [isAPILoading, setAPILoadingStatus] = useState(false);
+  //check usertype and location id
   const company_id = useSelector((state) => {
-    return state.global.company_id;
+    return state.global.locationId;
   });
+  const location_id = useSelector((state) => {
+    return state.global.locationId;
+  });
+  const userType = useSelector((state) => {
+    return state.global.userType;
+  })
   const handleSubmit = async (searchTerm) => {
+    let url  = `/hardware?location_id=${location_id}&`
+    userType === 'SUPER' ? url = '/hardware' : url  = `/hardware?location_id=${location_id}&`
     if (searchTerm !== "") {
       setAPILoadingStatus(true);
-      console.log(`/hardware?company_id=${company_id}&search=${searchTerm}`);
       await api
         .get(`/hardware?company_id=${company_id}&search=${searchTerm}`)
         .then((response) => {

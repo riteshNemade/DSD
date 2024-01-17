@@ -26,8 +26,8 @@ export default function ProfileScreenContent({ firstName, lastName }) {
 
   const handleLogout = async () => {
     await api.get("/logout").then(async () => {
-      //logout first then remove the token
-      await AsyncStorage.multiRemove(["token", "userInfo"]);
+      //clear out local storage
+      await AsyncStorage.clear();
     });
 
     dispatch({

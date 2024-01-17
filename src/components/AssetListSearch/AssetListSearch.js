@@ -16,13 +16,24 @@ const AssetListSearch = ({ setUrl }) => {
     setInputText(text);
   };
 
-  const company_id = useSelector((state) => {
-    return state.global.company_id;
+  //check user type and fetch location id
+  const location_id = useSelector((state) => {
+    return state.global.locationId;
   });
+  const userType = useSelector((state) => {
+    return state.global.userType;
+  });
+
   const handleSubmit = () => {
-    setUrl(
-      `/hardware?company_id=${company_id}&search=${inputText}&sort=created_at&order=asc&limit=20&offset=`
-    );
+    if (userType === "SUPER") {
+      setUrl(
+        `/hardware?search=${inputText}&sort=created_at&order=asc&limit=20&offset=`
+      );
+    } else {
+      setUrl(
+        `/hardware?location_id=${location_id}&search=${inputText}&sort=created_at&order=asc&limit=20&offset=`
+      );
+    }
   };
 
   return (
