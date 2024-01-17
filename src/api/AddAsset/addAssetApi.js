@@ -42,7 +42,6 @@ export const sendDataToServer = async (data) => {
     dataToSend.append("warranty_months", data.warranty);
   }
   if (data.supplierId !== null && data.supplierId !== "null") {
-    console.log("supplier", data.supplierId);
     dataToSend.append("supplier_id", data.supplierId);
   }
 
@@ -56,7 +55,6 @@ export const sendDataToServer = async (data) => {
     );
   }
   if (data.locationId !== null && data.locationId !== "null") {
-    console.log("locationId", data.locationId);
     dataToSend.append("rtd_location_id", data.locationId);
   }
 
@@ -67,7 +65,7 @@ export const sendDataToServer = async (data) => {
       },
     })
     .then((res) => {
-      console.log(res.data);
+
       if (res.data.status === "error") {
 
         const error = JSON.stringify(res.data?.messages)
@@ -131,7 +129,6 @@ export const uploadDataFromDatabase = async (data) => {
     dataToSend.append("warranty_months", data.warranty);
   }
   if (data.supplier_id !== null && data.supplier_id !== "null") {
-    console.log("supplier", data.supplier_id);
     dataToSend.append("supplier_id", data.supplier_id);
   }
 
@@ -139,14 +136,12 @@ export const uploadDataFromDatabase = async (data) => {
     dataToSend.append("purchase_cost", data.purchase_cost);
   }
   if (data.purchase_date !== null && data.purchase_date !== "null") {
-    console.log(new Date(data.purchase_date).toISOString());
     dataToSend.append(
       "purchase_date",
       new Date(data.purchase_date).toISOString()?.split("T")[0]
     );
   }
   if (data.location_id !== null && data.location_id !== "null") {
-    console.log("locationId", data.location_id);
     dataToSend.append("rtd_location_id", data.location_id);
   }
   dataToSend.append("_snipeit_bay_5",data.bay_info);
@@ -173,6 +168,5 @@ export const uploadDataFromDatabase = async (data) => {
     .catch((err) => {
       console.log("API Error: ", err);
     });
-    console.log("result: ", result)
   return result;
 };
