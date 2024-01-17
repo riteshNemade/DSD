@@ -6,6 +6,12 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { auth } from "@api/api";
+import {
+  dispatchLocalDataToRedux,
+  setLocalUserProfileData,
+  setLocalUserRole,
+  setUserLocations,
+} from "@utils/localStorageHandler";
 
 export default loginHooks = () => {
   const [username, setUsername] = useState(null);
@@ -28,36 +34,33 @@ export default loginHooks = () => {
       await auth
         .post("/login", { username, password })
         .then(async (res) => {
-          const token = res.data.data.token;
-          let canEdit = "0";
-          if (
-            res.data.data.user?.permissions.superuser === "1" ||
-            res.data.data?.user?.permissions["users.edit"] === "1" ||
-            res.data.data.user?.permissions.admin == 1
-          ) {
-            canEdit = "1";
-          }
-          const avatar = res.data.data.user.avatar;
-          const localUserData = {
-            firstName: res.data.data.user.first_name,
-            lastName: res.data.data.user.last_name,
-            username: res.data.data.user.username,
-            phone: res.data.data.user.phone,
-            email: res.data.data.user.email,
-            avatar,
-            canEdit,
-          };
-
+          //this ensures that state is cleared
+          await AsyncStorage.clear();
           dispatch({
-            type: "SET_TOKEN",
-            payload: token,
+            type: "RESET_REDUX",
           });
+
+          const { user, token } = res.data?.data;
+          //set localstorage items
+          if (user) {
+            await setLocalUserRole(user, dispatch);
+            await setUserLocations(user);
+            await setLocalUserProfileData(user);
+          }
           if (checked) {
+            //remember me
             await AsyncStorage.setItem("token", token);
           }
-          await AsyncStorage.setItem("userInfo", JSON.stringify(localUserData));
-          dispatch({
-            type: "LOGIN",
+
+          await dispatchLocalDataToRedux(dispatch).then(() => {
+            //redux actions
+            dispatch({
+              type: "SET_TOKEN",
+              payload: token,
+            });
+            dispatch({
+              type: "LOGIN",
+            });
           });
         })
         .catch((err) => {

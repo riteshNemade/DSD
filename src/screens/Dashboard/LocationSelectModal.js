@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Modal, Animated } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
 import { Dropdown } from "react-native-element-dropdown";
 import { verticalScale } from "react-native-size-matters/extend";
 
@@ -17,65 +16,71 @@ import {
   FONT_SIZE_LARGE,
   DROPDOWN_HEIGHT,
 } from "@constants/global";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
-  const [company, setCompany] = useState("");
-  const [companyID, setCompanyID] = useState(null);
-  const [isOptionSelected, setIsOptionSelected] = useState(false);
-  const [inputBorderColor, setInputBorderColor] = useState(colors.gray);
+import api from "@api/api";
+
+const LocationSelectModal = ({
+  isModalVisible,
+  setIsModalVisible,
+  locationId,
+  locationName,
+}) => {
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [data, setData] = useState([]);
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    if (company !== "" && company !== null && company !== undefined) {
-      setIsModalVisible(false);
-      dispatch({
-        type: "SET_COMPANY",
-        payload: {
-          id: companyID,
-          name: company,
-        },
+    await api
+      .post("/users/me/change-location", { location_id: id })
+      .then(async () => {
+        await AsyncStorage.setItem(
+          "primary_location",
+          JSON.stringify({ id, name })
+        );
+        dispatch({
+          type: "SET_LOCATION",
+          payload: {
+            id: id,
+            name: name,
+          },
+        });
+        setIsModalVisible(false);
       });
-      setIsOptionSelected(true);
-    } else {
-      setInputBorderColor("#FF0000");
-    }
   };
-  const fetchCompanies = async () => {
-    const response = await api.get("/companies");
-    return response.data.rows;
-  };
-
-  const { data } = useQuery({
-    queryKey: ["Companies"],
-    queryFn: fetchCompanies,
-  });
 
   const handleSelect = (id, name) => {
-    setIsOptionSelected(false);
-    setInputBorderColor(colors.gray);
-    setCompany(name);
-    setCompanyID(id);
+    setName(name);
+    setId(id);
   };
 
   const handleModalCloseRequest = () => {
-    if (isOptionSelected) {
-      setIsModalVisible(false);
-    } else {
-      return;
-    }
+    setIsModalVisible(false);
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      const seconday_locations = await AsyncStorage.getItem(
+        "secondary_locations"
+      );
+      setData(JSON.parse(seconday_locations));
+      console.log(data);
+    };
+    getData();
+  }, []);
 
   const [animation] = useState(new Animated.Value(0));
 
+  //this is to prevent modal opening before screen is ready
   useEffect(() => {
-    // Start animation after a certain delay
     const animationTimeout = setTimeout(() => {
       Animated.timing(animation, {
         toValue: 1,
-        duration: 300, // Adjust duration as needed
+        duration: 300,
         useNativeDriver: true,
       }).start();
-    }, 200); // Delay duration in milliseconds
+    }, 200);
 
     return () => clearTimeout(animationTimeout);
   }, [animation]);
@@ -119,17 +124,16 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
                 data={data || []}
                 labelField="name"
                 valueField="name"
-                value={company}
+                value={locationName}
                 placeholder={"Select Location"}
                 placeholderStyle={{
-                  color: inputBorderColor,
+                  color: colors.gray,
                   fontSize: FONT_SIZE_REGULAR,
                 }}
-                iconColor={inputBorderColor}
                 style={[
                   styles.dropdown,
                   {
-                    borderColor: inputBorderColor,
+                    borderColor: colors.gray,
                     fontSize: FONT_SIZE_REGULAR,
                   },
                 ]}
@@ -153,7 +157,7 @@ const CompanySelectModal = ({ isModalVisible, setIsModalVisible }) => {
   );
 };
 
-export default CompanySelectModal;
+export default LocationSelectModal;
 
 const styles = StyleSheet.create({
   containerBehindModal: {

@@ -1,4 +1,4 @@
-export const companySetter = () => ({
-    type: 'SET_COMPANY',
-  });
-  
+export const setGlobalLocation = (location) => ({
+  type: "SET_LOCATION",
+  payload: location,
+});

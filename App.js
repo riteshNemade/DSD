@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import * as Notifications from "expo-notifications";
+import * as SplashScreen from "expo-splash-screen";
 
 import { MenuProvider } from "react-native-popup-menu";
 
@@ -34,11 +35,14 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
+SplashScreen.preventAutoHideAsync()
 
 export default function App() {
   useEffect(() => {
     registerForPushNotificationsAsync();
   }, []);
+
+
 
   return (
     <>
@@ -73,9 +77,4 @@ async function registerForPushNotificationsAsync() {
     const { status } = await Notifications.requestPermissionsAsync();
     finalStatus = status;
   }
-  if (finalStatus !== "granted") {
-    alert("Failed to get push token for push notification!");
-    return;
-  }
-
 }

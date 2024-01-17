@@ -1,18 +1,14 @@
 import { Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 
-import { useSelector } from "react-redux";
 import { verticalScale } from "react-native-size-matters/extend";
 
 import { FONT_SIZE_REGULAR, colors, hPadding } from "@constants/global";
 
-const TopText = ({ setIsModalVisible }) => {
-  const company = useSelector((state) => {
-    return state.global.companyName;
-  });
+const TopText = ({ setIsModalVisible, locationName }) => {
   return (
     <>
-      {company !== "" && company !== undefined && company !== null ? (
+      {locationName !== "" && locationName !== undefined && locationName !== null ? (
         <View
           style={{
             paddingHorizontal: hPadding,
@@ -21,16 +17,16 @@ const TopText = ({ setIsModalVisible }) => {
           }}
         >
           <View style={{}}>
-            <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: 800 }}>
+            <Text style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: '800' }}>
               Location:{" "}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
             <Text
-              style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: 400 }}
+              style={{ fontSize: FONT_SIZE_REGULAR, fontWeight: '400' }}
               numberOfLines={1}
             >
-              {company}{" "}
+              {locationName}{" "}
             </Text>
           </View>
           <View style={{}}>
@@ -39,7 +35,7 @@ const TopText = ({ setIsModalVisible }) => {
                 numberOfLines={1}
                 style={{
                   fontSize: FONT_SIZE_REGULAR - 2,
-                  fontWeight: 400,
+                  fontWeight: '800',
                   color: colors.hyperlinkBlue,
                 }}
               >

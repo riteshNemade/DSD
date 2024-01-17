@@ -1,4 +1,5 @@
 {
     "files.autoSave": "afterDelay",
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "cloudcode.duetAI.inlineSuggestions.enableAuto": true
 }
