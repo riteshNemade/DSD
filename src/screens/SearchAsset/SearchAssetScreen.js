@@ -29,11 +29,11 @@ const QRScannerScreen = () => {
   })
   const handleSubmit = async (searchTerm) => {
     let url  = `/hardware?location_id=${location_id}&`
-    userType === 'SUPER' ? url = '/hardware' : url  = `/hardware?location_id=${location_id}&`
+    userType === 'SUPER' ? url = '/hardware?' : url  = `/hardware?location_id=${location_id}&`
     if (searchTerm !== "") {
       setAPILoadingStatus(true);
       await api
-        .get(`/hardware?company_id=${company_id}&search=${searchTerm}`)
+        .get(`${url}search=${searchTerm}`)
         .then((response) => {
           const data = response.data;
           if (data.status === "error" || data.total !== 1) {
@@ -48,6 +48,7 @@ const QRScannerScreen = () => {
           }
         })
         .catch((err) => {
+          console.log(err)
           setAPILoadingStatus(false);
           Alert.alert(
             "Asset does not exist",

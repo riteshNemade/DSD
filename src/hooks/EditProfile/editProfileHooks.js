@@ -80,10 +80,17 @@ export const profileFormState = () => {
           ]);
         })
         .catch((err) => {
-          Alert.alert(
-            "There was an Error.",
-            "Either the username is or input format is wrong"
-          );
+          if(err.response.status === 403){
+            Alert.alert(
+              "There was an Error.",
+              "You cannot edit profile. Please contact your administrator"
+            );
+          }else{
+            Alert.alert(
+              "There was an Error.",
+              "Either the username is or input format is wrong"
+            );
+          }
         });
     }
   };
