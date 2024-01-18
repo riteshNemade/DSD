@@ -17,9 +17,7 @@ const DashboardScreen = () => {
   const location = useSelector((state) => {
     return state.global;
   });
-  console.log(location);
   const user = useSelector((state) => {return state.global.userType})
-  console.log(user);
   useEffect(() => {
     const checkSuperUser = async () => {
       let userRole = await AsyncStorage.getItem("userRole");

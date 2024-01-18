@@ -12,7 +12,6 @@ const AssetTagEntryComponent = ({ handleSubmit }) => {
   };
 
   const handleEndEditing = async () => {
-    console.log(inputText);
     await handleSubmit(inputText);
   };
   return (

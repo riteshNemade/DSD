@@ -29,7 +29,6 @@ export async function setLocalUserRoleAndPermissions(user) {
     superuser: user.permissions.superuser === "0" ? false : true,
     admin: user.permissions.admin === "0" ? false : true,
   };
-  console.log('isSuper: ',userRole);
   const userPermissions = {
     createAsset: user.permissions["assets.create"] === "1" || userRole.superuser ? true : false,
   }

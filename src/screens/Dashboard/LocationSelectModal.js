@@ -68,7 +68,6 @@ const LocationSelectModal = ({
         "secondary_locations"
       );
       setData(JSON.parse(seconday_locations));
-      console.log(data);
     };
     getData();
   }, []);

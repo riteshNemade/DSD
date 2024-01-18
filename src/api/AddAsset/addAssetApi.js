@@ -3,6 +3,10 @@ import initDatabase, { deleteById } from "../sqlite";
 
 export const sendDataToServer = async (data) => {
   let result = {};
+  
+  /**
+   * prepare formdata
+   */
   const dataToSend = new FormData();
   if (
     data.imagepath !== null &&
@@ -44,7 +48,6 @@ export const sendDataToServer = async (data) => {
   if (data.supplierId !== null && data.supplierId !== "null") {
     dataToSend.append("supplier_id", data.supplierId);
   }
-
   if (data.purchaseCost !== null && data.purchaseCost !== "null") {
     dataToSend.append("purchase_cost", data.purchaseCost);
   }

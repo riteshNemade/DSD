@@ -39,20 +39,17 @@ const AddAssetScreen = ({ route }) => {
     (async () => {
       let userPermissions = await AsyncStorage.getItem("userPermissions");
       userPermissions = JSON.parse(userPermissions);
-      console.log(userPermissions);
       if (userPermissions.createAsset) {
         setCanCreateAsset(true);
       }
     })().finally(() => {
       setIsScreenLoading(false);
     });
-    console.log(canCreateAsset);
   }, []);
 
   //capture image from camera/image picker
   useEffect(() => {
     if (route.params && route.params.imageUri) {
-      console.log(route.params.imageUri);
       const filePath = route.params.imageUri;
       setImageName(filePath.split("/").pop());
       setCapturedImage(route.params.imageUri);
@@ -71,7 +68,6 @@ const AddAssetScreen = ({ route }) => {
         route.params?.drafts.imagepath !== "null" &&
         route.params?.drafts.imagepath !== null
       ) {
-        console.log(route.params?.drafts);
         const filePath = route.params?.drafts.imagepath;
         setImageName(filePath.split("/").pop());
         setCapturedImage(route.params?.drafts.imagepath);

@@ -80,6 +80,5 @@ export const fetchAssetTag = (id) => {
 
 export const deleteMaintenance = async (maintenance_id) => {
   await api.delete(`/maintenances/${maintenance_id}`).then((response) => {
-    console.log(response.data);
   });
 };

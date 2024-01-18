@@ -36,7 +36,6 @@ const QRScannerScreen = () => {
         .get(`/hardware?company_id=${company_id}&search=${searchTerm}`)
         .then((response) => {
           const data = response.data;
-          console.log(data);
           if (data.status === "error" || data.total !== 1) {
             setAPILoadingStatus(false);
             Alert.alert(

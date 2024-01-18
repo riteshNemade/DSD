@@ -16,6 +16,7 @@ import store from "../redux/store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BACKGROUND_FETCH_TASK = "upload-job-task";
+
 export const dataSyncService = async () => {
   await handleOfflineDataUpload();
 };

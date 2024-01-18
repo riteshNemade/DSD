@@ -18,7 +18,7 @@ export default loginHooks = () => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [isError, setIsError] = useState(false);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -26,9 +26,8 @@ export default loginHooks = () => {
     //validate
     if (!username?.trim() || !password?.trim()) {
       setIsError(true);
-      setEmail(null);
-      setPassword(null);
       Alert.alert("Login Failed", "Please enter the credentials properly");
+      return
     } else {
       setIsError(false);
       setIsLoading(true);
