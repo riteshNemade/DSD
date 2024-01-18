@@ -30,7 +30,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/notification.jpg",
+          "icon": "./assets/notification.jpg",
           "color": "#ffffff"
         }
       ]
