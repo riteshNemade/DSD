@@ -15,6 +15,7 @@ import validateInputs from "@utils/validateInputs";
 //JSX components
 import InputFieldsRender from "./InputFieldsRender";
 import FooterButtons from "./FooterButtons";
+import { startupSync } from "@utils/backgroundServices";
 
 const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
   const { state, updateState, resetState } = inputFieldState();
@@ -56,6 +57,7 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
     } else {
       if (isOffline) {
         saveOfflineData(data, dispatch);
+        await startupSync();  //start the background service explicitly
       } else {
         const result = await sendDataToServer(data);
         if (result.isSuccessful) {
