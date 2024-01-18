@@ -1,8 +1,10 @@
-import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import React, { memo, useState } from "react";
-
+import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { scale, verticalScale } from "react-native-size-matters/extend";
+const blurhash =
+  "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
 
 import {
   hPadding,
@@ -23,9 +25,9 @@ export default memo(function AssetListComponent({ item }) {
   const [isDataModalVisible, setIsDataModalVisible] = useState(false);
   const [isImageModalVisible, setIsImageModalVisible] = useState(false);
   const [modalToRender, setModalToRender] = useState("");
-  
+
   const navigation = useNavigation();
-  
+
   const handleTagClick = () => {
     setModalToRender("Details");
     setModalData(item);
@@ -85,6 +87,9 @@ export default memo(function AssetListComponent({ item }) {
                 source={{
                   uri: item.image !== undefined ? item.image : null,
                 }}
+                placeholder={blurhash}
+                contentFit="cover"
+                transition={1000}
                 style={{ flex: 1, height: verticalScale(105) }}
               />
             </TouchableOpacity>

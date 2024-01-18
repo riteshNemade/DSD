@@ -10,7 +10,6 @@ const ImageModal = ({ isModalVisible, setModalVisible, data }) => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
-  console.log(isModalVisible, setModalVisible, data);
   const imagePath = data;
   return (
     <View>

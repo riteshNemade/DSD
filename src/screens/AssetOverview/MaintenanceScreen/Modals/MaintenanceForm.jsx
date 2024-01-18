@@ -22,7 +22,6 @@ import ButtonComponent from "@components/Button/ButtonComponent";
 export const MaintenanceForm = ({ props }) => {
   const onStartDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-    console.log(selectedDate);
     props.updateState("isStartDatePickerVisible", false);
     props.updateState("startDate", currentDate);
   };
