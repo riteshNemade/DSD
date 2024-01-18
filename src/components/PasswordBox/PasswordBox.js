@@ -42,6 +42,7 @@ const PasswordBox = ({ size, password, setPassword, isError, placeholder }) => {
           secureTextEntry={isPasswordVisible}
           textContentType="password"
           autoCapitalize="none"
+          autoComplete="password"
           onChangeText={(text) => {
             setPassword(text);
           }}

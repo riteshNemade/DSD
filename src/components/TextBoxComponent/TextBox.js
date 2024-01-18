@@ -30,6 +30,7 @@ const TextBox = ({ text, setText, isError }) => {
           placeholder={"Enter Username"}
           placeholderTextColor={isError ? "red" : colors.gray}
           autoCapitalize="none"
+          autoComplete="username"
           value={text}
           style={[styles.inputStyle]}
           onChangeText={(text) => {
