@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Provider } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
-
+import Constants from "expo-constants";
 import { MenuProvider } from "react-native-popup-menu";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -35,14 +35,32 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
+
 
 export default function App() {
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
   useEffect(() => {
-    registerForPushNotificationsAsync();
+
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
   }, []);
-
-
 
   return (
     <>
@@ -62,6 +80,8 @@ export default function App() {
 }
 
 async function registerForPushNotificationsAsync() {
+  let token;
+
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
       name: "default",
@@ -71,10 +91,13 @@ async function registerForPushNotificationsAsync() {
     });
   }
 
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
-  if (existingStatus !== "granted") {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-  }
+  // const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  // let finalStatus = existingStatus;
+  // if (existingStatus !== "granted") {
+  //   const { status } = await Notifications.requestPermissionsAsync();
+  //   finalStatus = status;
+  // }
+  token = (await Notifications.getDevicePushTokenAsync()).data;
+  console.log(token);
+  return token.data;
 }

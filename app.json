@@ -12,7 +12,7 @@
       "backgroundColor": "#FFF"
     },
     "plugins": [
-      [ 
+      [
         "expo-build-properties",
         {
           "android": {
@@ -34,20 +34,23 @@
     "ios": {
       "supportsTablet": true
     },
-    
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFF"
       },
-      "package": "com.datafortune.DSD"
+      "package": "com.datafortune.DSD",
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "eca33638-05ba-4790-8019-1843b912c74c"
+        "projectId": "08784645-c79b-41b7-a151-be6314a6b73c"
       }
     }
   }
