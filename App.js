@@ -97,7 +97,7 @@ async function registerForPushNotificationsAsync() {
   //   const { status } = await Notifications.requestPermissionsAsync();
   //   finalStatus = status;
   // }
-  token = (await Notifications.getDevicePushTokenAsync()).data;
+  token = await Notifications.getDevicePushTokenAsync()
   console.log(token);
   return token.data;
 }
