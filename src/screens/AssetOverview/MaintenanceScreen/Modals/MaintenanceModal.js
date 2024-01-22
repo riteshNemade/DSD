@@ -70,6 +70,11 @@ const MaintenanceModal = ({ modalData, isModalVisible, setModalVisible }) => {
                         ? modalData.notes
                         : ""}{" "}
                       {"\n\n"}
+                      Ticket Status:{" "}
+                      {modalData.ticket_status !== undefined && modalData.ticket_status !== null
+                        ? modalData.ticket_status
+                        : ""}{" "}
+                      {"\n\n"}
                       Cost:{" "}
                       {modalData.cost !== undefined && modalData.cost !== null
                         ? modalData.cost

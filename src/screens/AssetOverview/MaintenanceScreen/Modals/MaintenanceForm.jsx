@@ -33,6 +33,7 @@ export const MaintenanceForm = ({ props }) => {
   };
   return (
     <View>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -42,7 +43,7 @@ export const MaintenanceForm = ({ props }) => {
         <View style={styles.container}>
           <View style={styles.containerBehindModal}>
             <View style={styles.contentContainer}>
-              <ScrollView style={{ flex: 9 }}>
+              <ScrollView>
                 <KeyboardAvoidingView
                   style={{ flex: 1, height: "100%" }}
                   enabled
@@ -226,28 +227,58 @@ export const MaintenanceForm = ({ props }) => {
                         flex: 7,
                         justifyContent: "flex-end",
                         alignItems: "center",
+                        marginTop: gapV - 2,
                       }}
                     >
+                      <Text>Consider under Open Warranty?</Text>
                       <View
                         style={{
-                          alignItems: "center",
+                          flex: 1,
                           flexDirection: "row",
-                          marginTop: 2,
+                          alignItems: "center",
                         }}
                       >
-                        <Text>Not under Open Warranty</Text>
+                        <Text>Yes</Text>
                         <CheckBox
-                          checked={props.state.isWarranty}
-                          onPress={() =>
-                            props.updateState(
-                              "isWarranty",
-                              !props.state.isWarranty
-                            )
-                          }
+                          containerStyle={{ padding: 0 }}
+                          checked={props.state.isWarranty === 2}
+                          onPress={() => {
+                            if (props.state.isWarranty === 2) {
+                              props.updateState("isWarranty", 0);
+                            } else {
+                              props.updateState("isWarranty", 2);
+                            }
+                          }}
+                        />
+
+                        <Text style={{marginLeft:20}}>No</Text>
+                        <CheckBox
+                          containerStyle={{ padding: 0 }}
+                          checked={props.state.isWarranty === 1}
+                          onPress={() => {
+                            if (props.state.isWarranty === 1) {
+                              props.updateState("isWarranty", 0);
+                            } else {
+                              props.updateState("isWarranty", 1);
+                            }
+                          }}
                         />
                       </View>
                     </View>
                   </View>
+
+                  <Dropdown
+                    data={props.ticketStatusList}
+                    labelField="name"
+                    valueField="id"
+                    value={props.state.ticketStatus}
+                    placeholderStyle={styles.placeholderStyle}
+                    style={styles.inputContainer}
+                    placeholder="Ticket Status"
+                    onChange={(item) => {
+                      props.updateState("supplier", item.id);
+                    }}
+                  />
 
                   <TextInput
                     style={styles.bigInputContainer}
@@ -258,7 +289,6 @@ export const MaintenanceForm = ({ props }) => {
                     value={props.state.notes}
                     onChangeText={(text) => props.updateState("notes", text)}
                   />
-                </KeyboardAvoidingView>
                 <View style={{ marginTop: gapV }}>
                   <ButtonComponent
                     text="Save"
@@ -266,11 +296,13 @@ export const MaintenanceForm = ({ props }) => {
                     onPress={() => props.handleSave()}
                   />
                 </View>
-              </ScrollView>
+                </KeyboardAvoidingView>
+                </ScrollView>
             </View>
           </View>
         </View>
       </Modal>
+    
     </View>
   );
 };
@@ -305,7 +337,7 @@ const styles = StyleSheet.create({
     borderColor: colors.gray,
     borderWidth: 1,
     borderRadius: textBox.textBorderRadius,
-    marginTop: gapV + 1,
+    marginTop: gapV/1.2,
     padding: textBox.padding,
     fontSize: 14,
     flex: 1,

@@ -19,6 +19,14 @@ const AddEditMaintenance = ({
   const { suppliersList, maintenancesList } = fetchOptions();
   const { state, updateState, resetState, populateEditInfo } =
     maintenanceFormState();
+
+  const ticketStatusList =[
+    {id:0, name:"Submitted"},
+    {id:1, name:"In Progress"},
+    {id:2, name:"Completed"},
+  ]
+
+
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handleModalClose = () => {
@@ -72,7 +80,7 @@ const AddEditMaintenance = ({
       title,
       asset_id: assetId,
       supplier_id: supplier,
-      is_warranty: isWarranty || false,
+      is_warranty: isWarranty,
       asset_maintenance_type: assetMaintenance,
       start_date: start_date,
       ...(completionDate !== null && { completion_date: completionDate }),
@@ -102,6 +110,7 @@ const AddEditMaintenance = ({
     updateState,
     handleSave,
     isDisabled,
+    ticketStatusList
   };
 
   return (
