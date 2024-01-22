@@ -1,12 +1,13 @@
 export default function validateInputs(data, updateValidatorState) {
-  const isInvalid = value => !value && (value === null || value === undefined);
+  const isInvalid = (value) =>
+    !value && (value === null || value === undefined);
 
   const fields = [
-    { name: 'assetTag', borderColor: 'assetTagBorderColor' },
-    { name: 'bay_info', borderColor: 'bay_infoBorderColor' },
-    { name: 'modelId', borderColor: 'modelBorderColor' },
-    { name: 'statusId', borderColor: 'statusBorderColor' },
-    { name: 'locationId', borderColor: 'locationBorderColor' },
+    { name: "assetTag", borderColor: "assetTagBorderColor" },
+    { name: "bay_info", borderColor: "bay_infoBorderColor" },
+    { name: "modelId", borderColor: "modelBorderColor" },
+    { name: "statusId", borderColor: "statusBorderColor" },
+    { name: "locationId", borderColor: "locationBorderColor" },
   ];
 
   for (let field of fields) {
@@ -16,9 +17,11 @@ export default function validateInputs(data, updateValidatorState) {
     }
   }
 
-  if (!Number.isInteger(data.warranty) || data.warranty < 0 || data.warranty > 240) {
-    updateValidatorState("warrantyBorderColor", "#FF0000");
-    return false;
+  if (data.warranty !== null && data.warranty !== undefined) {
+    if (!Number.isInteger(data.warranty) || data.warranty < 0 || data.warranty > 240) {
+      updateValidatorState("warrantyBorderColor", "#FF0000");
+      return false;
+    }
   }
 
   return true;
