@@ -31,6 +31,11 @@ export function fetchOptions() {
     return response.data.rows;
   };
 
+  const fetchAssetTag = async () => {
+    const response = await api.get("/hardware/getnextuniquetag");
+    return response.data.data.next_tag;
+  };
+
   const fetchAssetMaintenanceTypes = async () => {
     const response = await api.get("/asset-maintenance-type");
     const result = response.data.data;
@@ -69,6 +74,10 @@ export function fetchOptions() {
     queryFn: () => fetchCompanies(),
     cacheTime: API_CACHE_TIME,
   });
+  const assetTagQuery = useQuery({
+    queryKey: ["assetTag"],
+    queryFn: () => fetchAssetTag(),
+  });
   const assetMaintenanceQuery = useQuery({
     queryKey: ["maintenances"],
     queryFn: () => fetchAssetMaintenanceTypes(),
@@ -82,5 +91,7 @@ export function fetchOptions() {
     suppliersList: suppliersQuery.data || [],
     companiesList: companiesQuery.data || [],
     maintenancesList: assetMaintenanceQuery.data || [],
+    nextAssetTag: assetTagQuery.data || "",
+    isFetching: assetTagQuery.isFetching,
   };
 }

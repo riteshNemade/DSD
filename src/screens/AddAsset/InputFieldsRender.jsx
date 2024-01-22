@@ -5,7 +5,7 @@ import {
   View,
   Text,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
@@ -21,8 +21,10 @@ export default InputFieldsRender = ({ props }) => {
     locationsList,
     suppliersList,
     companiesList,
+    nextAssetTag,
+    isFetching,
   } = fetchOptions();
-  
+
   const [isPurchaseDatePickerVisible, setIsPurchaseDatePickerVisible] =
     useState(false);
   //prettier-ignore
@@ -53,7 +55,14 @@ export default InputFieldsRender = ({ props }) => {
     placeholderStyle: styles.placeholderStyle,
     placeholderTextColor: colors.gray,
   };
-  
+
+  useEffect(() => {
+    const assetTagValue = nextAssetTag;
+    if (assetTagValue !== null) {
+      props.updateState("assetTag", assetTagValue.toString());
+    }
+  }, [isFetching]);
+
   return (
     <View style={{ flex: 7 }}>
       {/* COMPANY NAME */}

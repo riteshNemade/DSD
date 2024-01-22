@@ -27,7 +27,7 @@ export default loginHooks = () => {
     if (!username?.trim() || !password?.trim()) {
       setIsError(true);
       Alert.alert("Login Failed", "Please enter the credentials properly");
-      return
+      return;
     } else {
       setIsError(false);
       setIsLoading(true);
@@ -63,7 +63,6 @@ export default loginHooks = () => {
               type: "LOGIN",
             });
           });
-          
         })
         .catch((err) => {
           console.log(err);

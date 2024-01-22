@@ -18,14 +18,16 @@ import FooterButtons from "./FooterButtons";
 import { startupSync } from "@utils/backgroundServices";
 
 const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
+
+  const dispatch = useDispatch();
   const { state, updateState, resetState } = inputFieldState();
   const { formState, resetValidatorState, updateValidatorState } =
     formErrorState();
+
+   //redux store variables 
   const isSuperUser = useSelector((state) => {
     return state.global.userType === "SUPER";
   });
-  //fetch company from redux
-  const dispatch = useDispatch();
   const companyName = useSelector((state) => {
     return state.global.companyName;
   });
