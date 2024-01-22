@@ -94,7 +94,8 @@ export const sendDataToServer = async (data) => {
   return result;
 };
 
-export const uploadDataFromDatabase = async (data) => {
+//offline data upload
+export const uploadDataFromDatabase = async (data, retry = false) => {
   let result = {};
   const dataToSend = new FormData();
   if (
@@ -155,13 +156,22 @@ export const uploadDataFromDatabase = async (data) => {
         "Content-Type": "multipart/form-data",
       },
     })
-    .then((res) => {
+    .then(async (res) => {
       if (res.data.status === "error") {
         const error = JSON.stringify(res.data?.messages);
         result = {
           isSuccessful: false,
           error
         }
+
+         // If asset tag is not unique and it's the first attempt, fetch a new asset tag and retry
+        if (!retry && res.data.messages.asset_tag && res.data.messages.asset_tag.includes("The asset tag must be unique.")) {
+          console.log('Retrying...')
+          const {nextAssetTag} = await api.get('/hardware/getnextuniquetag')
+          data.asset_tag = nextAssetTag;
+          result = await uploadDataFromDatabase(data, true);
+        }
+
       } else {
         result = {
           isSuccessful: true,
