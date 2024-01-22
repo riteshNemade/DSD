@@ -170,8 +170,16 @@ export default InputFieldsRender = ({ props }) => {
       {/* LOCATION */}
       <Dropdown
         {...dropdownProps}
+        style={[
+          dropdownProps.style,
+          { borderColor: props.formState.locationBorderColor },
+        ]}
+        placeholderStyle={[
+          dropdownProps.placeholderStyle,
+          { color: props.formState.locationBorderColor },
+        ]}
         data={locationsList}
-        placeholder={"Locations"}
+        placeholder={"Location *"}
         value={props.state.locationId}
         onChange={(item) => {
           props.updateState("location", item.name);

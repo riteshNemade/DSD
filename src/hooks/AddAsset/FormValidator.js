@@ -26,6 +26,7 @@ export function formErrorState() {
     modelBorderColor: colors.gray,
     statusBorderColor: colors.gray,
     warrantyBorderColor: colors.gray,
+    locationBorderColor: colors.gray,
   };
 
   const [formState, dispatch] = useReducer(reducer, initialState);
