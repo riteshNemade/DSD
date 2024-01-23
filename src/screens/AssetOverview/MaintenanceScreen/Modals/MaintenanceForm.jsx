@@ -33,7 +33,6 @@ export const MaintenanceForm = ({ props }) => {
   };
   return (
     <View>
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -251,7 +250,7 @@ export const MaintenanceForm = ({ props }) => {
                           }}
                         />
 
-                        <Text style={{marginLeft:20}}>No</Text>
+                        <Text style={{ marginLeft: 20 }}>No</Text>
                         <CheckBox
                           containerStyle={{ padding: 0 }}
                           checked={props.state.isWarranty === 1}
@@ -289,20 +288,19 @@ export const MaintenanceForm = ({ props }) => {
                     value={props.state.notes}
                     onChangeText={(text) => props.updateState("notes", text)}
                   />
-                <View style={{ marginTop: gapV }}>
-                  <ButtonComponent
-                    text="Save"
-                    disabled={props.isDisabled}
-                    onPress={() => props.handleSave()}
-                  />
-                </View>
+                  <View style={{ marginTop: gapV }}>
+                    <ButtonComponent
+                      text="Save"
+                      disabled={props.isDisabled}
+                      onPress={() => props.handleSave()}
+                    />
+                  </View>
                 </KeyboardAvoidingView>
-                </ScrollView>
+              </ScrollView>
             </View>
           </View>
         </View>
       </Modal>
-    
     </View>
   );
 };
@@ -337,7 +335,7 @@ const styles = StyleSheet.create({
     borderColor: colors.gray,
     borderWidth: 1,
     borderRadius: textBox.textBorderRadius,
-    marginTop: gapV/1.2,
+    marginTop: gapV / 1.2,
     padding: textBox.padding,
     fontSize: 14,
     flex: 1,
