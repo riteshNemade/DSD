@@ -212,7 +212,7 @@ export const MaintenanceForm = ({ props }) => {
                   {/* DATE PICKERS END */}
 
                   <View style={{ flexDirection: "row" }}>
-                    <View style={{ flex: 3, marginRight: 10 }}>
+                    <View style={{ flex: 3 }}>
                       <TextInput
                         style={[styles.inputContainer]}
                         value={props.state.cost}
@@ -221,63 +221,67 @@ export const MaintenanceForm = ({ props }) => {
                         onChangeText={(text) => props.updateState("cost", text)}
                       />
                     </View>
-                    <View
-                      style={{
-                        flex: 7,
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                        marginTop: gapV - 2,
-                      }}
-                    >
-                      <Text>Consider under Open Warranty?</Text>
+                    {props.isSuper && (
                       <View
                         style={{
-                          flex: 1,
-                          flexDirection: "row",
+                          flex: 7,
+                          justifyContent: "flex-end",
                           alignItems: "center",
+                          marginTop: gapV - 2,
                         }}
                       >
-                        <Text>Yes</Text>
-                        <CheckBox
-                          containerStyle={{ padding: 0 }}
-                          checked={props.state.isWarranty === 2}
-                          onPress={() => {
-                            if (props.state.isWarranty === 2) {
-                              props.updateState("isWarranty", 0);
-                            } else {
-                              props.updateState("isWarranty", 2);
-                            }
+                        <Text>Consider under Open Warranty?</Text>
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: "row",
+                            alignItems: "center",
                           }}
-                        />
+                        >
+                          <Text>Yes</Text>
+                          <CheckBox
+                            containerStyle={{ padding: 0 }}
+                            checked={props.state.isWarranty === 2}
+                            onPress={() => {
+                              if (props.state.isWarranty === 2) {
+                                props.updateState("isWarranty", 0);
+                              } else {
+                                props.updateState("isWarranty", 2);
+                              }
+                            }}
+                          />
 
-                        <Text style={{ marginLeft: 20 }}>No</Text>
-                        <CheckBox
-                          containerStyle={{ padding: 0 }}
-                          checked={props.state.isWarranty === 1}
-                          onPress={() => {
-                            if (props.state.isWarranty === 1) {
-                              props.updateState("isWarranty", 0);
-                            } else {
-                              props.updateState("isWarranty", 1);
-                            }
-                          }}
-                        />
+                          <Text style={{ marginLeft: 20 }}>No</Text>
+                          <CheckBox
+                            containerStyle={{ padding: 0 }}
+                            checked={props.state.isWarranty === 1}
+                            onPress={() => {
+                              if (props.state.isWarranty === 1) {
+                                props.updateState("isWarranty", 0);
+                              } else {
+                                props.updateState("isWarranty", 1);
+                              }
+                            }}
+                          />
+                        </View>
                       </View>
-                    </View>
+                    )}
                   </View>
 
-                  <Dropdown
-                    data={props.ticketStatusList}
-                    labelField="name"
-                    valueField="id"
-                    value={props.state.ticketStatus}
-                    placeholderStyle={styles.placeholderStyle}
-                    style={styles.inputContainer}
-                    placeholder="Ticket Status"
-                    onChange={(item) => {
-                      props.updateState("supplier", item.id);
-                    }}
-                  />
+                  {props.isSuper && (
+                    <Dropdown
+                      data={props.ticketStatusList}
+                      labelField="name"
+                      valueField="id"
+                      value={props.state.ticketStatus}
+                      placeholderStyle={styles.placeholderStyle}
+                      style={styles.inputContainer}
+                      placeholder="Ticket Status"
+                      onChange={(item) => {
+                        props.updateState("supplier", item.id);
+                      }}
+                    />
+                  )}
 
                   <TextInput
                     style={styles.bigInputContainer}

@@ -6,6 +6,7 @@ import { validateMaintenanceInput } from "@utils/validateInputs";
 import { maintenanceFormState } from "@hooks/AssetOverview/MaintenanceFormState";
 
 import { MaintenanceForm } from "./MaintenanceForm";
+import { useSelector } from "react-redux";
 
 const AddEditMaintenance = ({
   assetTag,
@@ -25,7 +26,7 @@ const AddEditMaintenance = ({
     {id:1, name:"In Progress"},
     {id:2, name:"Completed"},
   ]
-
+  const isSuper = useSelector((state)=> state.global.userType === "SUPER");
 
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -99,7 +100,6 @@ const AddEditMaintenance = ({
       populateEditInfo(editMaintenanceData);
     }
   }, [editMaintenanceData]);
-
   const formState = {
     assetTag,
     isModalVisible,
@@ -110,7 +110,8 @@ const AddEditMaintenance = ({
     updateState,
     handleSave,
     isDisabled,
-    ticketStatusList
+    ticketStatusList,
+    isSuper
   };
 
   return (
