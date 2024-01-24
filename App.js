@@ -37,27 +37,31 @@ Notifications.setNotificationHandler({
 });
 SplashScreen.preventAutoHideAsync();
 
-
 export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
 
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
-
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
@@ -91,13 +95,13 @@ async function registerForPushNotificationsAsync() {
     });
   }
 
-  // const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  // let finalStatus = existingStatus;
-  // if (existingStatus !== "granted") {
-  //   const { status } = await Notifications.requestPermissionsAsync();
-  //   finalStatus = status;
-  // }
-  token = await Notifications.getDevicePushTokenAsync()
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+  if (existingStatus !== "granted") {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+  token = await Notifications.getDevicePushTokenAsync();
   console.log(token);
   return token.data;
 }
