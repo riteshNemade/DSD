@@ -37,7 +37,14 @@ const FlatListComponent = ({ props }) => {
 
 const styles = StyleSheet.create({
   container: {
-    ...shadowStyles,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowRadius: 14,
+    elevation: 3,
+    shadowOpacity: 0.5,
     flexDirection: "row",
     borderRadius: 10,
     backgroundColor: "#fff",
@@ -46,6 +53,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 28,
     marginVertical: 15,
+    
   },
   contentContainer: {
     flex: 9,
@@ -73,16 +81,5 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "180deg" }],
   },
 });
-
-const shadowStyles = {
-  shadowColor: "#000000",
-  shadowOffset: {
-    width: 1,
-    height: 1,
-  },
-  shadowRadius: 14,
-  elevation: 3,
-  shadowOpacity: 0.5,
-};
 
 export default FlatListComponent;
