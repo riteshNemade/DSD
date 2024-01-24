@@ -11,7 +11,6 @@ const TopContent = ({ onClearImage, imageName }) => {
   const navigation = useNavigation();
   return (
     <View style={{ flex: 2 }}>
-      <Text style={styles.textStyle}>Scanned 1 Asset</Text>
       <View style={styles.topButtonContainer}>
         <View style={{ flex: 1, marginRight: 17, height: "100%" }}>
           <PlaceholderComponent

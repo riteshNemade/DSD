@@ -12,6 +12,7 @@ const reducer = (state, action) => {
         modelBorderColor: colors.gray,
         statusBorderColor: colors.gray,
         warrantyBorderColor: colors.gray,
+        locationBorderColor: colors.gray,
       };
 
     default:
