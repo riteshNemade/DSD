@@ -29,8 +29,7 @@ const DashboardButton = ({ color, iconName, text }) => {
       flex: 2,
       borderColor: color,
       borderWidth: 1,
-      height: verticalScale(185),
-      width: scale(185),
+      height: verticalScale(170),
       borderRadius: 16,
     },
   });

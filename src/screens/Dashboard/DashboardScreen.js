@@ -1,15 +1,17 @@
 import { SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import HeaderComponent from "@components/Header/HeaderComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 
 import TopText from "./TopText";
 import DashboardContent from "./DashboardContent";
 import LocationSelectModal from "./LocationSelectModal";
-import { useSelector } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import StatsCarousel from "./Statistics/StatsCarousel";
+import PieChart from "./PieChart/PieChart";
 
 const DashboardScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,16 +19,15 @@ const DashboardScreen = () => {
   const location = useSelector((state) => {
     return state.global;
   });
-  const user = useSelector((state) => {return state.global.userType})
   useEffect(() => {
     const checkSuperUser = async () => {
       let userRole = await AsyncStorage.getItem("userRole");
       userRole = JSON.parse(userRole);
-      if(userRole?.superuser){
+      if (userRole?.superuser) {
         setIsSuperUser(true);
       }
-    }
-    checkSuperUser()
+    };
+    checkSuperUser();
   }, []);
 
   return (
@@ -39,7 +40,7 @@ const DashboardScreen = () => {
           locationId={location?.locationId || ""}
         />
         <HeaderComponent title="Dashboard" iconName="Menu" />
-        <ContentViewComponent backgroundColor="#fff">
+        <ScrollContentViewComponent backgroundColor="#fff">
           {!isSuperUser ? (
             <TopText
               setIsModalVisible={setIsModalVisible}
@@ -49,7 +50,9 @@ const DashboardScreen = () => {
             <></>
           )}
           <DashboardContent />
-        </ContentViewComponent>
+          <StatsCarousel />
+          <PieChart />
+        </ScrollContentViewComponent>
       </LinearGradientComponent>
     </SafeAreaView>
   );

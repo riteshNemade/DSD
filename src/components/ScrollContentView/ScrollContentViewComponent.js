@@ -3,7 +3,7 @@ import React from "react";
 
 const ContentView = ({ children, backgroundColor }) => {
   return (
-    <View style={{ flexGrow: 8, height: "100%" }}>
+    <View style={{ flexGrow: 8, height: "100%", paddingBottom:100 }}>
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
         <ScrollView>{children}</ScrollView>
       </View>
