@@ -80,7 +80,7 @@ const PieChart = () => {
           style={{ flex: 3, justifyContent: "center", alignItems: "flex-end" }}
         >
           <VictoryPie
-            animate={{ easing: "exp" }}
+            
             style={{
               parent: {},
               labels: {

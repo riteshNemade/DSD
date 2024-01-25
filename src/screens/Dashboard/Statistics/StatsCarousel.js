@@ -83,7 +83,7 @@ const StatsCarousel = () => {
         </View>
         <View
           style={{
-            flex: 3,
+            flex: 4,
             justifyContent: "center",
             alignItems: "flex-start",
           }}
@@ -96,11 +96,11 @@ const StatsCarousel = () => {
             mode="horizontal-stack"
             modeConfig={{
               moveSize: 25,
-              stackInterval: 8,
+              stackInterval: 10,
               rotateZDeg: 0,
               snapDirection: "left",
             }}
-            width={200}
+            width={210}
             height={110}
             data={data}
             renderItem={({ item }) => <StatsCard item={item} />}

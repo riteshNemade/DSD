@@ -1,4 +1,4 @@
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -51,7 +51,9 @@ const DashboardScreen = () => {
           )}
           <DashboardContent />
           <StatsCarousel />
+          <View style={{paddingBottom:120}}>
           <PieChart />
+          </View>
         </ScrollContentViewComponent>
       </LinearGradientComponent>
     </SafeAreaView>
