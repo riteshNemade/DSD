@@ -1,6 +1,6 @@
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
-import React from "react";
-
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image } from "expo-image";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { scale, verticalScale } from "react-native-size-matters/extend";
@@ -9,13 +9,20 @@ import { colors } from "@constants/global";
 import ProfileSVG from "@assets/svg/ProfilePicture/ProfileSVG";
 
 const ProfilePicture = ({ enableEdit, image }) => {
+  const [imageUrl, setImageUrl] = useState(image);
+
+  useEffect(() => {
+    if (image?.startsWith("//gravatar.com")) {
+      setImageUrl("https:" + image);      
+    }
+  }, []);
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.profilePicture}>
-        {image !== null && image !== undefined ? (
+        {imageUrl !== null && imageUrl !== undefined ? (
           <Image
-            source={{ uri: image }}
+            source={{ uri: imageUrl }}
             style={{ height: scale(115), width: scale(115), borderRadius: 300 }}
           />
         ) : (

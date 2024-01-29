@@ -8,7 +8,12 @@ import { gapH, gapV } from "@constants/global";
 import ButtonComponent from "@components/Button/ButtonComponent";
 import ProfilePicture from "@components/ProfilePictureComponent/ProfilePicture";
 
-export default function ProfileHeader({ firstName, lastName, image }) {
+export default function ProfileHeader({
+  firstName,
+  lastName,
+  image,
+  logoutHandler,
+}) {
   const navigation = useNavigation();
   return (
     <View
@@ -47,10 +52,7 @@ export default function ProfileHeader({ firstName, lastName, image }) {
                 marginRight: scale(88),
               }}
             >
-              <ButtonComponent
-                text="Edit Profile"
-                onPress={() => navigation.navigate("EditProfile")}
-              />
+              <ButtonComponent text="Log Out" onPress={() => logoutHandler()} />
             </View>
           </View>
         </View>

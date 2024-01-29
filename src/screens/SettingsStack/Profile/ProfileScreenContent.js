@@ -44,12 +44,8 @@ export default function ProfileScreenContent({ firstName, lastName }) {
               firstName={firstName || formState.firstName}
               lastName={lastName || formState.lastName}
               image={formState.avatar}
+              logoutHandler={handleLogout}
             />
-          }
-          ListFooterComponent={
-            <View style={styles.buttonStyle}>
-              <ButtonComponent text="Log Out" onPress={handleLogout} />
-            </View>
           }
           data={settingsData}
           renderItem={renderSettings}
