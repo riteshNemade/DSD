@@ -13,6 +13,7 @@ import FloatingSyncButton from "./FloatingSyncButton";
 
 import { handleOfflineDataUpload } from "@utils/syncOfflineData";
 import initDatabase, { getLocalData } from "@api/sqlite";
+import { useIsFocused } from "@react-navigation/native";
 
 const UploadQueueScreen = () => {
   const [data, setData] = useState([]);
@@ -25,6 +26,7 @@ const UploadQueueScreen = () => {
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [isImageModalVisible, setIsImageModalVisible] = useState(false);
 
+  const isFocused = useIsFocused();
   const fetchDataFn = async () => {
     const db = await initDatabase();
     const offlineData = await getLocalData(db);
@@ -46,7 +48,7 @@ const UploadQueueScreen = () => {
       <LinearGradientComponent>
         <HeaderComponent title="Upload Queue" iconName="Menu" />
         <ContentViewComponent backgroundColor="#fff">
-          {data.length > 0 ? (
+          {data.length > 0 && isFocused? (
             <>
               {isDataModalVisible ? (
                 <DataModal
