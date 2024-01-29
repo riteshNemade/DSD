@@ -56,7 +56,7 @@ const DataModal = ({ isModalVisible, setModalVisible, data }) => {
                     : "N/A"}{" "}
                   {"\n"}
                   {"\n"}
-                  Comapny: {data.company !== undefined
+                  Company: {data.company !== undefined
                     ? data.company
                     : "N/A"}{" "}
                   {"\n"}
