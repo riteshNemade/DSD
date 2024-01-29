@@ -7,6 +7,8 @@ const reducer = (state, action) => {
     case "RESET_STATE":
       return {
         assetTag: null,
+        company: null,
+        company_id:null,
         serial: null,
         modelId: null,
         model: null,
@@ -26,7 +28,7 @@ const reducer = (state, action) => {
         purchaseDate: null,
         eolDate: null,
         imagePath: null,
-        flag: null,
+        flag:null,
       };
 
     default:
@@ -69,10 +71,9 @@ export function inputFieldState() {
       payload: { key, value },
     });
   };
-  const resetState = (key, value) => {
+  const resetState = () => {
     dispatch({
       type: "RESET_STATE",
-      payload: { key, value },
     });
   };
 
@@ -91,6 +92,14 @@ export const populateDraftData = (draftsData, updateState, resetState) => {
       updateState(
         "assetTag",
         draftsData.asset_tag !== "null" ? draftsData.asset_tag : null
+      );
+      updateState(
+        "company_id",
+        draftsData.company_id !== "null" ? draftsData.company_id : null
+      );
+      updateState(
+        "company",
+        draftsData.company!== "null" ? draftsData.company: null
       );
       updateState(
         "serial",
@@ -113,6 +122,10 @@ export const populateDraftData = (draftsData, updateState, resetState) => {
         draftsData.location_id !== "null" ? draftsData.location_id : null
       );
       updateState(
+        "location",
+        draftsData.location !== "null" ? draftsData.location : null
+      );
+      updateState(
         "bay_info",
         draftsData.bay_info !== "null" ? draftsData.bay_info : null
       );
@@ -122,7 +135,7 @@ export const populateDraftData = (draftsData, updateState, resetState) => {
       );
       updateState(
         "warranty",
-        draftsData.warranty !== "null" ? draftsData.warranty.toString() : null
+        draftsData.warranty !== "null" ? draftsData.warranty : null
       );
       updateState(
         "warranty",
@@ -134,13 +147,13 @@ export const populateDraftData = (draftsData, updateState, resetState) => {
       );
       updateState(
         "purchaseDate",
-        draftsData.purchase_date !== "null"
+        draftsData.purchase_date !== null
           ? new Date(draftsData.purchase_date)
           : null
       );
       updateState(
         "eolDate",
-        draftsData.eol_date !== "null" ? new Date(draftsData.eol_date) : null
+        draftsData.eol_date !== null ? new Date(draftsData.eol_date) : null
       );
       updateState(
         "supplierId",

@@ -64,30 +64,11 @@ export default InputFieldsRender = ({ props }) => {
   }, [isFetching]);
 
   return (
-    <View style={{ flex: 7 }}>
-      {/* COMPANY NAME */}
-      {props.isSuperUser ? (
-        <Dropdown
-          {...dropdownProps}
-          data={companiesList}
-          placeholder={"Companies"}
-          value={props.state.company_id}
-          onChange={(item) => {
-            props.updateState("company", item.name);
-            props.updateState("company_id", item.id);
-          }}
-        />
-      ) : (
-        <TextInput
-          editable={false}
-          selectTextOnFocus={false}
-          value={props.companyName}
-          style={[
-            styles.inputContainer,
-            { backgroundColor: "#e0e0e0", color: "#000" },
-          ]}
-        />
-      )}
+    <View style={{ flex: 7, marginTop: gapV }}>
+      <View style={{ height: 1, backgroundColor: "#DEDEDE" }}></View>
+      <Text style={{ fontSize: 20, marginTop: gapV, fontWeight: "500" }}>
+        Mandatory Info
+      </Text>
       {/* AssetTag */}
       <TextInput
         {...textInputProps}
@@ -100,29 +81,6 @@ export default InputFieldsRender = ({ props }) => {
         value={props.state.assetTag}
         onChangeText={(text) => {
           props.updateState("assetTag", text);
-        }}
-      />
-      {/* Bay # */}
-      <TextInput
-        {...textInputProps}
-        placeholderTextColor={props.formState.bay_infoBorderColor}
-        style={[
-          textInputProps.style,
-          { borderColor: props.formState.bay_infoBorderColor },
-        ]}
-        placeholder="Bay #(Actual Location) *"
-        value={props.state.bay_info}
-        onChangeText={(text) => {
-          props.updateState("bay_info", text);
-        }}
-      />
-      {/* SERIAL */}
-      <TextInput
-        {...textInputProps}
-        placeholder="Serial"
-        value={props.state.serial}
-        onChangeText={(text) => {
-          props.updateState("serial", text);
         }}
       />
       {/* MODEL */}
@@ -186,6 +144,58 @@ export default InputFieldsRender = ({ props }) => {
           props.updateState("locationId", item.id);
         }}
       />
+      {/* Bay # */}
+      <TextInput
+        {...textInputProps}
+        placeholderTextColor={props.formState.bay_infoBorderColor}
+        style={[
+          textInputProps.style,
+          { borderColor: props.formState.bay_infoBorderColor },
+        ]}
+        placeholder="Bay #(Actual Location) *"
+        value={props.state.bay_info}
+        onChangeText={(text) => {
+          props.updateState("bay_info", text);
+        }}
+      />
+      {/* COMPANY NAME */}
+      {props.isSuperUser ? (
+        <Dropdown
+          {...dropdownProps}
+          data={companiesList}
+          placeholder={"Companies"}
+          value={props.state.company_id}
+          onChange={(item) => {
+            props.updateState("company", item.name);
+            props.updateState("company_id", item.id);
+          }}
+        />
+      ) : (
+        <TextInput
+          editable={false}
+          selectTextOnFocus={false}
+          value={props.companyName}
+          style={[
+            styles.inputContainer,
+            { backgroundColor: "#e0e0e0", color: "#000" },
+          ]}
+        />
+      )}
+      {/* SERIAL */}
+      <TextInput
+        {...textInputProps}
+        placeholder="Serial"
+        value={props.state.serial}
+        onChangeText={(text) => {
+          props.updateState("serial", text);
+        }}
+      />
+      <View
+        style={{ height: 1, backgroundColor: "#DEDEDE", marginTop: gapV }}
+      ></View>
+      <Text style={{ fontSize: 20, marginTop: gapV, fontWeight: "500" }}>
+        Optional Info
+      </Text>
       {/* ASSETNAME */}
       <TextInput
         {...textInputProps}
