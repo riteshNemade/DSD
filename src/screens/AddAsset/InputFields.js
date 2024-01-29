@@ -55,6 +55,7 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
     const isFormValidated = validateInputs(data, updateValidatorState);
 
     if (!isFormValidated) {
+      Alert.alert("Error", "Please fill all the required fields.");
       return;
     } else {
       if (isOffline) {
@@ -67,7 +68,7 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
         } else {
           Alert.alert(
             "Error",
-            "Asset Tag must be unique. Please enter a unique Asset Tag"
+            `Please try again later or contact support.`
           );
         }
       }
@@ -90,6 +91,7 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
     state: { ...state },
     formState,
     companyName,
+    updateValidatorState,
   };
 
   return (

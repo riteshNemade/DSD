@@ -4,10 +4,10 @@ export default function validateInputs(data, updateValidatorState) {
 
   const fields = [
     { name: "assetTag", borderColor: "assetTagBorderColor" },
-    { name: "bay_info", borderColor: "bay_infoBorderColor" },
     { name: "modelId", borderColor: "modelBorderColor" },
     { name: "statusId", borderColor: "statusBorderColor" },
     { name: "locationId", borderColor: "locationBorderColor" },
+    { name: "bay_info", borderColor: "bay_infoBorderColor" },
   ];
 
   for (let field of fields) {

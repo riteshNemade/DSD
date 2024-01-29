@@ -2,9 +2,12 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 
 import ButtonComponent from "@components/Button/ButtonComponent";
+import { gapV } from "@constants/global";
 
 const FooterButtons = ({ handleSave, handleSaveToDraft }) => {
   return (
+    <>
+          <View style={{ height: 1, backgroundColor: "#DEDEDE", marginTop:gapV }}></View>
     <View style={styles.buttonContainer}>
       <View style={{ flex: 1, marginRight: 17, height: "100%" }}>
         <ButtonComponent
@@ -17,6 +20,7 @@ const FooterButtons = ({ handleSave, handleSaveToDraft }) => {
         <ButtonComponent text="Save to Drafts" onPress={handleSaveToDraft} />
       </View>
     </View>
+    </>
   );
 };
 

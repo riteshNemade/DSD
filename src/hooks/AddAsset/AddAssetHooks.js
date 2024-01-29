@@ -93,5 +93,6 @@ export function fetchOptions() {
     maintenancesList: assetMaintenanceQuery.data || [],
     nextAssetTag: assetTagQuery.data || "",
     isFetching: assetTagQuery.isFetching,
+    refetchAssetTag: assetTagQuery.refetch,
   };
 }

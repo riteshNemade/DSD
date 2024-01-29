@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -23,6 +23,7 @@ export default InputFieldsRender = ({ props }) => {
     companiesList,
     nextAssetTag,
     isFetching,
+    refetchAssetTag,
   } = fetchOptions();
 
   const [isPurchaseDatePickerVisible, setIsPurchaseDatePickerVisible] =
@@ -67,22 +68,41 @@ export default InputFieldsRender = ({ props }) => {
     <View style={{ flex: 7, marginTop: gapV }}>
       <View style={{ height: 1, backgroundColor: "#DEDEDE" }}></View>
       <Text style={{ fontSize: 20, marginTop: gapV, fontWeight: "500" }}>
-        Mandatory Info
+        Primary Info
       </Text>
       {/* AssetTag */}
-      <TextInput
-        {...textInputProps}
-        placeholderTextColor={props.formState.assetTagBorderColor}
+      <View
         style={[
           textInputProps.style,
-          { borderColor: props.formState.assetTagBorderColor },
+          {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          },
+          { borderColor: props.formState.assetTagBorderColor, flex: 1 },
         ]}
-        placeholder="Asset Tag * "
-        value={props.state.assetTag}
-        onChangeText={(text) => {
-          props.updateState("assetTag", text);
-        }}
-      />
+      >
+        <TextInput
+          {...textInputProps}
+          placeholderTextColor={props.formState.assetTagBorderColor}
+          style={[
+            { borderColor: props.formState.assetTagBorderColor, flex: 1 },
+          ]}
+          placeholder="Asset Tag * "
+          value={props.state.assetTag}
+          onChangeText={(text) => {
+            props.updateValidatorState("assetTagBorderColor", colors.gray);
+            props.updateState("assetTag", text);
+          }}
+        />
+        <TouchableOpacity onPress={refetchAssetTag}>
+          <FontAwesome5
+            name="redo"
+            size={16}
+            color={props.formState.assetTagBorderColor}
+          />
+        </TouchableOpacity>
+      </View>
       {/* MODEL */}
       <Dropdown
         {...dropdownProps}
@@ -101,6 +121,7 @@ export default InputFieldsRender = ({ props }) => {
         inputSearchStyle={styles.dropdownSearch}
         value={props.state.modelId}
         onChange={(item) => {
+          props.updateValidatorState("modelBorderColor", colors.gray);
           props.updateState("modelId", item.id);
           props.updateState("model", item.name);
         }}
@@ -121,6 +142,7 @@ export default InputFieldsRender = ({ props }) => {
         placeholder={"Status *"}
         value={props.state.statusId}
         onChange={(item) => {
+          props.updateValidatorState("statusBorderColor", colors.gray);
           props.updateState("status", item.name);
           props.updateState("statusId", item.id);
         }}
@@ -140,6 +162,7 @@ export default InputFieldsRender = ({ props }) => {
         placeholder={"Location *"}
         value={props.state.locationId}
         onChange={(item) => {
+          props.updateValidatorState("locationBorderColor", colors.gray);
           props.updateState("location", item.name);
           props.updateState("locationId", item.id);
         }}
@@ -155,6 +178,7 @@ export default InputFieldsRender = ({ props }) => {
         placeholder="Bay #(Actual Location) *"
         value={props.state.bay_info}
         onChangeText={(text) => {
+          props.updateValidatorState("bay_infoBorderColor", colors.gray);
           props.updateState("bay_info", text);
         }}
       />
