@@ -15,13 +15,11 @@ const AssetOverviewContent = ({ route }) => {
     <>
       <LinearGradientComponent>
         <ScrollContentViewComponent backgroundColor={"#fff"}>
-          <View style={{ flex: 1, borderRadius: 30, paddingBottom: 50 }}>
+          <View style={{ flex: 1, paddingBottom: 50 }}>
             <AssetImage imageUrl={imageUrl} data={data} />
-
             <View style={{ flex: 3 }}>
               <TableComponent items={data} />
             </View>
-
             <View style={styles.qrContainer}>
               <Image source={{ uri: qrUrl }} style={styles.qrStyle} />
             </View>

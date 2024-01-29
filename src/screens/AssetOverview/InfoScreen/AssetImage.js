@@ -53,8 +53,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     overflow: "scroll",
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
   },
   imageOverlay: {
     backgroundColor: "rgba(0,0,0,0.35)",
@@ -62,6 +60,5 @@ const styles = StyleSheet.create({
     height: verticalScale(250),
     position: "absolute",
     width: "100%",
-    borderTopEndRadius: 30,
   },
 });

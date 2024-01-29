@@ -9,8 +9,6 @@ const TableImage = ({ url }) => {
       <Image
         style={{
           height: verticalScale(250),
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
         }}
         source={{ uri: url }}
         resizeMode={"cover"}
