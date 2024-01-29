@@ -1,5 +1,5 @@
 import initDatabase, { deleteById } from "../sqlite";
-import { formDataBuilder } from "@utils/formDataBuilder";
+import { formDataBuilder, offlineFormDataBuilder } from "@utils/formDataBuilder";
 
 export const sendDataToServer = async (data) => {
   let result = {};
@@ -44,7 +44,7 @@ export const sendDataToServer = async (data) => {
 export const uploadDataFromDatabase = async (data, retry = false) => {
   let result = {};
 
-  const dataToSend = await formDataBuilder(data, retry);
+  const dataToSend = await offlineFormDataBuilder(data, retry);
 
   await api
     .post("/hardware", dataToSend, {
