@@ -5,14 +5,12 @@ import { verticalScale } from "react-native-size-matters/extend";
 import { colors } from "@constants/global";
 import ApplicationStackNavigatior from "./ApplicationStackNavigatior";
 
-import HomeIcon from "@assets/svg/BottomTabIcons/HomeIcon";
-import NotificationIcon from "@assets/svg/BottomTabIcons/NotificationIcon";
-import AddIcon from "@assets/svg/BottomTabIcons/AddIcon";
-import ListIcon from "@assets/svg/BottomTabIcons/ListIcon";
-
 import AddAssetScreen from "../screens/AddAsset/AddAssetScreen";
 import AssetAuditScreen from "../screens/AssetAudit/AssetAuditScreen";
 import NotificationsScreen from "../screens/Notifications/NotificationsScreen";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import { View } from "react-native";
+import { scale } from "react-native-size-matters";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +34,23 @@ export default function BottomTabNavigator() {
           tabBarIcon: {
             focused: true,
           },
-          tabBarIcon: ({ color }) => <HomeIcon />,
+          tabBarIcon: ({ color }) => {
+            return (
+              <View
+                style={{
+                  width: scale(40),
+                  height: scale(40),
+                  backgroundColor: "#fff",
+                  borderRadius: 300,
+                  padding: scale(6),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Entypo name="home" size={24} color="#a1a1a1" />
+              </View>
+            );
+          },
         }}
       />
       <Tab.Screen
@@ -46,7 +60,23 @@ export default function BottomTabNavigator() {
           tabBarIcon: {
             focused: true,
           },
-          tabBarIcon: ({ color }) => <ListIcon />,
+          tabBarIcon: ({ color }) => {
+            return (
+              <View
+                style={{
+                  width: scale(40),
+                  height: scale(40),
+                  backgroundColor: "#fff",
+                  borderRadius: 300,
+                  padding: scale(6),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesome5 name="list" size={24} color="#a1a1a1" />
+              </View>
+            );
+          },
         }}
       />
       <Tab.Screen
@@ -56,7 +86,23 @@ export default function BottomTabNavigator() {
           tabBarIcon: {
             focused: true,
           },
-          tabBarIcon: ({ color }) => <AddIcon />,
+          tabBarIcon: ({ color }) => {
+            return (
+              <View
+                style={{
+                  width: scale(40),
+                  height: scale(40),
+                  backgroundColor: "#fff",
+                  borderRadius: 300,
+                  padding: scale(6),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesome5 name="plus" size={18} color="#a1a1a1" />
+              </View>
+            );
+          },
         }}
       />
       <Tab.Screen
@@ -66,7 +112,23 @@ export default function BottomTabNavigator() {
           tabBarIcon: {
             focused: true,
           },
-          tabBarIcon: ({ color }) => <NotificationIcon />,
+          tabBarIcon: ({ color }) => {
+            return (
+              <View
+                style={{
+                  width: scale(40),
+                  height: scale(40),
+                  backgroundColor: "#fff",
+                  borderRadius: 300,
+                  padding: scale(6),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesome5 name="bell" size={20} color="#a1a1a1" />
+              </View>
+            );
+          },
         }}
       />
     </Tab.Navigator>
