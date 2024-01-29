@@ -23,14 +23,14 @@ const UploadListComponent = ({
 }) => {
   let imagePath = require("@assets/images/image_placeholder.png");
   const dispatch = useDispatch();
-  if (item.imagepath === "null") {
+  if (item.imagepath === null) {
     imagePath = require("@assets/images/image_placeholder.png");
   } else {
     imagePath = { uri: item.imagepath };
   }
 
   const handleImagePress = () => {
-    if (item.imagepath === "null") return;
+    if (item.imagepath === null) return;
 
     setIsImageModalVisible(true);
     setImageModalData(imagePath);
