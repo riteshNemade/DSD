@@ -8,8 +8,6 @@ const ContentView = ({ children, backgroundColor }) => {
         style={{
           flex: 1,
           backgroundColor: backgroundColor,
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
         }}
       >
         {children}

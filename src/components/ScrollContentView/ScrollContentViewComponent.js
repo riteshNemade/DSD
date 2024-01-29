@@ -16,7 +16,5 @@ export default ContentView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
   },
 });
