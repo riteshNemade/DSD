@@ -88,14 +88,12 @@ const styles = StyleSheet.create({
   containerBehindModal: {
     backgroundColor: "rgba(0, 0, 0, 0.76)",
     padding: 20,
-    borderRadius: 10,
     width: "100%",
     height: "100%",
-    borderRadius: 30,
   },
   container: {
     width: "100%",
-    marginTop: verticalScale(71.4),
+    marginTop: verticalScale(60),
     borderRadius: 30,
     height: "110%",
   },
