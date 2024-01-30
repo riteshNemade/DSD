@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
-    marginTop: verticalScale(67),
+    marginTop: 91, // 64dp + 27dp(header+tab nav)
     height: "110%",
   },
   inputContainer: {

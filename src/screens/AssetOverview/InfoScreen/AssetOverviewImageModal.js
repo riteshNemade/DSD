@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
-    marginTop: verticalScale(87),
+    marginTop: 91,  //64dp(header)+27dp(tab navigator)
     height: "110%",
   },
   textStyle: {

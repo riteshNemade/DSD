@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
-    marginTop: verticalScale(87),
+    marginTop: 91,
     height: "110%",
   },
   textStyle: {

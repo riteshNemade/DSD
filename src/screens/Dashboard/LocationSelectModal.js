@@ -166,17 +166,15 @@ const styles = StyleSheet.create({
   containerBehindModal: {
     backgroundColor: "rgba(0, 0, 0, 0.76)",
     padding: 20,
-    borderRadius: 10,
     width: "100%",
     height: "100%",
-    borderRadius: 30,
   },
   contentContainer: {
     backgroundColor: "#fff",
     height: "30%",
     padding: hPadding,
     borderRadius: 15,
-    marginTop: "40%",
+    marginTop: 64,
   },
   dropdown: {
     borderWidth: 1,

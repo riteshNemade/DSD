@@ -10,10 +10,11 @@ import { colors, gapV, hPadding } from "@constants/global";
 
 import FilterModalInputFields from "./FilterModalInputFields";
 import ButtonComponent from "@components/Button/ButtonComponent";
+import getStatusBarHeight from "@utils/getStatusBarHeight";
 
 const FilterModal = ({ isModalVisible, setModalVisible, setUrl }) => {
   const InputFieldProps = filters();
-  
+
   //check usertype and location id
   const location_id = useSelector((state) => {
     return state.global.locationId;
@@ -105,9 +106,9 @@ export default FilterModal;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginTop: verticalScale(60),
+    marginTop: 64,
     borderRadius: 30,
-    height: "110%",
+    height: "100%",
   },
   containerBehindModal: {
     backgroundColor: "rgba(0, 0, 0, 0.76)",

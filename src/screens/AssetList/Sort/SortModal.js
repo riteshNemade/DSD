@@ -46,7 +46,7 @@ const SortModal = ({
   return (
     <View>
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         visible={isSortModalVisible}
         onRequestClose={() => setSortModalVisible(false)}
@@ -158,7 +158,7 @@ export default SortModal;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginTop: verticalScale(60),
+    marginTop: 64,
     borderRadius: 30,
     height: "110%",
   },
