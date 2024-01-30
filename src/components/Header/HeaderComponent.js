@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import getStatusBarHeight from "@utils/getStatusBarHeight";
-import { scale } from "react-native-size-matters";
 
 const statusBarHeight = getStatusBarHeight();
 
@@ -18,9 +17,17 @@ export default function Header({ title }) {
   const navigation = useNavigation();
 
   return (
-    <View style={{ flexDirection: "row", padding: 5, marginVertical: "2.5%" }}>
+    <View
+      style={{
+        flexDirection: "row",
+        marginTop: statusBarHeight,
+        height: 64,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <TouchableOpacity
-        style={styles.backArrow}
+        style={[styles.backArrow, {}]}
         onPress={() => navigation.goBack()}
       >
         <FontAwesome5 name="chevron-left" size={20} color="white" />
@@ -29,6 +36,7 @@ export default function Header({ title }) {
         style={[
           styles.headerStyle,
           { marginLeft: offlineDataAvailable ? 50 : 0 },
+          { borderColor: "green" },
         ]}
       >
         {title}
@@ -53,11 +61,12 @@ export default function Header({ title }) {
 
 const styles = StyleSheet.create({
   backArrow: {
-    alignSelf: "center",
     flex: 1,
-    textAlign: "left",
-    marginTop: statusBarHeight - 12,
-    marginLeft: 15,
+    height: 48,
+    width: 48,
+    paddingRight: 14,
+    alignItems: "center",
+    justifyContent: "center",
   },
   headerStyle: {
     alignSelf: "center",
@@ -66,28 +75,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
     fontWeight: "800",
-    marginTop: statusBarHeight - 15,
   },
   offlineDataIconStyle: {
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 300,
-    marginTop: statusBarHeight - 12,
-    marginRight: 10,
-    padding: 7,
-    backgroundColor: "#3E53ABA8",
-    height: scale(30),
-    width: scale(30),
+    height: 48,
+    width: 48,
   },
   iconStyle: {
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 300,
-    marginTop: statusBarHeight - 12,
-    marginRight: 10,
-    padding: 7,
-    backgroundColor: "#3E53ABA8",
-    height: scale(30),
-    width: scale(30),
+    height: 48,
+    width: 48,
   },
 });
