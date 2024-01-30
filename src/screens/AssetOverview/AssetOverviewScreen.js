@@ -10,6 +10,8 @@ import MaintenanceScreen from "./MaintenanceScreen/MaintenanceScreen";
 
 import HeaderComponent from "@components/Header/HeaderComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import { FONT_SIZE_SMALL } from "@constants/global";
+import { scale } from "react-native-size-matters";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -19,8 +21,9 @@ function MyTabs({ data, imageUrl, qrUrl }) {
       initialRouteName="Info"
       screenOptions={{
         tabBarScrollEnabled: true,
-        tabBarItemStyle: { width: 150 },
+        tabBarItemStyle: { width: scale(120)},
         //styling
+        tabBarLabelStyle: {fontSize: FONT_SIZE_SMALL},
         tabBarAllowFontScaling: true,
         tabBarStyle: styles.tabBarStyle,
         tabBarContentContainerStyle: styles.tabBarContentContainerStyle,

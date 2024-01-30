@@ -3,9 +3,11 @@ import React, { useState } from "react";
 
 import { verticalScale } from "react-native-size-matters/extend";
 
-import MenuModal from "./MenuModal";
+import EditDeleteButtons from "./EditDeleteButtons";
 import ImageModal from "./AssetOverviewImageModal";
 import TableImage from "@components/TableImage/TableImage";
+import { Image } from "expo-image";
+import { FONT_SIZE_REGULAR } from "@constants/global";
 
 const AssetImage = ({ imageUrl, data }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -28,20 +30,24 @@ const AssetImage = ({ imageUrl, data }) => {
                 <TableImage url={imageUrl} />
                 <View style={styles.imageOverlay}></View>
               </TouchableOpacity>
-              <MenuModal data={data} />
+              <EditDeleteButtons data={data} iconColor={"white"} />
             </>
           )}
         </>
       ) : (
-        <View
-          style={{
-            height: verticalScale(250),
-            justifyContent: "center",
-            alignSelf: "center",
-          }}
-        >
-          <Text>No Preview Available.</Text>
-        </View>
+        <>
+          <View
+            style={{
+              height: verticalScale(250),
+              justifyContent:'center',
+              alignItems:'center'
+            }}
+          >
+            <Image source={require("../../../../assets/images/no_image.jpg")} style={{height:100, width:150}}/>
+            <Text style={{marginTop:5, fontSize:FONT_SIZE_REGULAR}}>No Preview Available</Text>
+          </View>
+          <EditDeleteButtons data={data} iconColor={'black'}/>
+        </>
       )}
     </View>
   );
