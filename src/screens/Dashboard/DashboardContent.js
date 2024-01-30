@@ -19,7 +19,7 @@ const DashboardButtonGroup = () => {
         >
           <DashboardButtonComponent
             color="#870CD2"
-            iconName="Scan"
+            iconName="qrcode"
             text="Scan"
           />
         </TouchableOpacity>
@@ -29,7 +29,7 @@ const DashboardButtonGroup = () => {
         >
           <DashboardButtonComponent
             color="#0DC8BD"
-            iconName="Add"
+            iconName="archive"
             text="Add Asset"
           />
         </TouchableOpacity>
@@ -43,7 +43,7 @@ const DashboardButtonGroup = () => {
         >
           <DashboardButtonComponent
             color="#EA6E15"
-            iconName="Asset"
+            iconName="clipboard"
             text="Asset List"
           />
         </TouchableOpacity>
@@ -53,7 +53,7 @@ const DashboardButtonGroup = () => {
         >
           <DashboardButtonComponent
             color="#3F77CB"
-            iconName="Audit"
+            iconName="list"
             text="Audit List"
           />
         </TouchableOpacity>

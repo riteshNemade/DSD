@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import HeaderComponent from "@components/Header/HeaderComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
+import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 
 import TopText from "./TopText";
 import DashboardContent from "./DashboardContent";
@@ -40,7 +40,7 @@ const DashboardScreen = () => {
           locationId={location?.locationId || ""}
         />
         <HeaderComponent title="Dashboard" iconName="Menu" />
-        <ScrollContentViewComponent backgroundColor="#fff">
+        <ContentViewComponent backgroundColor="#fff">
           {!isSuperUser ? (
             <TopText
               setIsModalVisible={setIsModalVisible}
@@ -51,10 +51,10 @@ const DashboardScreen = () => {
           )}
           <DashboardContent />
           <StatsCarousel />
-          <View style={{paddingBottom:120}}>
-          <PieChart />
+          <View>
+            <PieChart />
           </View>
-        </ScrollContentViewComponent>
+        </ContentViewComponent>
       </LinearGradientComponent>
     </SafeAreaView>
   );

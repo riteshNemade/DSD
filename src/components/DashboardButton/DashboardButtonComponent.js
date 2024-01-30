@@ -7,6 +7,7 @@ import AddBoxSVG from "@assets/svg/addBox";
 import QRScanner from "@assets/svg/qrScanner";
 import AssetList from "@assets/svg/assetList";
 import AuditList from "@assets/svg/auditList";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const DashboardButton = ({ color, iconName, text }) => {
   const SVGicon = useMemo(() => {
@@ -29,7 +30,7 @@ const DashboardButton = ({ color, iconName, text }) => {
       flex: 2,
       borderColor: color,
       borderWidth: 1,
-      height: verticalScale(170),
+      height: verticalScale(160),
       borderRadius: 16,
     },
   });
@@ -37,8 +38,17 @@ const DashboardButton = ({ color, iconName, text }) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1, alignItems: "center" }}>
-        <View style={{ margin: 15, flex: 2, height: 80, width: 80 }}>
-          {SVGicon !== undefined ? <SVGicon /> : null}
+        <View
+          style={{
+            margin: 15,
+            flex: 2,
+            height: 80,
+            width: 80,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <FontAwesome5 name={iconName} size={48} color={color} />
         </View>
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: 20, letterSpacing: 1.2, fontWeight: "600" }}>
