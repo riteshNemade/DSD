@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import getStatusBarHeight from "@utils/getStatusBarHeight";
+import { FONT_SIZE_LARGE } from "@constants/global";
 
 const statusBarHeight = getStatusBarHeight();
 
@@ -67,12 +68,13 @@ const styles = StyleSheet.create({
     paddingRight: 14,
     alignItems: "center",
     justifyContent: "center",
+    paddingLeft:8,
   },
   headerStyle: {
     alignSelf: "center",
     flex: 8,
     textAlign: "center",
-    fontSize: 20,
+    fontSize: FONT_SIZE_LARGE,
     color: "white",
     fontWeight: "800",
   },

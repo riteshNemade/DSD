@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonComponent from "@components/Button/ButtonComponent";
 
 import api from "@api/api";
-import { FONT_SIZE_REGULAR, colors, hPadding } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, colors, hPadding } from "@constants/global";
 
 const renderCamera = (scanned, handleBarCodeScanned) => {
   return (
@@ -149,12 +149,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: FONT_SIZE_LARGE + 4,
     fontWeight: "bold",
     marginBottom: 20,
   },
   paragraph: {
-    fontSize: 16,
+    fontSize: FONT_SIZE_REGULAR - 2,
     marginBottom: 40,
   },
   cameraContainer: {

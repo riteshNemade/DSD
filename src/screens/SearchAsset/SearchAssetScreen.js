@@ -2,7 +2,7 @@ import { Modal, StyleSheet, Text, View, Alert } from "react-native";
 import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
-import { gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_LARGE, gapV, hPadding } from "@constants/global";
 import { ActivityIndicator } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     marginVertical: gapV,
   },
   textStyle: {
-    fontSize: 18,
+    fontSize: FONT_SIZE_LARGE,
     letterSpacing: 1.1,
     fontWeight: "600",
   },

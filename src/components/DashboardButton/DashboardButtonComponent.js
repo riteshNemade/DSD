@@ -1,36 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { PixelRatio, StyleSheet, Text, View } from "react-native";
 import React, { useMemo } from "react";
 
-import { scale, verticalScale } from "react-native-size-matters/extend";
+import { scale } from "react-native-size-matters/extend";
 
-import AddBoxSVG from "@assets/svg/addBox";
-import QRScanner from "@assets/svg/qrScanner";
-import AssetList from "@assets/svg/assetList";
-import AuditList from "@assets/svg/auditList";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { DASHBOARD_ICON_SIZE, FONT_SIZE_REGULAR } from "@constants/global";
 
 const DashboardButton = ({ color, iconName, text }) => {
-  const SVGicon = useMemo(() => {
-    switch (iconName) {
-      case "Scan":
-        return () => <QRScanner color={color} />;
-      case "Add":
-        return AddBoxSVG;
-      case "Asset":
-        return AssetList;
-      case "Audit":
-        return AuditList;
-      default:
-        return;
-    }
-  }, [iconName]); // Only recompute when iconName changes
-
   const styles = StyleSheet.create({
     container: {
       flex: 2,
       borderColor: color,
       borderWidth: 1,
-      height: verticalScale(160),
+      height: scale(150),
       borderRadius: 16,
     },
   });
@@ -41,17 +23,17 @@ const DashboardButton = ({ color, iconName, text }) => {
         <View
           style={{
             margin: 15,
-            flex: 2,
+            flex: 3,
             height: 80,
             width: 80,
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <FontAwesome5 name={iconName} size={48} color={color} />
+          <FontAwesome5 name={iconName} size={DASHBOARD_ICON_SIZE} color={color} />
         </View>
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 20, letterSpacing: 1.2, fontWeight: "600" }}>
+        <View style={{ flex: 2 }}>
+          <Text style={{ fontSize: FONT_SIZE_REGULAR, letterSpacing: 1.2, fontWeight: "600" }}>
             {text}
           </Text>
         </View>

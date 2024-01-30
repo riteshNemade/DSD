@@ -114,7 +114,7 @@ export default memo(function AssetListComponent({ item }) {
                 ) : (
                   <></>
                 )}
-                <Text numberOfLines={1} style={{ fontSize: 14 }}>
+                <Text numberOfLines={1} style={{ fontSize: FONT_SIZE_SMALL }}>
                   {item.status_label?.name !== undefined
                     ? item.status_label.name
                     : "N/A"}

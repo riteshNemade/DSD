@@ -4,7 +4,7 @@ import React, { memo } from "react";
 import { verticalScale } from "react-native-size-matters/extend";
 
 import SettingsFragment from "./SettingsFragment";
-import { colors, gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_REGULAR, colors, gapV, hPadding } from "@constants/global";
 
 const SettingsComponent = memo(({ title, options }) => {
   return (
@@ -32,7 +32,7 @@ export default SettingsComponent;
 const styles = StyleSheet.create({
   textStyle: {
     color: colors.orange,
-    fontSize: 18,
+    fontSize: FONT_SIZE_REGULAR,
     fontWeight: "700",
     color: "#ff9c29",
     textAlign: "left",

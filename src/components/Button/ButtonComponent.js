@@ -6,7 +6,7 @@ import { verticalScale } from "react-native-size-matters/extend";
 import { ActivityIndicator } from "react-native-paper";
 
 import QRScanner from "@assets/svg/qrScanner";
-import { colors, FONT_SIZE_REGULAR } from "@constants/global";
+import { colors, FONT_SIZE_REGULAR, FONT_SIZE_SMALL } from "@constants/global";
 
 const ButtonComponent = ({
   text,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   buttonText: {
-    fontSize: FONT_SIZE_REGULAR,
+    fontSize: FONT_SIZE_SMALL,
     fontWeight: "600",
     color: "#fff",
     textAlign: "left",

@@ -20,7 +20,7 @@ const TopContent = ({ onClearImage, imageName }) => {
         </View>
         <View style={{ flex: 1, marginLeft: 17, height: "100%" }}>
           <ButtonComponent
-            text="Scan Image"
+            text="Upload Image"
             onPress={() => navigation.navigate("Camera")}
           />
         </View>
@@ -32,12 +32,6 @@ const TopContent = ({ onClearImage, imageName }) => {
 export default TopContent;
 
 const styles = StyleSheet.create({
-  textStyle: {
-    fontSize: 18,
-    letterSpacing: 0.8,
-    fontWeight: "700",
-    color: "#a1a1a1",
-  },
   topButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

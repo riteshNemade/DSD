@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { scale } from "react-native-size-matters/extend";
 import { useNavigation } from "@react-navigation/native";
 
-import { colors } from "@constants/global";
+import { FONT_SIZE_SMALL, colors } from "@constants/global";
 
 const TableComponent = ({ items }) => {
   const navigation = useNavigation();
@@ -133,13 +133,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     flexDirection: "row",
+    alignItems:'center'
   },
   key: {
     fontWeight: "bold",
-    fontSize: 12,
+    fontSize: FONT_SIZE_SMALL,
   },
   value: {
     marginLeft: 10,
+    fontSize: FONT_SIZE_SMALL,
   },
   container: {
     flex: 1,

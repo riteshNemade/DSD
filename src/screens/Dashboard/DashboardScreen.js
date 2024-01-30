@@ -1,11 +1,11 @@
-import { SafeAreaView, View } from "react-native";
+import { PixelRatio, SafeAreaView, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import HeaderComponent from "@components/Header/HeaderComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
-import ContentViewComponent from "@components/ContentView/ContentViewComponent";
+import ScrollContentViewComponent from "@components/ScrollContentView/ScrollContentViewComponent";
 
 import TopText from "./TopText";
 import DashboardContent from "./DashboardContent";
@@ -29,6 +29,12 @@ const DashboardScreen = () => {
     };
     checkSuperUser();
   }, []);
+  useEffect(() => {
+    const fontScale = PixelRatio.getFontScale();
+    const a = PixelRatio.get();
+    console.log("aaA", a);
+    console.log(fontScale);
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -40,7 +46,7 @@ const DashboardScreen = () => {
           locationId={location?.locationId || ""}
         />
         <HeaderComponent title="Dashboard" iconName="Menu" />
-        <ContentViewComponent backgroundColor="#fff">
+        <ScrollContentViewComponent backgroundColor="#fff">
           {!isSuperUser ? (
             <TopText
               setIsModalVisible={setIsModalVisible}
@@ -51,10 +57,10 @@ const DashboardScreen = () => {
           )}
           <DashboardContent />
           <StatsCarousel />
-          <View>
+          <View style={{ paddingBottom: 100 }}>
             <PieChart />
           </View>
-        </ContentViewComponent>
+        </ScrollContentViewComponent>
       </LinearGradientComponent>
     </SafeAreaView>
   );

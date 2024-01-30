@@ -5,16 +5,8 @@ import { verticalScale } from "react-native-size-matters/extend";
 import { hPadding } from "@constants/global";
 
 const CardViewComponent = ({ children, size }) => {
-  let cardHeight;
-
-  if (PixelRatio.get() > 3.5) {
-    cardHeight = verticalScale(170);
-  } else {
-    cardHeight = verticalScale(120);
-  }
-
   return (
-    <View style={[styles.container, { height: size || cardHeight }]}>
+    <View style={[styles.container, { height: size || verticalScale(120) }]}>
       {children}
     </View>
   );

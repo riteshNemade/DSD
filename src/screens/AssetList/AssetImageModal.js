@@ -74,11 +74,4 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: "110%",
   },
-  textStyle: {
-    fontSize: 14,
-    letterSpacing: 0.8,
-    textAlign: "left",
-    marginTop: 2,
-    lineHeight: 19,
-  },
 });

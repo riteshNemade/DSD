@@ -11,7 +11,7 @@ import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-import { colors, gapV, textBox } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, FONT_SIZE_SMALL, ICON_SIZE_SMALL, colors, gapV, textBox } from "@constants/global";
 import { fetchOptions } from "@hooks/AddAsset/AddAssetHooks";
 
 export default InputFieldsRender = ({ props }) => {
@@ -66,8 +66,7 @@ export default InputFieldsRender = ({ props }) => {
 
   return (
     <View style={{ flex: 7, marginTop: gapV }}>
-      <View style={{ height: 1, backgroundColor: "#DEDEDE" }}></View>
-      <Text style={{ fontSize: 20, marginTop: gapV, fontWeight: "500" }}>
+      <Text style={{ fontSize: FONT_SIZE_LARGE, marginTop: gapV, fontWeight: "500" }}>
         Primary Info
       </Text>
       {/* AssetTag */}
@@ -86,10 +85,10 @@ export default InputFieldsRender = ({ props }) => {
           {...textInputProps}
           placeholderTextColor={props.formState.assetTagBorderColor}
           style={[
-            { borderColor: props.formState.assetTagBorderColor, flex: 1 },
+            { borderColor: props.formState.assetTagBorderColor, flex: 1, fontSize: FONT_SIZE_SMALL },
           ]}
-          placeholder="Asset Tag * "
-          value={props.state.assetTag}
+          placeholder={isFetching ? "Fetching Asset Tag...":"Asset Tag * "}
+          value={isFetching ? "" : props.state.assetTag}
           onChangeText={(text) => {
             props.updateValidatorState("assetTagBorderColor", colors.gray);
             props.updateState("assetTag", text);
@@ -98,7 +97,7 @@ export default InputFieldsRender = ({ props }) => {
         <TouchableOpacity onPress={refetchAssetTag}>
           <FontAwesome5
             name="redo"
-            size={16}
+            size={ICON_SIZE_SMALL - 3}
             color={props.formState.assetTagBorderColor}
           />
         </TouchableOpacity>
@@ -116,6 +115,7 @@ export default InputFieldsRender = ({ props }) => {
         ]}
         placeholder={"Model *"}
         search
+        iconColor={props.formState.modelBorderColor}
         searchField={"name"}
         searchPlaceholder="Search Model"
         inputSearchStyle={styles.dropdownSearch}
@@ -138,6 +138,7 @@ export default InputFieldsRender = ({ props }) => {
           dropdownProps.placeholderStyle,
           { color: props.formState.statusBorderColor },
         ]}
+        iconColor={props.formState.statusBorderColor}
         data={statusList}
         placeholder={"Status *"}
         value={props.state.statusId}
@@ -159,6 +160,7 @@ export default InputFieldsRender = ({ props }) => {
           { color: props.formState.locationBorderColor },
         ]}
         data={locationsList}
+        iconColor={props.formState.locationBorderColor}
         placeholder={"Location *"}
         value={props.state.locationId}
         onChange={(item) => {
@@ -263,7 +265,7 @@ export default InputFieldsRender = ({ props }) => {
         onPress={() => setIsPurchaseDatePickerVisible(true)}
       >
         <TextInput
-          style={{ flex: 9, color: "black" }}
+          style={{ flex: 9, color: "black", fontSize: FONT_SIZE_SMALL }}
           placeholder="Purchase Date"
           placeholderTextColor={colors.gray}
           value={props.state.purchaseDate?.toISOString().split("T")[0] || null}
@@ -274,11 +276,11 @@ export default InputFieldsRender = ({ props }) => {
             style={{ flex: 2, alignItems: "center" }}
             onPress={() => props.updateState("purchaseDate", null)}
           >
-            <Feather name="x" size={20} color="#555555" />
+            <Feather name="x" size={ICON_SIZE_SMALL} color="#555555" />
           </TouchableOpacity>
         )}
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Feather name="calendar" size={20} color="#555555" />
+          <Feather name="calendar" size={ICON_SIZE_SMALL} color="#555555" />
         </View>
       </TouchableOpacity>
 
@@ -297,7 +299,7 @@ export default InputFieldsRender = ({ props }) => {
         onPress={() => setIsEolDatePickerVisible(true)}
       >
         <TextInput
-          style={{ flex: 9, color: "black" }}
+          style={{ flex: 9, color: "black", fontSize: FONT_SIZE_SMALL }}
           placeholder="EOL Date"
           placeholderTextColor={colors.gray}
           value={props.state.eolDate?.toISOString().split("T")[0]}
@@ -308,11 +310,11 @@ export default InputFieldsRender = ({ props }) => {
             style={{ flex: 2, alignItems: "center" }}
             onPress={() => props.updateState("eolDate", null)}
           >
-            <Feather name="x" size={20} color="#555555" />
+            <Feather name="x" size={ICON_SIZE_SMALL} color="#555555" />
           </TouchableOpacity>
         )}
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Feather name="calendar" size={20} color="#555555" />
+          <Feather name="calendar" size={ICON_SIZE_SMALL} color="#555555" />
         </View>
       </TouchableOpacity>
 
@@ -373,7 +375,7 @@ const styles = StyleSheet.create({
     borderRadius: textBox.textBorderRadius,
     marginTop: gapV + 1,
     padding: textBox.padding,
-    fontSize: 14,
+    fontSize: FONT_SIZE_SMALL,
   },
   bigInputContainer: {
     height: textBox.bigTextBoxHeight,
@@ -382,17 +384,18 @@ const styles = StyleSheet.create({
     borderRadius: textBox.textBorderRadius,
     marginTop: gapV,
     padding: textBox.padding,
+    fontSize: FONT_SIZE_SMALL,
   },
   selectedTextStyle: {
-    fontSize: 14,
+    fontSize: FONT_SIZE_SMALL,
   },
   placeholderStyle: {
     color: colors.gray,
-    fontSize: 14,
+    fontSize: FONT_SIZE_SMALL,
   },
   dropdownSearch: {
     borderColor: colors.gray,
     borderRadius: textBox.textBorderRadius,
-    fontSize: 14,
+    fontSize: FONT_SIZE_SMALL,
   },
 });

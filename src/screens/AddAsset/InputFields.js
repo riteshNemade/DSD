@@ -17,14 +17,19 @@ import InputFieldsRender from "./InputFieldsRender";
 import FooterButtons from "./FooterButtons";
 import { startupSync } from "@utils/backgroundServices";
 
-const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
-
+const InputFields = ({
+  isOffline,
+  clearImage,
+  capturedImage,
+  draftsData,
+  scrollref,
+}) => {
   const dispatch = useDispatch();
   const { state, updateState, resetState } = inputFieldState();
   const { formState, resetValidatorState, updateValidatorState } =
     formErrorState();
 
-   //redux store variables 
+  //redux store variables
   const isSuperUser = useSelector((state) => {
     return state.global.userType === "SUPER";
   });
@@ -40,7 +45,7 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
     imagepath: capturedImage || null,
     imagePath: capturedImage || null,
   };
-  if(!isSuperUser){
+  if (!isSuperUser) {
     data = {
       ...state,
       company: companyName,
@@ -48,28 +53,33 @@ const InputFields = ({ isOffline, clearImage, capturedImage, draftsData }) => {
       imagepath: capturedImage || null,
       imagePath: capturedImage || null,
     };
-    
   }
 
   const onPressSave = async () => {
     const isFormValidated = validateInputs(data, updateValidatorState);
 
     if (!isFormValidated) {
-      Alert.alert("Error", "Please fill all the required fields.");
+      Alert.alert("Error", "Please fill all the required fields.", [
+        {
+          text: "Ok",
+          onPress: () => {
+            if (scrollref.current) {
+              scrollref.current.scrollTo({ y: 0, animated: true });
+            }
+          },
+        },
+      ]);
       return;
     } else {
       if (isOffline) {
         saveOfflineData(data, dispatch);
-        await startupSync();  //start the background service explicitly
+        await startupSync(); //start the background service explicitly
       } else {
         const result = await sendDataToServer(data);
         if (result.isSuccessful) {
           Alert.alert("Success", "Data Uploaded Successfully");
         } else {
-          Alert.alert(
-            "Error",
-            `Please try again later or contact support.`
-          );
+          Alert.alert("Error", `Please try again later or contact support.`);
         }
       }
       resetValidatorState();

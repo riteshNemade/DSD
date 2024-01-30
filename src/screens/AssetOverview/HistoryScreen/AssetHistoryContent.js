@@ -6,7 +6,7 @@ import { FlashList } from "@shopify/flash-list";
 import ListContent from "./ListContent";
 import HistoryModal from "./HistoryInfoModal";
 
-import { colors, gapV } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, colors, gapV } from "@constants/global";
 
 const Header = () => {
   return (
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemName: {
-    fontSize: 20,
+    fontSize: FONT_SIZE_LARGE,
     justifyContent: "flex-start",
     color: colors.hyperlinkBlue,
   },
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   columnHeader: {
-    fontSize: 18,
+    fontSize: FONT_SIZE_REGULAR,
     fontWeight: "500",
   },
 });

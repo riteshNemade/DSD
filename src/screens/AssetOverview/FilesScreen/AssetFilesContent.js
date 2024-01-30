@@ -5,7 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import CardViewComponent from "@components/CardView/CardViewComponent";
 
-import { colors, gapH, gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, FONT_SIZE_SMALL, colors, gapH, gapV, hPadding } from "@constants/global";
 import { fetchHistoricalData } from "@hooks/AssetOverview/assetOverviewHooks";
 
 const ListContent = ({ file, note, date }) => {
@@ -25,12 +25,12 @@ const ListContent = ({ file, note, date }) => {
         <View
           style={{ flex: 7, justifyContent: "flex-start", marginLeft: gapH }}
         >
-          <Text style={{ fontWeight: "600" }}>FILE NAME: </Text>
+          <Text style={{ fontWeight: "600", fontSize: FONT_SIZE_SMALL }}>FILE NAME: </Text>
           <Text numberOfLines={1}>
             {file.filename} {"\n"}
           </Text>
 
-          <Text style={{ fontWeight: "600" }}>{"\n"}DATE: </Text>
+          <Text style={{ fontWeight: "600", fontSize: FONT_SIZE_SMALL }}>{"\n"}DATE: </Text>
           <Text>{date} </Text>
         </View>
       </View>

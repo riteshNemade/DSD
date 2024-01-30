@@ -18,9 +18,9 @@ export const textBox = {
 
 /*Buttons*/
 export const buttonHeight = verticalScale(50);
-export const FONT_SIZE_SMALL = PixelRatio.get() > 3.5 ? 12 : 14;
-export const FONT_SIZE_REGULAR = PixelRatio.get() > 3.5 ? 12 : 16;
-export const FONT_SIZE_LARGE = PixelRatio.get() > 3.5 ? 16 : 20;
+export const FONT_SIZE_SMALL = PixelRatio.get() >= 3.5 ? 14 : 10;
+export const FONT_SIZE_REGULAR = PixelRatio.get() >= 3.5 ? 18 : 14;
+export const FONT_SIZE_LARGE = PixelRatio.get() >= 3.5 ? 20 : 15;
 export const DROPDOWN_HEIGHT = verticalScale(60);
 export const DASHBOARD_BUTTON_HEIGHT =
   PixelRatio.get() > 3.5 ? verticalScale(100) : verticalScale(100);
@@ -46,3 +46,7 @@ export const colors = {
   statusGreen: "#01912F",
   hyperlinkBlue: "#3F71C6",
 };
+
+/* Icon Sizes */
+export const DASHBOARD_ICON_SIZE = PixelRatio.get() >= 3.5 ? 56 : 40;
+export const ICON_SIZE_SMALL = PixelRatio.get() >= 3.5 ? 20 : 15;

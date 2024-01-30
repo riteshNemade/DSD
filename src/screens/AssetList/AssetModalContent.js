@@ -4,7 +4,7 @@ import React, { memo } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { verticalScale, scale } from "react-native-size-matters/extend";
 
-import { colors, hPadding } from "@constants/global";
+import { FONT_SIZE_SMALL, colors, hPadding } from "@constants/global";
 
 const DataModalContent = ({ isModalVisible, setModalVisible, data }) => {
   const handleModalClose = () => {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     height: "110%",
   },
   textStyle: {
-    fontSize: 14,
+    fontSize: FONT_SIZE_SMALL,
     letterSpacing: 0.8,
     textAlign: "left",
     marginTop: 2,

@@ -2,24 +2,28 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "expo-image";
-import { gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_SMALL, ICON_SIZE_SMALL, gapV, hPadding } from "@constants/global";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { scale, verticalScale } from "react-native-size-matters";
 const StatsCard = ({ item }) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        style={{ height: verticalScale(100), width: scale(160), borderRadius: 6 }}
+        style={{
+          height: verticalScale(100),
+          width: scale(160),
+          borderRadius: 6,
+        }}
         locations={[0, 1]}
         colors={[item.color1, item.color2]}
         start={{ x: 0.1, y: 0 }}
         end={{ x: 1, y: 0 }}
       >
         <View style={{ paddingHorizontal: hPadding, paddingVertical: gapV }}>
-          <FontAwesome5 name={item.icon} color="white" size={20} />
+          <FontAwesome5 name={item.icon} color="white" size={ICON_SIZE_SMALL} />
           <Text
             style={{
-              fontSize: 20,
+              fontSize: FONT_SIZE_LARGE,
               color: "white",
               fontWeight: "600",
               marginTop: 5,
@@ -42,19 +46,17 @@ export default StatsCard;
 
 const styles = StyleSheet.create({
   container: {
-    height: verticalScale(120),
-    width: scale(160),
+    flex: 1,
+    aspectRatio: 16 / 9,
     borderRadius: 6,
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly",
-    
+    alignItems: "center",
   },
   cardName: {
-    fontSize: 12,
+    fontSize: FONT_SIZE_SMALL,
     color: "white",
     fontWeight: "600",
-    marginTop: 5,
+    marginTop: 2,
   },
   imageStyle: {
     height: verticalScale(100),

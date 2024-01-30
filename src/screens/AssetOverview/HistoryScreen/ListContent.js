@@ -1,3 +1,4 @@
+import { FONT_SIZE_REGULAR, FONT_SIZE_SMALL } from "@constants/global";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
 const ListContent = ({
@@ -24,13 +25,13 @@ const ListContent = ({
       >
         <View style={styles.column}>
           <View style={styles.firstColumn}>
-            <Text>{historicalData.action_date.formatted}</Text>
+            <Text style={{fontSize: FONT_SIZE_SMALL}}>{historicalData.action_date.formatted}</Text>
           </View>
           <View style={styles.firstColumn}>
-            <Text>{historicalData.admin.name}</Text>
+            <Text style={{fontSize: FONT_SIZE_SMALL}}>{historicalData.admin.name}</Text>
           </View>
           <View style={styles.firstColumn}>
-            <Text>{historicalData.action_type}</Text>
+            <Text style={{fontSize: FONT_SIZE_SMALL}}>{historicalData.action_type}</Text>
           </View>
         </View>
       </TouchableOpacity>

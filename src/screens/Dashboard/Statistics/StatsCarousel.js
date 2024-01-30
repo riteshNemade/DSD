@@ -1,13 +1,12 @@
-import { Text, View } from "react-native";
+import { PixelRatio, Text, View } from "react-native";
 import React from "react";
 import Carousel from "react-native-reanimated-carousel";
-import { gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_SMALL, gapV, hPadding } from "@constants/global";
 import CardViewComponent from "@components/CardView/CardViewComponent";
 import StatsCard from "./StatsCard";
 import { scale } from "react-native-size-matters";
 
 const StatsCarousel = () => {
-  //
   const data = [
     {
       id: 4,
@@ -61,19 +60,21 @@ const StatsCarousel = () => {
 
   return (
     <View style={{ marginTop: gapV }}>
-      <CardViewComponent size={scale(140)}>
+      <CardViewComponent size={scale(150)}>
         <View
           style={{
-            flex: 2,
+            flex: 3,
             paddingHorizontal: hPadding,
             paddingVertical: gapV,
+            marginRight:20,
+            justifyContent:'center'
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "700" }}>Statistics</Text>
+          <Text style={{ fontSize: FONT_SIZE_LARGE, fontWeight: "700" }}>Statistics</Text>
           <Text
             style={{
               marginTop: 10,
-              fontSize: 14,
+              fontSize: FONT_SIZE_SMALL,
               fontWeight: "400",
               color: "gray",
             }}
@@ -83,7 +84,7 @@ const StatsCarousel = () => {
         </View>
         <View
           style={{
-            flex: 4,
+            flex: 7,
             justifyContent: "center",
             alignItems: "flex-start",
           }}
@@ -95,8 +96,8 @@ const StatsCarousel = () => {
             }}
             mode="horizontal-stack"
             modeConfig={{
-              moveSize: 25,
-              stackInterval: 10,
+              moveSize: 105,
+              stackInterval: PixelRatio.get() < 3.5 ? 7 : 11,
               rotateZDeg: 0,
               snapDirection: "left",
             }}

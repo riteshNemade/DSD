@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { VictoryPie } from "victory-native";
 import CardViewComponent from "@components/CardView/CardViewComponent";
-import { gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_SMALL, gapV, hPadding } from "@constants/global";
 
 const graphicColor = ["#000080", "#FF5050"]; // Colors
 const defaultGraphicData = [
@@ -37,19 +37,19 @@ const PieChart = () => {
             paddingVertical: gapV,
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "700" }}>
+          <Text style={{ fontSize: FONT_SIZE_LARGE , fontWeight: "700" }}>
             Assets By Status
           </Text>
 
           <View
-            style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
+            style={{ flexDirection: "row", alignItems: "center", marginTop: 15 }}
           >
             <View
               style={{ height: 10, width: 10, backgroundColor: "#FF5050" }}
             ></View>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: FONT_SIZE_SMALL,
                 fontWeight: "400",
                 color: "gray",
                 marginLeft: 5,
@@ -66,7 +66,7 @@ const PieChart = () => {
             ></View>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: FONT_SIZE_SMALL,
                 fontWeight: "400",
                 color: "gray",
                 marginLeft: 5,

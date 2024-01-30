@@ -1,11 +1,11 @@
 import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
 
-const ContentView = ({ children, backgroundColor }) => {
+const ContentView = ({ children, backgroundColor, scrollref }) => {
   return (
     <View style={{ flexGrow: 8, height: "100%" }}>
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-        <ScrollView>{children}</ScrollView>
+        <ScrollView ref={scrollref || null}>{children}</ScrollView>
       </View>
     </View>
   );

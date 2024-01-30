@@ -25,7 +25,7 @@ const AddAssetScreen = ({ route }) => {
   const [draftsData, setDraftsData] = useState(null);
   const [canCreateAsset, setCanCreateAsset] = useState(false);
   const [isScreenLoading, setIsScreenLoading] = useState(true);
-  
+  const ScrollViewRef = React.useRef();
   //check internet connection
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
@@ -84,7 +84,7 @@ const AddAssetScreen = ({ route }) => {
       <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
         <LinearGradientComponent>
           <HeaderComponent title="Add Asset" iconName="Menu" />
-          <ScrollContentViewComponent backgroundColor="#fff">
+          <ScrollContentViewComponent backgroundColor="#fff" scrollref={ScrollViewRef}>
             {/* OFFLINE HEADER */}
             {isOffline ? <OfflineHeader /> : null}
 
@@ -98,6 +98,7 @@ const AddAssetScreen = ({ route }) => {
                       imageName={imageName}
                     />
                     <InputFields
+                    scrollref={ScrollViewRef}
                       isOffline={isOffline}
                       capturedImage={capturedImage}
                       clearImage={onClearImage}

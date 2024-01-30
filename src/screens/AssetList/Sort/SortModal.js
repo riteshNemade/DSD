@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { RadioButton } from "react-native-paper";
 import { scale, verticalScale } from "react-native-size-matters/extend";
 
-import { colors, gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_REGULAR, FONT_SIZE_SMALL, colors, gapV, hPadding } from "@constants/global";
 import ButtonComponent from "@components/Button/ButtonComponent";
 
 const SortModal = ({
@@ -76,7 +76,7 @@ const SortModal = ({
                     setSelectedOption("created_at-asc");
                   }}
                 />
-                <Text>Date Added (asc)</Text>
+                <Text style={styles.sortOptionTextStyle}>Date Added (asc)</Text>
               </View>
               <View style={styles.sortOptions}>
                 <RadioButton
@@ -90,7 +90,7 @@ const SortModal = ({
                     setSelectedOption("created_at-desc");
                   }}
                 />
-                <Text>Date Added (desc)</Text>
+                <Text style={styles.sortOptionTextStyle}>Date Added (desc)</Text>
               </View>
               <View style={styles.sortOptions}>
                 <RadioButton
@@ -102,7 +102,7 @@ const SortModal = ({
                     setSelectedOption("name-asc");
                   }}
                 />
-                <Text>Asset Name (asc)</Text>
+                <Text style={styles.sortOptionTextStyle}>Asset Name (asc)</Text>
               </View>
               <View style={styles.sortOptions}>
                 <RadioButton
@@ -114,7 +114,7 @@ const SortModal = ({
                     setSelectedOption("name-desc");
                   }}
                 />
-                <Text>Asset Name (desc)</Text>
+                <Text style={styles.sortOptionTextStyle}>Asset Name (desc)</Text>
               </View>
               <View style={styles.sortOptions}>
                 <RadioButton
@@ -128,7 +128,7 @@ const SortModal = ({
                     setSelectedOption("asset_eol_date-asc");
                   }}
                 />
-                <Text>EOL Date (asc)</Text>
+                <Text style={styles.sortOptionTextStyle}>EOL Date (asc)</Text>
               </View>
               <View style={styles.sortOptions}>
                 <RadioButton
@@ -142,7 +142,7 @@ const SortModal = ({
                     setSelectedOption("asset_eol_date-desc");
                   }}
                 />
-                <Text>EOL Date (desc)</Text>
+                <Text style={styles.sortOptionTextStyle}>EOL Date (desc)</Text>
               </View>
               <ButtonComponent text={"Search"} onPress={handleSortPressed} />
             </View>
@@ -177,11 +177,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textStyle: {
-    fontSize: 18,
+    fontSize: FONT_SIZE_REGULAR,
     letterSpacing: 1.1,
     fontWeight: "600",
     color: "#000",
     margin: scale(10),
+  },
+  sortOptionTextStyle:{
+    fontSize: FONT_SIZE_SMALL
   },
   sortOptions: {
     flex: 1,

@@ -1,7 +1,7 @@
 import { View, TextInput, StyleSheet } from "react-native";
 import React from "react";
 
-import { colors, gapV, gapH } from "@constants/global";
+import { colors, gapV, gapH, FONT_SIZE_REGULAR, FONT_SIZE_SMALL } from "@constants/global";
 import { verticalScale } from "react-native-size-matters/extend";
 
 export default function EditProfileContent({ formState, setFormState }) {
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     height: 50,
-    fontSize: 14,
+    fontSize: FONT_SIZE_SMALL,
     paddingLeft: 15,
   },
 });

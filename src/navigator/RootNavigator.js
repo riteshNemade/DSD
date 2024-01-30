@@ -37,7 +37,7 @@ export default function RootNavigator() {
         dispatch({ type: "LOGIN" });
       }
       await startupSync();
-
+      
       setIsAppLoaded(true);
     };
     initializeApp();

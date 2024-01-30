@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { verticalScale } from "react-native-size-matters/extend";
+import { FONT_SIZE_REGULAR } from "@constants/global";
 
 const AssetTagEntryComponent = ({ handleSubmit }) => {
   const [inputText, setInputText] = useState("");
@@ -37,7 +38,7 @@ const AssetTagEntryComponent = ({ handleSubmit }) => {
             />
           </View>
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{ flex: 1, justifyContent: "center", alignItems: "center", paddingRight: 10}}
           >
             <MaterialIcons name="search" color={"#667085"} size={24} />
           </View>
@@ -62,10 +63,10 @@ const styles = StyleSheet.create({
     elevation: 14,
     shadowOpacity: 1,
     width: "100%",
-    height: 128,
+    height: 160,
   },
   title: {
-    fontSize: 16,
+    fontSize: FONT_SIZE_REGULAR,
     letterSpacing: 1,
     fontWeight: "600",
     color: "#000",

@@ -4,7 +4,7 @@ import React from "react";
 import { verticalScale } from "react-native-size-matters/extend";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { gapV } from "@constants/global";
+import { FONT_SIZE_REGULAR, FONT_SIZE_SMALL, gapV } from "@constants/global";
 import WarningIcon from "@assets/svg/warningIcon.";
 import NewEmail from "@assets/svg/NewEmailIcon";
 
@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
     marginVertical: gapV / 2,
   },
   title: {
-    fontSize: 16,
+    fontSize: FONT_SIZE_REGULAR - 2,
     fontWeight: "600",
     color: "#ff9c29",
     textAlign: "left",
   },
   subText: {
-    fontSize: 12,
+    fontSize: FONT_SIZE_SMALL,
     lineHeight: 12,
     color: "#a1a1a1",
     textAlign: "left",

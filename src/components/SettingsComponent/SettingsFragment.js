@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { verticalScale } from "react-native-size-matters/extend";
 
-import { colors, gapH, gapV } from "@constants/global";
+import { FONT_SIZE_SMALL, colors, gapH, gapV } from "@constants/global";
 import settingsIconCollection from "@assets/svg/Settings";
 import GradientSwitch from "../GradientSwitch/GradientSwitch";
 
@@ -77,7 +77,7 @@ export default function SettingsFragment({
         <View style={{ flex: 7, justifyContent: "center" }}>
           <Text
             style={{
-              fontSize: 16,
+              fontSize: FONT_SIZE_SMALL + 1,
               fontWeight: "600",
               color: colors.gray,
             }}

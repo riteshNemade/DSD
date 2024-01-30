@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { colors, hPadding } from "@constants/global";
+import { FONT_SIZE_SMALL, colors, hPadding } from "@constants/global";
 import initDatabase, { deleteById } from "@api/sqlite";
 
 import CardViewComponent from "@components/CardView/CardViewComponent";
@@ -101,16 +101,16 @@ const UploadListComponent = ({
             onPress={() => handleDataModal()}
           >
             <Text
-              style={{ fontSize: 14, color: colors.blue }}
+              style={{ fontSize: FONT_SIZE_SMALL, color: colors.blue }}
               numberOfLines={1}
             >
               Tag: {item?.asset_tag !== "null" ? item.asset_tag : "N/A"}{" "}
               {item?.flag === "1" ? "(Draft)" : ""}
             </Text>
-            <Text style={{ fontSize: 14 }} numberOfLines={1}>
+            <Text style={{ fontSize: FONT_SIZE_SMALL }} numberOfLines={1}>
               Name: {item?.asset_name}
             </Text>
-            <Text style={{ fontSize: 14 }} numberOfLines={1}>
+            <Text style={{ fontSize: FONT_SIZE_SMALL }} numberOfLines={1}>
               Company: {item?.company}
             </Text>
           </TouchableOpacity>

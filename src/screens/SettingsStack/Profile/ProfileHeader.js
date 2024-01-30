@@ -4,7 +4,7 @@ import React from "react";
 import { scale } from "react-native-size-matters/extend";
 import { useNavigation } from "@react-navigation/native";
 
-import { gapH, gapV } from "@constants/global";
+import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, gapH, gapV } from "@constants/global";
 import ButtonComponent from "@components/Button/ButtonComponent";
 import ProfilePicture from "@components/ProfilePictureComponent/ProfilePicture";
 
@@ -38,7 +38,7 @@ export default function ProfileHeader({
             <Text
               numberOfLines={1}
               style={{
-                fontSize: 18,
+                fontSize: FONT_SIZE_LARGE,
                 letterSpacing: 1.1,
                 fontWeight: "700",
                 textAlign: "left",
