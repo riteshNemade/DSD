@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.8)",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
     flexDirection: "row",
   },
 });
