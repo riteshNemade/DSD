@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import api from "@api/api";
+import { Alert } from "react-native";
 
 export const fetchHistoricalData = (id) => {
   const [historicalData, setHistoricalData] = useState([]);
@@ -45,6 +46,25 @@ export const fetchHistoricalData = (id) => {
   };
 };
 
+export const deleteAsset = async (id, navigation, queryClient) => {
+  await api
+    .delete(`/hardware/${id}`)
+    .then((res) => {
+      Alert.alert("Success", "Asset deleted successfully", [
+        {
+          text: "Ok",
+          onPress: () => {
+            queryClient.invalidateQueries("assetList");
+            navigation.navigate("AssetList");
+          },
+        },
+      ]);
+    })
+    .catch((err) => {
+      Alert.alert("Error", "Something went wrong");
+    });
+};
+
 export const fetchMaintenanceData = (id) => {
   const getMaintenanceData = async () => {
     const response = await api.get(`/maintenances?asset_id=${id}`);
@@ -79,6 +99,5 @@ export const fetchAssetTag = (id) => {
 };
 
 export const deleteMaintenance = async (maintenance_id) => {
-  await api.delete(`/maintenances/${maintenance_id}`).then((response) => {
-  });
+  await api.delete(`/maintenances/${maintenance_id}`).then((response) => {});
 };

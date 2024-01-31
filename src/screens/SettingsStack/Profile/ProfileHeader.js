@@ -4,9 +4,17 @@ import React from "react";
 import { scale } from "react-native-size-matters/extend";
 import { useNavigation } from "@react-navigation/native";
 
-import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, gapH, gapV } from "@constants/global";
+import {
+  FONT_SIZE_LARGE,
+  FONT_SIZE_REGULAR,
+  FONT_SIZE_SMALL,
+  colors,
+  gapH,
+  gapV,
+} from "@constants/global";
 import ButtonComponent from "@components/Button/ButtonComponent";
 import ProfilePicture from "@components/ProfilePictureComponent/ProfilePicture";
+import { useSelector } from "react-redux";
 
 export default function ProfileHeader({
   firstName,
@@ -15,6 +23,15 @@ export default function ProfileHeader({
   logoutHandler,
 }) {
   const navigation = useNavigation();
+  const ROLE = useSelector((state) => {
+    if (state.global.userType === "SUPER") {
+      return "Super Admin";
+    } else if (state.global.userType === "ADMIN") {
+      return "Admin";
+    } else {
+      return "User";
+    }
+  });
   return (
     <View
       style={{
@@ -31,7 +48,7 @@ export default function ProfileHeader({
           style={{
             flex: 1,
             marginLeft: scale(25),
-            justifyContent: "space-evenly",
+            justifyContent: "space-around",
           }}
         >
           <View style={{}}>
@@ -45,6 +62,19 @@ export default function ProfileHeader({
               }}
             >
               {firstName + " " + lastName}
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: FONT_SIZE_SMALL,
+                marginTop: 3,
+                letterSpacing: 1.1,
+                fontWeight: "600",
+                textAlign: "left",
+                color: colors.gray,
+              }}
+            >
+              {ROLE}
             </Text>
             <View
               style={{

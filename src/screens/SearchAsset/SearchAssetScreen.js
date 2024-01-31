@@ -26,10 +26,12 @@ const QRScannerScreen = () => {
   });
   const userType = useSelector((state) => {
     return state.global.userType;
-  })
+  });
   const handleSubmit = async (searchTerm) => {
-    let url  = `/hardware?location_id=${location_id}&`
-    userType === 'SUPER' ? url = '/hardware?' : url  = `/hardware?location_id=${location_id}&`
+    let url = `/hardware?location_id=${location_id}&`;
+    userType === "SUPER"
+      ? (url = "/hardware?")
+      : (url = `/hardware?location_id=${location_id}&`);
     if (searchTerm !== "") {
       setAPILoadingStatus(true);
       await api
@@ -48,7 +50,7 @@ const QRScannerScreen = () => {
           }
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           setAPILoadingStatus(false);
           Alert.alert(
             "Asset does not exist",
@@ -61,8 +63,7 @@ const QRScannerScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
-        <HeaderComponent title="Search Asset" iconName="Menu" />
-
+          <HeaderComponent title="Search Asset" iconName="Menu" />
         <ScrollContentViewComponent backgroundColor={"#fff"}>
           <View style={styles.container}>
             <View style={{ flex: 1 }}>
@@ -123,6 +124,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust opacity as needed
-    marginTop:64,
+    marginTop: 64,
   },
 });

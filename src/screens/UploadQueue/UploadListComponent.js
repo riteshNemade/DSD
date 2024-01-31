@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, Image, Alert } from "react-native";
+import { Text, TouchableOpacity, View, Alert } from "react-native";
 import React from "react";
 
 import { useDispatch } from "react-redux";
@@ -9,6 +9,8 @@ import { FONT_SIZE_SMALL, colors, hPadding } from "@constants/global";
 import initDatabase, { deleteById } from "@api/sqlite";
 
 import CardViewComponent from "@components/CardView/CardViewComponent";
+import { Image } from "expo-image";
+import { scale } from "react-native-size-matters/extend";
 
 const UploadListComponent = ({
   item,
@@ -21,10 +23,10 @@ const UploadListComponent = ({
   setIsErrorModalVisible,
   refetch,
 }) => {
-  let imagePath = require("@assets/images/image_placeholder.png");
+  let imagePath = require("@assets/images/no_image.jpg");
   const dispatch = useDispatch();
   if (item.imagepath === null) {
-    imagePath = require("@assets/images/image_placeholder.png");
+    imagePath = require("@assets/images/no_image.jpg");
   } else {
     imagePath = { uri: item.imagepath };
   }
@@ -46,11 +48,12 @@ const UploadListComponent = ({
     setIsErrorModalVisible(true);
   };
 
-  const handleDeletion = async (id) => {
+  const handleDeletion = async (id, isDraft) => {
+    let draftString = isDraft ? "draft" : "offline";
     try {
       Alert.alert(
-        "Deleting an entry",
-        "Are you sure you want to delete this entry?",
+        `Deleting ${draftString} entry`,
+        `Are you sure you want to delete this ${draftString} entry?`,
         [
           {
             text: "Cancel",
@@ -83,36 +86,43 @@ const UploadListComponent = ({
     <CardViewComponent key={item.id}>
       <View style={{ flexDirection: "row", flex: 1, padding: hPadding }}>
         <View style={{ flex: 2 }}>
-          <TouchableOpacity onPress={() => handleImagePress()}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => handleImagePress()}
+          >
             <Image
               source={imagePath}
               style={{
-                borderWidth: 1,
-                resizeMode: "contain",
-                height: 60,
-                width: 60,
+                flex: 1,
               }}
+              contentFit="cover"
             />
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 6 }}>
+        <View style={{ flex: 6, marginLeft: scale(12)}}>
           <TouchableOpacity
             activeOpacity={0.2}
             onPress={() => handleDataModal()}
           >
-            <Text
-              style={{ fontSize: FONT_SIZE_SMALL, color: colors.blue }}
-              numberOfLines={1}
-            >
-              Tag: {item?.asset_tag !== "null" ? item.asset_tag : "N/A"}{" "}
-              {item?.flag === "1" ? "(Draft)" : ""}
-            </Text>
-            <Text style={{ fontSize: FONT_SIZE_SMALL }} numberOfLines={1}>
-              Name: {item?.asset_name}
-            </Text>
-            <Text style={{ fontSize: FONT_SIZE_SMALL }} numberOfLines={1}>
-              Company: {item?.company}
-            </Text>
+            <View>
+              <Text
+                style={{ fontSize: FONT_SIZE_SMALL, color: colors.blue }}
+                numberOfLines={1}
+              >
+                Tag: {item?.asset_tag !== "null" ? item.asset_tag : "N/A"}{" "}
+                {item?.flag === "1" ? "(Draft)" : ""}
+              </Text>
+            </View>
+            <View>
+              <Text style={{ fontSize: FONT_SIZE_SMALL }} numberOfLines={1}>
+                Name: {item?.asset_name}
+              </Text>
+            </View>
+            <View>
+              <Text style={{ fontSize: FONT_SIZE_SMALL }} numberOfLines={1}>
+                Company: {item?.company}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
         <View style={{ justifyContent: "center" }}>
@@ -129,7 +139,7 @@ const UploadListComponent = ({
           ) : (
             <></>
           )}
-          <TouchableOpacity onPress={() => handleDeletion(item?.id)}>
+          <TouchableOpacity onPress={() => handleDeletion(item?.id, item?.flag === "1")}>
             <View style={{}}>
               <Feather name="trash" size={20} color={colors.red} />
             </View>

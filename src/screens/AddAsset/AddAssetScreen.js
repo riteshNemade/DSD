@@ -26,6 +26,7 @@ const AddAssetScreen = ({ route }) => {
   const [editData, setEditData] = useState(null);
   const [canCreateAsset, setCanCreateAsset] = useState(false);
   const [isScreenLoading, setIsScreenLoading] = useState(true);
+  const [headerText,setHeaderText] = useState("Add Asset")
   const ScrollViewRef = React.useRef();
 
   //check internet connection
@@ -84,6 +85,7 @@ const AddAssetScreen = ({ route }) => {
   useEffect(() => {
     if(route.params?.editData){
       setEditData(route.params?.editData)
+      setHeaderText("Edit Asset")
     }
   },[route.params?.editData])
 
@@ -97,7 +99,7 @@ const AddAssetScreen = ({ route }) => {
     <View style={{ flex: 1 }}>
       <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
         <LinearGradientComponent>
-          <HeaderComponent title={"Add Asset"} iconName="Menu" />
+          <HeaderComponent title={headerText} iconName="Menu" />
           <ScrollContentViewComponent backgroundColor="#fff" scrollref={ScrollViewRef}>
             {/* OFFLINE HEADER */}
             {isOffline ? <OfflineHeader /> : null}

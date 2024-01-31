@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 
 import { FlashList } from "@shopify/flash-list";
 import { useNavigation } from "@react-navigation/native";
@@ -16,13 +16,8 @@ export default function AssetAuditContent({ auditListData }) {
         estimatedItemSize={105}
         renderItem={({ item }) => (
           <View style={{ paddingHorizontal: 34, flex: 1 }}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("AssetOverview", item);
-              }}
-            >
-              <FlatListComponent props={item} />
-            </TouchableOpacity>
+
+              <FlatListComponent props={item} navigation={navigation}/>
           </View>
         )}
       />

@@ -1,7 +1,7 @@
 import { PixelRatio, Text, View } from "react-native";
 import React from "react";
 import Carousel from "react-native-reanimated-carousel";
-import { FONT_SIZE_LARGE, FONT_SIZE_SMALL, gapV, hPadding } from "@constants/global";
+import { CAROUSEL_WIDTH, FONT_SIZE_LARGE, FONT_SIZE_SMALL, gapV, hPadding } from "@constants/global";
 import CardViewComponent from "@components/CardView/CardViewComponent";
 import StatsCard from "./StatsCard";
 import { scale } from "react-native-size-matters";
@@ -97,11 +97,11 @@ const StatsCarousel = () => {
             mode="horizontal-stack"
             modeConfig={{
               moveSize: 105,
-              stackInterval: PixelRatio.get() < 3.5 ? 7 : 11,
+              stackInterval: PixelRatio.get() < 3.5 ? 10: 11,
               rotateZDeg: 0,
               snapDirection: "left",
             }}
-            width={210}
+            width={CAROUSEL_WIDTH}
             height={110}
             data={data}
             renderItem={({ item }) => <StatsCard item={item} />}

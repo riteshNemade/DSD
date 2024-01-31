@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { verticalScale } from "react-native-size-matters/extend";
 
-import { colors } from "@constants/global";
+import { ICON_SIZE_SMALL, colors } from "@constants/global";
 import ApplicationStackNavigatior from "./ApplicationStackNavigatior";
 
 import AddAssetScreen from "../screens/AddAsset/AddAssetScreen";
@@ -47,7 +47,7 @@ export default function BottomTabNavigator() {
                   alignItems: "center",
                 }}
               >
-                <Entypo name="home" size={24} color="#a1a1a1" />
+                <Entypo name="home" size={ICON_SIZE_SMALL + 4} color="#a1a1a1" />
               </View>
             );
           },
@@ -73,7 +73,7 @@ export default function BottomTabNavigator() {
                   alignItems: "center",
                 }}
               >
-                <FontAwesome5 name="list" size={24} color="#a1a1a1" />
+                <FontAwesome5 name="list" size={ICON_SIZE_SMALL} color="#a1a1a1" />
               </View>
             );
           },
@@ -99,7 +99,7 @@ export default function BottomTabNavigator() {
                   alignItems: "center",
                 }}
               >
-                <FontAwesome5 name="plus" size={18} color="#a1a1a1" />
+                <FontAwesome5 name="plus" size={ICON_SIZE_SMALL} color="#a1a1a1" />
               </View>
             );
           },
@@ -125,7 +125,7 @@ export default function BottomTabNavigator() {
                   alignItems: "center",
                 }}
               >
-                <FontAwesome5 name="bell" size={20} color="#a1a1a1" />
+                <FontAwesome5 name="bell" size={ICON_SIZE_SMALL + 2} color="#a1a1a1" />
               </View>
             );
           },

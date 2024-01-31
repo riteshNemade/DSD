@@ -7,19 +7,21 @@ import { gapV } from "@constants/global";
 const FooterButtons = ({ handleSave, handleSaveToDraft }) => {
   return (
     <>
-          <View style={{ height: 1, backgroundColor: "#DEDEDE", marginTop:gapV }}></View>
-    <View style={styles.buttonContainer}>
-      <View style={{ flex: 1, marginRight: 17, height: "100%" }}>
-        <ButtonComponent
-          text="Save"
-          gradientOption={"Green"}
-          onPress={handleSave}
-        />
+      <View
+        style={{ height: 1, backgroundColor: "#DEDEDE", marginTop: gapV }}
+      />
+      <View style={styles.buttonContainer}>
+        <View style={{ flex: 1, marginRight: 17, height: "100%" }}>
+          <ButtonComponent
+            text="Save"
+            gradientOption={"Green"}
+            onPress={handleSave}
+          />
+        </View>
+        <View style={{ flex: 1, marginLeft: 17, height: "100%" }}>
+          <ButtonComponent text="Save to Drafts" onPress={handleSaveToDraft} />
+        </View>
       </View>
-      <View style={{ flex: 1, marginLeft: 17, height: "100%" }}>
-        <ButtonComponent text="Save to Drafts" onPress={handleSaveToDraft} />
-      </View>
-    </View>
     </>
   );
 };

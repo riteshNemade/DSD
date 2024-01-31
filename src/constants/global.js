@@ -18,9 +18,7 @@ export const textBox = {
 
 /*Buttons*/
 export const buttonHeight = verticalScale(50);
-export const FONT_SIZE_SMALL = PixelRatio.get() >= 3.5 ? 14 : 10;
-export const FONT_SIZE_REGULAR = PixelRatio.get() >= 3.5 ? 18 : 14;
-export const FONT_SIZE_LARGE = PixelRatio.get() >= 3.5 ? 20 : 15;
+
 export const DROPDOWN_HEIGHT = verticalScale(60);
 export const DASHBOARD_BUTTON_HEIGHT =
   PixelRatio.get() > 3.5 ? verticalScale(100) : verticalScale(100);
@@ -48,5 +46,32 @@ export const colors = {
 };
 
 /* Icon Sizes */
-export const DASHBOARD_ICON_SIZE = PixelRatio.get() >= 3.5 ? 56 : 40;
-export const ICON_SIZE_SMALL = PixelRatio.get() >= 3.5 ? 20 : 15;
+
+let ICON_SIZE = 20;
+let DASH_ICON_SIZE = 56;
+let SMALL_FONT = 14;
+let REGULAR_FONT = 18;
+let LARGE_FONT = 20;
+let CarouselWidth = 200;
+
+if(PixelRatio.get() >= 3.5){
+  ICON_SIZE = 20
+  DASH_ICON_SIZE = 56;
+  SMALL_FONT = 14;
+  REGULAR_FONT = 18;
+  LARGE_FONT = 20;
+  CarouselWidth= 210;
+}else if(PixelRatio.get() < 3.5 && PixelRatio.get() > 3){
+  ICON_SIZE = 15
+  DASH_ICON_SIZE = 40;
+  SMALL_FONT = 10;
+  REGULAR_FONT = 14;
+  LARGE_FONT = 15;
+  CarouselWidth= 160;
+}
+export const CAROUSEL_WIDTH = CarouselWidth;
+export const DASHBOARD_ICON_SIZE = DASH_ICON_SIZE;
+export const ICON_SIZE_SMALL = ICON_SIZE;
+export const FONT_SIZE_SMALL = SMALL_FONT;
+export const FONT_SIZE_REGULAR = REGULAR_FONT;
+export const FONT_SIZE_LARGE = LARGE_FONT;

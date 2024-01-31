@@ -35,6 +35,8 @@ export default memo(function AssetListComponent({ item }) {
   };
 
   const handleImageClick = () => {
+    if(item.image === null) return;
+    
     setModalToRender("Image");
     setImageModalData({
       uri: item.image !== undefined ? item.image : null,
@@ -84,28 +86,38 @@ export default memo(function AssetListComponent({ item }) {
           <View style={styles.container}>
             <TouchableOpacity style={{ flex: 2 }} onPress={handleImageClick}>
               <Image
-                source={{
-                  uri: item.image !== undefined ? item.image : null,
-                }}
+                source={
+                  item.image !== undefined && item.image !== null
+                    ? {
+                        uri: item.image,
+                      }
+                    : require("@assets/images/no_image.jpg")
+                }
                 placeholder={blurhash}
                 contentFit="cover"
                 transition={1000}
-                style={{ flex: 1, height: verticalScale(105) }}
+                style={{ flex: 1 }}
               />
             </TouchableOpacity>
             <View style={{ flex: 6, marginLeft: scale(12) }}>
+              <View style={{flex:1, justifyContent:'center'}}>
               <TouchableOpacity onPress={handleTagClick}>
-                <Text style={{ fontSize: FONT_SIZE_SMALL, color: colors.blue }}>
-                  Tag: {item.asset_tag}
+                <Text style={{ fontSize: FONT_SIZE_SMALL, color: colors.blue, fontWeight:'600' }}>
+                  Tag: <Text style={{fontWeight:'400',fontSize: FONT_SIZE_SMALL -1}}>{item.asset_tag}</Text>
                 </Text>
               </TouchableOpacity>
-              <Text numberOfLines={1} style={{ fontSize: FONT_SIZE_SMALL }}>
-                Name: {item.name !== undefined ? item.name : "N/A"}
+              </View>
+              <View style={{flex:1, justifyContent:'center'}}>
+              <Text numberOfLines={1} style={{ fontSize: FONT_SIZE_SMALL, fontWeight:'600' }}>
+                Name: <Text style={{fontWeight:'400',fontSize: FONT_SIZE_SMALL -1}}>{item.name !== undefined ? item.name : "N/A"}</Text>
               </Text>
-              <Text numberOfLines={1} style={{ fontSize: FONT_SIZE_SMALL }}>
-                Name:{" "}
-                {item.company?.name !== undefined ? item.company.name : "N/A"}
+              </View>
+              <View style={{flex:1, justifyContent:'center'}}>
+              <Text numberOfLines={1} style={{ fontSize: FONT_SIZE_SMALL, fontWeight:'600' }}>
+                Company:{" "}
+                <Text style={{fontWeight:'400',fontSize: FONT_SIZE_SMALL -1}}>{item.company?.name !== undefined ? item.company.name : "N/A"}</Text>
               </Text>
+              </View>
             </View>
             <View style={{ flex: 2 }}>
               <View style={styles.status}>

@@ -109,6 +109,10 @@ const InputFields = ({
   };
 
   const handleSaveToDraft = async () => {
+    if(editData?.editing){
+      Alert.alert("Error Saving to Draft", "Cannot save this asset to drafts.");
+      return;
+    }
     await onSaveToDrafts(data, resetState, dispatch);
   };
 

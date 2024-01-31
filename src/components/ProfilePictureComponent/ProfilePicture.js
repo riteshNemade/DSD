@@ -5,10 +5,33 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { scale, verticalScale } from "react-native-size-matters/extend";
 
-import { colors } from "@constants/global";
+import { ICON_SIZE_SMALL, colors } from "@constants/global";
 import ProfileSVG from "@assets/svg/ProfilePicture/ProfileSVG";
 
-const ProfilePicture = ({ enableEdit, image }) => {
+const ProfilePicture = ({ enableEdit, image, customSize }) => {
+  const styles = StyleSheet.create({
+    container: {
+      height: verticalScale(130),
+      justifyContent: "center",
+      alignItems: "flex-start",
+    },
+    profilePicture: {
+      height: scale(customSize || 115),
+      width: scale(customSize || 115),
+      justifyContent: "flex-end",
+      borderRadius: 300,
+    },
+    cameraIcon: {
+      position: "absolute",
+      right: 1,
+      height: 50,
+      width: 50,
+      borderRadius: 300,
+      backgroundColor: colors.green,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  });
   const [imageUrl, setImageUrl] = useState(image);
 
   useEffect(() => {
@@ -23,7 +46,7 @@ const ProfilePicture = ({ enableEdit, image }) => {
         {imageUrl !== null && imageUrl !== undefined ? (
           <Image
             source={{ uri: imageUrl }}
-            style={{ height: scale(115), width: scale(115), borderRadius: 300 }}
+            style={{ height: scale(customSize || 115), width: scale(customSize || 115), borderRadius: 300 }}
           />
         ) : (
           <ProfileSVG />
@@ -33,7 +56,7 @@ const ProfilePicture = ({ enableEdit, image }) => {
             style={styles.cameraIcon}
             onPress={() => navigation.navigate("Camera", "Profile")}
           >
-            <MaterialIcons name="camera-alt" size={20} color="white" />
+            <MaterialIcons name="camera-alt" size={ICON_SIZE_SMALL} color="white" />
           </TouchableOpacity>
         )}
       </View>
@@ -43,26 +66,4 @@ const ProfilePicture = ({ enableEdit, image }) => {
 
 export default ProfilePicture;
 
-const styles = StyleSheet.create({
-  container: {
-    height: verticalScale(130),
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  profilePicture: {
-    height: scale(115),
-    width: scale(115),
-    justifyContent: "flex-end",
-    borderRadius: 300,
-  },
-  cameraIcon: {
-    position: "absolute",
-    right: 1,
-    height: 40,
-    width: 40,
-    borderRadius: 300,
-    backgroundColor: colors.green,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+

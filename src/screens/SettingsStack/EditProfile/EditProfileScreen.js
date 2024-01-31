@@ -30,13 +30,14 @@ const EditProfileScreen = ({ route }) => {
       <LinearGradientComponent>
         <HeaderComponent title="Edit Profile" iconName="Menu" />
         {!isLoading ? (
-          <ScrollContentViewComponent backgroundColor="#fff">
-            <KeyboardAvoidingView
-              behavior="position"
-              style={{ paddingBottom: 100 }}
-            >
-              <View style={{ alignItems: "center", marginTop: gapV }}>
-                <ProfilePicture enableEdit image={formState.avatar} />
+          <ContentViewComponent backgroundColor="#fff">
+            <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+              <View style={{ alignItems: "center", marginVertical: gapV * 3 }}>
+                <ProfilePicture
+                  enableEdit
+                  image={formState.avatar}
+                  customSize={180}
+                />
               </View>
               <View>
                 <EditProfileContent
@@ -46,12 +47,12 @@ const EditProfileScreen = ({ route }) => {
               </View>
               <View style={styles.buttonStyle}>
                 <ButtonComponent
-                  text="Save The Information"
+                  text="Save Changes"
                   onPress={() => updateUser(isImageChanged)}
                 />
               </View>
             </KeyboardAvoidingView>
-          </ScrollContentViewComponent>
+          </ContentViewComponent>
         ) : (
           <ContentViewComponent backgroundColor={"#fff"}>
             <View style={styles.loader}>
@@ -69,7 +70,11 @@ export default EditProfileScreen;
 const styles = StyleSheet.create({
   buttonStyle: {
     paddingHorizontal: hPadding,
-    marginTop: gapV,
+    position: "absolute",
+    flex: 1,
+    bottom: 1,
+    width: "100%",
+    marginBottom: 20,
   },
   loader: {
     flex: 1,

@@ -10,7 +10,7 @@ import { FONT_SIZE_LARGE } from "@constants/global";
 
 const statusBarHeight = getStatusBarHeight();
 
-export default function Header({ title }) {
+const ProfileHeader = () => {
   const offlineDataAvailable = useSelector(
     (state) => state.sync.isSyncDataAvailable
   );
@@ -58,7 +58,9 @@ export default function Header({ title }) {
       </TouchableOpacity>
     </View>
   );
-}
+};
+
+export default ProfileHeader;
 
 const styles = StyleSheet.create({
   backArrow: {
