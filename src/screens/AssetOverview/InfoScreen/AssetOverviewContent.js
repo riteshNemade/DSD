@@ -11,6 +11,7 @@ import ScrollContentViewComponent from "@components/ScrollContentView/ScrollCont
 
 const AssetOverviewContent = ({ route }) => {
   const { imageUrl, qrUrl, data } = route.params;
+  
   return (
     <>
       <LinearGradientComponent>

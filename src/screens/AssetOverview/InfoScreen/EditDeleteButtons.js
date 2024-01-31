@@ -1,9 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { scale } from "react-native-size-matters/extend";
 import { ICON_SIZE_SMALL } from "@constants/global";
+
 
 const EditDeleteButtons = ({ data, iconColor }) => {
   const navigation = useNavigation();
@@ -18,11 +19,14 @@ const EditDeleteButtons = ({ data, iconColor }) => {
       }}
     >
       <View style={{ marginRight: 20 }}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddAsset',{editData: {...data, editing:true}})}>
         <FontAwesome5
           name="edit"
           size={ICON_SIZE_SMALL - 2}
           color={iconColor}
         />
+
+        </TouchableOpacity>
       </View>
       <View style={{ marginRight: 20 }}>
         <FontAwesome5

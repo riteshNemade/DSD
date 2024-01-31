@@ -14,7 +14,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, FONT_SIZE_SMALL, ICON_SIZE_SMALL, colors, gapV, textBox } from "@constants/global";
 import { fetchOptions } from "@hooks/AddAsset/AddAssetHooks";
 
-export default InputFieldsRender = ({ props }) => {
+export default InputFieldsRender = ({ props, editData }) => {
   const {
     modelsList,
     statusList,
@@ -25,6 +25,11 @@ export default InputFieldsRender = ({ props }) => {
     isFetching,
     refetchAssetTag,
   } = fetchOptions();
+
+  const handleRefetchAssetTag = () => {
+    refetchAssetTag()
+    props.updateState("assetTag", null);
+  }
 
   const [isPurchaseDatePickerVisible, setIsPurchaseDatePickerVisible] =
     useState(false);
@@ -59,7 +64,7 @@ export default InputFieldsRender = ({ props }) => {
 
   useEffect(() => {
     const assetTagValue = nextAssetTag;
-    if (assetTagValue !== null) {
+    if ((assetTagValue !== null && props.state.assetTag === null) || editData=== null) {
       props.updateState("assetTag", assetTagValue.toString());
     }
   }, [isFetching]);
@@ -87,14 +92,14 @@ export default InputFieldsRender = ({ props }) => {
           style={[
             { borderColor: props.formState.assetTagBorderColor, flex: 1, fontSize: FONT_SIZE_SMALL },
           ]}
-          placeholder={isFetching ? "Fetching Asset Tag...":"Asset Tag * "}
-          value={isFetching ? "" : props.state.assetTag}
+          placeholder={isFetching && editData === null ? "Fetching Asset Tag...":"Asset Tag * "}
+          value={isFetching && editData === null ? "" : props.state.assetTag}
           onChangeText={(text) => {
             props.updateValidatorState("assetTagBorderColor", colors.gray);
             props.updateState("assetTag", text);
           }}
         />
-        <TouchableOpacity onPress={refetchAssetTag}>
+        <TouchableOpacity onPress={handleRefetchAssetTag}>
           <FontAwesome5
             name="redo"
             size={ICON_SIZE_SMALL - 3}

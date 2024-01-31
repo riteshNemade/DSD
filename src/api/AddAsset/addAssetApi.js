@@ -1,12 +1,12 @@
 import initDatabase, { deleteById } from "../sqlite";
-import { formDataBuilder, offlineFormDataBuilder } from "@utils/formDataBuilder";
+import {
+  formDataBuilder,
+  jsonDataBuilder,
+  offlineFormDataBuilder,
+} from "@utils/formDataBuilder";
 
 export const sendDataToServer = async (data) => {
   let result = {};
-
-  /**
-   * prepare formdata
-   */
   const dataToSend = await formDataBuilder(data);
 
   await api
@@ -37,6 +37,35 @@ export const sendDataToServer = async (data) => {
     const db = await initDatabase();
     await deleteById(db, data.draftAssetId);
   }
+  return result;
+};
+
+export const patchServerData = async (data, id) => {
+  let result = {};
+  console.log("PATCH req... \n", data, "\n", id);
+  const dataToSend = await jsonDataBuilder(data);
+  console.log("Final Data", dataToSend);
+  await api
+    .patch(`/hardware/${id}`, dataToSend)
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.status === "error") {
+        const error = JSON.stringify(res.data?.messages);
+
+        result = {
+          isSuccessful: false,
+          error,
+        };
+      } else {
+        result = {
+          isSuccessful: true,
+        };
+      }
+    })
+    .catch((err) => {
+      console.log("API Error: ", err);
+    });
+
   return result;
 };
 

@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   inputFieldState,
   populateDraftData,
+  populateEditData,
 } from "@hooks/AddAsset/AddAssetFormHooks";
 import { formErrorState } from "@hooks/AddAsset/FormValidator";
-import { sendDataToServer } from "@api/AddAsset/addAssetApi";
+import { patchServerData, sendDataToServer } from "@api/AddAsset/addAssetApi";
 import { onSaveToDrafts, saveOfflineData } from "@utils/localSave";
 import validateInputs from "@utils/validateInputs";
 
@@ -22,6 +23,7 @@ const InputFields = ({
   clearImage,
   capturedImage,
   draftsData,
+  editData,
   scrollref,
 }) => {
   const dispatch = useDispatch();
@@ -72,9 +74,25 @@ const InputFields = ({
       return;
     } else {
       if (isOffline) {
+        //disable edit if offline
+        if(editData?.editing){
+          Alert.alert("Error", "You are offline. Please go online to edit an asset.");
+          return;
+        }
         saveOfflineData(data, dispatch);
         await startupSync(); //start the background service explicitly
+
+      } else if (editData!== null && editData?.editing) {
+
+        const result = await patchServerData(data, editData.id);
+        if (result.isSuccessful) {
+          Alert.alert("Success", "Data Uploaded Successfully");
+        } else {
+          Alert.alert("Error", `Please try again later or contact support.`);
+        }
+
       } else {
+        //normal upload
         const result = await sendDataToServer(data);
         if (result.isSuccessful) {
           Alert.alert("Success", "Data Uploaded Successfully");
@@ -82,6 +100,8 @@ const InputFields = ({
           Alert.alert("Error", `Please try again later or contact support.`);
         }
       }
+
+      //reset state
       resetValidatorState();
       resetState();
       clearImage();
@@ -94,6 +114,7 @@ const InputFields = ({
 
   //this is a useEffect call
   populateDraftData(draftsData, updateState, resetState);
+  populateEditData(editData, updateState, resetState);
 
   const inputFieldRenderProps = {
     isSuperUser,
@@ -106,7 +127,11 @@ const InputFields = ({
 
   return (
     <>
-      <InputFieldsRender props={inputFieldRenderProps} formState={formState} />
+      <InputFieldsRender
+        props={inputFieldRenderProps}
+        formState={formState}
+        editData={editData}
+      />
       <FooterButtons
         handleSave={onPressSave}
         handleSaveToDraft={handleSaveToDraft}

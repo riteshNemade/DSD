@@ -23,9 +23,11 @@ const AddAssetScreen = ({ route }) => {
   const [isOffline, setOfflineStatus] = useState(false);
   const [imageName, setImageName] = useState("");
   const [draftsData, setDraftsData] = useState(null);
+  const [editData, setEditData] = useState(null);
   const [canCreateAsset, setCanCreateAsset] = useState(false);
   const [isScreenLoading, setIsScreenLoading] = useState(true);
   const ScrollViewRef = React.useRef();
+
   //check internet connection
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
@@ -35,6 +37,7 @@ const AddAssetScreen = ({ route }) => {
     return () => removeNetInfoSubscription();
   }, []);
 
+  //check user permission
   useEffect(() => {
     (async () => {
       let userPermissions = await AsyncStorage.getItem("userPermissions");
@@ -47,6 +50,7 @@ const AddAssetScreen = ({ route }) => {
     });
   }, []);
 
+
   //capture image from camera/image picker
   useEffect(() => {
     if (route.params && route.params.imageUri) {
@@ -55,6 +59,7 @@ const AddAssetScreen = ({ route }) => {
       setCapturedImage(route.params.imageUri);
     }
   }, [route.params?.imageUri]);
+
 
   //capture image from navigation picker
   useEffect(() => {
@@ -75,15 +80,24 @@ const AddAssetScreen = ({ route }) => {
     }
   }, [route.params?.drafts]);
 
+  //Edit Data from navigation
+  useEffect(() => {
+    if(route.params?.editData){
+      setEditData(route.params?.editData)
+    }
+  },[route.params?.editData])
+
+
   const onClearImage = () => {
     setCapturedImage("");
     setImageName("");
   };
+
   return (
     <View style={{ flex: 1 }}>
       <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
         <LinearGradientComponent>
-          <HeaderComponent title="Add Asset" iconName="Menu" />
+          <HeaderComponent title={"Add Asset"} iconName="Menu" />
           <ScrollContentViewComponent backgroundColor="#fff" scrollref={ScrollViewRef}>
             {/* OFFLINE HEADER */}
             {isOffline ? <OfflineHeader /> : null}
@@ -103,6 +117,7 @@ const AddAssetScreen = ({ route }) => {
                       capturedImage={capturedImage}
                       clearImage={onClearImage}
                       draftsData={draftsData}
+                      editData={editData}
                     />
                   </>
                 ) : (

@@ -1,4 +1,5 @@
 export default function validateInputs(data, updateValidatorState) {
+  let warranty = parseInt(data.warranty) || null;
   const isInvalid = (value) =>
     !value && (value === null || value === undefined);
 
@@ -13,12 +14,13 @@ export default function validateInputs(data, updateValidatorState) {
   for (let field of fields) {
     if (isInvalid(data[field.name])) {
       updateValidatorState(field.borderColor, "#FF0000");
+      console.log(data[field.name])
       return false;
     }
   }
-
-  if (data.warranty !== null && data.warranty !== undefined) {
-    if (!Number.isInteger(data.warranty) || data.warranty < 0 || data.warranty > 240) {
+  console.log(warranty)
+  if (warranty !== null && warranty !== undefined) {
+    if (!Number.isInteger(parseInt(warranty)) || warranty < 0 || warranty > 240) {
       updateValidatorState("warrantyBorderColor", "#FF0000");
       return false;
     }
