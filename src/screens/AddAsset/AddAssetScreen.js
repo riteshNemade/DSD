@@ -128,7 +128,7 @@ const AddAssetScreen = ({ route }) => {
               </View>
             ) : (
               <View style={[styles.container, { marginTop: "70%" }]}>
-                <ActivityIndicator size={"large"} color={colors.blue} />
+                <ActivityIndicator size={"large"} color={colors.loading} />
               </View>
             )}
             {/* SCREEN CONTENT */}

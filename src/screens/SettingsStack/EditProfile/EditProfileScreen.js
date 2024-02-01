@@ -12,7 +12,7 @@ import ScrollContentViewComponent from "@components/ScrollContentView/ScrollCont
 
 import EditProfileContent from "./EditProfileContent";
 
-import { gapV, hPadding } from "@constants/global";
+import { colors, gapV, hPadding } from "@constants/global";
 import { profileFormState } from "@hooks/EditProfile/editProfileHooks";
 
 const EditProfileScreen = ({ route }) => {
@@ -56,7 +56,7 @@ const EditProfileScreen = ({ route }) => {
         ) : (
           <ContentViewComponent backgroundColor={"#fff"}>
             <View style={styles.loader}>
-              <ActivityIndicator size={48} />
+              <ActivityIndicator size={48} color={colors.loading} />
             </View>
           </ContentViewComponent>
         )}

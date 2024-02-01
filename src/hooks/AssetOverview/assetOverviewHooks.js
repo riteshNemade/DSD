@@ -10,14 +10,15 @@ export const fetchHistoricalData = (id) => {
     `/reports/activity?item_id=${id}&item_type=asset&search=`
   );
   const [searchTerm, setSearchTerm] = useState();
-
+  const [isFetching, setIsFetching] = useState(true);
   const getHistoricalData = async () => {
     await api
       .get(url)
       .then((response) => {
         setHistoricalData(response.data.rows);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsFetching(false));
   };
   const search = async () => {
     await api
@@ -43,6 +44,7 @@ export const fetchHistoricalData = (id) => {
     url,
     setUrl,
     setSearchTerm,
+    isFetching
   };
 };
 
@@ -79,6 +81,7 @@ export const fetchMaintenanceData = (id) => {
   return {
     maintenanceList: maintenanceQuery.data || [],
     maintenanceRefetch: maintenanceQuery.refetch,
+    isFetching: maintenanceQuery.isFetching,
   };
 };
 

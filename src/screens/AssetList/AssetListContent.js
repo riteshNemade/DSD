@@ -6,6 +6,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { verticalScale } from "react-native-size-matters/extend";
 
 import AssetListComponent from "./AssetListComponent";
+import { colors } from "@constants/global";
 
 const AssetListContent = ({
   assetListData,
@@ -45,7 +46,7 @@ const AssetListContent = ({
           ListFooterComponent={
             isFetching ? (
               <View style={{ paddingBottom: 10 }}>
-                <ActivityIndicator animating={true} size={11} />
+                <ActivityIndicator animating={true} size={11} color={colors.loading}/>
               </View>
             ) : (
               <></>

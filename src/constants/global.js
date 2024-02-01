@@ -27,6 +27,7 @@ export const DASHBOARD_BUTTON_WIDTH =
 
 /* colors */
 export const colors = {
+  loading: "#4290df",
   orange: "#FF9C29",
   green: "#22BB55",
   red: "#FE5C5B",

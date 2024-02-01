@@ -9,6 +9,7 @@ import AssetAuditContent from "./AssetAuditContent";
 import HeaderComponent from "@components/Header/HeaderComponent";
 import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
+import { colors } from "@constants/global";
 
 const AssetAuditScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +30,7 @@ const AssetAuditScreen = () => {
           <ContentViewComponent backgroundColor={"#fff"}>
             {isLoading ? (
               <View style={{ flex: 1, justifyContent: "center" }}>
-                <ActivityIndicator size={100} color="#4290df" />
+                <ActivityIndicator size={100} color={colors.loading} />
               </View>
             ) : (
               <AssetAuditContent auditListData={auditListData} />

@@ -2,7 +2,7 @@ import { Modal, StyleSheet, Text, View, Alert } from "react-native";
 import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
-import { FONT_SIZE_LARGE, gapV, hPadding } from "@constants/global";
+import { FONT_SIZE_LARGE, colors, gapV, hPadding } from "@constants/global";
 import { ActivityIndicator } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
@@ -88,7 +88,7 @@ const QRScannerScreen = () => {
           }}
         >
           <View style={styles.modalContainer}>
-            <ActivityIndicator animating={isAPILoading} size={48} />
+            <ActivityIndicator animating={isAPILoading} size={48} color={colors.loading}/>
           </View>
         </Modal>
       </LinearGradientComponent>

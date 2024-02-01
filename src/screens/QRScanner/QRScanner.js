@@ -9,7 +9,12 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonComponent from "@components/Button/ButtonComponent";
 
 import api from "@api/api";
-import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, colors, hPadding } from "@constants/global";
+import {
+  FONT_SIZE_LARGE,
+  FONT_SIZE_REGULAR,
+  colors,
+  hPadding,
+} from "@constants/global";
 
 const renderCamera = (scanned, handleBarCodeScanned) => {
   return (
@@ -33,8 +38,16 @@ const renderCamera = (scanned, handleBarCodeScanned) => {
 const QRScanner = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true); //for the loading indicator
   const navigation = useNavigation();
+
+  useEffect(() => {
+    (async () =>{
+      setTimeout(() => {
+        setIsLoading(false)
+      },500)
+    })()
+  },[])
 
   useEffect(() => {
     (async () => {
@@ -121,7 +134,11 @@ const QRScanner = () => {
       </View>
     );
   } else {
-    return (
+    return isLoading ? (
+      <View style={styles.container}>
+        <ActivityIndicator size={72} color={colors.loading}/>
+      </View>
+    ) : (
       <View style={styles.container}>
         {!scanned ? (
           <>
@@ -131,7 +148,7 @@ const QRScanner = () => {
           </>
         ) : (
           <>
-            <ActivityIndicator color={colors.blue} size={30} />
+            <ActivityIndicator color={colors.loading} size={30} />
           </>
         )}
       </View>
@@ -146,7 +163,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
   },
   title: {
     fontSize: FONT_SIZE_LARGE + 4,

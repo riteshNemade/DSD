@@ -6,7 +6,7 @@ import { ActivityIndicator } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import api from "@api/api";
-import { gapV, gapH } from "@constants/global";
+import { gapV, gapH, colors } from "@constants/global";
 import { profileFormState } from "@hooks/EditProfile/editProfileHooks";
 
 import ProfileHeader from "./ProfileHeader";
@@ -61,7 +61,7 @@ export default function ProfileScreenContent({ firstName, lastName }) {
               alignItems: "center",
             }}
           >
-            <ActivityIndicator size={48} />
+            <ActivityIndicator size={48} color={colors.loading}/>
           </View>
         </ContentViewComponent>
       )}
