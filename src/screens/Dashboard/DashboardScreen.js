@@ -12,10 +12,14 @@ import DashboardContent from "./DashboardContent";
 import LocationSelectModal from "./LocationSelectModal";
 import StatsCarousel from "./Statistics/StatsCarousel";
 import PieChart from "./PieChart/PieChart";
+import fetchDashboardStats from "@hooks/Dashboard/fetchStats";
 
 const DashboardScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSuperUser, setIsSuperUser] = useState(false);
+
+  const stats = fetchDashboardStats();
+
   const location = useSelector((state) => {
     return state.global;
   });
@@ -28,12 +32,6 @@ const DashboardScreen = () => {
       }
     };
     checkSuperUser();
-  }, []);
-  useEffect(() => {
-    const fontScale = PixelRatio.getFontScale();
-    const a = PixelRatio.get();
-    console.log("aaA", a);
-    console.log(fontScale);
   }, []);
 
   return (
@@ -56,9 +54,15 @@ const DashboardScreen = () => {
             <></>
           )}
           <DashboardContent />
-          <StatsCarousel />
+          <StatsCarousel stats={stats} />
           <View style={{ paddingBottom: 100 }}>
-            <PieChart />
+            <PieChart
+              goodAssets={
+                parseInt(stats?.grand_total || 0) -
+                parseInt(stats?.inoperable_assets || 0)
+              }
+              badAssets={parseInt(stats?.inoperable_assets) || 0}
+            />
           </View>
         </ScrollContentViewComponent>
       </LinearGradientComponent>

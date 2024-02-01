@@ -6,47 +6,48 @@ import CardViewComponent from "@components/CardView/CardViewComponent";
 import StatsCard from "./StatsCard";
 import { scale } from "react-native-size-matters";
 
-const StatsCarousel = () => {
+const StatsCarousel = ({stats}) => {
+  
   const data = [
     {
-      id: 4,
+      id: 1,
       color1: "#020344",
       color2: "#28B8D5",
       icon: "barcode",
       cardName: "Assets",
-      value: "396",
+      value: stats?.asset || 0,
     },
     {
-      id: 5,
+      id: 2,
       color1: "#3B53A6",
       color2: "#AD66F4",
       icon: "wrench",
       cardName: "Inoperable Assets",
-      value: "1",
+      value: stats?.inoperable_assets || 0,
     },
     {
-      id: 2,
+      id: 3,
       color1: "#e65c00",
       color2: "#F9D423",
       icon: "cog",
       cardName: "Asset Maintenance Tickets",
-      value: "18",
+      value: stats?.asset_maintenances || 0,
     },
     {
-      id: 3,
+      id: 4,
       color1: "#134E5E",
       color2: "#71B280",
       icon: "check",
       cardName: "Open Warranty Tickets",
-      value: "10",
+      value: stats?.asset_open_warranty || 0,
     },
     {
-      id: 1,
+      id: 5,
       color1: "#93291E",
       color2: "#ED213A",
       icon: "times",
       cardName: "Non-Warranty Tickets",
-      value: "0",
+      value: stats?.asset_nonopen_warranty || 0,
     },
     {
       id: 6,
@@ -54,7 +55,7 @@ const StatsCarousel = () => {
       color2: "#859398",
       icon: "times-circle",
       cardName: "Closed Maintenance Tickets",
-      value: "5",
+      value: stats?.completed_asset_maintenances || 0,
     },
   ];
 
