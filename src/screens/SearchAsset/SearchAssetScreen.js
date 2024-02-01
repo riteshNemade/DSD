@@ -18,9 +18,6 @@ const QRScannerScreen = () => {
   const navigation = useNavigation();
   const [isAPILoading, setAPILoadingStatus] = useState(false);
   //check usertype and location id
-  const company_id = useSelector((state) => {
-    return state.global.locationId;
-  });
   const location_id = useSelector((state) => {
     return state.global.locationId;
   });
@@ -74,7 +71,7 @@ const QRScannerScreen = () => {
             </View>
             <View style={{ flex: 1 }}>
               <ButtonComponent
-                iconEnabled
+                iconName="qrcode"
                 text={"Scan a QR Code"}
                 onPress={() => navigation.navigate("QRScanner")}
               />

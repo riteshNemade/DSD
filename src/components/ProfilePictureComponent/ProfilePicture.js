@@ -24,8 +24,8 @@ const ProfilePicture = ({ enableEdit, image, customSize }) => {
     cameraIcon: {
       position: "absolute",
       right: 1,
-      height: 50,
-      width: 50,
+      height: scale(50),
+      width: scale(50),
       borderRadius: 300,
       backgroundColor: colors.green,
       justifyContent: "center",

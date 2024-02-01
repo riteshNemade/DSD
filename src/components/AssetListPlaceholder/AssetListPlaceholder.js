@@ -14,31 +14,36 @@ const SkeletonCard = () => (
         <Skeleton
           LinearGradientComponent={LinearGradient}
           animation="wave"
-          width={65}
-          height={55}
+          style={{ flex: 1 }}
         />
       </View>
       <View style={styles.cardContent}>
-        <Skeleton
-          LinearGradientComponent={LinearGradient}
-          animation="wave"
-          width={"100%"}
-          height={15}
-          style={styles.margin}
-        />
-        <Skeleton
-          LinearGradientComponent={LinearGradient}
-          animation="wave"
-          width={"50%"}
-          height={15}
-          style={styles.margin}
-        />
-        <Skeleton
-          LinearGradientComponent={LinearGradient}
-          animation="wave"
-          width={"80%"}
-          height={15}
-        />
+        <View style={{flex:1, justifyContent:'center'}}>
+          <Skeleton
+            LinearGradientComponent={LinearGradient}
+            animation="wave"
+            width={"100%"}
+            
+            style={styles.margin}
+          />
+        </View>
+        <View style={{flex:1, justifyContent:'center'}}>
+          <Skeleton
+            LinearGradientComponent={LinearGradient}
+            animation="wave"
+            width={"50%"}
+            
+            style={styles.margin}
+          />
+        </View>
+        <View style={{flex:1, justifyContent:'center'}}>
+          <Skeleton
+            LinearGradientComponent={LinearGradient}
+            animation="wave"
+            width={"80%"}
+            
+          />
+        </View>
       </View>
     </View>
   </CardViewComponent>

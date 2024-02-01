@@ -6,12 +6,19 @@ import { verticalScale } from "react-native-size-matters/extend";
 import { ActivityIndicator } from "react-native-paper";
 
 import QRScanner from "@assets/svg/qrScanner";
-import { colors, FONT_SIZE_REGULAR, FONT_SIZE_SMALL } from "@constants/global";
+import {
+  colors,
+  FONT_SIZE_REGULAR,
+  FONT_SIZE_SMALL,
+  ICON_SIZE_SMALL,
+} from "@constants/global";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const ButtonComponent = ({
   text,
   onPress,
   iconEnabled,
+  iconName,
   gradientOption,
   disabled,
 }) => {
@@ -24,7 +31,7 @@ const ButtonComponent = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={{ height: "100%", flex: 1 }}
+      style={{ height: verticalScale(55), flex: 1 }}
       disabled={disabled || false}
     >
       <LinearGradient
@@ -35,10 +42,14 @@ const ButtonComponent = ({
         end={{ x: 1, y: 1 }}
       >
         <View style={styles.button}>
-          {iconEnabled !== undefined && iconEnabled ? (
+          {iconName !== undefined && iconName && iconName !== "" ? (
             <>
               <View style={{ flex: 1 }}>
-                <QRScanner color={"#fff"} height={20} width={20} />
+                <FontAwesome5
+                  name={iconName}
+                  size={ICON_SIZE_SMALL}
+                  color="white"
+                />
               </View>
               <View style={{ flex: 4, alignItems: "center", marginRight: 30 }}>
                 <Text style={styles.buttonText}>{text}</Text>
