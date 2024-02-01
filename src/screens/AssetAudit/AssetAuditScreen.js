@@ -10,6 +10,7 @@ import HeaderComponent from "@components/Header/HeaderComponent";
 import ContentViewComponent from "@components/ContentView/ContentViewComponent";
 import LinearGradientComponent from "@components/LinearGradient/LinearGradientComponent";
 import { colors } from "@constants/global";
+import NoData from "@components/NoData/NoData";
 
 const AssetAuditScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,11 +27,11 @@ const AssetAuditScreen = () => {
     <View style={{ flex: 1 }}>
       <LinearGradientComponent>
         <HeaderComponent title="Due for Audit" iconName="Menu" />
-        {isLoading | (auditListData.length > 0) ? (
+        {isLoading || (auditListData.length > 0) ? (
           <ContentViewComponent backgroundColor={"#fff"}>
             {isLoading ? (
               <View style={{ flex: 1, justifyContent: "center" }}>
-                <ActivityIndicator size={100} color={colors.loading} />
+                <ActivityIndicator size={72} color={colors.loading} />
               </View>
             ) : (
               <AssetAuditContent auditListData={auditListData} />
@@ -38,15 +39,7 @@ const AssetAuditScreen = () => {
           </ContentViewComponent>
         ) : (
           <ContentViewComponent backgroundColor={"#fff"}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text>No Data Available</Text>
-            </View>
+            <NoData message="No Audit Data Available" />
           </ContentViewComponent>
         )}
       </LinearGradientComponent>

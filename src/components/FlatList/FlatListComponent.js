@@ -3,14 +3,16 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { FONT_SIZE_SMALL, colors } from "@constants/global";
+import { verticalScale } from "react-native-size-matters";
 
-const FlatListComponent = ({ props, navigation}) => {
+const FlatListComponent = ({ props, navigation }) => {
   const { asset_tag, name, next_audit_date } = props;
 
   const renderText = (label, value, color) => {
     return value !== undefined && value !== "" ? (
-      <Text style={[styles.subText,{color: color}]}>
-        {label} :<Text style={{ fontWeight: "400", color:color }}> {value}</Text>
+      <Text style={[styles.subText, { color: color }]}>
+        {label} :
+        <Text style={{ fontWeight: "400", color: color }}> {value}</Text>
       </Text>
     ) : (
       <Text style={{ color: "gray" }}>{label} : Unavailable</Text>
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#fff",
     flex: 1,
-    height: 125,
+    height: verticalScale(100),
     width: "100%",
     paddingHorizontal: 28,
     marginVertical: 15,

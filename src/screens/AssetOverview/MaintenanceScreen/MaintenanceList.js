@@ -10,6 +10,7 @@ import { colors, gapH, gapV } from "@constants/global";
 import CardItem from "./CardItem";
 import MaintenanceModal from "./Modals/MaintenanceModal";
 import AddEditMaintenance from "./Modals/AddEditMaintenanceModal";
+import NoData from "@components/NoData/NoData";
 
 const MaintenanceList = ({ data, assetTag, assetId, refetch }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -35,14 +36,8 @@ const MaintenanceList = ({ data, assetTag, assetId, refetch }) => {
           )}
         />
       ) : (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text>No Maintenance Data.</Text>
+        <View style={{flex:1, marginTop:-50}}>
+          <NoData message="No Maintenance Data Available" />
         </View>
       )}
 

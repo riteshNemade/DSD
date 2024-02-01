@@ -6,7 +6,13 @@ import { FlashList } from "@shopify/flash-list";
 import ListContent from "./ListContent";
 import HistoryModal from "./HistoryInfoModal";
 
-import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, colors, gapV } from "@constants/global";
+import {
+  FONT_SIZE_LARGE,
+  FONT_SIZE_REGULAR,
+  colors,
+  gapV,
+} from "@constants/global";
+import NoData from "@components/NoData/NoData";
 
 const Header = () => {
   return (
@@ -25,7 +31,6 @@ const Header = () => {
 };
 
 const AssetHistoryContent = ({ historicalData }) => {
-
   const dataLength = historicalData.length;
   const [modalData, setModalData] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -56,10 +61,8 @@ const AssetHistoryContent = ({ historicalData }) => {
             />
           </>
         ) : (
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Text>No History Data.</Text>
+          <View style={{ flex: 1, marginTop: -50 }}>
+            <NoData message="No History Data Available" />
           </View>
         )}
       </View>

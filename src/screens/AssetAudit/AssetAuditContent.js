@@ -16,8 +16,7 @@ export default function AssetAuditContent({ auditListData }) {
         estimatedItemSize={105}
         renderItem={({ item }) => (
           <View style={{ paddingHorizontal: 34, flex: 1 }}>
-
-              <FlatListComponent props={item} navigation={navigation}/>
+            <FlatListComponent props={item} navigation={navigation} />
           </View>
         )}
       />

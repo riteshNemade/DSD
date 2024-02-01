@@ -8,7 +8,6 @@ import { ICON_SIZE_SMALL } from "@constants/global";
 import { deleteAsset } from "@hooks/AssetOverview/assetOverviewHooks";
 import { useQueryClient } from "@tanstack/react-query";
 
-
 const EditDeleteButtons = ({ data, iconColor }) => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
@@ -22,7 +21,10 @@ const EditDeleteButtons = ({ data, iconColor }) => {
           text: "Cancel",
           style: "cancel",
         },
-        { text: "Delete", onPress: () => deleteAsset(id, navigation, queryClient) },
+        {
+          text: "Delete",
+          onPress: () => deleteAsset(id, navigation, queryClient),
+        },
       ]
     );
   };
@@ -33,13 +35,13 @@ const EditDeleteButtons = ({ data, iconColor }) => {
         flex: 1,
         position: "absolute",
         right: 1,
-        marginTop:8,
+        marginTop: 8,
         flexDirection: "row",
       }}
     >
       <View style={{ marginRight: 8 }}>
         <TouchableOpacity
-          style={{ padding: 12 }}
+          style={{ padding: 8 }}
           onPress={() =>
             navigation.navigate("AddAsset", {
               editData: { ...data, editing: true },
@@ -53,9 +55,9 @@ const EditDeleteButtons = ({ data, iconColor }) => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ marginRight: 20 }}>
+      <View style={{ marginRight: 8 }}>
         <TouchableOpacity
-          style={{ padding: 12 }}
+          style={{ padding: 8 }}
           onPress={() => handleDeleteAsset(data?.id)}
         >
           <FontAwesome5
