@@ -9,10 +9,6 @@ module.exports = {
     icon: "./assets/icon.png",
     splash: {
       image: "./assets/splash.png",
-      resizeMode: "cover",
-    },
-    androidStatusBar: {
-
     },
     plugins: [
       [
