@@ -23,8 +23,8 @@ function MyTabs({ data, imageUrl, qrUrl }) {
         tabBarScrollEnabled: true,
         tabBarItemStyle: { width: scale(120)},
         //styling
-        tabBarLabelStyle: {fontSize: FONT_SIZE_SMALL},
-        tabBarAllowFontScaling: true,
+        tabBarLabelStyle: {fontSize: FONT_SIZE_SMALL, },
+        tabBarAllowFontScaling: false,
         tabBarStyle: styles.tabBarStyle,
         tabBarContentContainerStyle: styles.tabBarContentContainerStyle,
         tabBarActiveTintColor: "white",
