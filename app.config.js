@@ -10,10 +10,9 @@ module.exports = {
     splash: {
       image: "./assets/splash.png",
       resizeMode: "cover",
-      backgroundColor: "#FFF",
     },
     androidStatusBar: {
-      translucent: true,
+
     },
     plugins: [
       [

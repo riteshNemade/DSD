@@ -68,12 +68,12 @@ export default function App() {
 
   return (
     <>
+      <StatusBar style="auto" />
       <PersistQueryClientProvider
         client={queryClient}
         persistOptions={{ persister: asyncStoragePersister }}
       >
         <Provider store={store}>
-          <StatusBar translucent style="inverted" />
           <MenuProvider backHandler>
             <RootNavigator />
           </MenuProvider>
