@@ -71,7 +71,10 @@ export default InputFieldsRender = ({ props, editData }) => {
 
   return (
     <View style={{ flex: 7, marginTop: gapV }}>
-      <Text style={{ fontSize: FONT_SIZE_LARGE, marginTop: gapV, fontWeight: "500" }}>
+            <View
+        style={{ height: 1, backgroundColor: "#DEDEDE", marginTop: gapV /2 }}
+      />
+      <Text style={{ fontSize: FONT_SIZE_LARGE, marginTop: gapV , fontWeight: "500" }}>
         Primary Info
       </Text>
       {/* AssetTag */}
@@ -223,7 +226,7 @@ export default InputFieldsRender = ({ props, editData }) => {
       />
       <View
         style={{ height: 1, backgroundColor: "#DEDEDE", marginTop: gapV }}
-      ></View>
+      />
       <Text style={{ fontSize: 20, marginTop: gapV, fontWeight: "500" }}>
         Optional Info
       </Text>

@@ -88,17 +88,13 @@ const InputFields = ({
         if (result.isSuccessful) {
           Alert.alert("Success", "Data Uploaded Successfully");
         } else {
-          Alert.alert("Error", `Please try again later or contact support.`);
+          Alert.alert("Error Updating Asset", `Please try again later or contact support.`);
         }
 
       } else {
         //normal upload
-        const result = await sendDataToServer(data);
-        if (result.isSuccessful) {
-          Alert.alert("Success", "Data Uploaded Successfully");
-        } else {
-          Alert.alert("Error", `Please try again later or contact support.`);
-        }
+        await sendDataToServer(data);
+
       }
 
       //reset state

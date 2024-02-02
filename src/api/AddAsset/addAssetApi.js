@@ -1,3 +1,4 @@
+import { Alert } from "react-native";
 import initDatabase, { deleteById } from "../sqlite";
 import {
   formDataBuilder,
@@ -17,16 +18,12 @@ export const sendDataToServer = async (data) => {
     })
     .then((res) => {
       if (res.data.status === "error") {
-        const error = JSON.stringify(res.data?.messages);
+        const error = res.data?.messages;
+        console.log(error)
+        Alert.alert("Error", error?.asset_tag[0]|| "Error Adding Asset. Please contact support.");
 
-        result = {
-          isSuccessful: false,
-          error,
-        };
       } else {
-        result = {
-          isSuccessful: true,
-        };
+        Alert.alert("Success", "Data Uploaded Successfully");
       }
     })
     .catch((err) => {

@@ -54,16 +54,22 @@ const DashboardScreen = () => {
             <></>
           )}
           <DashboardContent />
-          <StatsCarousel stats={stats} />
-          <View style={{ paddingBottom: 100 }}>
-            <PieChart
-              goodAssets={
-                parseInt(stats?.grand_total || 0) -
-                parseInt(stats?.inoperable_assets || 0)
-              }
-              badAssets={parseInt(stats?.inoperable_assets) || 0}
-            />
-          </View>
+          {isSuperUser ? (
+            <>
+              <StatsCarousel stats={stats} />
+              <View style={{ paddingBottom: 100 }}>
+                <PieChart
+                  goodAssets={
+                    parseInt(stats?.grand_total || 0) -
+                    parseInt(stats?.inoperable_assets || 0)
+                  }
+                  badAssets={parseInt(stats?.inoperable_assets) || 0}
+                />
+              </View>
+            </>
+          ) : (
+            <></>
+          )}
         </ScrollContentViewComponent>
       </LinearGradientComponent>
     </SafeAreaView>

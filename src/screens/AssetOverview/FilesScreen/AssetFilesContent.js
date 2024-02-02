@@ -7,6 +7,7 @@ import CardViewComponent from "@components/CardView/CardViewComponent";
 
 import { FONT_SIZE_LARGE, FONT_SIZE_REGULAR, FONT_SIZE_SMALL, colors, gapH, gapV, hPadding } from "@constants/global";
 import { fetchHistoricalData } from "@hooks/AssetOverview/assetOverviewHooks";
+import NoData from "@components/NoData/NoData";
 
 const ListContent = ({ file, note, date }) => {
   return (
@@ -61,15 +62,7 @@ const AssetFilesContent = ({ id }) => {
           keyExtractor={(item) => item.id}
         />
       ) : (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text>No Files found.</Text>
-        </View>
+        <NoData message={'No Files Available'}/>
       )}
     </View>
   );

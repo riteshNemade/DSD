@@ -22,6 +22,7 @@ const AddAssetScreen = ({ route }) => {
   const [capturedImage, setCapturedImage] = useState(null);
   const [isOffline, setOfflineStatus] = useState(false);
   const [imageName, setImageName] = useState("");
+  const [imagePath, setImagePath] = useState(null);
   const [draftsData, setDraftsData] = useState(null);
   const [editData, setEditData] = useState(null);
   const [canCreateAsset, setCanCreateAsset] = useState(false);
@@ -56,6 +57,7 @@ const AddAssetScreen = ({ route }) => {
   useEffect(() => {
     if (route.params && route.params.imageUri) {
       const filePath = route.params.imageUri;
+      setImagePath({isEdit: false, url: filePath});
       setImageName(filePath.split("/").pop());
       setCapturedImage(route.params.imageUri);
     }
@@ -85,6 +87,10 @@ const AddAssetScreen = ({ route }) => {
   useEffect(() => {
     if(route.params?.editData){
       setEditData(route.params?.editData)
+      if(route.params?.editData.image !== undefined && route.params?.editData.image !== null){
+        setImagePath({isEdit: true, url: route.params?.editData.image});
+      }
+      console.log(editData)
       setHeaderText("Edit Asset")
     }
   },[route.params?.editData])
@@ -93,6 +99,7 @@ const AddAssetScreen = ({ route }) => {
   const onClearImage = () => {
     setCapturedImage("");
     setImageName("");
+    setImagePath(null);
   };
 
   return (
@@ -112,6 +119,7 @@ const AddAssetScreen = ({ route }) => {
                     <TopContent
                       onClearImage={onClearImage}
                       imageName={imageName}
+                      imagePath={imagePath}
                     />
                     <InputFields
                     scrollref={ScrollViewRef}

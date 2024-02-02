@@ -10,7 +10,7 @@ import {
 } from "@constants/global";
 
 const graphicColor = ["#000080", "#FF5050"]; // Colors
-const defaultGraphicData = [{ y: 50 }, { y: 50 }]; // Data used to make the animate prop work
+const defaultGraphicData = [{ x:0,y: 50 }, { x:0,y: 50 }]; // Data used to make the animate prop work
 
 const PieChart = ({ goodAssets, badAssets }) => {
   const [graphicData, setGraphicData] = useState(defaultGraphicData);
@@ -106,7 +106,7 @@ const PieChart = ({ goodAssets, badAssets }) => {
             height={200}
             colorScale={graphicColor}
             innerRadius={20}
-            labels={({ datum }) => datum.x}
+            // labels={({ datum }) => (datum.x)}
             labelPosition={({ index }) => (index ? "centroid" : "centroid")}
             padAngle={({ datum }) => datum.y / 180}
           />
